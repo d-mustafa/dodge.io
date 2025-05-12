@@ -103,6 +103,7 @@ numberOfEnemiesHTML.innerHTML = allEnemies.length;
 
 // Time
 let time = 0;
+let enemySpawnTime = 200;
 
 requestAnimationFrame(draw)
 
@@ -111,13 +112,7 @@ function draw() {
     ctx.fillRect(0, 0, cnv.width, cnv.height);
 
     if (gameState == "gameOn") {
-        time++
-        if (allEnemies.length < 100 && time > 500) {
-            if (time % 200 == 0) {
-                allEnemies.push(createEnemy());
-                numberOfEnemiesHTML.innerHTML = allEnemies.length;
-            }
-        }
+        spawnEnemyPeriodically()
         drawPlayerAndEnemies()
 
         if (keyboardMovementOn) {
@@ -140,6 +135,20 @@ function draw() {
 }
 
 draw()
+
+function spawnEnemyPeriodically() {
+    time++;
+    if (allEnemies.length < 101 && time > 500) {
+        if (time % enemySpawnTime == 0) {
+            allEnemies.push(createEnemy());
+            numberOfEnemiesHTML.innerHTML = allEnemies.length;
+
+            if (allEnemies.length % 10 == 0) {
+                enemySpawnTime -= 20;
+            }
+        }
+    }
+}
 
 function drawPlayerAndEnemies() {
     // Player

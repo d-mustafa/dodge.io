@@ -63,6 +63,7 @@ function recordKeyUp(event) {
 document.addEventListener("click", recordMouseClicked)
 let mouseMovementOn = false;
 let mouseOverRestartButton = false;
+let mouseOverPlayButton = false;
 function recordMouseClicked() {
     if (gameState == "gameOn" || gameState == "startScreen") {
         if (mouseMovementOn) {
@@ -70,8 +71,16 @@ function recordMouseClicked() {
         } else if (!mouseMovementOn) {
             mouseMovementOn = true;
         }  
-    } else if (gameState == "gameOver" && mouseOverRestartButton) {
+    }
+    if (gameState == "startScreen" && mouseOverPlayButton) {
         restartGame()
+        mouseOverPlayButton = false;
+    }
+    if (gameState == "gameOver" && mouseOverRestartButton) {
+        gameState = "startScreen"
+        mouseOverPlayButton = false;
+        numberOfEnemies.innerHTML = 0;
+        score.innerHTML = 0;
     }
 }
 
@@ -84,8 +93,7 @@ function mousemoveHandler(event) {
     mouseY = event.clientY - rect.top;
 }
 
-
-// Player
+// Player & Enemies
 let player = {
     x: cnv.width/2,
     y: cnv.height/2,
@@ -93,16 +101,15 @@ let player = {
     speed: 2.5,
 }
 
-// Enemies
 let allEnemies = []
-let numberOfEnemiesHTML = document.getElementById("number-of-enemies");
-for(let i = 0; i < 10; i++) {
-    allEnemies.push(createEnemy());
-}
-numberOfEnemiesHTML.innerHTML = allEnemies.length;
+let numberOfEnemies = document.getElementById("number-of-enemies");
+numberOfEnemies.innerHTML = allEnemies.length;
 
 // Time
 let time = 0;
+let score = document.getElementById("score");
+let highscore = document.getElementById("highscore");
+score.innerHTML = 0;
 let enemySpawnTime = 200;
 
 requestAnimationFrame(draw)
@@ -173,21 +180,27 @@ function drawStartScreen() {
     ctx.lineTo(550, 50)
     ctx.stroke()
 
-    // Title Text
     ctx.font = '30px Arial';
     ctx.textAlign = 'center';
 
     let color1 = 'grey'
     let color2 = 'white'
 
-    if (mouseOverTitle) color1, color2 = 'white', 'grey'
-    else color1, color2 = 'grey', 'white'
+    if (mouseOverTitle) {
+        color1 = 'white'
+        color2 = 'grey'
+    }
+    else {
+        color1 = 'grey'
+        color2 = 'white'
+    }
 
-    ctx.strokeText('Dodge.io', 320, 80);
     ctx.strokeStyle = color1;
+    ctx.strokeText('Dodge.io', 320, 80);
     
     ctx.strokeStyle = color2;
     ctx.strokeText('Fan Game', 470, 135);
+
 
     // PLAY BUTTON //
     const playGrad = ctx.createLinearGradient(250, 500, 550, 600)
@@ -217,6 +230,25 @@ function drawStartScreen() {
     ctx.moveTo(250, 600)
     ctx.lineTo(550, 500)
     ctx.stroke()
+
+
+    let color3 = 'lime'
+    let color4 = 'white'
+
+    if (mouseOverPlayButton) {
+        color3 = 'white'
+        color4 = 'lime'
+    }
+    else {
+        color3 = 'lime'
+        color4 = 'white'
+    }
+    
+    ctx.strokeStyle = color3;
+    ctx.strokeText('Press', 320, 530);
+    
+    ctx.strokeStyle = color4;
+    ctx.strokeText('Play', 470, 585);
 }
 
 function drawPlayer() {
@@ -239,10 +271,17 @@ function drawEnemies() {
 
 function spawnEnemyPeriodically() {
     time++;
-    if (allEnemies.length < 101 && time > 500) {
+    score.innerHTML = Math.round(time/10);
+    if (Number(score.innerHTML) > Number(highscore.innerHTML)) {
+        highscore.innerHTML = score.innerHTML;
+        highscore.style.color = "red";
+        console.log(highscore.style.color)
+    }
+
+    if (allEnemies.length < 100 && time > 500) {
         if (time % enemySpawnTime == 0) {
             allEnemies.push(createEnemy());
-            numberOfEnemiesHTML.innerHTML = allEnemies.length;
+            numberOfEnemies.innerHTML = allEnemies.length;
 
             if (allEnemies.length % 10 == 0) {
                 enemySpawnTime -= 20;
@@ -310,7 +349,7 @@ function createEnemy() {
         x: (Math.random() * (cnv.width-60))+30,
         y: (Math.random() * (cnv.height-60))+30,
         radius: (Math.random() * 10) + 10,
-        speed: (Math.random() * 0.3) + 0.7,
+        speed: Math.random() + 0.3,
     }
 
 
@@ -334,12 +373,14 @@ function createEnemy() {
 }
 
 function collisions() {
+
     allEnemies.forEach(enemy => {
         const dx = player.x - enemy.x;
         const dy = player.y - enemy.y;
         const distance = Math.hypot(dx, dy);
 
         if (distance < player.radius + enemy.radius) {
+            highscore.style.color = 'black';
             gameState = "gameOver"
         }
     });
@@ -390,28 +431,24 @@ function drawGameOver() {
         tryAgainColor = 'white'
     }
     
-    ctx.strokeText('Game Over', 335, 80);
     ctx.strokeStyle = gameOverColor;
+    ctx.strokeText('Game Over', 335, 80);
 
     ctx.strokeStyle = tryAgainColor;
     ctx.strokeText('Try Again', 480, 135);
 }
 
 function restartGame() {
-    player = {
-        x: cnv.width/2,
-        y: cnv.height/2,
-        radius: 15,
-        speed: 2.5,
-    }
     mouseMovementOn = false;
 
     allEnemies = []
     for(let i = 0; i < 10; i++) {
         allEnemies.push(createEnemy());
     }
-    numberOfEnemiesHTML.innerHTML = allEnemies.length;
+    numberOfEnemies.innerHTML = allEnemies.length;
 
     time = 0;
-    gameState = "gameOn";
+    score.innerHTML = 0;
+    enemySpawnTime = 200;
+    gameState = "gameOn"
 }

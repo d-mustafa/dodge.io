@@ -11,13 +11,22 @@
         body {
             text-align: center;
             font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            margin: auto 400px;
+        }
+        p {
+            display: inline;
+            margin-right: 50px;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
     <h1>Dodge.io</h1>
-    <p>Inspired by Evades.io</p>
+    <p style="display: block; margin: 0px;">Inspired by Evades.io</p>
     <canvas id="canvas" width="800" height="650"></canvas>
-    <p>Number of enemies: <span id="number-of-enemies">10</span></p>
+
+    <p>Number of enemies: <span id="number-of-enemies">0</span></p>
+    <p>Score: <span id="score">0</span></p>
+    <p>HighScore: <span id="highscore">0</span></p>
 </body>
 </html>

@@ -1,7 +1,7 @@
 // DODGE.IO
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
-let gameState = "gameOn";
+let gameState = "startScreen";
 
 // Keyboard
 document.addEventListener("keydown", recordKeyDown)
@@ -64,7 +64,7 @@ document.addEventListener("click", recordMouseClicked)
 let mouseMovementOn = false;
 let mouseOverRestartButton = false;
 function recordMouseClicked() {
-    if (gameState == "gameOn") {
+    if (gameState == "gameOn" || gameState == "startScreen") {
         if (mouseMovementOn) {
             mouseMovementOn = false
         } else if (!mouseMovementOn) {
@@ -110,31 +110,132 @@ requestAnimationFrame(draw)
 function draw() {
     ctx.fillStyle = "rgb(194, 194, 194)"
     ctx.fillRect(0, 0, cnv.width, cnv.height);
-
-    if (gameState == "gameOn") {
-        spawnEnemyPeriodically()
-        drawPlayerAndEnemies()
+    
+    if (gameState == "startScreen") {
+        drawPlayer();
+        drawStartScreen();
 
         if (keyboardMovementOn) {
-            keyboardControls()
+            keyboardControls();
         } else {
-            mouseMovement()
+            mouseMovement();
+        }
+    }
+    else if (gameState == "gameOn") {
+        drawPlayer();
+        drawEnemies();
+        spawnEnemyPeriodically();
+
+        if (keyboardMovementOn) {
+            keyboardControls();
+        } else {
+            mouseMovement();
         }
         
         moveEnemies();
-
-        collisions()
-    } else if (gameState == "gameOver") {
-        drawPlayerAndEnemies()
-        
-        drawGameOver()
+        collisions();
     }
-
+    else if (gameState == "gameOver") {
+        drawPlayer();
+        drawEnemies();
+        drawGameOver();
+    }
 
     requestAnimationFrame(draw)
 }
 
 draw()
+
+function drawStartScreen() {
+    const titleGrad = ctx.createLinearGradient(250, 50, 550, 150)
+    const titleGrad2 = ctx.createLinearGradient(250, 150, 550, 50)
+
+    let mouseOverTitle = (mouseX > 250 && mouseX < 550) && (mouseY > 50 && mouseY < 150);
+    if (mouseOverTitle) {
+        titleGrad.addColorStop(0, "rgb(114, 114, 114)");
+        titleGrad.addColorStop(1, "rgb(255, 255, 255)");
+
+        titleGrad2.addColorStop(0, "rgb(255, 255, 255)");
+        titleGrad2.addColorStop(1, "rgb(114, 114, 114)");
+    } else {
+        titleGrad.addColorStop(0, "rgb(255, 255, 255)");
+        titleGrad.addColorStop(1, "rgb(114, 114, 114)");
+
+        titleGrad2.addColorStop(0, "rgb(114, 114, 114)");
+        titleGrad2.addColorStop(1, "rgb(255, 255, 255)");
+    }
+
+    ctx.fillStyle = titleGrad;
+    ctx.fillRect(250, 50, 300, 100)
+    ctx.strokeStyle = titleGrad2;
+    ctx.beginPath()
+    ctx.moveTo(250, 150)
+    ctx.lineTo(550, 50)
+    ctx.stroke()
+
+    // Title Text
+    ctx.font = '30px Arial';
+    ctx.textAlign = 'center';
+
+    let color1 = 'grey'
+    let color2 = 'white'
+
+    if (mouseOverTitle) color1, color2 = 'white', 'grey'
+    else color1, color2 = 'grey', 'white'
+
+    ctx.strokeText('Dodge.io', 320, 80);
+    ctx.strokeStyle = color1;
+    
+    ctx.strokeStyle = color2;
+    ctx.strokeText('Fan Game', 470, 135);
+
+    // PLAY BUTTON //
+    const playGrad = ctx.createLinearGradient(250, 500, 550, 600)
+    const playGrad2 = ctx.createLinearGradient(250, 600, 550, 500)
+
+    mouseOverPlayButton = (mouseX > 250 && mouseX < 550) && (mouseY > 500 && mouseY < 600);
+
+    if (mouseOverPlayButton) {
+        playGrad.addColorStop(0, "rgb(0, 255, 0)");
+        playGrad.addColorStop(1, "rgb(255, 255, 255)");
+
+        playGrad2.addColorStop(0, "rgb(255, 255, 255)");
+        playGrad2.addColorStop(1, "rgb(0, 255, 0)");
+    } else {
+        playGrad.addColorStop(0, "rgb(255, 255, 255)");
+        playGrad.addColorStop(1, "rgb(0, 255, 0)");
+
+        playGrad2.addColorStop(0, "rgb(0, 255, 0)");
+        playGrad2.addColorStop(1, "rgb(255, 255, 255)");
+    }
+
+    ctx.fillStyle = playGrad;
+    ctx.fillRect(250, 500, 300, 100)
+
+    ctx.strokeStyle = playGrad2;
+    ctx.beginPath()
+    ctx.moveTo(250, 600)
+    ctx.lineTo(550, 500)
+    ctx.stroke()
+}
+
+function drawPlayer() {
+    // Player
+    ctx.fillStyle = "rgb(255, 0, 0)"
+    ctx.beginPath()
+    ctx.arc(player.x, player.y, player.radius, Math.PI*2, 0)
+    ctx.fill()
+}
+
+function drawEnemies() {
+    // Enemies
+    ctx.fillStyle = "rgb(100, 100, 100)"
+    allEnemies.forEach(enemy => {
+        ctx.beginPath()
+        ctx.arc(enemy["x"], enemy["y"], enemy["radius"], Math.PI*2, 0)
+        ctx.fill()
+    })
+}
 
 function spawnEnemyPeriodically() {
     time++;
@@ -148,22 +249,6 @@ function spawnEnemyPeriodically() {
             }
         }
     }
-}
-
-function drawPlayerAndEnemies() {
-    // Player
-    ctx.fillStyle = "rgb(255, 0, 0)"
-    ctx.beginPath()
-    ctx.arc(player.x, player.y, player.radius, Math.PI*2, 0)
-    ctx.fill()
-
-    // Enemies
-    ctx.fillStyle = "rgb(100, 100, 100)"
-    allEnemies.forEach(enemy => {
-        ctx.beginPath()
-        ctx.arc(enemy["x"], enemy["y"], enemy["radius"], Math.PI*2, 0)
-        ctx.fill()
-    })
 }
 
 function keyboardControls() {
@@ -305,8 +390,8 @@ function drawGameOver() {
         tryAgainColor = 'white'
     }
     
-    ctx.strokeStyle = gameOverColor;
     ctx.strokeText('Game Over', 335, 80);
+    ctx.strokeStyle = gameOverColor;
 
     ctx.strokeStyle = tryAgainColor;
     ctx.strokeText('Try Again', 480, 135);

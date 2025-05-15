@@ -79,8 +79,6 @@ function recordMouseClicked() {
     if (gameState == "gameOver" && mouseOverRestartButton) {
         gameState = "startScreen"
         mouseOverPlayButton = false;
-        numberOfEnemies.innerHTML = 0;
-        score.innerHTML = 0;
     }
 }
 
@@ -100,16 +98,13 @@ let player = {
     radius: 15,
     speed: 2.5,
 }
-
 let allEnemies = []
-let numberOfEnemies = document.getElementById("number-of-enemies");
-numberOfEnemies.innerHTML = allEnemies.length;
 
 // Time
 let time = 0;
-let score = document.getElementById("score");
-let highscore = document.getElementById("highscore");
-score.innerHTML = 0;
+let score = 0;
+let highscore = 0;
+let highscoreColor = "rgb(87, 87, 87)";
 let enemySpawnTime = 200;
 
 requestAnimationFrame(draw)
@@ -129,6 +124,7 @@ function draw() {
         }
     }
     else if (gameState == "gameOn") {
+        drawScore();
         drawPlayer();
         drawEnemies();
         spawnEnemyPeriodically();
@@ -252,7 +248,6 @@ function drawStartScreen() {
 }
 
 function drawPlayer() {
-    // Player
     ctx.fillStyle = "rgb(255, 0, 0)"
     ctx.beginPath()
     ctx.arc(player.x, player.y, player.radius, Math.PI*2, 0)
@@ -260,7 +255,6 @@ function drawPlayer() {
 }
 
 function drawEnemies() {
-    // Enemies
     ctx.fillStyle = "rgb(100, 100, 100)"
     allEnemies.forEach(enemy => {
         ctx.beginPath()
@@ -269,19 +263,30 @@ function drawEnemies() {
     })
 }
 
+function drawScore() {
+    ctx.font = '20px Arial';
+    ctx.textAlign = 'center';
+        
+    ctx.fillStyle = "rgb(87, 87, 87)";
+    ctx.fillText(`Score: ${score}`, 200, 40);
+    ctx.fillText(`Enemy Count: ${allEnemies.length}`, 600, 40);
+
+    ctx.fillStyle = highscoreColor;
+    ctx.fillText(`Highscore: ${highscore}`, 400, 40);
+}
+
 function spawnEnemyPeriodically() {
     time++;
-    score.innerHTML = Math.round(time/10);
-    if (Number(score.innerHTML) > Number(highscore.innerHTML)) {
-        highscore.innerHTML = score.innerHTML;
-        highscore.style.color = "red";
-        console.log(highscore.style.color)
+    score = Math.round(time/10);
+    if (Number(score) > Number(highscore)) {
+        highscore = score;
+        highscoreColor = "red";
     }
 
     if (allEnemies.length < 100 && time > 500) {
         if (time % enemySpawnTime == 0) {
             allEnemies.push(createEnemy());
-            numberOfEnemies.innerHTML = allEnemies.length;
+        
 
             if (allEnemies.length % 10 == 0) {
                 enemySpawnTime -= 20;
@@ -380,7 +385,7 @@ function collisions() {
         const distance = Math.hypot(dx, dy);
 
         if (distance < player.radius + enemy.radius) {
-            highscore.style.color = 'black';
+            highscoreColor = "rgb(87, 87, 87)";
             gameState = "gameOver"
         }
     });
@@ -445,10 +450,10 @@ function restartGame() {
     for(let i = 0; i < 10; i++) {
         allEnemies.push(createEnemy());
     }
-    numberOfEnemies.innerHTML = allEnemies.length;
+
 
     time = 0;
-    score.innerHTML = 0;
+    score = 0;
     enemySpawnTime = 200;
     gameState = "gameOn"
 }

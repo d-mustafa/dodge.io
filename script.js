@@ -139,6 +139,7 @@ function draw() {
         collisions();
     }
     else if (gameState == "gameOver") {
+        drawScore();
         drawPlayer();
         drawEnemies();
         drawGameOver();
@@ -150,6 +151,7 @@ function draw() {
 draw()
 
 function drawStartScreen() {
+    // TITLE CARD //
     const titleGrad = ctx.createLinearGradient(250, 50, 550, 150)
     const titleGrad2 = ctx.createLinearGradient(250, 150, 550, 50)
 
@@ -276,6 +278,7 @@ function drawScore() {
 }
 
 function spawnEnemyPeriodically() {
+    // Increment time and score
     time++;
     score = Math.round(time/10);
     if (Number(score) > Number(highscore)) {
@@ -283,6 +286,7 @@ function spawnEnemyPeriodically() {
         highscoreColor = "red";
     }
 
+    // Spawn enemies after a grace period and then spawn them periodically
     if (allEnemies.length < 100 && time > 500) {
         if (time % enemySpawnTime == 0) {
             allEnemies.push(createEnemy());
@@ -392,6 +396,7 @@ function collisions() {
 }
 
 function drawGameOver() {
+    // RESTART BUTTON //
     const grad = ctx.createLinearGradient(250, 50, 550, 150)
     const grad2 = ctx.createLinearGradient(250, 150, 550, 50)
 
@@ -420,7 +425,6 @@ function drawGameOver() {
     ctx.lineTo(550, 50)
     ctx.stroke()
 
-
     // Text
     ctx.font = '30px Arial';
     ctx.textAlign = 'center';
@@ -445,12 +449,11 @@ function drawGameOver() {
 
 function restartGame() {
     mouseMovementOn = false;
-
+    
     allEnemies = []
     for(let i = 0; i < 10; i++) {
         allEnemies.push(createEnemy());
     }
-
 
     time = 0;
     score = 0;

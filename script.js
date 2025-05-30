@@ -69,6 +69,11 @@ function draw() {
         mouseMovement();
         abilities();
     }
+    else if (gameState == "pickPlayer") {
+        drawPlayer();
+        mouseMovement();
+        abilities();
+    }
     else if (gameState == "gameOn") {
         drawScore();
         drawPlayer();

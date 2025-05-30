@@ -227,8 +227,8 @@ function drawPlayer() {
 }
 
 function drawEnemies() {
-    ctx.fillStyle = "rgb(100, 100, 100)"
     allEnemies.forEach(enemy => {
+        ctx.fillStyle = enemy.color
         ctx.beginPath()
         ctx.arc(enemy["x"], enemy["y"], enemy["radius"], Math.PI*2, 0)
         ctx.fill()
@@ -253,8 +253,8 @@ function createEnemy() {
         y: (Math.random() * (cnv.height-60))+30,
         radius: (Math.random() * 10) + 10,
         speed: Math.random() + 0.3,
+        color: "rgb(100, 100, 100)"
     }
-
 
     let dx = player.x - oneEnemy.x;
     let dy = player.y - oneEnemy.y;
@@ -271,6 +271,8 @@ function createEnemy() {
 
     oneEnemy.movex = (dx / distance) * oneEnemy.speed;
     oneEnemy.movey = (dy / distance) * oneEnemy.speed;
+    oneEnemy.baseMoveX = oneEnemy.movex
+    oneEnemy.baseMoveY = oneEnemy.movey
 
     return oneEnemy;
 }
@@ -350,8 +352,8 @@ function moveEnemies() {
         enemy["y"] += enemy["movey"]
         
         // Doesnt allow the enemies to leave the map
-        if (enemy["x"] - enemy["radius"]  <= 0 || enemy["x"] + enemy["radius"]  >= cnv.width) enemy["movex"] *= -1
-        if (enemy["y"] - enemy["radius"]  <= 0 || enemy["y"] + enemy["radius"]  >= cnv.height) enemy["movey"] *= -1
+        if (enemy["x"] - enemy["radius"]  <= 0 || enemy["x"] + enemy["radius"]  >= cnv.width) enemy["baseMoveX"] *= -1
+        if (enemy["y"] - enemy["radius"]  <= 0 || enemy["y"] + enemy["radius"]  >= cnv.height) enemy["baseMoveY"] *= -1
     })
 
 }
@@ -393,7 +395,7 @@ function collisions() {
 
 // Abilities
 function abilities() {
-    // Dash
+    // Dash (Q-Key)
     now = Date.now()
     if (dash.activated){
         player.speed += player.dash
@@ -413,4 +415,35 @@ function abilities() {
     }
     if (now - dash.lastUsed < dash.cooldown) dash.usable = false;
     else dash.usable = true
+
+    // Slow Aura (Passive)
+    allEnemies.forEach(enemy => {
+        const dx = player.x - enemy["x"];
+        const dy = player.y - enemy["y"];
+        const distance = Math.hypot(dx, dy)
+        
+        if (distance < 100) {
+            enemy["movex"] = enemy["baseMoveX"] / 1.7
+            enemy["movey"] = enemy["baseMoveY"] / 1.7
+            enemy["color"] = "rgb(55, 77, 107)"
+        } else if (distance < 125) {
+            enemy["movex"] = enemy["baseMoveX"] / 1.5
+            enemy["movey"] = enemy["baseMoveY"] / 1.5
+            enemy["color"] = "rgb(68, 84, 107)"
+        } else if (distance < 150) {
+            enemy["movex"] = enemy["baseMoveX"] / 1.3
+            enemy["movey"] = enemy["baseMoveY"] / 1.3
+            enemy["color"] = "rgb(81, 91, 105)"
+        } else if (distance < 175) {
+            enemy["movex"] = enemy["baseMoveX"] / 1.1
+            enemy["movey"] = enemy["baseMoveY"] / 1.1
+            enemy["color"] = "rgb(95, 100, 107)"
+        } else {
+            enemy["movex"] = enemy["baseMoveX"]
+            enemy["movey"] = enemy["baseMoveY"]
+            enemy["color"] = "rgb(100, 100, 100)"
+        }
+    })
 }
+
+

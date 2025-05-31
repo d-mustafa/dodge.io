@@ -52,7 +52,7 @@ let dash = {
     usable: true,
     activated: false,
     deccelerating: false,
-    speed: 0.2,
+    speed: 0.5,
     cooldown: 1100, // cooldowns are in milliseconds
     lastUsed: 0,
 }

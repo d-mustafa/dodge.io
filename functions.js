@@ -395,20 +395,20 @@ function abilities() {
     // Dash (Active)
     now = Date.now()
     if (dash.activated){
-        player.speed += dash.dashSpeed;
+        player.speed += dash.speed;
         player.color = "rgb(255, 72, 72)";
         
         if (player.speed > 10) {
             dash.deccelerating = true;
-            dash.dashSpeed *= -1;
-            player.speed += dash.dashSpeed;
+            dash.speed *= -1;
+            player.speed += dash.speed;
         }
         if (player.speed <= 2.5 && dash.deccelerating) {
             dash.activated = false;
             dash.deccelerating = false;
             dash.lastUsed = Date.now();
             
-            dash.dashSpeed *= -1;
+            dash.speed *= -1;
             player.speed = 2.5;
             player.color = "rgb(255, 0, 0)";
         }

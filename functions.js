@@ -413,8 +413,15 @@ function abilities() {
             dash.lastUsed = Date.now();
         }
     }
+    // Cooldown
     if (now - dash.lastUsed < dash.cooldown) dash.usable = false;
-    else dash.usable = true
+    else dash.usable = true;
+
+    // // Cooldown Text
+    // ctx.font = '30px Arial';
+    // ctx.textAlign = 'center';
+    // ctx.fillStyle = "rgb(127, 0, 0)";
+    // ctx.strokeText('Dash', 480, 135);
 
     // Slow Aura (Passive)
     allEnemies.forEach(enemy => {

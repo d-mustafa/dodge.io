@@ -92,9 +92,9 @@ function draw() {
         collisions();
     }
     else if (gameState == "gameOver") {
+        drawGameOver();
         drawPlayer();
         drawEnemies();
-        drawGameOver();
     }
 
     requestAnimationFrame(draw)

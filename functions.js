@@ -16,11 +16,7 @@ function recordKeyDown(event) {
         dash.activated = true;
     }
     if (event.code == "ShiftLeft" || event.code == "ShiftRight") {
-        if (keyboardMovementOn) {
-            shiftPressed = 0.5;
-        } else if (mouseMovementOn) {
-            shiftPressed = 0.5;
-        }
+        shiftPressed = 0.5
     }
 
     if (wPressed || aPressed || sPressed || dPressed) {
@@ -70,6 +66,7 @@ function recordMouseClicked() {
 
 // Draw Stuff
 function drawStartScreen() {
+    // TITLE //
     const titleGrad = ctx.createLinearGradient(250, 50, 550, 150)
     const titleGrad2 = ctx.createLinearGradient(250, 150, 550, 50)
 
@@ -335,7 +332,7 @@ function mouseMovement() {
         if (!dash.activated){
             player.speed = 2.5 * shiftPressed;
         }
-        if (distance > 5) {
+        if (distance > 1) {
             player.x += (dx / distance) * player.speed;
             player.y += (dy / distance) * player.speed;
         }
@@ -402,15 +399,15 @@ function abilities() {
         player.color = "rgb(255, 72, 72)"
 
         if (player.speed >= 10) {
-            player.speed = 10
             player.dash *= -1
-        }
-        else if (player.speed <= 2.5) {
-            player.color = "rgb(255, 0, 0)"
-            dash.activated = false;
-            player.dash *= -1
-            player.speed = 2.5
-            dash.lastUsed = Date.now();
+
+            if (player.speed <= 2.5) {
+                player.color = "rgb(255, 0, 0)"
+                dash.activated = false;
+                player.dash *= -1
+                player.speed = 2.5
+                dash.lastUsed = Date.now();
+            }
         }
     }
     // Dash CD

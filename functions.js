@@ -419,10 +419,10 @@ function abilities() {
         dash.usable = false;
         
         // Cooldown Text
-        ctx.font = '30px Arial';
+        ctx.font = '20px Arial';
         ctx.textAlign = 'center';
         ctx.fillStyle = "rgb(127, 0, 0)";
-        ctx.fillText(`Dash: ${dashCDLeft}`, 350, 135);
+        ctx.fillText(`Dash: ${dashCDLeft}`, 400, 620);
         console.log(dashCDLeft)
     }
     else dash.usable = true;

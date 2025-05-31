@@ -12,7 +12,7 @@ function recordKeyDown(event) {
     if (event.code == "KeyD") {
         dPressed = true;
     }
-    if (event.code == "KeyQ" && dash.usable) {
+    if ((event.code == "KeyQ" || event.code == "KeyJ") && dash.usable) {
         dash.activated = true;
     }
     if (event.code == "ShiftLeft" || event.code == "ShiftRight") {
@@ -395,7 +395,7 @@ function collisions() {
 
 // Abilities
 function abilities() {
-    // Dash (Q-Key)
+    // Dash (Active)
     now = Date.now()
     if (dash.activated){
         player.speed += player.dash
@@ -413,7 +413,7 @@ function abilities() {
             dash.lastUsed = Date.now();
         }
     }
-    // Cooldown
+    // Dash CD
     let dashCDLeft = ((dash.cooldown - (now - dash.lastUsed)) / 1000).toFixed(2)
     if (now - dash.lastUsed < dash.cooldown) {
         dash.usable = false;
@@ -423,7 +423,7 @@ function abilities() {
         ctx.textAlign = 'center';
         ctx.fillStyle = "rgb(127, 0, 0)";
         ctx.fillText(`Dash: ${dashCDLeft}`, 400, 620);
-        console.log(dashCDLeft)
+        console.log(dashCDLeft);
     }
     else dash.usable = true;
     

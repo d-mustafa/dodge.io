@@ -1,4 +1,5 @@
 // DODGE.IO
+console.log("1.0")
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 let gameState = "startScreen";

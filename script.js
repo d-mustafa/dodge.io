@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("1.03")
+console.log("fixing dash-distance")
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 let gameState = "startScreen";

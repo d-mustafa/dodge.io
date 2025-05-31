@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("1.01")
+console.log("1.02")
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 let gameState = "startScreen";
@@ -36,7 +36,7 @@ let player = {
     radius: 15,
     speed: 2.5,
     color: "rgb(255, 0, 0)",
-    dash: 0.5,
+    dash: 0.2,
 }
 let allEnemies = []
 

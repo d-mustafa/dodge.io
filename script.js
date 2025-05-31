@@ -51,7 +51,7 @@ let enemySpawnTime = 200;
 let dash = {
     usable: true,
     activated: false,
-    deccelerate: false,
+    deccelerating: false,
     cooldown: 1000, // cooldowns are in milliseconds
     lastUsed: 0,
 }

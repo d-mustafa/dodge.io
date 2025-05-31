@@ -395,20 +395,21 @@ function abilities() {
     // Dash (Active)
     now = Date.now()
     if (dash.activated){
-        player.speed += player.dash
-        player.color = "rgb(255, 72, 72)"
-        let deccelerating = false;
-
+        player.speed += player.dash;
+        player.color = "rgb(255, 72, 72)";
+        
         if (player.speed >= 10) {
-            player.dash *= -1
-            deceletaring = true;
+            dash.deccelerating = true;
+            player.dash *= -1;
         }
-        if (player.speed <= 2.5 && deccelerating) {
-            player.color = "rgb(255, 0, 0)"
+        if (player.speed <= 2.5 && dash.deccelerating) {
             dash.activated = false;
-            player.dash *= -1
-            player.speed = 2.5
+            dash.deccelerating = false;
             dash.lastUsed = Date.now();
+            
+            player.dash *= -1;
+            player.speed = 2.5;
+            player.color = "rgb(255, 0, 0)";
         }
     }
     // Dash CD

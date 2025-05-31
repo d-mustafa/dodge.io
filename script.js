@@ -65,6 +65,7 @@ function draw() {
     
     if (gameState == "startScreen") {
         abilities();
+        
         drawStartScreen();
         drawPlayer();
 
@@ -73,11 +74,13 @@ function draw() {
     }
     else if (gameState == "pickPlayer") {
         abilities();
+        
         drawPlayer()
         mouseMovement();
     }
     else if (gameState == "gameOn") {
         abilities();
+        
         drawScore();
         drawPlayer();
         

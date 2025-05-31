@@ -70,7 +70,6 @@ function draw() {
 
         keyboardControls();
         mouseMovement();
-        abilities();
     }
     else if (gameState == "pickPlayer") {
         abilities();

@@ -53,7 +53,7 @@ let dash = {
     usable: true,
     activated: false,
     deccelerating: false,
-    cooldown: 1000, // cooldowns are in milliseconds
+    cooldown: 1100, // cooldowns are in milliseconds
     lastUsed: 0,
 }
 
@@ -64,6 +64,7 @@ function draw() {
     ctx.fillRect(0, 0, cnv.width, cnv.height);
     
     if (gameState == "startScreen") {
+        abilities();
         drawPlayer();
         drawStartScreen();
 
@@ -72,13 +73,15 @@ function draw() {
         abilities();
     }
     else if (gameState == "pickPlayer") {
-        drawPlayer();
-        mouseMovement();
         abilities();
+        drawPlayer()
+        mouseMovement();
     }
     else if (gameState == "gameOn") {
         drawScore();
+        abilities();
         drawPlayer();
+        
         drawEnemies();
         spawnEnemyPeriodically();
 
@@ -87,8 +90,6 @@ function draw() {
         
         moveEnemies();
         collisions();
-
-        abilities();
     }
     else if (gameState == "gameOver") {
         drawPlayer();

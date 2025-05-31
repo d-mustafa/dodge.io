@@ -397,17 +397,18 @@ function abilities() {
     if (dash.activated){
         player.speed += player.dash
         player.color = "rgb(255, 72, 72)"
+        let deccelerating = false;
 
         if (player.speed >= 10) {
             player.dash *= -1
-
-            if (player.speed <= 2.5) {
-                player.color = "rgb(255, 0, 0)"
-                dash.activated = false;
-                player.dash *= -1
-                player.speed = 2.5
-                dash.lastUsed = Date.now();
-            }
+            deceletaring = true;
+        }
+        if (player.speed <= 2.5 && deccelerating) {
+            player.color = "rgb(255, 0, 0)"
+            dash.activated = false;
+            player.dash *= -1
+            player.speed = 2.5
+            dash.lastUsed = Date.now();
         }
     }
     // Dash CD

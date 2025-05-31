@@ -414,14 +414,19 @@ function abilities() {
         }
     }
     // Cooldown
-    if (now - dash.lastUsed < dash.cooldown) dash.usable = false;
+    let dashCDLeft = ((dash.cooldown - (now - dash.lastUsed)) / 1000).toFixed(2)
+    if (now - dash.lastUsed < dash.cooldown) {
+        dash.usable = false;
+        
+        // Cooldown Text
+        ctx.font = '30px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillStyle = "rgb(127, 0, 0)";
+        ctx.fillText(`Dash: ${dashCDLeft}`, 350, 135);
+        console.log(dashCDLeft)
+    }
     else dash.usable = true;
-
-    // // Cooldown Text
-    // ctx.font = '30px Arial';
-    // ctx.textAlign = 'center';
-    // ctx.fillStyle = "rgb(127, 0, 0)";
-    // ctx.strokeText('Dash', 480, 135);
+    
 
     // Slow Aura (Passive)
     allEnemies.forEach(enemy => {

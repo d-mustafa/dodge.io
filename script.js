@@ -36,7 +36,6 @@ let player = {
     radius: 15,
     speed: 2.5,
     color: "rgb(255, 0, 0)",
-    dash: 0.2,
 }
 let allEnemies = []
 

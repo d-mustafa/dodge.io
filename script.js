@@ -65,8 +65,8 @@ function draw() {
     
     if (gameState == "startScreen") {
         abilities();
-        drawPlayer();
         drawStartScreen();
+        drawPlayer();
 
         keyboardControls();
         mouseMovement();

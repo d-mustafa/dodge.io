@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("1.02")
+console.log("1.03")
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 let gameState = "startScreen";
@@ -77,8 +77,8 @@ function draw() {
         mouseMovement();
     }
     else if (gameState == "gameOn") {
-        drawScore();
         abilities();
+        drawScore();
         drawPlayer();
         
         drawEnemies();

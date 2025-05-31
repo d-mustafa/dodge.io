@@ -398,9 +398,10 @@ function abilities() {
         player.speed += player.dash;
         player.color = "rgb(255, 72, 72)";
         
-        if (player.speed >= 10) {
+        if (player.speed > 10) {
             dash.deccelerating = true;
             player.dash *= -1;
+            player.speed += player.dash;
         }
         if (player.speed <= 2.5 && dash.deccelerating) {
             dash.activated = false;

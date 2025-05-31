@@ -425,7 +425,7 @@ function abilities() {
     else dash.usable = true;
     
 
-    // Slow Aura (Passive)
+    // Stagnation (Passive)
     allEnemies.forEach(enemy => {
         const dx = player.x - enemy["x"];
         const dy = player.y - enemy["y"];

@@ -12,8 +12,10 @@ function recordKeyDown(event) {
     if (event.code == "KeyD") {
         dPressed = true;
     }
-    if ((event.code == "KeyQ" || event.code == "KeyJ") && dash.usable) {
-        dash.activated = true;
+    if ((event.code == "KeyQ" || event.code == "KeyJ")) {
+        if (player.dodger == "jsab" && dash.usable) {
+            dash.activated = true;
+        }
     }
     if (event.code == "ShiftLeft" || event.code == "ShiftRight") {
         shiftPressed = 0.5
@@ -84,8 +86,8 @@ function recordMouseClicked() {
             player.color = "rgb(255, 0, 0)";
             player.subColor = "rgb(127, 0, 0)";
         }
-        else if (mouseOver.jotunn) {
-            player.dodger = "jotunn";
+        else if (mouseOver.jötunn) {
+            player.dodger = "jötunn";
             player.color = "rgb(79, 203, 255)";
             player.subColor = "rgb(62, 158, 199)";
         }
@@ -460,7 +462,7 @@ function abilities() {
         else dash.usable = true;
     }
     
-    if (player.dodger == "jotunn") {
+    if (player.dodger == "jötunn") {
         // Stagnation (Passive)
         allEnemies.forEach(enemy => {
             const dx = player.x - enemy["x"];

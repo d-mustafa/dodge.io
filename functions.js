@@ -422,7 +422,7 @@ function abilities() {
         ctx.font = '20px Arial';
         ctx.textAlign = 'center';
         ctx.fillStyle = "rgb(127, 0, 0)";
-        ctx.fillText(`Dash: ${dashCDLeft}`, 400, 620);
+        ctx.fillText(`Dash: ${dashCDLeft}s`, 400, 620);
     }
     else dash.usable = true;
     

@@ -63,7 +63,7 @@ function recordMouseClicked() {
     // Play Again Button
     if (gameState == "gameOver" && mouseOverRestartButton) {
         gameState = "startScreen"
-        mouseOverPlayButton = false;
+        mouseOverRestartButton = false;
     }
     
     // Hero Choice
@@ -88,28 +88,28 @@ function recordMouseClicked() {
 
 // Draw Stuff
 function drawStartScreen() {
-    // TITLE //
-    const titleGrad = ctx.createLinearGradient(250, 50, 550, 150)
-    const titleGrad2 = ctx.createLinearGradient(250, 150, 550, 50)
+    // DODGER SLECTOR BUTTON //
+    const selectorGrad = ctx.createLinearGradient(250, 50, 550, 150)
+    const selectorGrad2 = ctx.createLinearGradient(250, 150, 550, 50)
 
-    let mouseOverTitle = (mouseX > 250 && mouseX < 550) && (mouseY > 50 && mouseY < 150);
-    if (mouseOverTitle) {
-        titleGrad.addColorStop(0, "rgb(114, 114, 114)");
-        titleGrad.addColorStop(1, "rgb(255, 255, 255)");
+    mouseOverSelector = (mouseX > 250 && mouseX < 550) && (mouseY > 50 && mouseY < 150);
+    if (mouseOverSelector) {
+        selectorGrad.addColorStop(0, "rgb(114, 114, 114)");
+        selectorGrad.addColorStop(1, "rgb(255, 255, 255)");
 
-        titleGrad2.addColorStop(0, "rgb(255, 255, 255)");
-        titleGrad2.addColorStop(1, "rgb(114, 114, 114)");
+        selectorGrad2.addColorStop(0, "rgb(255, 255, 255)");
+        selectorGrad2.addColorStop(1, "rgb(114, 114, 114)");
     } else {
-        titleGrad.addColorStop(0, "rgb(255, 255, 255)");
-        titleGrad.addColorStop(1, "rgb(114, 114, 114)");
+        selectorGrad.addColorStop(0, "rgb(255, 255, 255)");
+        selectorGrad.addColorStop(1, "rgb(114, 114, 114)");
 
-        titleGrad2.addColorStop(0, "rgb(114, 114, 114)");
-        titleGrad2.addColorStop(1, "rgb(255, 255, 255)");
+        selectorGrad2.addColorStop(0, "rgb(114, 114, 114)");
+        selectorGrad2.addColorStop(1, "rgb(255, 255, 255)");
     }
 
-    ctx.fillStyle = titleGrad;
+    ctx.fillStyle = selectorGrad;
     ctx.fillRect(250, 50, 300, 100)
-    ctx.strokeStyle = titleGrad2;
+    ctx.strokeStyle = selectorGrad2;
     ctx.beginPath()
     ctx.moveTo(250, 150)
     ctx.lineTo(550, 50)
@@ -121,7 +121,7 @@ function drawStartScreen() {
     let color1 = 'grey'
     let color2 = 'white'
 
-    if (mouseOverTitle) {
+    if (mouseOverSelector) {
         color1 = 'white'
         color2 = 'grey'
     }
@@ -131,10 +131,10 @@ function drawStartScreen() {
     }
 
     ctx.strokeStyle = color1;
-    ctx.strokeText('Dodge.io', 320, 80);
+    ctx.strokeText('Dodger', 320, 80);
     
     ctx.strokeStyle = color2;
-    ctx.strokeText('Fan Game', 470, 135);
+    ctx.strokeText('Selector', 470, 135);
 
 
     // PLAY BUTTON //
@@ -180,10 +180,10 @@ function drawStartScreen() {
     }
     
     ctx.strokeStyle = color3;
-    ctx.strokeText('Press', 320, 530);
+    ctx.strokeText('Start', 320, 530);
     
     ctx.strokeStyle = color4;
-    ctx.strokeText('Play', 470, 585);
+    ctx.strokeText('Playing', 470, 585);
 }
 
 function drawDodgerSelection() {
@@ -394,8 +394,7 @@ function restartGame() {
     time = 0;
     score = 0;
     enemySpawnTime = 200;
-
-    dash.lastUsed = 0
+    dash.lastUsed = 0;
 
     gameState = "gameOn"
 }

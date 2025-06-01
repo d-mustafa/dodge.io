@@ -56,14 +56,14 @@ function recordMouseClicked() {
         }  
     }
     // Play Button
-    if (gameState == "startScreen" && mouseOverPlayButton) {
+    if (gameState == "startScreen" && mouseOver.play) {
         restartGame()
-        mouseOverPlayButton = false;
+        mouseOver.play = false;
     }
     // Play Again Button
-    if (gameState == "gameOver" && mouseOverRestartButton) {
+    if (gameState == "gameOver" && mouseOver.restart) {
         gameState = "startScreen"
-        mouseOverRestartButton = false;
+        mouseOver.restart = false;
     }
     
     // Hero Choice
@@ -92,8 +92,8 @@ function drawStartScreen() {
     const selectorGrad = ctx.createLinearGradient(250, 50, 550, 150)
     const selectorGrad2 = ctx.createLinearGradient(250, 150, 550, 50)
 
-    mouseOverSelector = (mouseX > 250 && mouseX < 550) && (mouseY > 50 && mouseY < 150);
-    if (mouseOverSelector) {
+    mouseOver.selector = (mouseX > 250 && mouseX < 550) && (mouseY > 50 && mouseY < 150);
+    if (mouseOver.selector) {
         selectorGrad.addColorStop(0, "rgb(114, 114, 114)");
         selectorGrad.addColorStop(1, "rgb(255, 255, 255)");
 
@@ -121,7 +121,7 @@ function drawStartScreen() {
     let color1 = 'grey'
     let color2 = 'white'
 
-    if (mouseOverSelector) {
+    if (mouseOver.selector) {
         color1 = 'white'
         color2 = 'grey'
     }
@@ -141,9 +141,9 @@ function drawStartScreen() {
     const playGrad = ctx.createLinearGradient(250, 500, 550, 600)
     const playGrad2 = ctx.createLinearGradient(250, 600, 550, 500)
 
-    mouseOverPlayButton = (mouseX > 250 && mouseX < 550) && (mouseY > 500 && mouseY < 600);
+    mouseOver.play = (mouseX > 250 && mouseX < 550) && (mouseY > 500 && mouseY < 600);
 
-    if (mouseOverPlayButton) {
+    if (mouseOver.play) {
         playGrad.addColorStop(0, "rgb(0, 255, 0)");
         playGrad.addColorStop(1, "rgb(255, 255, 255)");
 
@@ -170,7 +170,7 @@ function drawStartScreen() {
     let color3 = 'lime'
     let color4 = 'white'
 
-    if (mouseOverPlayButton) {
+    if (mouseOver.play) {
         color3 = 'white'
         color4 = 'lime'
     }
@@ -194,7 +194,7 @@ function drawGameOver() {
     const grad = ctx.createLinearGradient(250, 50, 550, 150)
     const grad2 = ctx.createLinearGradient(250, 150, 550, 50)
 
-    mouseOverRestartButton = (mouseX > 250 && mouseX < 550) && (mouseY > 50 && mouseY < 150);
+    mouseOver.restart = (mouseX > 250 && mouseX < 550) && (mouseY > 50 && mouseY < 150);
 
     if (mouseOverRestartButton) {
         grad.addColorStop(0, "rgb(255, 0, 0)");
@@ -226,7 +226,7 @@ function drawGameOver() {
 
     let gameOverColor = 'red'
     let tryAgainColor = 'white'
-    if (mouseOverRestartButton) {
+    if (mouseOver.restart) {
         gameOverColor = 'white'
         tryAgainColor = 'red'
     }

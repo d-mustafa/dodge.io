@@ -423,69 +423,73 @@ function collisions() {
 
 // Abilities
 function abilities() {
-    // Dash (Active)
     now = Date.now()
-    if (dash.activated){
-        player.speed += dash.speed;
-        player.color = "rgb(255, 72, 72)";
-        
-        if (player.speed > 10) {
-            dash.deccelerating = true;
-            dash.speed *= -1;
-            player.speed += dash.speed;
-        }
-        if (player.speed <= 2.5 && dash.deccelerating) {
-            dash.activated = false;
-            dash.deccelerating = false;
-            dash.lastUsed = Date.now();
-            
-            dash.speed *= -1;
-            player.speed = 2.5;
-            player.color = "rgb(255, 0, 0)";
-        }
-    }
-    // Dash CD
-    let dashCDLeft = ((dash.cooldown - (now - dash.lastUsed)) / 1000).toFixed(2)
-    if (now - dash.lastUsed < dash.cooldown) {
-        dash.usable = false;
-        
-        // Cooldown Text
-        ctx.font = '20px Arial';
-        ctx.textAlign = 'center';
-        ctx.fillStyle = player.subColor;
-        ctx.fillText(`Dash: ${dashCDLeft}s`, 400, 620);
-    }
-    else dash.usable = true;
     
-
-    // Stagnation (Passive)
-    allEnemies.forEach(enemy => {
-        const dx = player.x - enemy["x"];
-        const dy = player.y - enemy["y"];
-        const distance = Math.hypot(dx, dy)
+    if (player.dodger == "jsab") {
+        // Dash (Active)
+        if (dash.activated){
+            player.speed += dash.speed;
+            player.color = "rgb(255, 72, 72)";
         
-        if (distance < 100) {
-            enemy["movex"] = enemy["baseMoveX"] / 1.7
-            enemy["movey"] = enemy["baseMoveY"] / 1.7
-            enemy["color"] = "rgb(55, 77, 107)"
-        } else if (distance < 125) {
-            enemy["movex"] = enemy["baseMoveX"] / 1.5
-            enemy["movey"] = enemy["baseMoveY"] / 1.5
-            enemy["color"] = "rgb(68, 84, 107)"
-        } else if (distance < 150) {
-            enemy["movex"] = enemy["baseMoveX"] / 1.3
-            enemy["movey"] = enemy["baseMoveY"] / 1.3
-            enemy["color"] = "rgb(81, 91, 105)"
-        } else if (distance < 175) {
-            enemy["movex"] = enemy["baseMoveX"] / 1.1
-            enemy["movey"] = enemy["baseMoveY"] / 1.1
-            enemy["color"] = "rgb(95, 100, 107)"
-        } else {
-            enemy["movex"] = enemy["baseMoveX"]
-            enemy["movey"] = enemy["baseMoveY"]
-            enemy["color"] = "rgb(100, 100, 100)"
+            if (player.speed > 10) {
+                dash.deccelerating = true;
+                dash.speed *= -1;
+                player.speed += dash.speed;
+            }
+            if (player.speed <= 2.5 && dash.deccelerating) {
+                dash.activated = false;
+                dash.deccelerating = false;
+                dash.lastUsed = Date.now();
+            
+                dash.speed *= -1;
+                player.speed = 2.5;
+                player.color = "rgb(255, 0, 0)";
+            }
         }
-    })
+        // Dash CD
+        let dashCDLeft = ((dash.cooldown - (now - dash.lastUsed)) / 1000).toFixed(2)
+        if (now - dash.lastUsed < dash.cooldown) {
+            dash.usable = false;
+        
+            // Cooldown Text
+            ctx.font = '20px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillStyle = player.subColor;
+            ctx.fillText(`Dash: ${dashCDLeft}s`, 400, 620);
+        }
+        else dash.usable = true;
+    }
+    
+    if (player.dodger == "jotunn") {
+        // Stagnation (Passive)
+        allEnemies.forEach(enemy => {
+            const dx = player.x - enemy["x"];
+            const dy = player.y - enemy["y"];
+            const distance = Math.hypot(dx, dy)
+        
+            if (distance < 100) {
+                enemy["movex"] = enemy["baseMoveX"] / 1.7
+                enemy["movey"] = enemy["baseMoveY"] / 1.7
+                enemy["color"] = "rgb(55, 77, 107)"
+            } else if (distance < 125) {
+                enemy["movex"] = enemy["baseMoveX"] / 1.5
+                enemy["movey"] = enemy["baseMoveY"] / 1.5
+                enemy["color"] = "rgb(68, 84, 107)"
+            } else if (distance < 150) {
+                enemy["movex"] = enemy["baseMoveX"] / 1.3
+                enemy["movey"] = enemy["baseMoveY"] / 1.3
+                enemy["color"] = "rgb(81, 91, 105)"
+            } else if (distance < 175) {
+                enemy["movex"] = enemy["baseMoveX"] / 1.1
+                enemy["movey"] = enemy["baseMoveY"] / 1.1
+                enemy["color"] = "rgb(95, 100, 107)"
+            } else {
+                enemy["movex"] = enemy["baseMoveX"]
+                enemy["movey"] = enemy["baseMoveY"]
+                enemy["color"] = "rgb(100, 100, 100)"
+            }
+        })
+    }
 }
 
 

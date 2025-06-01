@@ -55,19 +55,25 @@ function recordMouseClicked() {
             mouseMovementOn = true;
         }  
     }
-    // Play Button
-    if (gameState == "startScreen" && mouseOver.play) {
-        restartGame()
-        mouseOver.play = false;
+    // Start screen Buttons
+    if (gameState == "startScreen") {
+        if (mouseOver.play) {
+            restartGame()
+            mouseOver.play = false;
+        } else if (mouseOver.selector) {
+            gameState = "selectDodger"
+            mouseOver.selector = false
+        }
     }
-    // Play Again Button
-    if (gameState == "gameOver" && mouseOver.restart) {
+    // Back to start screen buttons
+    if (gameState == "gameOver" && mouseOver.restart || gameState == "selectDodger" && mouseOver.backToStart) {
         gameState = "startScreen"
         mouseOver.restart = false;
+        mouseOver.backToStart = false;
     }
     
     // Hero Choice
-    if (gameState == "pickDodger") {
+    if (gameState == "selectDodger") {
         if (mouseOver.weaver) {
             player.dodger = "weaver";
             player.color = "rgb(255, 255, 255)";

@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("mouse movement button clicking & enemy wall noclip fix")
+console.log("syntax error fix")
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 let gameState = "startScreen";

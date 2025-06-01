@@ -41,6 +41,7 @@ let player = {
     radius: 15,
     speed: 2.5,
     color: "rgb(255, 255, 255)",
+    subColor: "rgb(230, 230, 230)",
     dodger: "weaver",
 }
 let allEnemies = []

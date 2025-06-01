@@ -164,6 +164,10 @@ function drawStartScreen() {
     ctx.strokeText('Play', 470, 585);
 }
 
+function drawDodgerSelection() {
+
+}
+
 function drawGameOver() {
     const grad = ctx.createLinearGradient(250, 50, 550, 150)
     const grad2 = ctx.createLinearGradient(250, 150, 550, 50)

@@ -18,7 +18,7 @@ function recordKeyDown(event) {
         }
     }
     if (event.code == "ShiftLeft" || event.code == "ShiftRight") {
-        shiftPressed = 0.5
+        shiftPressed = 0.75
     }
 
     if (wPressed || aPressed || sPressed || dPressed) {
@@ -390,6 +390,11 @@ function mouseMovement() {
 
 function moveEnemies() {
     allEnemies.forEach(enemy => {
+        if (player.dodger != jotunn) {
+            enemy["movex"] = enemy["baseMoveX"];
+            enemy["movey"] = enemy["baseMoveY"];
+        }
+        
         enemy["x"] += enemy["movex"]
         enemy["y"] += enemy["movey"]
         
@@ -486,28 +491,28 @@ function abilities() {
         allEnemies.forEach(enemy => {
             const dx = player.x - enemy["x"];
             const dy = player.y - enemy["y"];
-            const distance = Math.hypot(dx, dy)
+            const distance = Math.hypot(dx, dy);
         
             if (distance < 100) {
-                enemy["movex"] = enemy["baseMoveX"] / 1.7
-                enemy["movey"] = enemy["baseMoveY"] / 1.7
-                enemy["color"] = "rgb(55, 77, 107)"
+                enemy["movex"] = enemy["baseMoveX"] / 1.7;
+                enemy["movey"] = enemy["baseMoveY"] / 1.7;
+                enemy["color"] = "rgb(55, 77, 107)";
             } else if (distance < 125) {
-                enemy["movex"] = enemy["baseMoveX"] / 1.5
-                enemy["movey"] = enemy["baseMoveY"] / 1.5
-                enemy["color"] = "rgb(68, 84, 107)"
+                enemy["movex"] = enemy["baseMoveX"] / 1.5;
+                enemy["movey"] = enemy["baseMoveY"] / 1.5;
+                enemy["color"] = "rgb(68, 84, 107)";
             } else if (distance < 150) {
-                enemy["movex"] = enemy["baseMoveX"] / 1.3
-                enemy["movey"] = enemy["baseMoveY"] / 1.3
-                enemy["color"] = "rgb(81, 91, 105)"
+                enemy["movex"] = enemy["baseMoveX"] / 1.3;
+                enemy["movey"] = enemy["baseMoveY"] / 1.3;
+                enemy["color"] = "rgb(81, 91, 105)";
             } else if (distance < 175) {
-                enemy["movex"] = enemy["baseMoveX"] / 1.1
-                enemy["movey"] = enemy["baseMoveY"] / 1.1
-                enemy["color"] = "rgb(95, 100, 107)"
+                enemy["movex"] = enemy["baseMoveX"] / 1.1;
+                enemy["movey"] = enemy["baseMoveY"] / 1.1;
+                enemy["color"] = "rgb(95, 100, 107)";
             } else {
-                enemy["movex"] = enemy["baseMoveX"]
-                enemy["movey"] = enemy["baseMoveY"]
-                enemy["color"] = "rgb(100, 100, 100)"
+                enemy["movex"] = enemy["baseMoveX"];
+                enemy["movey"] = enemy["baseMoveY"];
+                enemy["color"] = "rgb(100, 100, 100)";
             }
         })
     }

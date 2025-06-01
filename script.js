@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("added hover to the link and an 's' to the dash cd")
+console.log("bunch of dodger selector stuff added (besides the gamestate screen itself)")
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 let gameState = "startScreen";

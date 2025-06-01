@@ -80,7 +80,7 @@ function draw() {
         keyboardControls();
         mouseMovement();
     }
-    else if (gameState == "pickDodger") {
+    else if (gameState == "selectDodger") {
         abilities();
 
         drawDodgerSelection();

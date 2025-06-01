@@ -426,6 +426,14 @@ function collisions() {
 // Abilities
 function abilities() {
     now = Date.now()
+    ctx.font = '20px Arial';
+    ctx.textAlign = 'center';
+    ctx.fillStyle = player.subColor;
+
+    if (player.dodger == "weaver") {
+        // No Abiliy
+        ctx.fillText(`Passive: Skill`, 400, 620);
+    }
     
     if (player.dodger == "jsab") {
         // Dash (Active)
@@ -452,18 +460,18 @@ function abilities() {
         let dashCDLeft = ((dash.cooldown - (now - dash.lastUsed)) / 1000).toFixed(2)
         if (now - dash.lastUsed < dash.cooldown) {
             dash.usable = false;
-        
-            // Cooldown Text
-            ctx.font = '20px Arial';
-            ctx.textAlign = 'center';
-            ctx.fillStyle = player.subColor;
-            ctx.fillText(`Dash: ${dashCDLeft}s`, 400, 620);
+            ctx.fillText(`Active: ${dashCDLeft}s`, 400, 620);
         }
-        else dash.usable = true;
+        else {
+            dash.usable = true;
+            ctx.fillText(`Active: Dash(Q)`, 400, 620);
+        }
     }
     
     if (player.dodger == "jötunn") {
         // Stagnation (Passive)
+        ctx.fillText(`Passive: Stagnation`, 400, 620);
+        
         allEnemies.forEach(enemy => {
             const dx = player.x - enemy["x"];
             const dy = player.y - enemy["y"];

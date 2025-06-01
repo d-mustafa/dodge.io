@@ -47,6 +47,7 @@ function recordKeyUp(event) {
 }
 
 function recordMouseClicked() {
+    // Mouse Movement
     if (gameState != "gameOver") {
         if (mouseMovementOn) {
             mouseMovementOn = false
@@ -54,13 +55,20 @@ function recordMouseClicked() {
             mouseMovementOn = true;
         }  
     }
+    // Play Button
     if (gameState == "startScreen" && mouseOverPlayButton) {
         restartGame()
         mouseOverPlayButton = false;
     }
+    // Play Again Button
     if (gameState == "gameOver" && mouseOverRestartButton) {
         gameState = "startScreen"
         mouseOverPlayButton = false;
+    }
+    
+    // Hero Choice
+    if (gameState == "pickDodger") {
+
     }
 }
 
@@ -283,7 +291,7 @@ function spawnEnemyPeriodically() {
     score = Math.round(time/10);
     if (Number(score) > Number(highscore)) {
         highscore = score;
-        highscoreColor = "red";
+        highscoreColor = player.color;
     }
 
     if (allEnemies.length < 100 && time > 500) {

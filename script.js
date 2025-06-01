@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("bunch of dodger selector stuff added (besides the gamestate screen itself)")
+console.log("bunch of dodger selector stuff added, plus bug fixes")
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 let gameState = "startScreen";

@@ -19,6 +19,11 @@ document.addEventListener("click", recordMouseClicked)
 let mouseMovementOn = false;
 let mouseOverRestartButton = false;
 let mouseOverPlayButton = false;
+let mouseOver = {
+    weave = false,
+    jsab = false,
+    jötunn = false,
+}
 
 cnv.addEventListener('mousemove', mousemoveHandler);
 let mouseX;
@@ -44,7 +49,6 @@ let now = Date.now()
 let time = 0;
 let score = 0;
 let highscore = 0;
-let highscoreColor = "rgb(87, 87, 87)";
 let enemySpawnTime = 200;
 
 // Abilities

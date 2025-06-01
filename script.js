@@ -17,9 +17,10 @@ let shiftPressed = 1;
 // Mouse
 document.addEventListener("click", recordMouseClicked)
 let mouseMovementOn = false;
-let mouseOverRestartButton = false;
-let mouseOverPlayButton = false;
 let mouseOver = {
+    play = false,
+    selector = false,
+    restart = false,
     weave = false,
     jsab = false,
     jötunn = false,

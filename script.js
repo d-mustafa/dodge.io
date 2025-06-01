@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("mouse movement button clicking fix")
+console.log("mouse movement button clicking & enemy wall noclip fix")
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 let gameState = "startScreen";

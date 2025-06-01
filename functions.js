@@ -204,7 +204,7 @@ function drawGameOver() {
 
     mouseOver.restart = (mouseX > 250 && mouseX < 550) && (mouseY > 50 && mouseY < 150);
 
-    if (mouseOverRestartButton) {
+    if (mouseOver.restart) {
         grad.addColorStop(0, "rgb(255, 0, 0)");
         grad.addColorStop(1, "rgb(255, 255, 255)");
 

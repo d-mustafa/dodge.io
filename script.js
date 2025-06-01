@@ -76,7 +76,7 @@ function draw() {
         
         drawStartScreen();
         drawPlayer();
-
+        
         keyboardControls();
         mouseMovement();
     }
@@ -84,8 +84,9 @@ function draw() {
         abilities();
 
         drawDodgerSelection();
+        drawPlayer();
         
-        drawPlayer()
+        keyboardControls();
         mouseMovement();
     }
     else if (gameState == "gameOn") {
@@ -94,13 +95,13 @@ function draw() {
         drawScore();
         drawPlayer();
         
-        drawEnemies();
-        spawnEnemyPeriodically();
-
         keyboardControls();
         mouseMovement();
         
+        drawEnemies();
+        spawnEnemyPeriodically();
         moveEnemies();
+        
         collisions();
     }
     else if (gameState == "gameOver") {

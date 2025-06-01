@@ -68,7 +68,15 @@ function recordMouseClicked() {
     
     // Hero Choice
     if (gameState == "pickDodger") {
-
+        if (mouseOver.weaver) {
+            player.dodger = "weaver";
+        }
+        else if (mouseOver.jsab) {
+            player.dodger = "jsab";
+        }
+        else if (mouseOver.jotunn) {
+            player.dodger = "jotunn";
+        }
     }
 }
 

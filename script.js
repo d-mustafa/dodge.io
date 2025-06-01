@@ -77,7 +77,7 @@ function draw() {
         keyboardControls();
         mouseMovement();
     }
-    else if (gameState == "pickPlayer") {
+    else if (gameState == "pickDodger") {
         abilities();
 
         drawDodgerSelection();

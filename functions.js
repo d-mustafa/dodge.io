@@ -49,12 +49,17 @@ function recordKeyUp(event) {
 }
 
 function recordMouseClicked() {
+    // Variable to keep mouse movement the way it was if the player pressed a button
+    let previousMM;
+    
     // Mouse Movement
     if (gameState != "gameOver") {
         if (mouseMovementOn) {
-            mouseMovementOn = false
+            mouseMovementOn = false;
+            previousMM = true;
         } else if (!mouseMovementOn) {
             mouseMovementOn = true;
+            previousMM = false;
         }  
     }
     // Start screen Buttons
@@ -62,9 +67,11 @@ function recordMouseClicked() {
         if (mouseOver.play) {
             restartGame()
             mouseOver.play = false;
+            mouseMovementOn = previousMM;
         } else if (mouseOver.selector) {
             gameState = "selectDodger"
             mouseOver.selector = false
+            mouseMovementOn = previousMM;
         }
     }
     // Back to start screen buttons
@@ -72,6 +79,7 @@ function recordMouseClicked() {
         gameState = "startScreen"
         mouseOver.restart = false;
         mouseOver.backToStart = false;
+        mouseMovementOn = previousMM;
     }
     
     // Hero Choice
@@ -80,16 +88,19 @@ function recordMouseClicked() {
             player.dodger = "weaver";
             player.color = "rgb(255, 255, 255)";
             player.subColor = "rgb(230, 230, 230)";
+            mouseMovementOn = previousMM;
         }
         else if (mouseOver.jsab) {
             player.dodger = "jsab";
             player.color = "rgb(255, 0, 0)";
             player.subColor = "rgb(127, 0, 0)";
+            mouseMovementOn = previousMM;
         }
         else if (mouseOver.jötunn) {
             player.dodger = "jötunn";
             player.color = "rgb(79, 203, 255)";
             player.subColor = "rgb(62, 158, 199)";
+            mouseMovementOn = previousMM;
         }
     }
 }

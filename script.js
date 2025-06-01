@@ -49,6 +49,7 @@ let now = Date.now()
 let time = 0;
 let score = 0;
 let highscore = 0;
+let highscoreColor = "rgb(87, 87, 87)";
 let enemySpawnTime = 200;
 
 // Abilities

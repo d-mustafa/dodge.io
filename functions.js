@@ -390,7 +390,7 @@ function mouseMovement() {
 
 function moveEnemies() {
     allEnemies.forEach(enemy => {
-        if (player.dodger != jotunn) {
+        if (player.dodger != "jötunn") {
             enemy["movex"] = enemy["baseMoveX"];
             enemy["movey"] = enemy["baseMoveY"];
         }

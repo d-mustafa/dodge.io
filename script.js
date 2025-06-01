@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("fixing dash-distance")
+console.log("added hover to the link and an 's' to the dash cd")
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 let gameState = "startScreen";

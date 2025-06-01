@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("restary button fix")
+console.log("mouse movement button clicking fix")
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 let gameState = "startScreen";

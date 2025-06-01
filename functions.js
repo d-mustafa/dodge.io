@@ -47,7 +47,7 @@ function recordKeyUp(event) {
 }
 
 function recordMouseClicked() {
-    if (gameState == "gameOn" || gameState == "startScreen") {
+    if (gameState != "gameOver") {
         if (mouseMovementOn) {
             mouseMovementOn = false
         } else if (!mouseMovementOn) {

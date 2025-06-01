@@ -70,12 +70,18 @@ function recordMouseClicked() {
     if (gameState == "pickDodger") {
         if (mouseOver.weaver) {
             player.dodger = "weaver";
+            player.color = "rgb(255, 255, 255)";
+            player.subColor = "rgb(230, 230, 230)";
         }
         else if (mouseOver.jsab) {
             player.dodger = "jsab";
+            player.color = "rgb(255, 0, 0)";
+            player.subColor = "rgb(127, 0, 0)";
         }
         else if (mouseOver.jotunn) {
             player.dodger = "jotunn";
+            player.color = "rgb(79, 203, 255)";
+            player.subColor = "rgb(62, 158, 199)";
         }
     }
 }
@@ -299,7 +305,7 @@ function spawnEnemyPeriodically() {
     score = Math.round(time/10);
     if (Number(score) > Number(highscore)) {
         highscore = score;
-        highscoreColor = player.color;
+        highscoreColor = player.subColor;
     }
 
     if (allEnemies.length < 100 && time > 500) {
@@ -441,7 +447,7 @@ function abilities() {
         // Cooldown Text
         ctx.font = '20px Arial';
         ctx.textAlign = 'center';
-        ctx.fillStyle = "rgb(127, 0, 0)";
+        ctx.fillStyle = player.subColor;
         ctx.fillText(`Dash: ${dashCDLeft}s`, 400, 620);
     }
     else dash.usable = true;

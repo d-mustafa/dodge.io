@@ -18,12 +18,12 @@ let shiftPressed = 1;
 document.addEventListener("click", recordMouseClicked)
 let mouseMovementOn = false;
 let mouseOver = {
-    play = false,
-    selector = false,
-    restart = false,
-    weave = false,
-    jsab = false,
-    jötunn = false,
+    play: false,
+    selector: false,
+    restart: false,
+    weave: false,
+    jsab: false,
+    jötunn: false,
 }
 
 cnv.addEventListener('mousemove', mousemoveHandler);

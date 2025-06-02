@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("start screen button locations swap")
+console.log("objects and shi")
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 let gameState = "startScreen";

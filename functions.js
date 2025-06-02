@@ -62,6 +62,7 @@ function recordMouseClicked() {
             previousMM = false;
         }  
     }
+    
     // Start screen Buttons
     if (gameState == "startScreen") {
         if (mouseOver.play) {

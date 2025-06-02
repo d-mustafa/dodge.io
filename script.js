@@ -48,12 +48,12 @@ let player = {
 let allEnemies = []
 
 // Time
-let now = Date.now()
-let time = 0;
-let score = 0;
+let now = Date.now();
+let startTime = Date.now();
+let currentTime = 0;
+let enemySpawnPeriod = 3;
 let highscore = 0;
 let highscoreColor = "rgb(87, 87, 87)";
-let enemySpawnTime = 200;
 
 // Abilities
 let dash = {
@@ -68,6 +68,7 @@ let dash = {
 requestAnimationFrame(draw)
 
 function draw() {
+    now = Date.now()
     ctx.fillStyle = "rgb(194, 194, 194)"
     ctx.fillRect(0, 0, cnv.width, cnv.height);
     
@@ -93,7 +94,7 @@ function draw() {
     else if (gameState == "gameOn") {
         abilities();
         
-        drawScore();
+        drawTime();
         drawPlayer();
         
         keyboardControls();

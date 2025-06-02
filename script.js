@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("retsart button mouse movement fix")
+console.log("dodger selector back button added")
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 let gameState = "startScreen";
@@ -83,6 +83,7 @@ function draw() {
     else if (gameState == "selectDodger") {
         abilities();
 
+        drawStartScreen();
         drawDodgerSelection();
         drawPlayer();
         

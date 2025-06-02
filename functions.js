@@ -154,7 +154,7 @@ function drawStartScreen() {
     
         ctx.strokeStyle = color2;
         ctx.strokeText('Selector', 470, 135);
-    } else if (gameState == "selectDodger" {
+    } else if (gameState == "selectDodger") {
         ctx.strokeStyle = color1;
         ctx.strokeText('Back To', 320, 80);
     

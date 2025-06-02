@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("dodger boxes")
+console.log("dodger boxes (evenly spaces)")
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 let gameState = "startScreen";

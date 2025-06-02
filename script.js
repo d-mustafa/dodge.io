@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("dodger boxes (evenly spaces)")
+console.log("start screen button locations swap")
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 let gameState = "startScreen";

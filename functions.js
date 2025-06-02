@@ -74,7 +74,7 @@ function recordMouseClicked() {
         }
     }
     // Back to start screen buttons
-    if (gameState == "gameOver" && mouseOver.restart || gameState == "selectDodger" && mouseOver.backToStart) {
+    if (gameState == "gameOver" && mouseOver.restart || gameState == "selectDodger" && mouseOver.selector) {
         gameState = "startScreen"
         mouseOver.restart = false;
         mouseOver.backToStart = false;
@@ -148,13 +148,22 @@ function drawStartScreen() {
         color2 = 'white'
     }
 
-    ctx.strokeStyle = color1;
-    ctx.strokeText('Dodger', 320, 80);
+    if (gameState == "startScreen") {
+        ctx.strokeStyle = color1;
+        ctx.strokeText('Dodger', 320, 80);
     
-    ctx.strokeStyle = color2;
-    ctx.strokeText('Selector', 470, 135);
+        ctx.strokeStyle = color2;
+        ctx.strokeText('Selector', 470, 135);
+    } else if (gameState == "selectDodger" {
+        ctx.strokeStyle = color1;
+        ctx.strokeText('Back To', 320, 80);
+    
+        ctx.strokeStyle = color2;
+        ctx.strokeText('Main Menu', 470, 135);
+    }
 
-
+    if (gameState == "startScreen") {
+        
     // PLAY BUTTON //
     const playGrad = ctx.createLinearGradient(250, 500, 550, 600)
     const playGrad2 = ctx.createLinearGradient(250, 600, 550, 500)
@@ -202,6 +211,8 @@ function drawStartScreen() {
     
     ctx.strokeStyle = color4;
     ctx.strokeText('Playing', 470, 585);
+        
+    }
 }
 
 function drawDodgerSelection() {

@@ -106,9 +106,58 @@ function recordMouseClicked() {
 
 // Draw Stuff
 function drawStartScreen() {
+    if (gameState == "startScreen") {
+        // PLAY BUTTON //
+        const playGrad = ctx.createLinearGradient(250, 50, 550, 150)
+        const playGrad2 = ctx.createLinearGradient(250, 150, 550, 50)
+
+        mouseOver.play = (mouseX > 250 && mouseX < 550) && (mouseY > 500 && mouseY < 600);
+
+        if (mouseOver.play) {
+            playGrad.addColorStop(0, "rgb(0, 255, 0)");
+            playGrad.addColorStop(1, "rgb(255, 255, 255)");
+
+            playGrad2.addColorStop(0, "rgb(255, 255, 255)");
+            playGrad2.addColorStop(1, "rgb(0, 255, 0)");
+        } else {
+            playGrad.addColorStop(0, "rgb(255, 255, 255)");
+            playGrad.addColorStop(1, "rgb(0, 255, 0)");
+
+            playGrad2.addColorStop(0, "rgb(0, 255, 0)");
+            playGrad2.addColorStop(1, "rgb(255, 255, 255)");
+        }
+
+        ctx.fillStyle = playGrad;
+        ctx.fillRect(250, 50, 300, 100)
+
+        ctx.strokeStyle = playGrad2;
+        ctx.beginPath()
+        ctx.moveTo(250, 150)
+        ctx.lineTo(550, 50)
+        ctx.stroke()
+
+
+        let color3 = 'lime'
+        let color4 = 'white'
+
+        if (mouseOver.play) {
+            color3 = 'white'
+            color4 = 'lime'
+        } else {
+            color3 = 'lime'
+            color4 = 'white'
+        }
+    
+        ctx.strokeStyle = color3;
+        ctx.strokeText('Start', 320, 80);
+    
+        ctx.strokeStyle = color4;
+        ctx.strokeText('Playing', 470, 135);
+    }
+    
     // DODGER SLECTOR BUTTON //
-    const selectorGrad = ctx.createLinearGradient(250, 50, 550, 150)
-    const selectorGrad2 = ctx.createLinearGradient(250, 150, 550, 50)
+    const selectorGrad = ctx.createLinearGradient(250, 500, 550, 600)
+    const selectorGrad2 = ctx.createLinearGradient(250, 600, 550, 500)
 
     mouseOver.selector = (mouseX > 250 && mouseX < 550) && (mouseY > 50 && mouseY < 150);
     if (mouseOver.selector) {
@@ -126,11 +175,11 @@ function drawStartScreen() {
     }
 
     ctx.fillStyle = selectorGrad;
-    ctx.fillRect(250, 50, 300, 100)
+    ctx.fillRect(250, 500, 300, 100)
     ctx.strokeStyle = selectorGrad2;
     ctx.beginPath()
-    ctx.moveTo(250, 150)
-    ctx.lineTo(550, 50)
+    ctx.moveTo(250, 600)
+    ctx.lineTo(550, 500)
     ctx.stroke()
 
     ctx.font = '30px Arial';
@@ -150,68 +199,16 @@ function drawStartScreen() {
 
     if (gameState == "startScreen") {
         ctx.strokeStyle = color1;
-        ctx.strokeText('Dodger', 320, 80);
+        ctx.strokeText('Dodger', 320, 530);
     
         ctx.strokeStyle = color2;
-        ctx.strokeText('Selector', 470, 135);
+        ctx.strokeText('Selector', 470, 585);
     } else if (gameState == "selectDodger") {
         ctx.strokeStyle = color1;
-        ctx.strokeText('Back To', 320, 80);
+        ctx.strokeText('Back To', 320, 530);
     
         ctx.strokeStyle = color2;
-        ctx.strokeText('Main Menu', 470, 135);
-    }
-
-    if (gameState == "startScreen") {
-        
-    // PLAY BUTTON //
-    const playGrad = ctx.createLinearGradient(250, 500, 550, 600)
-    const playGrad2 = ctx.createLinearGradient(250, 600, 550, 500)
-
-    mouseOver.play = (mouseX > 250 && mouseX < 550) && (mouseY > 500 && mouseY < 600);
-
-    if (mouseOver.play) {
-        playGrad.addColorStop(0, "rgb(0, 255, 0)");
-        playGrad.addColorStop(1, "rgb(255, 255, 255)");
-
-        playGrad2.addColorStop(0, "rgb(255, 255, 255)");
-        playGrad2.addColorStop(1, "rgb(0, 255, 0)");
-    } else {
-        playGrad.addColorStop(0, "rgb(255, 255, 255)");
-        playGrad.addColorStop(1, "rgb(0, 255, 0)");
-
-        playGrad2.addColorStop(0, "rgb(0, 255, 0)");
-        playGrad2.addColorStop(1, "rgb(255, 255, 255)");
-    }
-
-    ctx.fillStyle = playGrad;
-    ctx.fillRect(250, 500, 300, 100)
-
-    ctx.strokeStyle = playGrad2;
-    ctx.beginPath()
-    ctx.moveTo(250, 600)
-    ctx.lineTo(550, 500)
-    ctx.stroke()
-
-
-    let color3 = 'lime'
-    let color4 = 'white'
-
-    if (mouseOver.play) {
-        color3 = 'white'
-        color4 = 'lime'
-    }
-    else {
-        color3 = 'lime'
-        color4 = 'white'
-    }
-    
-    ctx.strokeStyle = color3;
-    ctx.strokeText('Start', 320, 530);
-    
-    ctx.strokeStyle = color4;
-    ctx.strokeText('Playing', 470, 585);
-        
+        ctx.strokeText('Main Menu', 470, 585);
     }
 }
 

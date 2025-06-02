@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("enemy spawn rate, pls workkkkk")
+console.log("enemy spawn rate, pls korwwwww")
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 let gameState = "startScreen";
@@ -53,7 +53,7 @@ let startTime = Date.now();
 let currentTime = ((now-startTime) / 1000).toFixed(2);
 let enemySpawnPeriod = 3000;
 let lastSpawn = Date.now();
-let highscore = currenTime;
+let highscore = currentTime;
 let highscoreColor = "rgb(87, 87, 87)";
 
 // Abilities

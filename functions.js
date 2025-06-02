@@ -156,7 +156,10 @@ function drawStartScreen() {
             color3 = 'lime'
             color4 = 'white'
         }
-    
+        
+        ctx.font = '30px Arial';
+        ctx.textAlign = 'center';
+        
         ctx.strokeStyle = color3;
         ctx.strokeText('Start', playBtn.x + 70, playBtn.y + 30);
     
@@ -201,9 +204,6 @@ function drawStartScreen() {
     ctx.lineTo(selectorBtn.xw, selectorBtn.y)
     ctx.stroke()
 
-    ctx.font = '30px Arial';
-    ctx.textAlign = 'center';
-
     let color1 = 'grey'
     let color2 = 'white'
 
@@ -216,6 +216,9 @@ function drawStartScreen() {
         color2 = 'white'
     }
 
+    ctx.font = '30px Arial';
+    ctx.textAlign = 'center';
+    
     if (gameState == "startScreen") {
         ctx.strokeStyle = color1;
         ctx.strokeText('Dodger', selectorBtn.x + 70, selectorBtn.y + 30);

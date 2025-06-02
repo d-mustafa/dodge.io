@@ -108,7 +108,7 @@ function recordMouseClicked() {
 function drawStartScreen() {
     if (gameState == "startScreen") {
         // PLAY BUTTON //
-        let playBtn {
+        let playBtn = {
             x: 250,
             y: 50,
             w: 300,
@@ -165,12 +165,12 @@ function drawStartScreen() {
     }
     
     // DODGER SLECTOR BUTTON //
-    let selectorBtn {
-            x: 250,
-            y: 500,
-            w: 300,
-            h: 100,
-        }
+    let selectorBtn = {
+        x: 250,
+        y: 500,
+        w: 300,
+        h: 100,
+    }
     selectorBtn.xw = selectorBtn.x + selectorBtn.w
     selectorBtn.yh = selectorBtn.y + selectorBtn.h
     

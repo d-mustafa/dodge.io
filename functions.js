@@ -111,8 +111,7 @@ function drawStartScreen() {
         const playGrad = ctx.createLinearGradient(250, 50, 550, 150)
         const playGrad2 = ctx.createLinearGradient(250, 150, 550, 50)
 
-        mouseOver.play = (mouseX > 250 && mouseX < 550) && (mouseY > 500 && mouseY < 600);
-
+        mouseOver.play = (mouseX > 250 && mouseX < 550) && (mouseY > 50 && mouseY < 150)
         if (mouseOver.play) {
             playGrad.addColorStop(0, "rgb(0, 255, 0)");
             playGrad.addColorStop(1, "rgb(255, 255, 255)");
@@ -159,7 +158,7 @@ function drawStartScreen() {
     const selectorGrad = ctx.createLinearGradient(250, 500, 550, 600)
     const selectorGrad2 = ctx.createLinearGradient(250, 600, 550, 500)
 
-    mouseOver.selector = (mouseX > 250 && mouseX < 550) && (mouseY > 50 && mouseY < 150);
+    mouseOver.selector = (mouseX > 250 && mouseX < 550) && (mouseY > 500 && mouseY < 600);
     if (mouseOver.selector) {
         selectorGrad.addColorStop(0, "rgb(114, 114, 114)");
         selectorGrad.addColorStop(1, "rgb(255, 255, 255)");

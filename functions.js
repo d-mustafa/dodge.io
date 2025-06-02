@@ -108,10 +108,20 @@ function recordMouseClicked() {
 function drawStartScreen() {
     if (gameState == "startScreen") {
         // PLAY BUTTON //
-        const playGrad = ctx.createLinearGradient(250, 50, 550, 150)
-        const playGrad2 = ctx.createLinearGradient(250, 150, 550, 50)
-
-        mouseOver.play = (mouseX > 250 && mouseX < 550) && (mouseY > 50 && mouseY < 150)
+        let playBtn {
+            x: 250,
+            y: 50,
+            w: 300,
+            h: 100,
+        }
+        playBtn.xw = playBtn.x + playBtn.w
+        playBtn.yh = playBtn.y + playBtn.h
+        
+        mouseOver.play = (mouseX > playBtn.x && mouseX < playBtn.xw) && (mouseY > playBtn.y && mouseY < playBtn.yh)
+        
+        const playGrad = ctx.createLinearGradient(playBtn.x, playBtn.y, playBtn.xw, playBtn.yh)
+        const playGrad2 = ctx.createLinearGradient(playBtn.x, playBtn.yh, playBtn.xw, playBtn.y)
+        
         if (mouseOver.play) {
             playGrad.addColorStop(0, "rgb(0, 255, 0)");
             playGrad.addColorStop(1, "rgb(255, 255, 255)");
@@ -127,12 +137,12 @@ function drawStartScreen() {
         }
 
         ctx.fillStyle = playGrad;
-        ctx.fillRect(250, 50, 300, 100)
+        ctx.fillRect(playBtn.x, playBtn.y, playBtn.w, playBtn.h)
 
         ctx.strokeStyle = playGrad2;
         ctx.beginPath()
-        ctx.moveTo(250, 150)
-        ctx.lineTo(550, 50)
+        ctx.moveTo(playBtn.x, playBtn.yh)
+        ctx.lineTo(playBtn.xw, playBtn.y)
         ctx.stroke()
 
 
@@ -148,17 +158,27 @@ function drawStartScreen() {
         }
     
         ctx.strokeStyle = color3;
-        ctx.strokeText('Start', 320, 80);
+        ctx.strokeText('Start', playBtn.x + 70, playBtn.y + 30);
     
         ctx.strokeStyle = color4;
-        ctx.strokeText('Playing', 470, 135);
+        ctx.strokeText('Playing', playBtn.x + 220, playBtn.y + 85);
     }
     
     // DODGER SLECTOR BUTTON //
-    const selectorGrad = ctx.createLinearGradient(250, 500, 550, 600)
-    const selectorGrad2 = ctx.createLinearGradient(250, 600, 550, 500)
-
-    mouseOver.selector = (mouseX > 250 && mouseX < 550) && (mouseY > 500 && mouseY < 600);
+    let selectorBtn {
+            x: 250,
+            y: 500,
+            w: 300,
+            h: 100,
+        }
+    selectorBtn.xw = selectorBtn.x + selectorBtn.w
+    selectorBtn.yh = selectorBtn.y + selectorBtn.h
+    
+    mouseOver.selector = (mouseX > selectorBtn.x && mouseX < selectorBtn.xw) && (mouseY > selectorBtn.y && mouseY < selectorBtn.yh);
+    
+    const selectorGrad = ctx.createLinearGradient(selectorBtn.x, selectorBtn.y, selectorBtn.xw, selectorBtn.yh)
+    const selectorGrad2 = ctx.createLinearGradient(selectorBtn.x, selectorBtn.yh, selectorBtn.xw, selectorBtn.y)
+    
     if (mouseOver.selector) {
         selectorGrad.addColorStop(0, "rgb(114, 114, 114)");
         selectorGrad.addColorStop(1, "rgb(255, 255, 255)");
@@ -174,11 +194,11 @@ function drawStartScreen() {
     }
 
     ctx.fillStyle = selectorGrad;
-    ctx.fillRect(250, 500, 300, 100)
+    ctx.fillRect(selectorBtn.x, selectorBtn.y, selectorBtn.w, selectorBtn.h)
     ctx.strokeStyle = selectorGrad2;
     ctx.beginPath()
-    ctx.moveTo(250, 600)
-    ctx.lineTo(550, 500)
+    ctx.moveTo(selectorBtn.x, selectorBtn.yh)
+    ctx.lineTo(selectorBtn.xw, selectorBtn.y)
     ctx.stroke()
 
     ctx.font = '30px Arial';
@@ -198,16 +218,16 @@ function drawStartScreen() {
 
     if (gameState == "startScreen") {
         ctx.strokeStyle = color1;
-        ctx.strokeText('Dodger', 320, 530);
+        ctx.strokeText('Dodger', selectorBtn.x + 70, selectorBtn.y + 30);
     
         ctx.strokeStyle = color2;
-        ctx.strokeText('Selector', 470, 585);
+        ctx.strokeText('Selector', selectorBtn.x + 220, selectorBtn.y + 85);
     } else if (gameState == "selectDodger") {
         ctx.strokeStyle = color1;
-        ctx.strokeText('Back To', 320, 530);
+        ctx.strokeText('Back To', selectorBtn.x + 70, selectorBtn.y + 30);
     
         ctx.strokeStyle = color2;
-        ctx.strokeText('Main Menu', 470, 585);
+        ctx.strokeText('Main Menu', selectorBtn.x + 220, selectorBtn.y + 85);
     }
 }
 

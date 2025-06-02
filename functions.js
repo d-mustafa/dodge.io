@@ -65,24 +65,20 @@ function recordMouseClicked() {
     if (gameState == "startScreen") {
         if (mouseOver.play) {
             restartGame()
-            mouseOver.play = false;
             mouseMovementOn = previousMM;
         } else if (mouseOver.selector) {
             gameState = "selectDodger"
-            mouseOver.selector = false
             mouseMovementOn = previousMM;
         }
     }
     // Back to start screen buttons
-    if (gameState == "gameOver" && mouseOver.restart || gameState == "selectDodger" && mouseOver.selector) {
+    else if (gameState == "gameOver" && mouseOver.restart || gameState == "selectDodger" && mouseOver.selector) {
         gameState = "startScreen"
-        mouseOver.restart = false;
-        mouseOver.backToStart = false;
         mouseMovementOn = previousMM;
     }
     
     // Hero Choice
-    if (gameState == "selectDodger") {
+    else if (gameState == "selectDodger") {
         if (mouseOver.weaver) {
             player.dodger = "weaver";
             player.color = "rgb(255, 255, 255)";
@@ -92,7 +88,7 @@ function recordMouseClicked() {
         else if (mouseOver.jsab) {
             player.dodger = "jsab";
             player.color = "rgb(255, 0, 0)";
-            player.subColor = "rgb(127, 0, 0)";
+            player.subColor = "rgb(184, 0, 0)";
             mouseMovementOn = previousMM;
         }
         else if (mouseOver.jötunn) {
@@ -219,6 +215,7 @@ function drawStartScreen() {
     ctx.font = '30px Arial';
     ctx.textAlign = 'center';
     
+    // swap between 'dodger selector' and 'back to main menu' for the button
     if (gameState == "startScreen") {
         ctx.strokeStyle = color1;
         ctx.strokeText('Dodger', selectorBtn.x + 70, selectorBtn.y + 30);
@@ -235,15 +232,63 @@ function drawStartScreen() {
 }
 
 function drawDodgerSelection() {
-    // BackGrounds
-    ctx.fillStyle = "rgb(230, 230, 230)";
-    ctx.fillRect(50, 200, 200, 100)
+    // Inner functions to make life easier
+    function drawCircle(x, y) {
+        ctx.beginPath()
+        ctx.arc(x, y, 12.5, Math.PI * 2, 0)
+        ctx.fill()
+    }
+    function decideFillStyle(bool, color1, color2) {
+        if (bool) {
+            ctx.fillStyle = color1;
+        } else {
+            ctx.fillStyle = color2;
+        }
+    }
 
-    ctx.fillStyle = "rgb(127, 0, 0)";
-    ctx.fillRect(300, 200, 200, 100)
+    // BackGrounds
+    mouseOver.weaver = (mouseX > 50 && mouseX < 250) && (mouseY > 200 && mouseY < 300);
+    decideFillStyle(mouseOver.weaver, "rgb(230, 230, 230)", "rgb(220, 220, 220)");
+    ctx.fillRect(50, 200, 200, 100);
     
-    ctx.fillStyle = "rgb(62, 158, 199)";
-    ctx.fillRect(550, 200, 200, 100)
+
+    mouseOver.jsab = (mouseX > 300 && mouseX < 500) && (mouseY > 200 && mouseY < 300);
+    decideFillStyle(mouseOver.jsab, "rgb(153, 0, 0)", "rgb(127, 0, 0)");
+    ctx.fillRect(300, 200, 200, 100);
+    
+
+    mouseOver.jötunn = (mouseX > 550 && mouseX < 750) && (mouseY > 200 && mouseY < 300);
+    decideFillStyle(mouseOver.jötunn, "rgb(70, 175, 219)", "rgb(62, 158, 199)");
+    ctx.fillRect(550, 200, 200, 100);
+
+    // Text
+    ctx.textAlign = 'left';
+
+    ctx.fillStyle = "rgb(255, 255, 255)";
+    drawCircle(220, 220)
+
+    ctx.font = "25px 'Lucida Console'";
+    ctx.fillText("WEAVER", 60, 230);
+    ctx.font = "15px 'Lucida Console'";
+    ctx.fillText("ABILITY: NONE", 60, 280);
+
+
+    ctx.fillStyle = "rgb(255, 0, 0)";
+    drawCircle(470, 220)
+
+    ctx.font = "25px 'Lucida Console'";
+    ctx.fillText("JSAB", 310, 230);
+    ctx.font = "15px 'Lucida Console'";
+    ctx.fillText("ABILITY: DASH", 310, 280);
+
+
+    ctx.fillStyle = "rgb(79, 203, 255)";
+    drawCircle(730, 220)
+
+    ctx.font = "25px 'Lucida Console'";
+    ctx.fillText("JÖTUNN", 560, 230);
+    ctx.font = "15px 'Lucida Console'";
+    ctx.fillText("ABILITY: STAGNATION", 560, 280);
 
 }
 
@@ -315,16 +360,18 @@ function drawEnemies() {
     })
 }
 
-function drawScore() {
+function drawTime() {
+    currentTime = ((now-startTime) / 1000).toFixed(2)
+    
     ctx.font = '20px Arial';
     ctx.textAlign = 'center';
         
     ctx.fillStyle = "rgb(87, 87, 87)";
-    ctx.fillText(`Score: ${score}`, 200, 40);
+    ctx.fillText(`Time: ${currentTime}s`, 200, 40);
     ctx.fillText(`Enemy Count: ${allEnemies.length}`, 600, 40);
 
     ctx.fillStyle = highscoreColor;
-    ctx.fillText(`Highscore: ${highscore}`, 400, 40);
+    ctx.fillText(`Highest Time: ${highscore}`, 400, 40);
 }
 
 function createEnemy() {
@@ -358,21 +405,15 @@ function createEnemy() {
 }
 
 function spawnEnemyPeriodically() {
-    time++;
-    score = Math.round(time/10);
-    if (Number(score) > Number(highscore)) {
-        highscore = score;
+    if (Number(currentTime) > Number(highscore)) {
+        highscore = currentTime;
         highscoreColor = player.subColor;
     }
 
-    if (allEnemies.length < 100 && time > 500) {
-        if (time % enemySpawnTime == 0) {
+    realTime = (now-startTime) / 1000
+    if (allEnemies.length < 100) {
+        if (realTime % enemySpawnPeriod == 0) {
             allEnemies.push(createEnemy());
-        
-
-            if (allEnemies.length % 10 == 0) {
-                enemySpawnTime -= 20;
-            }
         }
     }
 }
@@ -453,9 +494,9 @@ function restartGame() {
         allEnemies.push(createEnemy());
     }
 
-    time = 0;
-    score = 0;
-    enemySpawnTime = 200;
+    startTime = Date.now();
+    currentTime = 0;
+    enemySpawnPeriod = 3;
     dash.lastUsed = 0;
 
     gameState = "gameOn"
@@ -479,8 +520,7 @@ function collisions() {
 
 // Abilities
 function abilities() {
-    now = Date.now()
-    ctx.font = '20px Arial';
+    ctx.font = "20px 'Verdana'";
     ctx.textAlign = 'center';
     ctx.fillStyle = player.subColor;
 
@@ -531,29 +571,29 @@ function abilities() {
             const dy = player.y - enemy["y"];
             const distance = Math.hypot(dx, dy);
         
-            if (distance < 100) {
-                enemy["movex"] = enemy["baseMoveX"] / 1.7;
-                enemy["movey"] = enemy["baseMoveY"] / 1.7;
+            if (distance < 175 && distance > 100) {
+                enemy["movex"] = enemy["baseMoveX"] / (1/distance * 194);
+                enemy["movey"] = enemy["baseMoveY"] / (1/distance * 194);
+            } else if (distance < 100) {
+                enemy["movex"] = enemy["baseMoveX"] / (1/75 * 194);
+                enemy["movey"] = enemy["baseMoveY"] / (1/75 * 194);
                 enemy["color"] = "rgb(55, 77, 107)";
-            } else if (distance < 125) {
-                enemy["movex"] = enemy["baseMoveX"] / 1.5;
-                enemy["movey"] = enemy["baseMoveY"] / 1.5;
-                enemy["color"] = "rgb(68, 84, 107)";
-            } else if (distance < 150) {
-                enemy["movex"] = enemy["baseMoveX"] / 1.3;
-                enemy["movey"] = enemy["baseMoveY"] / 1.3;
-                enemy["color"] = "rgb(81, 91, 105)";
-            } else if (distance < 175) {
-                enemy["movex"] = enemy["baseMoveX"] / 1.1;
-                enemy["movey"] = enemy["baseMoveY"] / 1.1;
-                enemy["color"] = "rgb(95, 100, 107)";
             } else {
                 enemy["movex"] = enemy["baseMoveX"];
                 enemy["movey"] = enemy["baseMoveY"];
                 enemy["color"] = "rgb(100, 100, 100)";
             }
+
+
+            if (distance < 100) {
+                enemy["color"] = "rgb(55, 77, 107)";
+            } else if (distance < 125) {
+                enemy["color"] = "rgb(68, 84, 107)";
+            } else if (distance < 150) {
+                enemy["color"] = "rgb(81, 91, 105)";
+            } else if (distance < 175) {
+                enemy["color"] = "rgb(95, 100, 107)";
+            }
         })
     }
 }
-
-

@@ -410,7 +410,7 @@ function spawnEnemyPeriodically() {
         highscoreColor = player.subColor;
     }
 
-    if (allEnemies.length < 100 && (currentTime - lastSpawn > 1)) {
+    if (allEnemies.length < 100 && (currentTime - lastSpawn > 1000)) {
         if (currentTime % enemySpawnPeriod == 0) {
             allEnemies.push(createEnemy());
             lastSpawn = Date.now();

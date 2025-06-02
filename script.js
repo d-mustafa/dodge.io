@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("first class")
+console.log("enemy spawn rate")
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 let gameState = "startScreen";

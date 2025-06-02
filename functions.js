@@ -12,7 +12,7 @@ function recordKeyDown(event) {
     if (event.code == "KeyD") {
         dPressed = true;
     }
-    if ((event.code == "KeyQ" || event.code == "KeyJ")) {
+    if ((event.code == "KeyQ" || event.code == "KeyJ") && gameState != "gameOver") {
         if (player.dodger == "jsab" && dash.usable) {
             dash.activated = true;
         }

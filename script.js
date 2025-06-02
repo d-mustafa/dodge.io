@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("objects and shi")
+console.log("fuckin... font size... and shi")
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 let gameState = "startScreen";

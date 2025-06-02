@@ -52,6 +52,7 @@ let now = Date.now();
 let startTime = Date.now();
 let currentTime = 0;
 let enemySpawnPeriod = 3;
+let lastSpawn = 0;
 let highscore = 0;
 let highscoreColor = "rgb(87, 87, 87)";
 

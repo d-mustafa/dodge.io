@@ -53,14 +53,12 @@ function recordMouseClicked() {
     let previousMM;
     
     // Mouse Movement
-    if (gameState != "gameOver") {
-        if (mouseMovementOn) {
-            mouseMovementOn = false;
-            previousMM = true;
-        } else if (!mouseMovementOn) {
-            mouseMovementOn = true;
-            previousMM = false;
-        }  
+    if (mouseMovementOn) {
+        mouseMovementOn = false;
+        previousMM = true;
+    } else if (!mouseMovementOn) {
+        mouseMovementOn = true;
+        previousMM = false;
     }
     
     // Start screen Buttons

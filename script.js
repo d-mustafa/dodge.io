@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("fuckin... background color changes... and shi")
+console.log("first class")
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 let gameState = "startScreen";

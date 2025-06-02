@@ -236,13 +236,13 @@ function drawStartScreen() {
 
 function drawDodgerSelection() {
     // BackGrounds
-    ctx.fillStyle = "rgb(255, 255, 255)";
+    ctx.fillStyle = "rgb(230, 230, 230)";
     ctx.fillRect(50, 200, 200, 100)
 
-    ctx.fillStyle = "rgb(255, 0, 0)";
+    ctx.fillStyle = "rgb(127, 0, 0)";
     ctx.fillRect(300, 200, 200, 100)
     
-    ctx.fillStyle = "rgb(79, 203, 255)";
+    ctx.fillStyle = "rgb(62, 158, 199)";
     ctx.fillRect(550, 200, 200, 100)
 
 }

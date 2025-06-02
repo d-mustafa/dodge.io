@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("dodger selector back button added")
+console.log("unexpected token '{' (i missed a fucking bracket)")
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 let gameState = "startScreen";

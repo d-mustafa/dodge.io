@@ -24,6 +24,9 @@ let mouseOver = {
     weave: false,
     jsab: false,
     jötunn: false,
+    easy: false,
+    medium: false,
+    hard: false,
 }
 
 cnv.addEventListener('mousemove', mousemoveHandler);
@@ -77,6 +80,16 @@ function draw() {
         abilities();
         
         drawStartScreen();
+        drawPlayer();
+        
+        keyboardControls();
+        mouseMovement();
+    }
+    else if (gameState == "selectDifficulty") {
+        abilities();
+
+        drawStartScreen();
+        drawDifficultySelection();
         drawPlayer();
         
         keyboardControls();

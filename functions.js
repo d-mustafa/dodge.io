@@ -405,7 +405,7 @@ function createEnemy() {
 }
 
 function spawnEnemyPeriodically() {
-    if (currentTime > highscore) {
+    if (Number(currentTime) > Number(highscore)) {
         highscore = currentTime;
         highscoreColor = player.subColor;
     }

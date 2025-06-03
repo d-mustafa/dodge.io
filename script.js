@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("color changes")
+console.log("color changes  3")
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 let gameState = "startScreen";

@@ -362,7 +362,14 @@ function drawEnemies() {
 
 function drawTime() {
     currentTime = ((now-startTime) / 1000).toFixed(2);
-    
+
+    // Updates the highscore
+    if (currentTime > highscore) {
+        highscore = currentTime;
+        highscoreColor = player.subColor;
+    }
+
+    // Actually draws the times (and the enemy count)
     ctx.font = "17.5px 'Verdana'";
     ctx.textAlign = 'center';
         
@@ -405,12 +412,8 @@ function createEnemy() {
 }
 
 function spawnEnemyPeriodically() {
-    if (Number(currentTime) > Number(highscore)) {
-        highscore = currentTime;
-        highscoreColor = player.subColor;
-    }
-
-    if (allEnemies.length < 100 && currentTime > 5 && now - lastSpawn > enemySpawnPeriod) {
+    // Enemy spawn period is 3000ms by default, decreases by 200ms for every 10 enemies spawned to increase difficulty
+    if (allEnemies.length < 100 && now - lastSpawn > enemySpawnPeriod) {
         allEnemies.push(createEnemy());
         lastSpawn = Date.now();
 

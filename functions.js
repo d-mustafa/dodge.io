@@ -367,11 +367,11 @@ function drawTime() {
     ctx.textAlign = 'center';
         
     ctx.fillStyle = "rgb(87, 87, 87)";
-    ctx.fillText(`Time: ${currentTime}s`, 200, 40);
+    ctx.fillText(`Time Elapsed: ${currentTime}s`, 200, 40);
     ctx.fillText(`Enemy Count: ${allEnemies.length}`, 600, 40);
 
     ctx.fillStyle = highscoreColor;
-    ctx.fillText(`Highest Time: ${highscore}s`, 450, 40);
+    ctx.fillText(`Highest Time: ${highscore}s`, 400, 40);
 }
 
 function createEnemy() {

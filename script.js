@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("game over dash")
+console.log("background slighty darker")
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 let gameState = "startScreen";
@@ -70,7 +70,7 @@ requestAnimationFrame(draw)
 
 function draw() {
     now = Date.now()
-    ctx.fillStyle = "rgb(194, 194, 194)"
+    ctx.fillStyle = "rgb(185, 185, 185)"
     ctx.fillRect(0, 0, cnv.width, cnv.height);
     
     if (gameState == "startScreen") {

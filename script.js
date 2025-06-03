@@ -53,7 +53,7 @@ let startTime = Date.now();
 let currentTime = ((now-startTime) / 1000).toFixed(2);
 let enemySpawnPeriod = 3000;
 let lastSpawn = Date.now();
-let highscore = currentTime;
+let highscore = 0;
 let highscoreColor = "rgb(87, 87, 87)";
 
 // Abilities

@@ -67,7 +67,7 @@ function recordMouseClicked() {
     // Start screen Buttons
     if (gameState == "startScreen") {
         if (mouseOver.play) {
-            restartGame()
+            gameState = "selectDifficulty"
             mouseMovementOn = previousMM;
         } else if (mouseOver.selector) {
             gameState = "selectDodger"
@@ -75,9 +75,21 @@ function recordMouseClicked() {
         }
     }
     // Back to start screen buttons
-    else if (gameState == "gameOver" && mouseOver.restart || gameState == "selectDodger" && mouseOver.selector) {
+    else if (gameState == "gameOver" && mouseOver.restart || gameState == "selectDodger" && mouseOver.selector || gameState == "selectDifficulty" && mouseOver.play) {
         gameState = "startScreen"
         mouseMovementOn = previousMM;
+    }
+
+    // Difficulty Choice
+    else if (gameState == "selectDifficulty") {
+        if (mouseOver.easy || mouseOver.medium || mouseOver.hard) {
+            if (mouseOver.easy) player.difficulty = "easy";
+            else if (mouseOver.medium) player.difficulty = "medium";
+            else if (mouseOver.hard) player.difficulty = "hard";
+
+            restartGame()
+            mouseMovementOn = previousMM;
+        }
     }
     
     // Hero Choice
@@ -103,10 +115,11 @@ function recordMouseClicked() {
     }
 }
 
-// STUFF THAT DRAWS STUFF TO THE SCREEN
+
+// FUNCTIONS THAT DRAWS STUFF TO THE SCREEN
 // Draws the main menu
 function drawStartScreen() {
-    if (gameState == "startScreen") {
+    if (gameState == "startScreen" || gameState == "selectDifficulty") {
         // PLAY BUTTON //
         let playBtn = {
             x: 250,
@@ -146,97 +159,160 @@ function drawStartScreen() {
         ctx.stroke()
 
 
-        let color3 = 'lime'
-        let color4 = 'white'
+        let color1 = 'lime'
+        let color2 = 'white'
 
         if (mouseOver.play) {
-            color3 = 'white'
-            color4 = 'lime'
+            color1 = 'white'
+            color2 = 'lime'
         } else {
-            color3 = 'lime'
-            color4 = 'white'
+            color1 = 'lime'
+            color2 = 'white'
         }
         
         ctx.font = '30px Arial';
         ctx.textAlign = 'center';
         
-        ctx.strokeStyle = color3;
-        ctx.strokeText('Start', playBtn.x + 70, playBtn.y + 30);
-    
-        ctx.strokeStyle = color4;
-        ctx.strokeText('Playing', playBtn.x + 220, playBtn.y + 85);
+        // swaps between 2 types of buttons for going in and out of the character selection screen
+        // (this way i dont need to rewrite over 50 lines of code)
+        if (gameState == "startScreen") {
+            ctx.strokeStyle = color1;
+            ctx.strokeText('Start', playBtn.x + 70, playBtn.y + 30);
+        
+            ctx.strokeStyle = color2;
+            ctx.strokeText('Playing', playBtn.x + 220, playBtn.y + 85);
+        } else if (gameState == "selectDifficulty") {
+            ctx.strokeStyle = color1;
+            ctx.strokeText('Back To', playBtn.x + 70, playBtn.y + 30);
+        
+            ctx.strokeStyle = color2;
+            ctx.strokeText('Main Menu', playBtn.x + 220, playBtn.y + 85);
+        }
     }
-    
-    // DODGER SLECTOR BUTTON //
-    let selectorBtn = {
-        x: 250,
-        y: 475,
-        w: 300,
-        h: 100,
-    }
-    selectorBtn.xw = selectorBtn.x + selectorBtn.w
-    selectorBtn.yh = selectorBtn.y + selectorBtn.h
-    
-    mouseOver.selector = (mouseX > selectorBtn.x && mouseX < selectorBtn.xw) && (mouseY > selectorBtn.y && mouseY < selectorBtn.yh);
-    
-    const selectorGrad = ctx.createLinearGradient(selectorBtn.x, selectorBtn.y, selectorBtn.xw, selectorBtn.yh)
-    const selectorGrad2 = ctx.createLinearGradient(selectorBtn.x, selectorBtn.yh, selectorBtn.xw, selectorBtn.y)
-    
-    if (mouseOver.selector) {
-        selectorGrad.addColorStop(0, "rgb(114, 114, 114)");
-        selectorGrad.addColorStop(1, "rgb(255, 255, 255)");
+    if (gameState == "startScreen"  || gameState == "selectDodger") {
+                // DODGER SLECTOR BUTTON //
+        let selectorBtn = {
+            x: 250,
+            y: 475,
+            w: 300,
+            h: 100,
+        }
+        selectorBtn.xw = selectorBtn.x + selectorBtn.w
+        selectorBtn.yh = selectorBtn.y + selectorBtn.h
+        
+        mouseOver.selector = (mouseX > selectorBtn.x && mouseX < selectorBtn.xw) && (mouseY > selectorBtn.y && mouseY < selectorBtn.yh);
+        
+        const selectorGrad = ctx.createLinearGradient(selectorBtn.x, selectorBtn.y, selectorBtn.xw, selectorBtn.yh)
+        const selectorGrad2 = ctx.createLinearGradient(selectorBtn.x, selectorBtn.yh, selectorBtn.xw, selectorBtn.y)
+        
+        if (mouseOver.selector) {
+            selectorGrad.addColorStop(0, "rgb(114, 114, 114)");
+            selectorGrad.addColorStop(1, "rgb(255, 255, 255)");
 
-        selectorGrad2.addColorStop(0, "rgb(255, 255, 255)");
-        selectorGrad2.addColorStop(1, "rgb(114, 114, 114)");
-    } else {
-        selectorGrad.addColorStop(0, "rgb(255, 255, 255)");
-        selectorGrad.addColorStop(1, "rgb(114, 114, 114)");
+            selectorGrad2.addColorStop(0, "rgb(255, 255, 255)");
+            selectorGrad2.addColorStop(1, "rgb(114, 114, 114)");
+        } else {
+            selectorGrad.addColorStop(0, "rgb(255, 255, 255)");
+            selectorGrad.addColorStop(1, "rgb(114, 114, 114)");
 
-        selectorGrad2.addColorStop(0, "rgb(114, 114, 114)");
-        selectorGrad2.addColorStop(1, "rgb(255, 255, 255)");
-    }
+            selectorGrad2.addColorStop(0, "rgb(114, 114, 114)");
+            selectorGrad2.addColorStop(1, "rgb(255, 255, 255)");
+        }
 
-    ctx.fillStyle = selectorGrad;
-    ctx.fillRect(selectorBtn.x, selectorBtn.y, selectorBtn.w, selectorBtn.h)
-    ctx.strokeStyle = selectorGrad2;
-    ctx.beginPath()
-    ctx.moveTo(selectorBtn.x, selectorBtn.yh)
-    ctx.lineTo(selectorBtn.xw, selectorBtn.y)
-    ctx.stroke()
+        ctx.fillStyle = selectorGrad;
+        ctx.fillRect(selectorBtn.x, selectorBtn.y, selectorBtn.w, selectorBtn.h)
+        ctx.strokeStyle = selectorGrad2;
+        ctx.beginPath()
+        ctx.moveTo(selectorBtn.x, selectorBtn.yh)
+        ctx.lineTo(selectorBtn.xw, selectorBtn.y)
+        ctx.stroke()
 
-    let color1 = 'grey'
-    let color2 = 'white'
+        let color3 = 'grey'
+        let color4 = 'white'
 
-    if (mouseOver.selector) {
-        color1 = 'white'
-        color2 = 'grey'
-    }
-    else {
-        color1 = 'grey'
-        color2 = 'white'
-    }
+        if (mouseOver.selector) {
+            color3 = 'white'
+            color4 = 'grey'
+        }
+        else {
+            color3 = 'grey'
+            color4 = 'white'
+        }
 
-    ctx.font = '30px Arial';
-    ctx.textAlign = 'center';
-    
-    // swaps between 2 types of buttons for going in and out of the character selection screen
-    // (this way i dont need to rewrite over 50 lines of code)
-    if (gameState == "startScreen") {
-        ctx.strokeStyle = color1;
-        ctx.strokeText('Dodger', selectorBtn.x + 70, selectorBtn.y + 30);
-    
-        ctx.strokeStyle = color2;
-        ctx.strokeText('Selector', selectorBtn.x + 220, selectorBtn.y + 85);
-    } else if (gameState == "selectDodger") {
-        ctx.strokeStyle = color1;
-        ctx.strokeText('Back To', selectorBtn.x + 70, selectorBtn.y + 30);
-    
-        ctx.strokeStyle = color2;
-        ctx.strokeText('Main Menu', selectorBtn.x + 220, selectorBtn.y + 85);
+        ctx.font = '30px Arial';
+        ctx.textAlign = 'center';
+        
+        // swaps between 2 types of buttons for going in and out of the character selection screen
+        // (this way i dont need to rewrite over 50 lines of code)
+        if (gameState == "startScreen") {
+            ctx.strokeStyle = color3;
+            ctx.strokeText('Dodger', selectorBtn.x + 70, selectorBtn.y + 30);
+        
+            ctx.strokeStyle = color4;
+            ctx.strokeText('Selector', selectorBtn.x + 220, selectorBtn.y + 85);
+        } else if (gameState == "selectDodger") {
+            ctx.strokeStyle = color3;
+            ctx.strokeText('Back To', selectorBtn.x + 70, selectorBtn.y + 30);
+        
+            ctx.strokeStyle = color4;
+            ctx.strokeText('Main Menu', selectorBtn.x + 220, selectorBtn.y + 85);
+        }
     }
 }
 
-// Draws the character selection
+// Draws the difficulty options screen
+function drawDifficultySelection() {
+    function decideFillStyle(bool, color1, color2) {
+        if (bool) {
+            ctx.fillStyle = color1;
+        } else {
+            ctx.fillStyle = color2;
+        }
+    }
+
+    // BackGrounds
+    mouseOver.easy = (mouseX > 50 && mouseX < 250) && (mouseY > 200 && mouseY < 300);
+    decideFillStyle(mouseOver.easy, "rgb(0, 191, 216)", "rgb(0, 171, 194)");
+    ctx.fillRect(50, 200, 200, 100);
+    
+
+    mouseOver.medium = (mouseX > 300 && mouseX < 500) && (mouseY > 200 && mouseY < 300);
+    decideFillStyle(mouseOver.medium, "rgb(220, 220, 0)", "rgb(200, 200, 0)");
+    ctx.fillRect(300, 200, 200, 100);
+    
+
+    mouseOver.hard = (mouseX > 550 && mouseX < 750) && (mouseY > 200 && mouseY < 300);
+    decideFillStyle(mouseOver.hard, "rgb(30, 30, 30)", "rgb(50, 50, 50)");
+    ctx.fillRect(550, 200, 200, 100);
+
+    // Text
+    ctx.textAlign = 'left';
+
+    ctx.fillStyle = "rgb(0, 225, 255)";
+
+    ctx.font = "25px 'Lucida Console'";
+    ctx.fillText("EASY", 60, 230);
+    ctx.font = "15px 'Lucida Console'";
+    ctx.fillText("Normal Enemies", 60, 280);
+
+
+    ctx.fillStyle = "rgb(255, 255, 0)";
+
+    ctx.font = "25px 'Lucida Console'";
+    ctx.fillText("MEDIUM", 310, 230);
+    ctx.font = "15px 'Lucida Console'";
+    ctx.fillText("Decelerating Enemies", 310, 280);
+
+
+    ctx.fillStyle = "rgb(0, 0, 0)";
+
+    ctx.font = "25px 'Lucida Console'";
+    ctx.fillText("HARD", 560, 230);
+    ctx.font = "15px 'Lucida Console'";
+    ctx.fillText("Homing Enemies", 560, 280);
+}
+
+// Draws the character selection screen
 function drawDodgerSelection() {
     // Inner functions to make life easier
     function drawCircle(x, y) {
@@ -295,7 +371,6 @@ function drawDodgerSelection() {
     ctx.fillText("JÖTUNN", 560, 230);
     ctx.font = "15px 'Lucida Console'";
     ctx.fillText("ABILITY: STAGNATION", 560, 280);
-
 }
 
 // Draws the game over screen
@@ -395,9 +470,9 @@ function createEnemy() {
     let oneEnemy = {
         x: (Math.random() * (cnv.width-60))+30,
         y: (Math.random() * (cnv.height-60))+30,
-        radius: (Math.random() * 10) + 10,
+        radius: (Math.random() * 7.5) + 10,
         speed: Math.random() + 0.3,
-        color: "rgb(100, 100, 100)"
+        color: "rgb(100, 100, 100)",
     }
 
     let dx = player.x - oneEnemy.x;
@@ -421,6 +496,8 @@ function createEnemy() {
     // used so modifications can be made to movex and movey without losing their original values
     oneEnemy.baseMoveX = oneEnemy.movex
     oneEnemy.baseMoveY = oneEnemy.movey
+    
+    giveEnemyAbility(oneEnemy);
 
     return oneEnemy;
 }
@@ -510,8 +587,6 @@ function moveEnemies() {
 
 // Resets certain variables once the play button is pressed
 function restartGame() {
-    mouseMovementOn = false;
-
     allEnemies = []
     for(let i = 0; i < 10; i++) {
         allEnemies.push(createEnemy());
@@ -544,6 +619,8 @@ function collisions() {
 }
 
 // ABILITIES
+
+// Player abilities
 function abilities() {
     ctx.font = "20px 'Verdana'";
     ctx.textAlign = 'center';
@@ -608,23 +685,64 @@ function abilities() {
             } else if (distance < 100) {
                 enemy["movex"] = enemy["baseMoveX"] / (1/75 * 194);
                 enemy["movey"] = enemy["baseMoveY"] / (1/75 * 194);
-                enemy["color"] = "rgb(55, 77, 107)";
             } else {
                 enemy["movex"] = enemy["baseMoveX"];
                 enemy["movey"] = enemy["baseMoveY"];
-                enemy["color"] = "rgb(100, 100, 100)";
+                enemy["color"] = enemy["baseColor"];
             }
 
-
-            if (distance < 100) {
-                enemy["color"] = "rgb(55, 77, 107)";
-            } else if (distance < 125) {
-                enemy["color"] = "rgb(68, 84, 107)";
-            } else if (distance < 150) {
-                enemy["color"] = "rgb(81, 91, 105)";
-            } else if (distance < 175) {
-                enemy["color"] = "rgb(95, 100, 107)";
+            if (enemy.ability == "none") {
+                if (distance < 100) {
+                    enemy["color"] = "rgb(55, 77, 107)";
+                } else if (distance < 125) {
+                    enemy["color"] = "rgb(68, 84, 107)";
+                } else if (distance < 150) {
+                    enemy["color"] = "rgb(81, 91, 105)";
+                } else if (distance < 175) {
+                    enemy["color"] = "rgb(95, 100, 107)";
+                }
+            } else if (enemy.ability == "decelerator") {
+                if (distance < 100) {
+                    enemy["color"] = "rgb(210, 0, 0)";
+                } else if (distance < 125) {
+                    enemy["color"] = "rgb(220, 0, 0)";
+                } else if (distance < 150) {
+                    enemy["color"] = "rgb(230, 0, 0)";
+                } else if (distance < 175) {
+                    enemy["color"] = "rgb(240, 0, 0)";
+                }
             }
+
         })
     }
+}
+
+// Enemy abilities
+function giveEnemyAbility(enemy) {
+    if (player.difficulty == "easy") {
+        // All enemies on easy difficulty have no abilitis
+        enemy.ability = "none";
+    } else {
+        num = Math.random();
+
+        // 25% chance for an enemy on medium or hard difficulty to be a decelerator
+        if ((player.difficulty == "medium" || player.difficulty == "hard") && num > 0.75) enemy.ability = "decelerator";
+
+        // 25% chance for an enemy on hard difficulty to be a homing
+        else if (player.difficulty == "hard" && num > 0.5) enemy.ability = "homing";
+
+        // 50% chance for an enemy on meidum or hard difficulty have no ability
+        else enemy.ability = "none";
+    }
+
+    if (enemy.ability == "none") {
+        enemy.baseColor = "rgb(100, 100, 100)";
+
+    } else if (enemy.ability == "decelerator") {
+        enemy.baseColor = "rgb(255, 0, 0)";
+        
+    } else if (enemy.ability == "homing") {
+        enemy.baseColor = "rgb(255, 196, 0)";
+    }
+    enemy.color = enemy.baseColor;
 }

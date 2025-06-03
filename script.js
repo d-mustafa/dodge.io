@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("using Number() to see if it'll do anything")
+console.log("typeshi")
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 let gameState = "startScreen";

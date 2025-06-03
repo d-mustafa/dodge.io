@@ -363,7 +363,7 @@ function drawEnemies() {
 function drawTime() {
     currentTime = ((now-startTime) / 1000).toFixed(2);
     
-    ctx.font = '20px Arial';
+    ctx.font = "20px 'Verdana'";
     ctx.textAlign = 'center';
         
     ctx.fillStyle = "rgb(87, 87, 87)";

@@ -110,7 +110,7 @@ function drawStartScreen() {
         // PLAY BUTTON //
         let playBtn = {
             x: 250,
-            y: 50,
+            y: 75,
             w: 300,
             h: 100,
         }
@@ -170,7 +170,7 @@ function drawStartScreen() {
     // DODGER SLECTOR BUTTON //
     let selectorBtn = {
         x: 250,
-        y: 500,
+        y: 475,
         w: 300,
         h: 100,
     }
@@ -432,9 +432,7 @@ function spawnEnemyPeriodically() {
         lastSpawn = Date.now();
 
         // Enemy spawn period is 3000ms by default. This decreases it by 200ms for every 10 enemies spawned to increase difficulty
-        if (allEnemies.length % 10 == 0) {
-            enemySpawnPeriod -= 200;
-        }
+        if (allEnemies.length % 10 == 0) enemySpawnPeriod -= 200;
     }
 }
 
@@ -551,9 +549,15 @@ function abilities() {
     ctx.textAlign = 'center';
     ctx.fillStyle = player.subColor;
 
+    // The text should be centered unless the gameState is gameOn
+    textX = 200;
+    if (gameState == "gameOn") textX = 200
+    else textX = 400
+        
+
     if (player.dodger == "weaver") {
         // No Abiliy
-        ctx.fillText(`Passive: Skill`, 200, 620);
+        ctx.fillText(`Passive: Skill`, textX, 620);
     }
     
     if (player.dodger == "jsab") {
@@ -581,17 +585,17 @@ function abilities() {
         let dashCDLeft = ((dash.cooldown - (now - dash.lastUsed)) / 1000).toFixed(2)
         if (now - dash.lastUsed < dash.cooldown) {
             dash.usable = false;
-            ctx.fillText(`Active: ${dashCDLeft}s`, 400, 620);
+            ctx.fillText(`Active: ${dashCDLeft}s`, textX, 620);
         }
         else {
             dash.usable = true;
-            ctx.fillText(`Active: Dash(Q)`, 200, 620);
+            ctx.fillText(`Active: Dash(Q)`, textX, 620);
         }
     }
     
     if (player.dodger == "jötunn") {
         // Stagnation (Passive)
-        ctx.fillText(`Passive: Stagnation`, 200, 620);
+        ctx.fillText(`Passive: Stagnation`, textX, 620);
         
         allEnemies.forEach(enemy => {
             const dx = player.x - enemy["x"];

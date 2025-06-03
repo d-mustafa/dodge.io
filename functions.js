@@ -367,6 +367,7 @@ function drawTime() {
     if (currentTime > highscore) {
         highscore = currentTime;
         highscoreColor = player.subColor;
+        console.log(highscore)
     }
 
     // Actually draws the times (and the enemy count)

@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("score size")
+console.log("highscore bug?")
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 let gameState = "startScreen";

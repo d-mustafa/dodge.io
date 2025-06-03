@@ -1,4 +1,5 @@
-// Keyboard and Mouse Events
+// KEYBAORD AND MOUSE EVENTS
+// keeps track of when certain buttons are pressed/held
 function recordKeyDown(event) {
     if (event.code == "KeyW") {
         wPressed = true;
@@ -26,6 +27,7 @@ function recordKeyDown(event) {
     }
 }
 
+// keeps track of when certain buttons are released
 function recordKeyUp(event) {
     if (event.code == "KeyW") {
         wPressed = false;
@@ -48,6 +50,7 @@ function recordKeyUp(event) {
     }
 }
 
+// Keeps track of clicking certain areas on the screen. Needed to make buttons work.
 function recordMouseClicked() {
     // Variable to keep mouse movement the way it was if the player pressed a button
     let previousMM;
@@ -100,7 +103,8 @@ function recordMouseClicked() {
     }
 }
 
-// Draw Stuff
+// STUFF THAT DRAWS STUFF TO THE SCREEN
+// Draws the main menu
 function drawStartScreen() {
     if (gameState == "startScreen") {
         // PLAY BUTTON //
@@ -215,7 +219,8 @@ function drawStartScreen() {
     ctx.font = '30px Arial';
     ctx.textAlign = 'center';
     
-    // swap between 'dodger selector' and 'back to main menu' for the button
+    // swaps between 2 types of buttons for going in and out of the character selection screen
+    // (this way i dont need to rewrite over 50 lines of code)
     if (gameState == "startScreen") {
         ctx.strokeStyle = color1;
         ctx.strokeText('Dodger', selectorBtn.x + 70, selectorBtn.y + 30);
@@ -231,6 +236,7 @@ function drawStartScreen() {
     }
 }
 
+// Draws the character selection
 function drawDodgerSelection() {
     // Inner functions to make life easier
     function drawCircle(x, y) {
@@ -292,6 +298,7 @@ function drawDodgerSelection() {
 
 }
 
+// Draws the game over screen
 function drawGameOver() {
     const grad = ctx.createLinearGradient(250, 50, 550, 150)
     const grad2 = ctx.createLinearGradient(250, 150, 550, 50)
@@ -344,13 +351,14 @@ function drawGameOver() {
     ctx.strokeText('Try Again', 480, 135);
 }
 
-function drawPlayer() {
+function drawPlayer() { // self explanatory no?
     ctx.fillStyle = player.color
     ctx.beginPath()
     ctx.arc(player.x, player.y, player.radius, Math.PI*2, 0)
     ctx.fill()
 }
 
+// Loops through the allEnemies array and draws all of them with their own unique attributes
 function drawEnemies() {
     allEnemies.forEach(enemy => {
         ctx.fillStyle = enemy.color
@@ -360,6 +368,7 @@ function drawEnemies() {
     })
 }
 
+// draws the current time, highest time, and enemy count
 function drawTime() {
     currentTime = ((now-startTime) / 1000).toFixed(2));
 
@@ -381,6 +390,7 @@ function drawTime() {
     ctx.fillText(`Highest Time: ${highscore}s`, 400, 40);
 }
 
+// Creates an individual enemy with unique attributes
 function createEnemy() {
     let oneEnemy = {
         x: (Math.random() * (cnv.width-60))+30,
@@ -394,6 +404,7 @@ function createEnemy() {
     let dy = player.y - oneEnemy.y;
     let distance = Math.hypot(dx, dy);
 
+    // used to prevent the enemy from spawning too close to the player
     while(distance < 300) {
         oneEnemy.x = (Math.random() * (cnv.width-60))+30;
         oneEnemy.y = (Math.random() * (cnv.height-60))+30;
@@ -403,27 +414,32 @@ function createEnemy() {
         distance = Math.hypot(dx, dy);
     }
 
+    // used to make the enemy move toward the player once it spanws
     oneEnemy.movex = (dx / distance) * oneEnemy.speed;
     oneEnemy.movey = (dy / distance) * oneEnemy.speed;
+
+    // used so modifications can be made to movex and movey without losing their original values
     oneEnemy.baseMoveX = oneEnemy.movex
     oneEnemy.baseMoveY = oneEnemy.movey
 
     return oneEnemy;
 }
 
+// Spawns an enemy every 3s
 function spawnEnemyPeriodically() {
-    // Enemy spawn period is 3000ms by default, decreases by 200ms for every 10 enemies spawned to increase difficulty
     if (allEnemies.length < 100 && now - lastSpawn > enemySpawnPeriod) {
         allEnemies.push(createEnemy());
         lastSpawn = Date.now();
 
+        // Enemy spawn period is 3000ms by default. This decreases it by 200ms for every 10 enemies spawned to increase difficulty
         if (allEnemies.length % 10 == 0) {
             enemySpawnPeriod -= 200;
         }
     }
 }
 
-// Player and Enemy Movement
+// PLAYER AND ENEMY MOVEMENT
+// Keeps track of WASD inputs to move the player
 function keyboardControls() {
     if (keyboardMovementOn){
         if (!dash.activated){
@@ -453,6 +469,7 @@ function keyboardControls() {
     }
 }
 
+// Keeps track of the cursor to move the player towards it
 function mouseMovement() {
     if (mouseMovementOn && !keyboardMovementOn) {
         const dx = mouseX - player.x;
@@ -472,6 +489,7 @@ function mouseMovement() {
     }
 }
 
+// Loops through the allEnemies array to move each enemy with their movex and movey
 function moveEnemies() {
     allEnemies.forEach(enemy => {
         if (player.dodger != "jötunn") {
@@ -490,7 +508,9 @@ function moveEnemies() {
 }
 
 
-// GameState Changes
+// GAMESTATE CHANGES
+
+// Resets certain variables once the play button is pressed
 function restartGame() {
     mouseMovementOn = false;
 
@@ -508,6 +528,7 @@ function restartGame() {
     gameState = "gameOn"
 }
 
+// Keeps track of when the player touches any enemy in the allEnemies array
 function collisions() {
     if (!dash.activated || now - dash.lastUsed < 200){
         allEnemies.forEach(enemy => {
@@ -524,7 +545,7 @@ function collisions() {
     }
 }
 
-// Abilities
+// ABILITIES
 function abilities() {
     ctx.font = "20px 'Verdana'";
     ctx.textAlign = 'center';

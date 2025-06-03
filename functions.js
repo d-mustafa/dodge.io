@@ -364,10 +364,9 @@ function drawTime() {
     currentTime = ((now-startTime) / 1000).toFixed(2);
 
     // Updates the highscore
-    if (currentTime > highscore) {
+    if (Number(currentTime) > Number(highscore)) {
         highscore = currentTime;
         highscoreColor = player.subColor;
-        console.log(highscore)
     }
 
     // Actually draws the times (and the enemy count)

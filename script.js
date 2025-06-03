@@ -1,6 +1,5 @@
 // DODGE.IO
-console.log("numbers were tweaking out like crazy so i had to revert back to my old code")
-console.log("missed a bracket and everything broke lmao")
+console.log("text movement")
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 let gameState = "startScreen";

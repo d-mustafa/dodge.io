@@ -363,6 +363,9 @@ function drawEnemies() {
 function drawTime() {
     currentTime = ((now-startTime) / 1000).toFixed(2);
 
+    console.log("currentTime: " + typeof currentTime)
+    console.log("highscore: " + typeof highscore)
+
     // Updates the highscore
     if (Number(currentTime) > Number(highscore)) {
         highscore = currentTime;

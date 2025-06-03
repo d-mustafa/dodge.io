@@ -361,13 +361,10 @@ function drawEnemies() {
 }
 
 function drawTime() {
-    currentTime = ((now-startTime) / 1000).toFixed(2);
-
-    console.log("currentTime: " + typeof currentTime)
-    console.log("highscore: " + typeof highscore)
+    currentTime = Number(((now-startTime) / 1000).toFixed(2));
 
     // Updates the highscore
-    if (Number(currentTime) > Number(highscore)) {
+    if (currentTime > highscore) {
         highscore = currentTime;
         highscoreColor = player.subColor;
     }

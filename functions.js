@@ -379,15 +379,15 @@ function drawTime() {
     }
 
     // Actually draws the times (and the enemy count)
-    ctx.font = "17.5px 'Verdana'";
+    ctx.font = "20px 'Verdana'";
     ctx.textAlign = 'center';
         
     ctx.fillStyle = "rgb(87, 87, 87)";
     ctx.fillText(`Time Elapsed: ${currentTime}s`, 200, 40);
-    ctx.fillText(`Enemy Count: ${allEnemies.length}`, 600, 40);
+    ctx.fillText(`Enemy Count: ${allEnemies.length}`, 600, 620);
 
     ctx.fillStyle = highscoreColor;
-    ctx.fillText(`Highest Time: ${highscore}s`, 400, 40);
+    ctx.fillText(`Highest Time: ${highscore}s`, 600, 40);
 }
 
 // Creates an individual enemy with unique attributes
@@ -553,7 +553,7 @@ function abilities() {
 
     if (player.dodger == "weaver") {
         // No Abiliy
-        ctx.fillText(`Passive: Skill`, 400, 620);
+        ctx.fillText(`Passive: Skill`, 200, 620);
     }
     
     if (player.dodger == "jsab") {
@@ -585,13 +585,13 @@ function abilities() {
         }
         else {
             dash.usable = true;
-            ctx.fillText(`Active: Dash(Q)`, 400, 620);
+            ctx.fillText(`Active: Dash(Q)`, 200, 620);
         }
     }
     
     if (player.dodger == "jötunn") {
         // Stagnation (Passive)
-        ctx.fillText(`Passive: Stagnation`, 400, 620);
+        ctx.fillText(`Passive: Stagnation`, 200, 620);
         
         allEnemies.forEach(enemy => {
             const dx = player.x - enemy["x"];

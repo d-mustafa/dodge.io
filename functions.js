@@ -94,7 +94,7 @@ function recordMouseClicked() {
         else if (mouseOver.jötunn) {
             player.dodger = "jötunn";
             player.color = "rgb(79, 203, 255)";
-            player.subColor = "rgb(65, 166, 209)";
+            player.subColor = "rgb(70, 186, 235)";
             mouseMovementOn = previousMM;
         }
     }
@@ -253,7 +253,7 @@ function drawDodgerSelection() {
     
 
     mouseOver.jsab = (mouseX > 300 && mouseX < 500) && (mouseY > 200 && mouseY < 300);
-    decideFillStyle(mouseOver.jsab, "rgb(230, 0, 0)", "rgb(220, 0, 0)");
+    decideFillStyle(mouseOver.jsab, "rgb(210, 0, 0)", "rgb(200, 0, 0)");
     ctx.fillRect(300, 200, 200, 100);
     
 

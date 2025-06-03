@@ -253,7 +253,7 @@ function drawDodgerSelection() {
     
 
     mouseOver.jsab = (mouseX > 300 && mouseX < 500) && (mouseY > 200 && mouseY < 300);
-    decideFillStyle(mouseOver.jsab, "rgb(210, 0, 0)", "rgb(200, 0, 0)");
+    decideFillStyle(mouseOver.jsab, "rgb(220, 0, 0)", "rgb(200, 0, 0)");
     ctx.fillRect(300, 200, 200, 100);
     
 

@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("typeshi")
+console.log("apparently .toFixed() turns a number into a string for some fucking reason")
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 let gameState = "startScreen";

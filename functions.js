@@ -370,7 +370,7 @@ function drawEnemies() {
 
 // draws the current time, highest time, and enemy count
 function drawTime() {
-    currentTime = ((now-startTime) / 1000).toFixed(2));
+    currentTime = ((now-startTime) / 1000).toFixed(2);
 
     // Updates the highscore
     if (Number(currentTime) > Number(highscore)) {

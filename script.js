@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("score positioning 2")
+console.log("score size")
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 let gameState = "startScreen";

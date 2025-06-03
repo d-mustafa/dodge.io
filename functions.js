@@ -371,7 +371,7 @@ function drawTime() {
     ctx.fillText(`Enemy Count: ${allEnemies.length}`, 600, 40);
 
     ctx.fillStyle = highscoreColor;
-    ctx.fillText(`Highest Time: ${highscore}`, 400, 40);
+    ctx.fillText(`Highest Time: ${highscore}s`, 400, 40);
 }
 
 function createEnemy() {

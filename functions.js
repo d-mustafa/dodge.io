@@ -492,7 +492,7 @@ function drawText() {
             ctx.fillText(`Active: ${dashCDLeft}s`, textX, 620);
         } else {
             dash.usable = true;
-            ctx.fillText(`Active: Dash(Q)`, textX, 620);
+            ctx.fillText(`Active: Dash(Q/J)`, textX, 620);
         }
     }
     
@@ -606,10 +606,15 @@ function moveEnemies() {
         const dy = player.y - enemy.y;
         const distance = Math.hypot(dx, dy);
 
-        if (enemy.ability == "homing") {
+        if (enemy.ability === "homing") {
             if (distance < enemy.detectionRadius) {
-                enemy.baseMoveX = (dx / distance) * enemy.speed;
-                enemy.baseMoveY = (dy / distance) * enemy.speed;
+                const targetVX = (dx / distance) * enemy.speed;
+                const targetVY = (dy / distance) * enemy.speed;
+
+                // Smoothly adjust velocity toward target vector (homing, but with a delay)
+                const turnSpeed = 0.05;
+                enemy.baseMoveX += (targetVX - enemy.baseMoveX) * turnSpeed;
+                enemy.baseMoveY += (targetVY - enemy.baseMoveY) * turnSpeed;
             }
         }
         

@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("UI modifications")
+console.log("homing shenanigans")
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 let gameState = "startScreen";

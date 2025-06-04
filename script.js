@@ -44,6 +44,7 @@ let player = {
     y: cnv.height/2,
     radius: 15,
     speed: 2.5,
+    slowed: 1,
     color: "rgb(255, 255, 255)",
     subColor: "rgb(230, 230, 230)",
     dodger: "weaver",
@@ -78,6 +79,7 @@ function draw() {
     
     if (gameState == "startScreen") {
         abilities();
+        drawText();
         
         drawStartScreen();
         drawPlayer();
@@ -87,6 +89,7 @@ function draw() {
     }
     else if (gameState == "selectDifficulty") {
         abilities();
+        drawText();
 
         drawStartScreen();
         drawDifficultySelection();
@@ -97,6 +100,7 @@ function draw() {
     }
     else if (gameState == "selectDodger") {
         abilities();
+        drawText();
 
         drawStartScreen();
         drawDodgerSelection();
@@ -106,24 +110,26 @@ function draw() {
         mouseMovement();
     }
     else if (gameState == "gameOn") {
-        abilities();
-        
-        drawTime();
+        drawText();
+
+        drawEnemies();
         drawPlayer();
         
         keyboardControls();
         mouseMovement();
         
-        drawEnemies();
         spawnEnemyPeriodically();
         moveEnemies();
+        abilities();
         
         collisions();
     }
     else if (gameState == "gameOver") {
+        drawText();
+        
         drawGameOver();
-        drawPlayer();
         drawEnemies();
+        drawPlayer();
     }
 
     requestAnimationFrame(draw)

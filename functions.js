@@ -19,7 +19,7 @@ function recordKeyDown(event) {
         }
     }
     if (event.code == "ShiftLeft" || event.code == "ShiftRight") {
-        shiftPressed = 0.75
+        shiftPressed = 0.7;
     }
 
     if (wPressed || aPressed || sPressed || dPressed) {
@@ -312,14 +312,16 @@ function drawDifficultySelection() {
     ctx.fillText("Homing Enemies", 560, 280);
 }
 
+// Convenience function to draw simple circles
+function drawCircle(x, y, r = 12.5) {
+    ctx.beginPath()
+    ctx.arc(x, y, r, Math.PI * 2, 0)
+    ctx.fill()
+}
+
 // Draws the character selection screen
 function drawDodgerSelection() {
-    // Inner functions to make life easier
-    function drawCircle(x, y) {
-        ctx.beginPath()
-        ctx.arc(x, y, 12.5, Math.PI * 2, 0)
-        ctx.fill()
-    }
+    // Inner function to make life easier
     function decideFillStyle(bool, color1, color2) {
         if (bool) {
             ctx.fillStyle = color1;
@@ -437,32 +439,65 @@ function drawPlayer() { // self explanatory no?
 function drawEnemies() {
     allEnemies.forEach(enemy => {
         ctx.fillStyle = enemy.color
-        ctx.beginPath()
-        ctx.arc(enemy["x"], enemy["y"], enemy["radius"], Math.PI*2, 0)
-        ctx.fill()
+        drawCircle(enemy.x, enemy.y, enemy.radius)
+        
+        if (enemy.ability == "decelerator") {
+            ctx.fillStyle = "rgba(177, 88, 88, 0.47)"
+            drawCircle(enemy.x, enemy.y, enemy.auraRadius);
+        }
     })
 }
 
 // draws the current time, highest time, and enemy count
-function drawTime() {
-    currentTime = ((now-startTime) / 1000).toFixed(2);
+function drawText() {
+    if (gameState == "gameOn") {
+        currentTime = ((now-startTime) / 1000).toFixed(2);
 
-    // Updates the highscore
-    if (Number(currentTime) > Number(highscore)) {
-        highscore = currentTime;
-        highscoreColor = player.subColor;
+        // Updates the highscore
+        if (Number(currentTime) > Number(highscore)) {
+            highscore = currentTime;
+            highscoreColor = player.subColor;
+        }
+
+        // Actually draws the times (and the enemy count)
+        ctx.font = "20px 'Verdana'";
+        ctx.textAlign = 'center';
+            
+        ctx.fillStyle = "rgb(87, 87, 87)";
+        ctx.fillText(`Time Elapsed: ${currentTime}s`, 200, 40);
+        ctx.fillText(`Enemy Count: ${allEnemies.length}`, 600, 620);
+
+        ctx.fillStyle = highscoreColor;
+        ctx.fillText(`Highest Time: ${highscore}s`, 600, 40);
     }
-
-    // Actually draws the times (and the enemy count)
+    // Abilites
     ctx.font = "20px 'Verdana'";
     ctx.textAlign = 'center';
-        
-    ctx.fillStyle = "rgb(87, 87, 87)";
-    ctx.fillText(`Time Elapsed: ${currentTime}s`, 200, 40);
-    ctx.fillText(`Enemy Count: ${allEnemies.length}`, 600, 620);
+    ctx.fillStyle = player.subColor;
 
-    ctx.fillStyle = highscoreColor;
-    ctx.fillText(`Highest Time: ${highscore}s`, 600, 40);
+    // The text should be centered unless the gameState is gameOn
+    textX = 200;
+    if (gameState == "gameOn") textX = 200
+    else textX = 400
+
+    // No Abiliy
+    if (player.dodger == "weaver") ctx.fillText(`Passive: Skill`, textX, 620);
+
+    // Dash
+    else if (player.dodger == "jsab") {
+        // Dash CD
+        let dashCDLeft = ((dash.cooldown - (now - dash.lastUsed)) / 1000).toFixed(2)
+        if (now - dash.lastUsed < dash.cooldown) {
+            dash.usable = false;
+            ctx.fillText(`Active: ${dashCDLeft}s`, textX, 620);
+        } else {
+            dash.usable = true;
+            ctx.fillText(`Active: Dash(Q)`, textX, 620);
+        }
+    }
+    
+    // Stagnation (Passive)
+    else if (player.dodger == "jötunn") ctx.fillText(`Passive: Stagnation`, textX, 620);
 }
 
 // Creates an individual enemy with unique attributes
@@ -518,7 +553,7 @@ function spawnEnemyPeriodically() {
 function keyboardControls() {
     if (keyboardMovementOn){
         if (!dash.activated){
-            player.speed = 2.5 * shiftPressed;
+            player.speed = 2.5 * shiftPressed * player.slowed;
         }
         let dx = 0;
         let dy = 0;
@@ -551,7 +586,7 @@ function mouseMovement() {
         const dy = mouseY - player.y;
         const distance = Math.hypot(dx, dy);
         if (!dash.activated){
-            player.speed = 2.5 * shiftPressed;
+            player.speed = 2.5 * shiftPressed * player.slowed;
         }
         if (distance > 1) {
             player.x += (dx / distance) * player.speed;
@@ -567,17 +602,47 @@ function mouseMovement() {
 // Loops through the allEnemies array to move each enemy with their movex and movey
 function moveEnemies() {
     allEnemies.forEach(enemy => {
-        if (player.dodger != "jötunn") {
-            enemy["movex"] = enemy["baseMoveX"];
-            enemy["movey"] = enemy["baseMoveY"];
+        const dx = player.x - enemy.x;
+        const dy = player.y - enemy.y;
+        const distance = Math.hypot(dx, dy);
+
+        if (enemy.ability == "homing") {
+            if (distance < enemy.detectionRadius) {
+                enemy.baseMoveX = (dx / distance) * enemy.speed;
+                enemy.baseMoveY = (dy / distance) * enemy.speed;
+            }
         }
         
-        enemy["x"] += enemy["movex"]
-        enemy["y"] += enemy["movey"]
+        if (player.dodger == "jötunn") {
+            if (distance < 175 && distance > 100) {
+                enemy.movex = enemy.baseMoveX / (1/distance * 194);
+                enemy.movey = enemy.baseMoveY / (1/distance * 194);
+            } else if (distance < 100) {
+                enemy.movex = enemy.baseMoveX / (1/75 * 194);
+                enemy.movey = enemy.baseMoveY / (1/75 * 194);
+            } else {
+                enemy.movex = enemy.baseMoveX;
+                enemy.movey = enemy.baseMoveY;
+                enemy.color = enemy.baseColor;
+            }
+        } else {
+                enemy.movex = enemy.baseMoveX;
+                enemy.movey = enemy.baseMoveY;
+
+
+        }
+
+        // if (enemy.ability == "homing") {
+        //     enemy.movex = (dx / distance) * enemy.speed;
+        //     enemy.movey = (dy / distance) * enemy.speed;
+        // }
+        
+        enemy.x += enemy.movex
+        enemy.y += enemy.movey
         
         // Doesnt allow the enemies to leave the map
-        if (enemy["x"] - enemy["radius"]  <= 0 || enemy["x"] + enemy["radius"]  >= cnv.width) enemy["baseMoveX"] *= -1
-        if (enemy["y"] - enemy["radius"]  <= 0 || enemy["y"] + enemy["radius"]  >= cnv.height) enemy["baseMoveY"] *= -1
+        if (enemy.x - enemy.radius  <= 0 || enemy.x + enemy.radius  >= cnv.width) enemy.baseMoveX *= -1;
+        if (enemy.y - enemy.radius  <= 0 || enemy.y + enemy.radius  >= cnv.height) enemy.baseMoveY *= -1;
     })
 
 }
@@ -588,7 +653,10 @@ function moveEnemies() {
 // Resets certain variables once the play button is pressed
 function restartGame() {
     allEnemies = []
-    for(let i = 0; i < 10; i++) {
+    startAmount = 10;
+    if (player.difficulty == "medium") startAmount = 15;
+    if (player.difficulty == "hard") startAmount = 20;
+    for(let i = 1; i < startAmount; i++) {
         allEnemies.push(createEnemy());
     }
 
@@ -603,40 +671,32 @@ function restartGame() {
 
 // Keeps track of when the player touches any enemy in the allEnemies array
 function collisions() {
-    if (!dash.activated || now - dash.lastUsed < 200){
-        allEnemies.forEach(enemy => {
-            const dx = player.x - enemy.x;
-            const dy = player.y - enemy.y;
-            const distance = Math.hypot(dx, dy);
+    let underAura = 0;
+    allEnemies.forEach(enemy => {
+        const dx = player.x - enemy.x;
+        const dy = player.y - enemy.y;
+        const distance = Math.hypot(dx, dy);
 
+        if (!dash.activated || now - dash.lastUsed < 200){
             if (distance < player.radius + enemy.radius) {
                 highscoreColor = "rgb(87, 87, 87)";
                 gameState = "gameOver"
 
             }
-        });
-    }
+        }
+
+        if (enemy.ability == "decelerator" && distance < player.radius + enemy.auraRadius) {
+            underAura += 1;
+        }
+    });
+    player.slowed = 1 - (underAura/15)
+    if (player.slowed < 0.8) player.slowed = 0.8;
 }
 
 // ABILITIES
 
 // Player abilities
 function abilities() {
-    ctx.font = "20px 'Verdana'";
-    ctx.textAlign = 'center';
-    ctx.fillStyle = player.subColor;
-
-    // The text should be centered unless the gameState is gameOn
-    textX = 200;
-    if (gameState == "gameOn") textX = 200
-    else textX = 400
-        
-
-    if (player.dodger == "weaver") {
-        // No Abiliy
-        ctx.fillText(`Passive: Skill`, textX, 620);
-    }
-    
     if (player.dodger == "jsab") {
         // Dash (Active)
         if (dash.activated){
@@ -658,58 +718,43 @@ function abilities() {
                 player.color = "rgb(255, 0, 0)";
             }
         }
-        // Dash CD
-        let dashCDLeft = ((dash.cooldown - (now - dash.lastUsed)) / 1000).toFixed(2)
-        if (now - dash.lastUsed < dash.cooldown) {
-            dash.usable = false;
-            ctx.fillText(`Active: ${dashCDLeft}s`, textX, 620);
-        }
-        else {
-            dash.usable = true;
-            ctx.fillText(`Active: Dash(Q)`, textX, 620);
-        }
     }
     
     if (player.dodger == "jötunn") {
-        // Stagnation (Passive)
-        ctx.fillText(`Passive: Stagnation`, textX, 620);
-        
         allEnemies.forEach(enemy => {
-            const dx = player.x - enemy["x"];
-            const dy = player.y - enemy["y"];
+            const dx = player.x - enemy.x;
+            const dy = player.y - enemy.y;
             const distance = Math.hypot(dx, dy);
-        
-            if (distance < 175 && distance > 100) {
-                enemy["movex"] = enemy["baseMoveX"] / (1/distance * 194);
-                enemy["movey"] = enemy["baseMoveY"] / (1/distance * 194);
-            } else if (distance < 100) {
-                enemy["movex"] = enemy["baseMoveX"] / (1/75 * 194);
-                enemy["movey"] = enemy["baseMoveY"] / (1/75 * 194);
-            } else {
-                enemy["movex"] = enemy["baseMoveX"];
-                enemy["movey"] = enemy["baseMoveY"];
-                enemy["color"] = enemy["baseColor"];
-            }
 
             if (enemy.ability == "none") {
                 if (distance < 100) {
-                    enemy["color"] = "rgb(55, 77, 107)";
+                    enemy.color = "rgb(55, 77, 107)";
                 } else if (distance < 125) {
-                    enemy["color"] = "rgb(68, 84, 107)";
+                    enemy.color = "rgb(68, 84, 107)";
                 } else if (distance < 150) {
-                    enemy["color"] = "rgb(81, 91, 105)";
+                    enemy.color = "rgb(81, 91, 105)";
                 } else if (distance < 175) {
-                    enemy["color"] = "rgb(95, 100, 107)";
+                    enemy.color = "rgb(95, 100, 107)";
                 }
             } else if (enemy.ability == "decelerator") {
                 if (distance < 100) {
-                    enemy["color"] = "rgb(210, 0, 0)";
+                    enemy.color = "rgb(210, 0, 0)";
                 } else if (distance < 125) {
-                    enemy["color"] = "rgb(220, 0, 0)";
+                    enemy.color = "rgb(220, 0, 0)";
                 } else if (distance < 150) {
-                    enemy["color"] = "rgb(230, 0, 0)";
+                    enemy.color = "rgb(230, 0, 0)";
                 } else if (distance < 175) {
-                    enemy["color"] = "rgb(240, 0, 0)";
+                    enemy.color = "rgb(240, 0, 0)";
+                }
+            } else if (enemy.ability == "homing") {
+                if (distance < 100) {
+                    enemy.color = "rgb(190, 146, 0)";
+                } else if (distance < 125) {
+                    enemy.color = "rgb(206, 158, 0)";
+                } else if (distance < 150) {
+                    enemy.color = "rgb(216, 166, 0)";
+                } else if (distance < 175) {
+                    enemy.color = "rgb(235, 180, 0)";
                 }
             }
 
@@ -740,9 +785,11 @@ function giveEnemyAbility(enemy) {
 
     } else if (enemy.ability == "decelerator") {
         enemy.baseColor = "rgb(255, 0, 0)";
-        
+        enemy.auraRadius = 60;
+
     } else if (enemy.ability == "homing") {
         enemy.baseColor = "rgb(255, 196, 0)";
+        enemy.detectionRadius = 200;
     }
     enemy.color = enemy.baseColor;
 }

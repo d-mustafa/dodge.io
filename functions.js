@@ -612,9 +612,8 @@ function moveEnemies() {
                 const targetVY = (dy / distance) * enemy.speed;
 
                 // Smoothly adjust velocity toward target vector (homing, but with a delay)
-                const turnSpeed = 0.05;
-                enemy.baseMoveX += (targetVX - enemy.baseMoveX) * turnSpeed;
-                enemy.baseMoveY += (targetVY - enemy.baseMoveY) * turnSpeed;
+                enemy.baseMoveX += (targetVX - enemy.baseMoveX) * 0.01;
+                enemy.baseMoveY += (targetVY - enemy.baseMoveY) * 0.01;
             }
         }
         

@@ -540,7 +540,14 @@ function createEnemy() {
 // Spawns an enemy every 3s
 function spawnEnemyPeriodically() {
     if (allEnemies.length < 100 && now - lastSpawn > enemySpawnPeriod) {
-        allEnemies.push(createEnemy());
+        allEnemies.push(createEnemy());  
+
+        // filter and re-order the array just like in the restartGame() function (prevents inconsistent overlapping)
+        allEnemies = [
+            ...allEnemies.filter(enemy => enemy.ability === "decelerator"),
+            ...allEnemies.filter(enemy => enemy.ability !== "decelerator")
+        ]
+        
         lastSpawn = Date.now();
 
         // Enemy spawn period is 3000ms by default. This decreases it by 200ms for every 10 enemies spawned to increase difficulty
@@ -669,8 +676,6 @@ function restartGame() {
     
     // Re-order the allEnemies array to draw the enemies with the auras (decelerator enemies) first
     // this prevents inconsistent overlapping when they're drawn
-    // allEnemies = allEnemies.filter(enemy => enemy.ability === "decelerator") // filters the enemies with the decelerator ability
-                        // .concat(enemy => enemy.ability !== "decelerator") // concatenates the enemies without it
     allEnemies = [
         ...allEnemies.filter(enemy => enemy.ability === "decelerator"),
         ...allEnemies.filter(enemy => enemy.ability !== "decelerator")

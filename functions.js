@@ -669,8 +669,12 @@ function restartGame() {
     
     // Re-order the allEnemies array to draw the enemies with the auras (decelerator enemies) first
     // this prevents inconsistent overlapping when they're drawn
-    allEnemies = allEnemies.filter(enemy => enemy.ability === "decelerator") // filters the enemies with the decelerator ability
-                        .concat(enemy => enemy.ability !== "decelerator") // concatenates the enemies without it
+    // allEnemies = allEnemies.filter(enemy => enemy.ability === "decelerator") // filters the enemies with the decelerator ability
+                        // .concat(enemy => enemy.ability !== "decelerator") // concatenates the enemies without it
+    allEnemies = [
+        ...allEnemies.filter(enemy => enemy.ability === "decelerator"),
+        ...allEnemies.filter(enemy => enemy.ability !== "decelerator")
+    ]
 
     startTime = Date.now();
     currentTime = 0;

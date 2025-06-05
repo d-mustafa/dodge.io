@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("stronger adjustment")
+console.log("stronger adjustment + stronger aura")
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 let gameState = "startScreen";

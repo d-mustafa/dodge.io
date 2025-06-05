@@ -657,12 +657,20 @@ function moveEnemies() {
 // Resets certain variables once the play button is pressed
 function restartGame() {
     allEnemies = []
+    
+    // The starting amount of enemies is different based on the difficulty
     startAmount = 10;
-    if (player.difficulty == "medium") startAmount = 15;
-    if (player.difficulty == "hard") startAmount = 20;
+    if (player.difficulty === "medium") startAmount = 15;
+    if (player.difficulty === "hard") startAmount = 20;
+    
     for(let i = 1; i < startAmount; i++) {
         allEnemies.push(createEnemy());
     }
+    
+    // Re-order the allEnemies array to draw the enemies with the auras (decelerator enemies) first
+    // this prevents inconsistent overlapping when they're drawn
+    allEnemies = allEnemies.filter(enemy => enemy.ability === "decelerator") // filters the enemies with the decelerator ability
+                        .concat(enemy => enemy.ability !== "decelerator") // concatenates the enemies without it
 
     startTime = Date.now();
     currentTime = 0;
@@ -701,7 +709,7 @@ function collisions() {
 
 // Player abilities
 function abilities() {
-    if (player.dodger == "jsab") {
+    if (player.dodger === "jsab") {
         // Dash (Active)
         if (dash.activated){
             player.speed += dash.speed;
@@ -724,13 +732,13 @@ function abilities() {
         }
     }
     
-    if (player.dodger == "jötunn") {
+    if (player.dodger === "jötunn") {
         allEnemies.forEach(enemy => {
             const dx = player.x - enemy.x;
             const dy = player.y - enemy.y;
             const distance = Math.hypot(dx, dy);
 
-            if (enemy.ability == "none") {
+            if (enemy.ability === "none") {
                 if (distance < 100) {
                     enemy.color = "rgb(55, 77, 107)";
                 } else if (distance < 125) {
@@ -740,7 +748,7 @@ function abilities() {
                 } else if (distance < 175) {
                     enemy.color = "rgb(95, 100, 107)";
                 }
-            } else if (enemy.ability == "decelerator") {
+            } else if (enemy.ability === "decelerator") {
                 if (distance < 100) {
                     enemy.color = "rgb(210, 0, 0)";
                 } else if (distance < 125) {
@@ -750,7 +758,7 @@ function abilities() {
                 } else if (distance < 175) {
                     enemy.color = "rgb(240, 0, 0)";
                 }
-            } else if (enemy.ability == "homing") {
+            } else if (enemy.ability === "homing") {
                 if (distance < 100) {
                     enemy.color = "rgb(190, 146, 0)";
                 } else if (distance < 125) {

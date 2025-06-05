@@ -612,17 +612,30 @@ function moveEnemies() {
         const dx = player.x - enemy.x;
         const dy = player.y - enemy.y;
         const distance = Math.hypot(dx, dy);
+        let homingIn = false;
 
-        if (enemy.ability === "homing") {
-            if (distance < enemy.detectionRadius) {
-                const targetVX = (dx / distance) * enemy.speed;
-                const targetVY = (dy / distance) * enemy.speed;
+        // Homing enemies move toward the player (if the player is close enough)
+        if (enemy.ability === "homing")  {
+            if (distance <= enemy.detectionRadius) {
+                const angleToPlayer = Math.atan2(dy, dx); // Target angle
 
-                // Smoothly adjust velocity toward target vector (homing, but with a delay)
-                enemy.baseMoveX += (targetVX - enemy.baseMoveX) * 0.01;
-                enemy.baseMoveY += (targetVY - enemy.baseMoveY) * 0.01;
+                // Calculate shortest angular difference
+                let angleDiff = angleToPlayer - enemy.facingAngle;
+
+                // Normalize to [-PI, PI] for shortest rotation direction
+                angleDiff = Math.atan2(Math.sin(angleDiff), Math.cos(angleDiff));
+
+                const turnSpeed = 0.01; // radians per frame — tweak this
+                enemy.facingAngle += Math.sign(angleDiff) * Math.min(Math.abs(angleDiff), turnSpeed);
+
+                // Move forward in direction of facingAngle — speed stays constant
+                enemy.baseMoveX = Math.cos(enemy.facingAngle) * enemy.speed;
+                enemy.baseMoveY = Math.sin(enemy.facingAngle) * enemy.speed;
+
+                // Set homingIn to true so they bounce off the walls correctly
+                homingIn = true;
             }
-        }
+        } 
         
         if (player.dodger == "jötunn") {
             if (distance < 175 && distance > 100) {
@@ -639,21 +652,28 @@ function moveEnemies() {
         } else {
                 enemy.movex = enemy.baseMoveX;
                 enemy.movey = enemy.baseMoveY;
-
-
         }
-
-        // if (enemy.ability == "homing") {
-        //     enemy.movex = (dx / distance) * enemy.speed;
-        //     enemy.movey = (dy / distance) * enemy.speed;
-        // }
         
         enemy.x += enemy.movex
         enemy.y += enemy.movey
         
         // Doesnt allow the enemies to leave the map
-        if (enemy.x - enemy.radius  <= 0 || enemy.x + enemy.radius  >= cnv.width) enemy.baseMoveX *= -1;
-        if (enemy.y - enemy.radius  <= 0 || enemy.y + enemy.radius  >= cnv.height) enemy.baseMoveY *= -1;
+        if (homingIn) {
+            // Left or right wall → reflect across the Y axis
+            if (enemy.x - enemy.radius  <= 0 || enemy.x + enemy.radius  >= cnv.width) enemy.facingAngle = Math.PI - enemy.facingAngle;
+
+            // Top or bottom wall → reflect across the X axis
+            if (enemy.y - enemy.radius  <= 0 || enemy.y + enemy.radius  >= cnv.height) enemy.facingAngle = -enemy.facingAngle;
+        } else {
+            // Left or right wall → multiple the baseMoveX's value by -1
+            if (enemy.x - enemy.radius  <= 0 || enemy.x + enemy.radius  >= cnv.width) enemy.baseMoveX *= -1;
+
+            // Top or bottom wall → multiple the baseMoveY's value by -1
+            if (enemy.y - enemy.radius  <= 0 || enemy.y + enemy.radius  >= cnv.height) enemy.baseMoveY *= -1;
+            if (enemy.ability === "homing") {
+                enemy.facingAngle = Math.atan2(Math.sin(enemy.facingAngle), Math.cos(enemy.facingAngle));
+            }
+        }
     })
 
 }
@@ -811,6 +831,12 @@ function giveEnemyAbility(enemy) {
     } else if (enemy.ability == "homing") {
         enemy.baseColor = "rgb(255, 196, 0)";
         enemy.detectionRadius = 200;
+
+        // Initialization for the enemies angle that its moving in (avoids the weird snapping-towards-the-player effect)
+        const dx = player.x - enemy.x;
+        const dy = player.y - enemy.y;
+        const angleToPlayer = Math.atan2(dy, dx); // angle toward the player
+        enemy.facingAngle = angleToPlayer
     }
     enemy.color = enemy.baseColor;
 }

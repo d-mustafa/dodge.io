@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("filtering and concatenation attempt 2")
+console.log("filtering and concatenation new enemies")
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 let gameState = "startScreen";

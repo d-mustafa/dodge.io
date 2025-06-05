@@ -693,8 +693,8 @@ function collisions() {
             underAura += 1;
         }
     });
-    player.slowed = 1 - (underAura/15)
-    if (player.slowed < 0.8) player.slowed = 0.8;
+    player.slowed = 1 - (underAura/10)
+    if (player.slowed < 0.7) player.slowed = 0.7;
 }
 
 // ABILITIES

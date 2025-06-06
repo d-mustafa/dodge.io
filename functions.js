@@ -531,7 +531,13 @@ function createEnemy() {
     // used so modifications can be made to movex and movey without losing their original values
     oneEnemy.baseMoveX = oneEnemy.movex
     oneEnemy.baseMoveY = oneEnemy.movey
-    
+
+
+    // Initialization foe the angle the enemy moves towards (avoids the weird snapping-towards-the-player effect)
+    const angleToPlayer = Math.atan2(dy, dx); // angle toward the player
+    oneEnemy.facingAngle = angleToPlayer
+
+    // Initializes the enemy's ability
     giveEnemyAbility(oneEnemy);
 
     return oneEnemy;
@@ -665,15 +671,20 @@ function moveEnemies() {
             // Top or bottom wall → reflect across the X axis
             if (enemy.y - enemy.radius  <= 0 || enemy.y + enemy.radius  >= cnv.height) enemy.facingAngle = -enemy.facingAngle;
         } else {
-            // Left or right wall → multiple the baseMoveX's value by -1
-            if (enemy.x - enemy.radius  <= 0 || enemy.x + enemy.radius  >= cnv.width) enemy.baseMoveX *= -1;
-
-            // Top or bottom wall → multiple the baseMoveY's value by -1
-            if (enemy.y - enemy.radius  <= 0 || enemy.y + enemy.radius  >= cnv.height) enemy.baseMoveY *= -1;
-            if (enemy.ability === "homing") {
-                enemy.facingAngle = Math.atan2(Math.sin(enemy.facingAngle), Math.cos(enemy.facingAngle));
+            if (enemy.x - enemy.radius  <= 0 || enemy.x + enemy.radius  >= cnv.width) {
+                // reflect the x value and the angle for left & right walls
+                enemy.baseMoveX *= -1;
+                enemy.facingAngle = Math.PI - enemy.facingAngle;
+            }
+            
+            if (enemy.y - enemy.radius  <= 0 || enemy.y + enemy.radius  >= cnv.height) {
+                // reflect the y value and the angle for top & bottom walls
+                enemy.baseMoveY *= -1;
+                enemy.facingAngle = -enemy.facingAngle;
             }
         }
+        // Normalize the angle with the ever reliable Math.atan2()
+        enemy.facingAngle = Math.atan2(Math.sin(enemy.facingAngle), Math.cos(enemy.facingAngle));
     })
 
 }
@@ -831,12 +842,6 @@ function giveEnemyAbility(enemy) {
     } else if (enemy.ability == "homing") {
         enemy.baseColor = "rgb(255, 196, 0)";
         enemy.detectionRadius = 200;
-
-        // Initialization for the enemies angle that its moving in (avoids the weird snapping-towards-the-player effect)
-        const dx = player.x - enemy.x;
-        const dy = player.y - enemy.y;
-        const angleToPlayer = Math.atan2(dy, dx); // angle toward the player
-        enemy.facingAngle = angleToPlayer
     }
     enemy.color = enemy.baseColor;
 }

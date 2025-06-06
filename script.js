@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("class")
+console.log("math.acos2(), or sum shi like that")
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 let gameState = "startScreen";

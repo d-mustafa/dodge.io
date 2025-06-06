@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("math.acos2(), or sum shi like that")
+console.log("updated enemy abilities. what changed? idk, figure it out yourself.")
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 let gameState = "startScreen";

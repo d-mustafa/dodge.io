@@ -503,12 +503,17 @@ function drawText() {
 // Creates an individual enemy with unique attributes
 function createEnemy() {
     let oneEnemy = {
-        x: (Math.random() * (cnv.width-60))+30,
-        y: (Math.random() * (cnv.height-60))+30,
-        radius: (Math.random() * 7.5) + 10,
-        speed: Math.random() + 0.3,
+        x: (Math.random() * (cnv.width-60))+30,  // between 30 and 770
+        y: (Math.random() * (cnv.height-60))+30,  // between 30 and 520
+        radius: (Math.random() * 7.5) + 10,  // between 10 and 17.5
         color: "rgb(100, 100, 100)",
     }
+    if (player.difficulty == "easy") oneEnemy.speed = Math.random() + 1; // between 1 and 2
+
+    else if (player.difficulty == "medium") oneEnemy.speed = (Math.random() * 1.5) + 1; // between 1 and 2.5
+    
+    else if (player.difficulty == "hard") oneEnemy.speed = (Math.random() * 1.5) + 1.5; // between 1.5 and 2.5
+    
 
     let dx = player.x - oneEnemy.x;
     let dy = player.y - oneEnemy.y;
@@ -528,7 +533,7 @@ function createEnemy() {
     oneEnemy.movex = (dx / distance) * oneEnemy.speed;
     oneEnemy.movey = (dy / distance) * oneEnemy.speed;
 
-    // used so modifications can be made to movex and movey without losing their original values
+    // Using base values to extend the possibility of what can be done to the enemies speed
     oneEnemy.baseMoveX = oneEnemy.movex
     oneEnemy.baseMoveY = oneEnemy.movey
 
@@ -537,8 +542,8 @@ function createEnemy() {
     const angleToPlayer = Math.atan2(dy, dx); // angle toward the player
     oneEnemy.facingAngle = angleToPlayer
 
-    // Initializes the enemy's ability
-    giveEnemyAbility(oneEnemy);
+    // Initializes the enemy's ability and other important values based on their ability
+    enemyAbilitiesAndStats(oneEnemy);
 
     return oneEnemy;
 }
@@ -598,13 +603,22 @@ function mouseMovement() {
         const dx = mouseX - player.x;
         const dy = mouseY - player.y;
         const distance = Math.hypot(dx, dy);
-        if (!dash.activated){
+        if (!dash.activated) {
             player.speed = 2.5 * shiftPressed * player.slowed;
         }
-        if (distance > 1) {
+
+        const slowStart = player.radius + 40
+        if (distance < slowStart) {
+            const factor = (distance) / (slowStart); // 0 -> 1
+            const slowFactor = 0.3 + 0.7 * factor; // Interpolate from 0.3x speed to 1x speed
+            player.x += (dx / distance) * player.speed * slowFactor;
+            player.y += (dy / distance) * player.speed * slowFactor;
+        } else {
             player.x += (dx / distance) * player.speed;
             player.y += (dy / distance) * player.speed;
         }
+        
+
 
         // Doesnt allow the player to leave the map
         if (player.x - player.radius  <= 0 || player.x + player.radius  >= cnv.width) player.x -= (dx / distance) * player.speed;
@@ -631,7 +645,7 @@ function moveEnemies() {
                 // Normalize to [-PI, PI] for shortest rotation direction
                 angleDiff = Math.atan2(Math.sin(angleDiff), Math.cos(angleDiff));
 
-                const turnSpeed = 0.01; // radians per frame — tweak this
+                const turnSpeed = 0.01; // radians per frame — ill probably tweak this a ton
                 enemy.facingAngle += Math.sign(angleDiff) * Math.min(Math.abs(angleDiff), turnSpeed);
 
                 // Move forward in direction of facingAngle — speed stays constant
@@ -644,12 +658,19 @@ function moveEnemies() {
         } 
         
         if (player.dodger == "jötunn") {
-            if (distance < 175 && distance > 100) {
-                enemy.movex = enemy.baseMoveX / (1/distance * 194);
-                enemy.movey = enemy.baseMoveY / (1/distance * 194);
-            } else if (distance < 100) {
-                enemy.movex = enemy.baseMoveX / (1/75 * 194);
-                enemy.movey = enemy.baseMoveY / (1/75 * 194);
+            const slowStart = 175 - enemy.radius - player.radius;
+            const slowEnd = 75 - enemy.radius - player.radius;
+
+            if (distance < slowStart) {
+                // Limit distance to avoid going below slowEnd
+                const maxDist = Math.max(distance, slowEnd);
+
+                // Calculate a slowdown factor between 0 (closest) and 1 (farthest in range)
+                const factor = (maxDist - slowEnd) / (slowStart - slowEnd);
+                const slowFactor = 0.3 + 0.7 * factor; // Interpolate from 0.3x speed to 1x speed
+
+                enemy.movex = enemy.baseMoveX * slowFactor;
+                enemy.movey = enemy.baseMoveY * slowFactor;
             } else {
                 enemy.movex = enemy.baseMoveX;
                 enemy.movey = enemy.baseMoveY;
@@ -698,8 +719,8 @@ function restartGame() {
     
     // The starting amount of enemies is different based on the difficulty
     startAmount = 10;
-    if (player.difficulty === "medium") startAmount = 15;
-    if (player.difficulty === "hard") startAmount = 20;
+    if (player.difficulty === "medium") startAmount = 20;
+    if (player.difficulty === "hard") startAmount = 30;
     
     for(let i = 1; i < startAmount; i++) {
         allEnemies.push(createEnemy());
@@ -815,31 +836,31 @@ function abilities() {
 }
 
 // Enemy abilities
-function giveEnemyAbility(enemy) {
-    if (player.difficulty == "easy") {
-        // All enemies on easy difficulty have no abilitis
-        enemy.ability = "none";
-    } else {
-        num = Math.random();
+function enemyAbilitiesAndStats(enemy) {
+    num = Math.random();
 
-        // 25% chance for an enemy on medium or hard difficulty to be a decelerator
-        if ((player.difficulty == "medium" || player.difficulty == "hard") && num > 0.75) enemy.ability = "decelerator";
+    // All enemies on easy difficulty have no abilities
+    if (player.difficulty == "easy")  enemy.ability = "none";
 
-        // 25% chance for an enemy on hard difficulty to be a homing
-        else if (player.difficulty == "hard" && num > 0.5) enemy.ability = "homing";
-
-        // 50% chance for an enemy on meidum or hard difficulty have no ability
+    else if (player.difficulty == "medium") {
+        // 25% Chance to get the decelerator ability
+        if (num > 0.75) enemy.ability = "decelerator";
+        else enemy.ability = "none";
+    }
+    else if (player.difficulty == "hard") {
+        // 25% Chance to get the decelerator ability, 15% for the homing ability
+        if (num > 0.85) enemy.ability = "homing";
+        else if (num > 0.6) enemy.ability = "decelerator";
         else enemy.ability = "none";
     }
 
-    if (enemy.ability == "none") {
-        enemy.baseColor = "rgb(100, 100, 100)";
-
-    } else if (enemy.ability == "decelerator") {
+    if (enemy.ability == "none") enemy.baseColor = "rgb(100, 100, 100)";
+    
+    else if (enemy.ability == "decelerator") {
         enemy.baseColor = "rgb(255, 0, 0)";
-        enemy.auraRadius = 60;
-
-    } else if (enemy.ability == "homing") {
+        enemy.auraRadius = (Math.random() * 20) + 60;
+    }
+    else if (enemy.ability == "homing") {
         enemy.baseColor = "rgb(255, 196, 0)";
         enemy.detectionRadius = 200;
     }

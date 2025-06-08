@@ -452,10 +452,11 @@ function drawEnemies() {
 function drawText() {
     if (gameState == "gameOn") {
         currentTime = ((now-startTime) / 1000).toFixed(2);
-
+        difficulty = player.difficulty
+        
         // Updates the highscore
         if (Number(currentTime) > Number(highscore)) {
-            highscore = currentTime;
+            highscore[difficulty] = currentTime;
             highscoreColor = player.subColor;
         }
 
@@ -468,7 +469,8 @@ function drawText() {
         ctx.fillText(`Enemy Count: ${allEnemies.length}`, 600, 620);
 
         ctx.fillStyle = highscoreColor;
-        ctx.fillText(`Highest Time: ${highscore}s`, 600, 40);
+        // Displays the highesscore and the current difficulty (capitalized)
+        ctx.fillText(`Highest Time (${difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}): ${highscore[difficulty]}s`, 600, 40);
     }
     // Abilites
     ctx.font = "20px 'Verdana'";

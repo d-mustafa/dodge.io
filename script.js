@@ -32,16 +32,21 @@ let mouseOver = {
 let mouseX;
 let mouseY;
 cnv.addEventListener('mousemove', (event) => {
-    let rect = cnv.getBoundingClientRect();
+    const rect = cnv.getBoundingClientRect();
     mouseX = event.clientX - rect.left;
     mouseY = event.clientY - rect.top;
+
+    console.log(`MouseX, MouseY: ${mouseX}, ${mouseY}`)
 });
 
 let windowX;
 let windowY;
 window.addEventListener('mousemove', (event) => {
-    windowX = event.pageX;
-    windowY = event.pageY;
+    const rect = cnv.getBoundingClientRect();
+    windowX = event.pageX - rect.left;
+    windowY = event.pageY - rect.top;
+
+    console.log(`WindowX, WindowY: ${windowX}, ${windowY}`)
 });
 
 

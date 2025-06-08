@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("Slowfactor")
+console.log("window.addEventListener('mousemove', handler)")
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 let gameState = "startScreen";
@@ -29,17 +29,21 @@ let mouseOver = {
     hard: false,
 }
 
-cnv.addEventListener('mousemove', mousemoveHandler);
 let mouseX;
 let mouseY;
-let pageCoord = [0, 0]
-function mousemoveHandler(event) {
+cnv.addEventListener('mousemove', (event) => {
     let rect = cnv.getBoundingClientRect();
     mouseX = event.clientX - rect.left;
     mouseY = event.clientY - rect.top;
+});
 
-    pageCoord = [event.pageX - rect.left, event.pageY - rect.top]
-}
+let windowX;
+let windowY;
+window.addEventListener('mousemove', (event) => {
+    windowX = event.pageX;
+    windowY = event.pageY;
+});
+
 
 // Player & Enemies
 let player = {

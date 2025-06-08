@@ -451,11 +451,12 @@ function drawEnemies() {
 // draws the current time, highest time, and enemy count
 function drawText() {
     if (gameState == "gameOn") {
+        // Current time in seconds
         currentTime = ((now-startTime) / 1000).toFixed(2);
         difficulty = player.difficulty
         
         // Updates the highscore
-        if (Number(currentTime) > Number(highscore)) {
+        if (Number(currentTime) > Number(highscore[difficulty])) {
             highscore[difficulty] = currentTime;
             highscoreColor = player.subColor;
         }

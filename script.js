@@ -38,7 +38,7 @@ function mousemoveHandler(event) {
     mouseX = event.clientX - rect.left;
     mouseY = event.clientY - rect.top;
 
-    pageCoord = [event.pageX, event.pageY]
+    pageCoord = [event.pageX - rect.left, event.pageY - rect.top]
 }
 
 // Player & Enemies

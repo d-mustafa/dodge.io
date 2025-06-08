@@ -594,7 +594,7 @@ function keyboardControls() {
         player.x += dx * player.speed;
         player.y += dy * player.speed;
 
-        // Doesnt allow the player to leave the map
+        // Doesn't allow the player to leave the map (wall collisions)
         if (player.x - player.radius  <= 0 || player.x + player.radius  >= cnv.width) player.x -= dx * player.speed;
         if (player.y - player.radius  <= 0 || player.y + player.radius  >= cnv.height) player.y -= dy * player.speed;
     }
@@ -620,12 +620,16 @@ function mouseMovement() {
             player.x += (dx / distance) * player.speed;
             player.y += (dy / distance) * player.speed;
         }
-        
 
-
-        // Doesnt allow the player to leave the map
-        if (player.x - player.radius  <= 0 || player.x + player.radius  >= cnv.width) player.x -= (dx / distance) * player.speed;
-        if (player.y - player.radius  <= 0 || player.y + player.radius  >= cnv.height) player.y -= (dy / distance) * player.speed;
+        // Doesn't allow the player to leave the map (wall collisions)
+        if (player.x - player.radius  <= 0 || player.x + player.radius  >= cnv.width) {
+            if (distance < slowStart) player.x -= (dx / distance) * player.speed * slowFactor;
+            else player.x -= (dx / distance) * player.speed;
+        }
+        if (player.y - player.radius  <= 0 || player.y + player.radius  >= cnv.height) {
+            if (distance < slowStart) player.y -= (dy / distance) * player.speed * slowFactor;
+            else player.y -= (dy / distance) * player.speed;
+        }
     }
 }
 
@@ -661,16 +665,16 @@ function moveEnemies() {
         } 
         
         if (player.dodger == "jötunn") {
+            // Similar to mouse movement mechanics, but theres a limit to how slow the enemies move
+            // Calculates the distance from the edge of the enemy to the edge of the player, so I subtract the radii
             const slowStart = 175 - enemy.radius - player.radius;
             const slowEnd = 75 - enemy.radius - player.radius;
 
             if (distance < slowStart) {
                 // Limit distance to avoid going below slowEnd
                 const maxDist = Math.max(distance, slowEnd);
-
-                // Calculate a slowdown factor between 0 (closest) and 1 (farthest in range)
                 const factor = (maxDist - slowEnd) / (slowStart - slowEnd);
-                const slowFactor = 0.3 + 0.7 * factor; // Interpolate from 0.3x speed to 1x speed
+                const slowFactor = 0.3 + 0.7 * factor;
 
                 enemy.movex = enemy.baseMoveX * slowFactor;
                 enemy.movey = enemy.baseMoveY * slowFactor;
@@ -687,25 +691,16 @@ function moveEnemies() {
         enemy.x += enemy.movex
         enemy.y += enemy.movey
         
-        // Doesnt allow the enemies to leave the map
-        if (homingIn) {
+        // Doesn't allow the enemies to leave the map (wall collisions)
+        if (enemy.x - enemy.radius  <= 0 || enemy.x + enemy.radius  >= cnv.width) {
             // Left or right wall → reflect across the Y axis
-            if (enemy.x - enemy.radius  <= 0 || enemy.x + enemy.radius  >= cnv.width) enemy.facingAngle = Math.PI - enemy.facingAngle;
-
+            if (!homingIn) enemy.baseMoveX *= -1;
+            enemy.facingAngle = Math.PI - enemy.facingAngle;
+        }
+        if (enemy.y - enemy.radius  <= 0 || enemy.y + enemy.radius  >= cnv.height) {
             // Top or bottom wall → reflect across the X axis
-            if (enemy.y - enemy.radius  <= 0 || enemy.y + enemy.radius  >= cnv.height) enemy.facingAngle = -enemy.facingAngle;
-        } else {
-            if (enemy.x - enemy.radius  <= 0 || enemy.x + enemy.radius  >= cnv.width) {
-                // reflect the x value and the angle for left & right walls
-                enemy.baseMoveX *= -1;
-                enemy.facingAngle = Math.PI - enemy.facingAngle;
-            }
-            
-            if (enemy.y - enemy.radius  <= 0 || enemy.y + enemy.radius  >= cnv.height) {
-                // reflect the y value and the angle for top & bottom walls
-                enemy.baseMoveY *= -1;
-                enemy.facingAngle = -enemy.facingAngle;
-            }
+            if (!homingIn) enemy.baseMoveY *= -1;
+            enemy.facingAngle = -enemy.facingAngle;
         }
         // Normalize the angle with the ever reliable Math.atan2()
         enemy.facingAngle = Math.atan2(Math.sin(enemy.facingAngle), Math.cos(enemy.facingAngle));

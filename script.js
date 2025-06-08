@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("boudingCLient")
+console.log("new mouseX, mouseY")
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 let gameState = "startScreen";
@@ -29,26 +29,25 @@ let mouseOver = {
     hard: false,
 }
 
-let mouseX;
-let mouseY;
+
+/*
+Tracks the Mouse's coordinates throught the canvas.
+
 cnv.addEventListener('mousemove', (event) => {
     const rect = cnv.getBoundingClientRect();
     mouseX = event.clientX - rect.left;
     mouseY = event.clientY - rect.top;
-
-    console.log(`MouseX, MouseY: ${mouseX}, ${mouseY}`)
 });
+*/
 
-let windowX;
-let windowY;
+let mouseX;
+let mouseY;
+// Tracks the mouse's coordinates throughout the entire window
 window.addEventListener('mousemove', (event) => {
     const rect = cnv.getBoundingClientRect();
-    windowX = event.pageX - rect.left;
-    windowY = event.pageY - rect.top;
-
-    console.log(`WindowX, WindowY: ${windowX}, ${windowY}`)
+    mouseX = event.pageX - rect.left;
+    mouseX = event.pageY - rect.top;
 });
-
 
 // Player & Enemies
 let player = {

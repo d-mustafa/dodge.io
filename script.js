@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("PageX, PageY. Also difficulty bug")
+console.log("PageXY")
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 let gameState = "startScreen";

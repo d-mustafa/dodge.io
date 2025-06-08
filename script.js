@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("window.addEventListener('mousemove', handler)")
+console.log("boudingCLient")
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 let gameState = "startScreen";

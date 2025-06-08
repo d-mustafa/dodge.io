@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("Simplifications")
+console.log("Slowfactor")
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 let gameState = "startScreen";

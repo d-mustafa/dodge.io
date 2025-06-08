@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("Highscore per difficulty.")
+console.log("PageX, PageY. Also difficulty bug")
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 let gameState = "startScreen";
@@ -32,10 +32,13 @@ let mouseOver = {
 cnv.addEventListener('mousemove', mousemoveHandler);
 let mouseX;
 let mouseY;
+let pageCoord = [0, 0]
 function mousemoveHandler(event) {
     let rect = cnv.getBoundingClientRect();
     mouseX = event.clientX - rect.left;
     mouseY = event.clientY - rect.top;
+
+    pageCoord = [event.pageX, event.pageY]
 }
 
 // Player & Enemies

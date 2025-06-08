@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("updated enemy abilities. what changed? idk, figure it out yourself.")
+console.log("Highscore per difficulty.")
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 let gameState = "startScreen";

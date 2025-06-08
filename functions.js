@@ -610,10 +610,12 @@ function mouseMovement() {
             player.speed = 2.5 * shiftPressed * player.slowed;
         }
 
-        const slowStart = player.radius + 40
+        const slowStart = player.radius + 40;
+        let slowFactor;
+        
         if (distance < slowStart) {
             const factor = (distance) / (slowStart); // 0 -> 1
-            const slowFactor = 0.3 + 0.7 * factor; // Interpolate from 0.3x speed to 1x speed
+            slowFactor = 0.3 + 0.7 * factor; // Transition from 0.3x speed to 1x speed
             player.x += (dx / distance) * player.speed * slowFactor;
             player.y += (dy / distance) * player.speed * slowFactor;
         } else {

@@ -116,6 +116,12 @@ if (reset || !localData){
     localStorage.setItem('localUserData', JSON.stringify(userData));
 }
 
+// saves the game if it the website is suddenly closed
+if (gameState != "loading") {
+    window.addEventListener('beforeunload',
+                            localStorage.setItem('localUserData', JSON.stringify(userData)))
+}
+
 
 requestAnimationFrame(draw)
 

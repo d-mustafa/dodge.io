@@ -44,8 +44,6 @@ function recordMouseClicked() {
         mouseMovementOn = true;
         previousMM = false;
     }
-
-    for (let bool in mouseOver) if (mouseOver[bool]) mouseMovementOn = previousMM;
     
     // Start screen Buttons
     if (gameState == "startScreen") {
@@ -64,6 +62,7 @@ function recordMouseClicked() {
             if (mouseOver.medium) difficulty = {level: "medium", color: "rgb(255, 255, 0)"};
             if (mouseOver.hard) difficulty = {level: "hard", color: "rgb(0, 0, 0)"};
 
+            for (let bool in mouseOver) mouseOver[bool] = false;
             restartGame()
         }
     }
@@ -91,6 +90,8 @@ function recordMouseClicked() {
             userData.player = player;
             localStorage.setItem('localUserData', JSON.stringify(userData));
         }
+
+        for (let bool in mouseOver) if (mouseOver[bool]) mouseMovementOn = previousMM;
     }
 }
 

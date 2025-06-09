@@ -45,7 +45,7 @@ function recordMouseClicked() {
         previousMM = false;
     }
 
-    for (let bool in mouseOver) if (mouseOver["bool"]) mouseMovementOn = previousMM;
+    for (let bool in mouseOver) if (mouseOver[bool]) mouseMovementOn = previousMM;
     
     // Start screen Buttons
     if (gameState == "startScreen") {

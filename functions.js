@@ -465,9 +465,13 @@ function drawText() {
         if (Number(currentTime) > Number(highscore[difficulty])) {
             highscore[difficulty] = currentTime;
             highscoreColor = player.subColor;
-            
+
             userData.highscore[difficulty] = highscore[difficulty];
-            localStorage.setItem('localUserData', JSON.stringify(userData));
+            // Saves data every 5 seconds (incase the user disconnects/crashes)
+            if (now - lastSave >= 5000) {
+                localStorage.setItem('localUserData', JSON.stringify(userData));
+                lastSave = Date.now();
+            }
         }
 
         // Actually draws the times (and the enemy count)
@@ -482,6 +486,7 @@ function drawText() {
         // Displays the highesscore and the current difficulty (capitalized)
         ctx.fillText(`Highest Time (${difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}): ${highscore[difficulty]}s`, 600, 40);
     }
+    
     // Abilites
     ctx.font = "20px 'Verdana'";
     ctx.textAlign = 'center';
@@ -498,8 +503,8 @@ function drawText() {
     // Dash
     else if (player.dodger == "jsab") {
         // Dash CD
-        let dashCDLeft = ((dash.cooldown - (now - dash.lastUsed)) / 1000).toFixed(2)
-        if (now - dash.lastUsed < dash.cooldown) {
+        let dashCDLeft = ((dash.cooldown - (now - dash.lastUsed)) / 1000).toFixed(2);
+        if (now - dash.lastUsed <= dash.cooldown) { // 1.1s
             dash.usable = false;
             ctx.fillText(`Active: ${dashCDLeft}s`, textX, 620);
         } else {
@@ -566,7 +571,7 @@ function createEnemy() {
 
 // Spawns an enemy every 3s
 function spawnEnemyPeriodically() {
-    if (allEnemies.length < 100 && now - lastSpawn > enemySpawnPeriod) {
+    if (allEnemies.length < 100 && now - lastSpawn >= enemySpawnPeriod) {
         allEnemies.push(createEnemy());  
 
         // filter and re-order the array just like in the restartGame() function (prevents inconsistent overlapping)
@@ -762,10 +767,15 @@ function collisions() {
         const dy = player.y - enemy.y;
         const distance = Math.hypot(dx, dy);
 
-        if (!dash.activated || now - dash.lastUsed < 200){
+        // Gives the player some time to get out of an enemy they dashed onto (0.5s)
+        if (!dash.activated || now - dash.lastUsed < 500) {
             if (distance < player.radius + enemy.radius) {
                 highscoreColor = "rgb(87, 87, 87)";
                 gameState = "gameOver"
+
+                // Saves data once the user dies
+                userData.highscore[player.difficulty] = highscore[player.difficulty];
+                localStorage.setItem('localUserData', JSON.stringify(userData));
             }
         }
 

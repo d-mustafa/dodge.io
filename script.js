@@ -2,7 +2,7 @@
 console.log("difficulty color");
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
-let gameState = "startScreen";
+let gameState = "loading";
 
 // Keyboard
 document.addEventListener("keydown", recordKeyDown)
@@ -138,63 +138,60 @@ function draw() {
         ctx.textAlign = "center";
         ctx.fillText(options[LI], cnv.width/2, cnv.height/2);
     }
+    else gameState = "startScreen";
 
     // Actual Game
-    else {
-        if (gameState == "startScreen") {
-            abilities();
-            drawText();
+    if (gameState == "startScreen") {
+        abilities();
+        drawText();
             
-            drawStartScreen();
-            drawPlayer();
+        drawStartScreen();
+        drawPlayer();
             
-            keyboardControls();
-            mouseMovement();
-        }
-        else if (gameState == "selectDifficulty") {
-            abilities();
-            drawText();
+        keyboardControls();
+        mouseMovement();
+    }
+    else if (gameState == "selectDifficulty") {
+        abilities();
+        drawText();
     
-            drawStartScreen();
-            drawDifficultySelection();
-            drawPlayer();
+        drawStartScreen();
+        drawDifficultySelection();
+        drawPlayer();
             
-            keyboardControls();
-            mouseMovement();
-        }
-        else if (gameState == "selectDodger") {
-            abilities();
-            drawText();
+        keyboardControls();
+        mouseMovement();
+    }
+    else if (gameState == "selectDodger") {
+        abilities();
+        drawText();
     
-            drawStartScreen();
-            drawDodgerSelection();
-            drawPlayer();
+        drawStartScreen();
+        drawDodgerSelection();
+        drawPlayer();
             
-            keyboardControls();
-            mouseMovement();
-        }
-        else if (gameState == "gameOn") {
-            drawText();
-    
-            drawEnemies();
-            drawPlayer();
+        keyboardControls();
+        mouseMovement();
+    }
+    else if (gameState == "gameOn") {
+        drawText();
+        drawEnemies();
+        drawPlayer();
             
-            keyboardControls();
-            mouseMovement();
+        keyboardControls();
+        mouseMovement();
             
-            spawnEnemyPeriodically();
-            moveEnemies();
-            abilities();
+        spawnEnemyPeriodically();
+        moveEnemies();
+        abilities();
             
-            collisions();
-        }
-        else if (gameState == "gameOver") {
-            drawText();
-            
-            drawGameOver();
-            drawEnemies();
-            drawPlayer();
-        }
+        collisions();
+    }
+    else if (gameState == "gameOver") {
+        drawText();
+        drawGameOver();
+        drawEnemies();
+        drawPlayer();
     }
     requestAnimationFrame(draw)
 }

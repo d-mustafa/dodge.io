@@ -115,7 +115,7 @@ function recordMouseClicked() {
 
             // saves the current players dodger to local storage
             userData.player.dodger = player.dodger;
-            localStorage.setItem('localUserData', JSON.stringfly(userData));
+            localStorage.setItem('localUserData', JSON.stringify(userData));
             mouseMovementOn = previousMM;
         }
     }
@@ -467,7 +467,7 @@ function drawText() {
             highscoreColor = player.subColor;
             
             userData.highscore[difficulty] = highscore[difficulty];
-            localStorage.setItem('localUserData', JSON.stringfly(userData));
+            localStorage.setItem('localUserData', JSON.stringify(userData));
         }
 
         // Actually draws the times (and the enemy count)

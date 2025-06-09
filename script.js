@@ -78,15 +78,25 @@ let dash = {
 // USER DATA
 const localData = localStorage.getItem('localUserData'); // load savedData (if it exists)
 let userData;
+let reset = false;
 
 if (localData) {
-    // retrieves the users local data
-    userData = JSON.parse(localData)
+    // retrieves the users local data and watches for corrupted data
+    try {
+        userData = JSON.parse(saveData);
+    } catch (exception) {
+        console.warn('Saved data was invalid, resetting.', exception);
+        localStorage.removeItem('localUserData');
+        reset = true;
+        break;
+    }
     
     // updates the player and highscore to the users local data
     player = userData.player
     highscore = userData.highscore
-} else {
+}
+
+if (reset || !localData){
     // creates a new userData for new users
     userData = {
         highscore: highscore,

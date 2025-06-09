@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("user data `n shi");
+console.log("FUCKING SET AND GET ARE SO DAMN SIMILAR, RAHHHHHHHHHHHH");
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 let gameState = "startScreen";
@@ -76,7 +76,7 @@ let dash = {
 
 
 // USER DATA
-const saveData = localStorage.setItem('localUserData'); // load savedData (if it exists)
+const saveData = localStorage.getItem('localUserData'); // load savedData (if it exists)
 let userData;
 
 if (saveData) {

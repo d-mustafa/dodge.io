@@ -759,9 +759,8 @@ function collisions() {
             }
         }
 
-        if (enemy.ability == "decelerator" && distance < player.radius + enemy.auraRadius) {
-            underAura += 1;
-        }
+        if (gameState === "gameOver") underAura = 0;
+        else if (enemy.ability === "decelerator" && distance < player.radius + enemy.auraRadius) underAura++;
     });
     
     player.slowed = 1 - (underAura/10)

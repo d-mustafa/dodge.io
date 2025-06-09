@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("Local data attempt");
+console.log("user data `n shi");
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 let gameState = "startScreen";
@@ -80,12 +80,20 @@ const saveData = localStorage.setItem('localUserData'); // load savedData (if it
 let userData;
 
 if (saveData) {
+    // retrieves the users local data
     userData = JSON.parse(savedData)
+    
+    // updates the player and highscore to the users local data
+    player = userData.player
+    highscore = userData.highscore
 } else {
+    // creates a new userData for new users
     userData = {
         highscore: highscore,
         player: player,
     };
+    
+    // saves the new user data to local storage
     localStorage.setItem('localUserData', JSON.stringfly(userData));
 }
 

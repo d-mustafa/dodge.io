@@ -138,7 +138,7 @@ function draw() {
         ctx.textAlign = "center";
         ctx.fillText(options[LI], cnv.width/2, cnv.height/2);
     }
-    else if (now - loadingGame > 5000 && gameState != "startScreen") gameState = "startScreen";
+    else if (now - loadingGame > 5000 && gameState == "loading") gameState = "startScreen";
 
     // Actual Game
     if (gameState == "startScreen") {

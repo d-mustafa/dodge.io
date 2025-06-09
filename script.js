@@ -76,8 +76,8 @@ let highscore =  {
 };
 
 let difficulty = {
-    level: "",
-    color: "",
+    level: "easy",
+    color: "rgb(0, 225, 255)",
 }
 
 // USER DATA

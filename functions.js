@@ -75,7 +75,9 @@ function recordMouseClicked() {
         }
     }
     // Back to start screen buttons
-    else if (gameState == "gameOver" && mouseOver.restart || gameState == "selectDodger" && mouseOver.selector || gameState == "selectDifficulty" && mouseOver.play) {
+    else if (gameState == "gameOver" && mouseOver.restart ||
+             gameState == "selectDodger" && mouseOver.selector ||
+             gameState == "selectDifficulty" && mouseOver.play) {
         gameState = "startScreen"
         mouseMovementOn = previousMM;
     }
@@ -94,22 +96,26 @@ function recordMouseClicked() {
     
     // Hero Choice
     else if (gameState == "selectDodger") {
-        if (mouseOver.weaver) {
-            player.dodger = "weaver";
-            player.color = "rgb(255, 255, 255)";
-            player.subColor = "rgb(230, 230, 230)";
-            mouseMovementOn = previousMM;
-        }
-        else if (mouseOver.jsab) {
-            player.dodger = "jsab";
-            player.color = "rgb(255, 0, 0)";
-            player.subColor = "rgb(230, 0, 0)";
-            mouseMovementOn = previousMM;
-        }
-        else if (mouseOver.jötunn) {
-            player.dodger = "jötunn";
-            player.color = "rgb(79, 203, 255)";
-            player.subColor = "rgb(70, 186, 235)";
+        if (mouseOver.weaver || mouseOver.jsab || mouseOver.jötunn) {
+            if (mouseOver.weaver) {
+                player.dodger = "weaver";
+                player.color = "rgb(255, 255, 255)";
+                player.subColor = "rgb(230, 230, 230)";
+            }
+            else if (mouseOver.jsab) {
+                player.dodger = "jsab";
+                player.color = "rgb(255, 0, 0)";
+                player.subColor = "rgb(230, 0, 0)";
+            }
+            else if (mouseOver.jötunn) {
+                player.dodger = "jötunn";
+                player.color = "rgb(79, 203, 255)";
+                player.subColor = "rgb(70, 186, 235)";
+            }
+
+            // saves the current players dodger to local storage
+            userData.player.dodger = player.dodger;
+            localStorage.setItem('localUserData', JSON.stringfly(userData));
             mouseMovementOn = previousMM;
         }
     }
@@ -455,10 +461,13 @@ function drawText() {
         currentTime = ((now-startTime) / 1000).toFixed(2);
         difficulty = player.difficulty
         
-        // Updates the highscore
+        // Updates the highscore and saves it to local storage
         if (Number(currentTime) > Number(highscore[difficulty])) {
             highscore[difficulty] = currentTime;
             highscoreColor = player.subColor;
+            
+            userData.highscore[difficulty] = highscore[difficulty];
+            localStorage.setItem('localUserData', JSON.stringfly(userData));
         }
 
         // Actually draws the times (and the enemy count)
@@ -720,7 +729,6 @@ function moveEnemies() {
 // Resets certain variables once the play button is pressed
 function restartGame() {
     allEnemies = []
-    
     // The starting amount of enemies is different based on the difficulty
     startAmount = 10;
     if (player.difficulty === "medium") startAmount = 20;
@@ -758,7 +766,6 @@ function collisions() {
             if (distance < player.radius + enemy.radius) {
                 highscoreColor = "rgb(87, 87, 87)";
                 gameState = "gameOver"
-
             }
         }
 
@@ -766,6 +773,7 @@ function collisions() {
             underAura += 1;
         }
     });
+    
     player.slowed = 1 - (underAura/10)
     if (player.slowed < 0.7) player.slowed = 0.7;
 }

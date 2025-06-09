@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("crash data");
+console.log("unknown");
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 let gameState = "loading";
@@ -161,6 +161,9 @@ window.addEventListener('beforeunload', () => {
     else if (gameState === "gameOn" || gameState === "gameOver") {
         crashData.leaveOnPlay++;
         crashData.lastLeftOn = "During Game";
+    } else {
+        crashData.leaveUnknown++;
+        crashData.lastLeftOn = `Unknown. Gamestate: ${gameState}.`;
     }
         
     localStorage.setItem('localCrashData', JSON.stringify(crashData));

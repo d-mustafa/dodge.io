@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("diff variable");
+console.log("mouseOver difficulty");
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 let gameState = "loading";

@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("periodic data saving");
+console.log("periodic data saving, (every 5 seconds)");
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 let gameState = "startScreen";

@@ -135,7 +135,7 @@ function draw() {
         }
         
         ctx.fillStyle = "rgb(87, 87, 87)";
-        ctx.font = "50px 'Verdana'";
+        ctx.font = "40px 'Verdana'";
         ctx.textAlign = "center";
         ctx.fillText(options[LI], cnv.width/2, cnv.height/2);
     }

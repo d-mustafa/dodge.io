@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("difficulty color");
+console.log("difficulty color && saving");
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 let gameState = "startScreen";

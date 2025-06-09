@@ -511,11 +511,18 @@ function createEnemy() {
         radius: (Math.random() * 7.5) + 10,  // between 10 and 17.5
         color: "rgb(100, 100, 100)",
     }
+    
+    // Initializes the enemy's ability and other important values based on their ability
+    enemyAbilitiesAndStats(oneEnemy);
+    
     if (player.difficulty == "easy") oneEnemy.speed = Math.random() + 1; // between 1 and 2
 
-    else if (player.difficulty == "medium") oneEnemy.speed = (Math.random() * 1.5) + 1; // between 1 and 2.5
+    if (player.difficulty == "medium") oneEnemy.speed = Math.random() + 1.25; // between 1.25 and 2.25
     
-    else if (player.difficulty == "hard") oneEnemy.speed = (Math.random() * 1.5) + 1.5; // between 1.5 and 2.5
+    if (player.difficulty == "hard") {
+        if (enemy.ability == "homing") oneEnemy.speed = (Math.random() * 0.7) + 1.5; // between 1.5 and 2.2
+        else oneEnemy.speed = Math.random() + 1.5; // between 1.5 and 2.5 (as fast as the player)
+    }
     
 
     let dx = player.x - oneEnemy.x;
@@ -544,9 +551,6 @@ function createEnemy() {
     // Initialization foe the angle the enemy moves towards (avoids the weird snapping-towards-the-player effect)
     const angleToPlayer = Math.atan2(dy, dx); // angle toward the player
     oneEnemy.facingAngle = angleToPlayer
-
-    // Initializes the enemy's ability and other important values based on their ability
-    enemyAbilitiesAndStats(oneEnemy);
 
     return oneEnemy;
 }
@@ -771,7 +775,7 @@ function collisions() {
 // Player abilities
 function abilities() {
     if (player.dodger === "jsab") {
-        // Dash (Active)
+        // Dash gives the player a powerful but short-lived burst of speed
         if (dash.activated){
             player.speed += dash.speed;
             player.color = "rgb(255, 72, 72)";
@@ -792,7 +796,7 @@ function abilities() {
             }
         }
     }
-    
+    // Changes enemy color based on distance to signify that they're being slowed down
     if (player.dodger === "jötunn") {
         allEnemies.forEach(enemy => {
             const dx = player.x - enemy.x;
@@ -855,11 +859,14 @@ function enemyAbilitiesAndStats(enemy) {
     }
 
     if (enemy.ability == "none") enemy.baseColor = "rgb(100, 100, 100)";
-    
+
+    // decelerators need an aura radius for their ability
     else if (enemy.ability == "decelerator") {
         enemy.baseColor = "rgb(255, 0, 0)";
         enemy.auraRadius = (Math.random() * 20) + 60;
     }
+
+    // homings need a detection radius for their ability
     else if (enemy.ability == "homing") {
         enemy.baseColor = "rgb(255, 196, 0)";
         enemy.detectionRadius = 200;

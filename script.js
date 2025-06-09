@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("save on disconnect");
+console.log("crash data");
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 let gameState = "loading";
@@ -87,7 +87,7 @@ let LI = 0; // loading index
 let lastSave = 0; // tracks how often data is saved (during gameplay)
 const localData = localStorage.getItem('localUserData'); // load savedData (if it exists)
 let userData;
-let reset = false;
+let resetLocalData = false;
 
 if (localData) {
     // retrieves the users local data and watches for corrupted data
@@ -99,13 +99,13 @@ if (localData) {
         player.subColor = userData.player.subColor
         highscore = userData.highscore
     } catch (exception) {
-        console.warn('Saved data was invalid, resetting.', exception);
+        console.warn('Local user data was invalid, resetting.', exception);
         localStorage.removeItem('localUserData');
-        reset = true;
+        resetLocalData = true;
     }
 }
 
-if (reset || !localData){
+if (resetLocalData || !localData){
     // creates a new userData for new users
     userData = {
         highscore: highscore,
@@ -116,15 +116,58 @@ if (reset || !localData){
     localStorage.setItem('localUserData', JSON.stringify(userData));
 }
 
-// saves the game if it the website is suddenly closed
-if (gameState != "loading") {
-    window.addEventListener('beforeunload', () => {
-        localStorage.setItem('localUserData', JSON.stringify(userData))
-        console.log("User disconnected; successfully saved the game.")
-    })
+
+// Crash data to track when the user leaves/crashes
+localCrashData = localStorage.getItem('localCrashData');
+crashData;
+resetCrashData = false;
+
+if (localCrashData) {
+    try {
+        crashData = JSON.parse(localCrashData);
+    } catch (exception) {
+        console.warn('Crash data was invalid, resetting.', exception);
+        localStorage.removeItem('localCrashData');
+        resetCrashData = true;
+    }
+}
+if (!localCrashData || resetCrashData) {
+    crashData = {
+        leaveOnLoading: 0,
+        leaveOnMenu: 0,
+        leaveOnPlay: 0,
+        leaveUnknown: 0,
+        lastLeftOn: "",
+    };
+    localStorage.setItem('localCrashData', JSON.stringify(crashData));
 }
 
+// saves the game if the website is closed
+window.addEventListener('beforeunload', () => {
+    if (gameState !== "loading") { // only save user data if they're not on the loading screen
+        localStorage.setItem('localUserData', JSON.stringify(userData));
+    }
+    
+    if (gameState === "loading") {
+        crashData.leaveOnLoading++;
+        crashData.lastLeftOn = "Loading Screen";
+    }
+    else if (gameState === "startScreen" ||
+        gameState === "selectDifficulty" ||
+        gameState === "selectDodger")    {
+        crashData.leaveOnMenu++;
+        crashData.lastLeftOn = "Main Menu";
+    }
+    else if (gameState === "gameOn" || gameState === "gameOver") {
+        crashData.leaveOnPlay++;
+        crashData.lastLeftOn = "During Game";
+    }
+        
+    localStorage.setItem('localCrashData', JSON.stringify(crashData));
+})
 
+
+// Drawing the game
 requestAnimationFrame(draw)
 
 function draw() {

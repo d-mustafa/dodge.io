@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("difficulty color && saving");
+console.log("difficulty color && saving && loading screen");
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 let gameState = "startScreen";
@@ -82,6 +82,7 @@ let difficulty = {
 
 // USER DATA
 let loadingGame = Date.now();
+let loadingScreen = Date.now();
     
 let lastSave = 0; // tracks how often data is saved (during gameplay)
 const localData = localStorage.getItem('localUserData'); // load savedData (if it exists)
@@ -122,62 +123,80 @@ function draw() {
     now = Date.now()
     ctx.fillStyle = "rgb(185, 185, 185)"
     ctx.fillRect(0, 0, cnv.width, cnv.height);
+
+    // Loading Screen
+    if (now - loadingGame <= 5000) { // Takes 5 seconds to load the game
+        options = ["Loading.", "Loading..", "Loading..."];
+        i = 0
+        if (now - loadingScreen >= 1000) { // change the text every second
+            loadingScreen = Date.now();
+            i++;
+            if (i > 2) i = 0;
+        }
+        
+        ctx.fillStyle = "rgb(87, 87, 87)";
+        ctx.font = "Arial 50px"
+        ctx.textAlign = "center"
+        ctx.fillText = (options[i], cnv.width/2, cnv.height/2)
+    }
+
+    // Actual Game
+    else {
+        if (gameState == "startScreen") {
+            abilities();
+            drawText();
+            
+            drawStartScreen();
+            drawPlayer();
+            
+            keyboardControls();
+            mouseMovement();
+        }
+        else if (gameState == "selectDifficulty") {
+            abilities();
+            drawText();
     
-    if (gameState == "startScreen") {
-        abilities();
-        drawText();
-        
-        drawStartScreen();
-        drawPlayer();
-        
-        keyboardControls();
-        mouseMovement();
+            drawStartScreen();
+            drawDifficultySelection();
+            drawPlayer();
+            
+            keyboardControls();
+            mouseMovement();
+        }
+        else if (gameState == "selectDodger") {
+            abilities();
+            drawText();
+    
+            drawStartScreen();
+            drawDodgerSelection();
+            drawPlayer();
+            
+            keyboardControls();
+            mouseMovement();
+        }
+        else if (gameState == "gameOn") {
+            drawText();
+    
+            drawEnemies();
+            drawPlayer();
+            
+            keyboardControls();
+            mouseMovement();
+            
+            spawnEnemyPeriodically();
+            moveEnemies();
+            abilities();
+            
+            collisions();
+        }
+        else if (gameState == "gameOver") {
+            drawText();
+            
+            drawGameOver();
+            drawEnemies();
+            drawPlayer();
+        }
     }
-    else if (gameState == "selectDifficulty") {
-        abilities();
-        drawText();
-
-        drawStartScreen();
-        drawDifficultySelection();
-        drawPlayer();
-        
-        keyboardControls();
-        mouseMovement();
-    }
-    else if (gameState == "selectDodger") {
-        abilities();
-        drawText();
-
-        drawStartScreen();
-        drawDodgerSelection();
-        drawPlayer();
-        
-        keyboardControls();
-        mouseMovement();
-    }
-    else if (gameState == "gameOn") {
-        drawText();
-
-        drawEnemies();
-        drawPlayer();
-        
-        keyboardControls();
-        mouseMovement();
-        
-        spawnEnemyPeriodically();
-        moveEnemies();
-        abilities();
-        
-        collisions();
-    }
-    else if (gameState == "gameOver") {
-        drawText();
-        
-        drawGameOver();
-        drawEnemies();
-        drawPlayer();
-    }
-
     requestAnimationFrame(draw)
 }
 

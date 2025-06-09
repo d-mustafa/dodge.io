@@ -86,7 +86,7 @@ if (localData) {
     try {
         userData = JSON.parse(localData);
         // updates the player and highscore to the users local data
-        player = userData.player
+        player.dodger = userData.player.dodger
         highscore = userData.highscore
     } catch (exception) {
         console.warn('Saved data was invalid, resetting.', exception);

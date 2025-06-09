@@ -91,18 +91,9 @@ function recordMouseClicked() {
     // Difficulty Choice
     else if (gameState == "selectDifficulty") {
         if (mouseOver.easy || mouseOver.medium || mouseOver.hard) {
-            if (mouseOver.easy) {
-                difficulty.level = "easy";
-                difficulty.color = "rgb(0, 225, 255)";
-            }
-            else if (mouseOver.medium) {
-                difficulty.level = "medium";
-                difficulty.color = "rgb(255, 255, 0)";
-            }
-            else if (mouseOver.hard) {
-                difficulty.level = "hard";
-                difficulty.color = "rgb(0, 0, 0)";
-            }
+            if (mouseOver.easy) difficulty = {level: "easy", color: "rgb(0, 225, 255)"};
+            else if (mouseOver.medium) difficulty = {level: "medium", color: "rgb(255, 255, 0)"};
+            else if (mouseOver.hard) difficulty = {level: "hard", color: "rgb(0, 0, 0)"};
 
             restartGame()
             mouseMovementOn = previousMM;

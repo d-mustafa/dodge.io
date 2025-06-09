@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("typos and corrupted data check");
+console.log("typos and corrupted data check; stringify fixes");
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 let gameState = "startScreen";

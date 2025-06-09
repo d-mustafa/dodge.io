@@ -777,7 +777,7 @@ function collisions() {
         const distance = Math.hypot(dx, dy);
 
         // Gives the player some time to get out of an enemy they dashed onto (0.5s)
-        if (!dash.activated || now - dash.lastUsed < 500) {
+        if (!dash.activated || !(now - dash.lastUsed < 500)) {
             if (distance < player.radius + enemy.radius) {
                 difficulty.color = "rgb(87, 87, 87)";
                 gameState = "gameOver"

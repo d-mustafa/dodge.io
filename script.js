@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("prevMM");
+console.log("colors");
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 let gameState = "loading";

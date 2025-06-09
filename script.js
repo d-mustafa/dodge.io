@@ -45,9 +45,9 @@ let player = {
     radius: 15,
     speed: 2.5,
     slowed: 1,
+    dodger: "weaver",
     color: "rgb(255, 255, 255)",
     subColor: "rgb(230, 230, 230)",
-    dodger: "weaver",
 };
 
 let dash = {
@@ -92,6 +92,8 @@ if (localData) {
         userData = JSON.parse(localData);
         // updates the player and highscore to the users local data
         player.dodger = userData.player.dodger
+        player.color = userData.player.color
+        player.subColor = userData.player.subColor
         highscore = userData.highscore
     } catch (exception) {
         console.warn('Saved data was invalid, resetting.', exception);

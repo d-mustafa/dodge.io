@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("new mouseX, mouseY & speed changes to enemies")
+console.log("finna crashout lowky")
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 let gameState = "startScreen";

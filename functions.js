@@ -458,6 +458,7 @@ function drawText() {
         ctx.fillText(`Time Elapsed: ${currentTime}s`, 200, 40);
         ctx.fillText(`Enemy Count: ${allEnemies.length}`, 600, 620);
 
+        if (highscoreColor === difficulty.color) ctx.font = "bold 20px 'Verdana'";
         ctx.fillStyle = highscoreColor;
         // Displays the highest score and the current difficulty (capitalized)
         ctx.fillText(

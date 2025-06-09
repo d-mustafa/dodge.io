@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("loading screen");
+console.log("diff variable");
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 let gameState = "loading";

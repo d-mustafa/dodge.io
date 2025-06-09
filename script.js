@@ -82,7 +82,7 @@ let difficulty = {
 
 // USER DATA
 let loadingGame = Date.now();
-let loadingScreen = Date.now();
+let loadingTextChange = Date.now();
     
 let lastSave = 0; // tracks how often data is saved (during gameplay)
 const localData = localStorage.getItem('localUserData'); // load savedData (if it exists)
@@ -128,8 +128,8 @@ function draw() {
     if (now - loadingGame <= 5000) { // Takes 5 seconds to load the game
         options = ["Loading.", "Loading..", "Loading..."];
         i = 0
-        if (now - loadingScreen >= 1000) { // change the text every second
-            loadingScreen = Date.now();
+        if (now - loadingTextChange >= 1000) { // change the text every second
+            loadingTextChange = Date.now();
             i++;
             if (i > 2) i = 0;
         }

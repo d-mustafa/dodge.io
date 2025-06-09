@@ -49,11 +49,15 @@ function recordMouseClicked() {
     if (gameState == "startScreen") {
         if (mouseOver.play) gameState = "selectDifficulty"
         else if (mouseOver.selector) gameState = "selectDodger"
+        if (mouseOver.play || mouseOver.selector) mouseMovementOn = previousMM;
     }
     // Back to start screen buttons
     else if (gameState == "gameOver" && mouseOver.restart ||
              gameState == "selectDodger" && mouseOver.selector ||
-             gameState == "selectDifficulty" && mouseOver.play) gameState = "startScreen";
+             gameState == "selectDifficulty" && mouseOver.play) {
+        gameState = "startScreen";
+        mouseMovementOn = previousMM;
+    }
 
     // Difficulty Choice
     else if (gameState == "selectDifficulty") {
@@ -62,7 +66,7 @@ function recordMouseClicked() {
             if (mouseOver.medium) difficulty = {level: "medium", color: "rgb(255, 255, 0)"};
             if (mouseOver.hard) difficulty = {level: "hard", color: "rgb(0, 0, 0)"};
 
-            for (let bool in mouseOver) mouseOver[bool] = false;
+            mouseMovementOn = previousMM;
             restartGame()
         }
     }
@@ -86,12 +90,11 @@ function recordMouseClicked() {
                 player.subColor = "rgb(70, 186, 235)";
             }
 
+            mouseMovementOn = previousMM;
             // saves the current players dodger to local storage
             userData.player = player;
             localStorage.setItem('localUserData', JSON.stringify(userData));
         }
-
-        for (let bool in mouseOver) if (mouseOver[bool]) mouseMovementOn = previousMM;
     }
 }
 

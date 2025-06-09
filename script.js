@@ -118,8 +118,10 @@ if (reset || !localData){
 
 // saves the game if it the website is suddenly closed
 if (gameState != "loading") {
-    window.addEventListener('beforeunload',
-                            localStorage.setItem('localUserData', JSON.stringify(userData)))
+    window.addEventListener('beforeunload', () => {
+        localStorage.setItem('localUserData', JSON.stringify(userData))
+        console.log("User disconnected; successfully saved the game.")
+    })
 }
 
 

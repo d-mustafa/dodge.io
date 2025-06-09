@@ -474,7 +474,7 @@ function drawText() {
     if (gameState == "gameOn") {
         // Current time in seconds
         currentTime = ((now-startTime) / 1000).toFixed(2);
-        difficulty = player.difficulty
+        difficulty = difficulty.level
         
         // Updates the highscore and saves it to local storage
         if (Number(currentTime) > Number(highscore[difficulty])) {
@@ -496,7 +496,8 @@ function drawText() {
         ctx.fillText(`Time Elapsed: ${currentTime}s`, 200, 40);
         ctx.fillText(`Enemy Count: ${allEnemies.length}`, 600, 620);
 
-        ctx.fillStyle = difficulty.color;
+        if (Number(currentTime) > Number(highscore[difficulty])) ctx.fillStyle = difficulty.color;
+        else ctx.fillStyle = "rgb(87, 87, 87)";
         // Displays the highesscore and the current difficulty (capitalized)
         ctx.fillText(`Highest Time (${difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}): ${highscore[difficulty]}s`, 600, 40);
     }
@@ -543,11 +544,11 @@ function createEnemy() {
     // Initializes the enemy's ability and other important values based on their ability
     enemyAbilitiesAndStats(oneEnemy);
     
-    if (player.difficulty == "easy") oneEnemy.speed = Math.random() + 1; // between 1 and 2
+    if (difficulty.level == "easy") oneEnemy.speed = Math.random() + 1; // between 1 and 2
 
-    if (player.difficulty == "medium") oneEnemy.speed = Math.random() + 1.25; // between 1.25 and 2.25
+    if (difficulty.level == "medium") oneEnemy.speed = Math.random() + 1.25; // between 1.25 and 2.25
     
-    if (player.difficulty == "hard") {
+    if (difficulty.level == "hard") {
         if (oneEnemy.ability == "homing") oneEnemy.speed = (Math.random() * 0.7) + 1.5; // between 1.5 and 2.2
         else oneEnemy.speed = Math.random() + 1.5; // between 1.5 and 2.5 (as fast as the player)
     }
@@ -750,8 +751,8 @@ function restartGame() {
     allEnemies = []
     // The starting amount of enemies is different based on the difficulty
     startAmount = 10;
-    if (player.difficulty === "medium") startAmount = 20;
-    if (player.difficulty === "hard") startAmount = 30;
+    if (difficulty.level === "medium") startAmount = 20;
+    if (difficulty.level === "hard") startAmount = 30;
     
     for(let i = 1; i < startAmount; i++) {
         allEnemies.push(createEnemy());
@@ -876,14 +877,14 @@ function enemyAbilitiesAndStats(enemy) {
     num = Math.random();
 
     // All enemies on easy difficulty have no abilities
-    if (player.difficulty == "easy")  enemy.ability = "none";
+    if (difficulty.level == "easy")  enemy.ability = "none";
 
-    else if (player.difficulty == "medium") {
+    else if (difficulty.level == "medium") {
         // 25% Chance to get the decelerator ability
         if (num > 0.75) enemy.ability = "decelerator";
         else enemy.ability = "none";
     }
-    else if (player.difficulty == "hard") {
+    else if (difficulty.level == "hard") {
         // 25% Chance to get the decelerator ability, 15% for the homing ability
         if (num > 0.85) enemy.ability = "homing";
         else if (num > 0.6) enemy.ability = "decelerator";

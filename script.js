@@ -118,7 +118,7 @@ if (resetLocalData || !localData){
 
 
 // Crash data to track when the user leaves/crashes
-let localCrashData = localStorage.getItem('localCrashData');
+const localCrashData = localStorage.getItem('localCrashData');
 let crashData;
 let resetCrashData = false;
 

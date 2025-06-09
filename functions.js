@@ -123,7 +123,7 @@ function recordMouseClicked() {
             }
 
             // saves the current players dodger to local storage
-            userData.player.dodger = player.dodger;
+            userData.player = player;
             localStorage.setItem('localUserData', JSON.stringify(userData));
             mouseMovementOn = previousMM;
         }
@@ -475,7 +475,7 @@ function drawText() {
             highscore[difficulty] = currentTime;
             highscoreColor = player.subColor;
 
-            userData.highscore[difficulty] = highscore[difficulty];
+            userData.highscore = highscore;
             // Saves data every 5 seconds (incase the user disconnects/crashes)
             if (now - lastSave >= 5000) {
                 localStorage.setItem('localUserData', JSON.stringify(userData));
@@ -783,7 +783,7 @@ function collisions() {
                 gameState = "gameOver"
 
                 // Saves data once the user dies
-                userData.highscore[player.difficulty] = highscore[player.difficulty];
+                userData.highscore = highscore;
                 localStorage.setItem('localUserData', JSON.stringify(userData));
             }
         }

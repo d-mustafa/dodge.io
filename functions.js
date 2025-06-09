@@ -513,12 +513,12 @@ function drawText() {
     else if (player.dodger == "jsab") {
         // Dash CD
         let dashCDLeft = ((dash.cooldown - (now - dash.lastUsed)) / 1000).toFixed(2);
-        if (now - dash.lastUsed <= dash.cooldown) { // 1.1s
-            dash.usable = false;
-            ctx.fillText(`Active: ${dashCDLeft}s`, textX, 620);
-        } else {
+        if (now - dash.lastUsed >= dash.cooldown) { // 1.1s
             dash.usable = true;
             ctx.fillText(`Active: Dash(Q/J)`, textX, 620);
+        } else {
+            dash.usable = false;
+            ctx.fillText(`Active: ${dashCDLeft}s`, textX, 620);
         }
     }
     

@@ -520,7 +520,7 @@ function createEnemy() {
     if (player.difficulty == "medium") oneEnemy.speed = Math.random() + 1.25; // between 1.25 and 2.25
     
     if (player.difficulty == "hard") {
-        if (enemy.ability == "homing") oneEnemy.speed = (Math.random() * 0.7) + 1.5; // between 1.5 and 2.2
+        if (oneEnemy.ability == "homing") oneEnemy.speed = (Math.random() * 0.7) + 1.5; // between 1.5 and 2.2
         else oneEnemy.speed = Math.random() + 1.5; // between 1.5 and 2.5 (as fast as the player)
     }
     

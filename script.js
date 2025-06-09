@@ -68,7 +68,7 @@ let currentTime = ((now-startTime) / 1000).toFixed(2);
 let enemySpawnPeriod = 3000;
 let lastSpawn = Date.now();
 
-let highscore =  {
+let highscore = {
     easy: 0,
     medium: 0,
     hard: 0,

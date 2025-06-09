@@ -81,6 +81,8 @@ let difficulty = {
 }
 
 // USER DATA
+let loadingGame = Date.now();
+    
 let lastSave = 0; // tracks how often data is saved (during gameplay)
 const localData = localStorage.getItem('localUserData'); // load savedData (if it exists)
 let userData;

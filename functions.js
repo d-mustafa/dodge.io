@@ -2,30 +2,18 @@
 // keeps track of when certain buttons are pressed/held
 function recordKeyDown(event) {
     if (now - loadingGame <= 5000) return;
-        
-    if (event.code == "KeyW") {
-        wPressed = true;
-    }
-    if (event.code == "KeyA") {
-        aPressed = true;
-    }
-    if (event.code == "KeyS") {
-        sPressed = true;
-    }
-    if (event.code == "KeyD") {
-        dPressed = true;
-    }
+    
+    if (event.code == "KeyW") wPressed = true;
+    if (event.code == "KeyA") aPressed = true;
+    if (event.code == "KeyS") sPressed = true;
+    if (event.code == "KeyD") dPressed = true;
+    if (event.code == "ShiftLeft" || event.code == "ShiftRight") shiftPressed = 0.7;
+    if (wPressed || aPressed || sPressed || dPressed) keyboardMovementOn = true;
+    
     if ((event.code == "KeyQ" || event.code == "KeyJ") && gameState != "gameOver") {
         if (player.dodger == "jsab" && dash.usable) {
             dash.activated = true;
         }
-    }
-    if (event.code == "ShiftLeft" || event.code == "ShiftRight") {
-        shiftPressed = 0.7;
-    }
-
-    if (wPressed || aPressed || sPressed || dPressed) {
-        keyboardMovementOn = true;
     }
 }
 
@@ -33,25 +21,12 @@ function recordKeyDown(event) {
 function recordKeyUp(event) {
     if (now - loadingGame <= 5000) return;
     
-    if (event.code == "KeyW") {
-        wPressed = false;
-    }
-    if (event.code == "KeyA") {
-        aPressed = false;
-    }
-    if (event.code == "KeyS") {
-        sPressed = false;
-    }
-    if (event.code == "KeyD") {
-        dPressed = false;
-    }
-    if (event.code == "ShiftLeft" || event.code == "ShiftRight") {
-        shiftPressed = 1;
-    }
-
-    if (!wPressed && !aPressed && !sPressed && !dPressed) {
-        keyboardMovementOn = false;
-    }
+    if (event.code == "KeyW") wPressed = false;
+    if (event.code == "KeyA") aPressed = false;
+    if (event.code == "KeyS") sPressed = false;
+    if (event.code == "KeyD") dPressed = false;
+    if (event.code == "ShiftLeft" || event.code == "ShiftRight") shiftPressed = 1;
+    if (!wPressed && !aPressed && !sPressed && !dPressed) keyboardMovementOn = false;
 }
 
 // Keeps track of clicking certain areas on the screen. Needed to make buttons work.
@@ -69,24 +44,18 @@ function recordMouseClicked() {
         mouseMovementOn = true;
         previousMM = false;
     }
+
+    for (let bool in mouseOver) if (mouseOver["bool"]) mouseMovementOn = previousMM;
     
     // Start screen Buttons
     if (gameState == "startScreen") {
-        if (mouseOver.play) {
-            gameState = "selectDifficulty"
-            mouseMovementOn = previousMM;
-        } else if (mouseOver.selector) {
-            gameState = "selectDodger"
-            mouseMovementOn = previousMM;
-        }
+        if (mouseOver.play) gameState = "selectDifficulty"
+        else if (mouseOver.selector) gameState = "selectDodger"
     }
     // Back to start screen buttons
     else if (gameState == "gameOver" && mouseOver.restart ||
              gameState == "selectDodger" && mouseOver.selector ||
-             gameState == "selectDifficulty" && mouseOver.play) {
-        gameState = "startScreen"
-        mouseMovementOn = previousMM;
-    }
+             gameState == "selectDifficulty" && mouseOver.play) gameState = "startScreen";
 
     // Difficulty Choice
     else if (gameState == "selectDifficulty") {
@@ -96,7 +65,6 @@ function recordMouseClicked() {
             if (mouseOver.hard) difficulty = {level: "hard", color: "rgb(0, 0, 0)"};
 
             restartGame()
-            mouseMovementOn = previousMM;
         }
     }
     
@@ -122,7 +90,6 @@ function recordMouseClicked() {
             // saves the current players dodger to local storage
             userData.player = player;
             localStorage.setItem('localUserData', JSON.stringify(userData));
-            mouseMovementOn = previousMM;
         }
     }
 }

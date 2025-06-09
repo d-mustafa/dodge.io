@@ -163,7 +163,7 @@ window.addEventListener('beforeunload', () => {
         crashData.lastLeftOn = "During Game";
     } else {
         crashData.leaveUnknown++;
-        crashData.lastLeftOn = `Unknown. Gamestate: ${gameState}.`;
+        crashData.lastLeftOn = `Unknown. Gamestate: '${gameState}'.`;
     }
         
     localStorage.setItem('localCrashData', JSON.stringify(crashData));

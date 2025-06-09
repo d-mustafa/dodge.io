@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("FUCKING SET AND GET ARE SO DAMN SIMILAR, RAHHHHHHHHHHHH");
+console.log("typos");
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 let gameState = "startScreen";
@@ -76,12 +76,12 @@ let dash = {
 
 
 // USER DATA
-const saveData = localStorage.getItem('localUserData'); // load savedData (if it exists)
+const localData = localStorage.getItem('localUserData'); // load savedData (if it exists)
 let userData;
 
-if (saveData) {
+if (localData) {
     // retrieves the users local data
-    userData = JSON.parse(savedData)
+    userData = JSON.parse(localData)
     
     // updates the player and highscore to the users local data
     player = userData.player
@@ -94,10 +94,8 @@ if (saveData) {
     };
     
     // saves the new user data to local storage
-    localStorage.setItem('localUserData', JSON.stringfly(userData));
+    localStorage.setItem('localUserData', JSON.stringify(userData));
 }
-
-
 
 
 requestAnimationFrame(draw)

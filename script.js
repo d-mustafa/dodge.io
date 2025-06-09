@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("new mouseX, mouseY")
+console.log("new mouseX, mouseY & speed changes to enemies")
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 let gameState = "startScreen";
@@ -46,7 +46,7 @@ let mouseY;
 window.addEventListener('mousemove', (event) => {
     const rect = cnv.getBoundingClientRect();
     mouseX = event.pageX - rect.left;
-    mouseX = event.pageY - rect.top;
+    mouseY = event.pageY - rect.top;
 });
 
 // Player & Enemies

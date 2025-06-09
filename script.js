@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("bold");
+console.log("save on disconnect");
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 let gameState = "loading";

@@ -861,7 +861,7 @@ function enemyAbilitiesAndStats(enemy) {
     // decelerators need an aura radius for their ability
     else if (enemy.ability == "decelerator") {
         enemy.baseColor = "rgb(255, 0, 0)";
-        enemy.auraRadius = (Math.random() * 20) + 60;
+        enemy.auraRadius = (Math.random() * 20) + 80;
     }
 
     // homings need a detection radius for their ability

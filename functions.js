@@ -479,7 +479,6 @@ function drawText() {
         // Updates the highscore and saves it to local storage
         if (Number(currentTime) > Number(highscore[difficulty])) {
             highscore[difficulty] = currentTime;
-            highscoreColor = player.subColor;
 
             userData.highscore = highscore;
             // Saves data every 5 seconds (incase the user disconnects/crashes)
@@ -489,7 +488,7 @@ function drawText() {
             }
         }
 
-        // Actually draws the times (and the enemy count)
+        // Draws the times and the enemy count
         ctx.font = "20px 'Verdana'";
         ctx.textAlign = 'center';
             

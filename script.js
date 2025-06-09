@@ -135,9 +135,9 @@ function draw() {
         }
         
         ctx.fillStyle = "rgb(87, 87, 87)";
-        ctx.font = "Arial 50px"
-        ctx.textAlign = "center"
-        ctx.fillText = (options[i], cnv.width/2, cnv.height/2)
+        ctx.font = "Arial 50px";
+        ctx.textAlign = "center";
+        ctx.fillText(options[i], cnv.width/2, cnv.height/2);
     }
 
     // Actual Game

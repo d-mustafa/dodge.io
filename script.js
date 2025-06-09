@@ -29,17 +29,6 @@ let mouseOver = {
     hard: false,
 }
 
-
-/*
-Tracks the Mouse's coordinates throught the canvas.
-
-cnv.addEventListener('mousemove', (event) => {
-    const rect = cnv.getBoundingClientRect();
-    mouseX = event.clientX - rect.left;
-    mouseY = event.clientY - rect.top;
-});
-*/
-
 let mouseX;
 let mouseY;
 // Tracks the mouse's coordinates throughout the entire window

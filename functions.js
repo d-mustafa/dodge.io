@@ -432,11 +432,10 @@ function drawText() {
     if (gameState == "gameOn") {
         // Current time in seconds
         currentTime = ((now-startTime) / 1000).toFixed(2);
-        difficulty = difficulty.level
         
         // Updates the highscore and saves it to local storage
-        if (Number(currentTime) > Number(highscore[difficulty])) {
-            highscore[difficulty] = currentTime;
+        if (Number(currentTime) > Number(highscore[difficulty.level])) {
+            highscore[difficulty.level] = currentTime;
 
             userData.highscore = highscore;
             // Saves data every 5 seconds (incase the user disconnects/crashes)
@@ -454,10 +453,12 @@ function drawText() {
         ctx.fillText(`Time Elapsed: ${currentTime}s`, 200, 40);
         ctx.fillText(`Enemy Count: ${allEnemies.length}`, 600, 620);
 
-        if (Number(currentTime) > Number(highscore[difficulty])) ctx.fillStyle = difficulty.color;
+        if (Number(currentTime) > Number(highscore[difficulty.level])) ctx.fillStyle = difficulty.color;
         else ctx.fillStyle = "rgb(87, 87, 87)";
-        // Displays the highesscore and the current difficulty (capitalized)
-        ctx.fillText(`Highest Time (${difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}): ${highscore[difficulty]}s`, 600, 40);
+        // Displays the highest score and the current difficulty (capitalized)
+        ctx.fillText(
+            `Highest Time (${difficulty.level.charAt(0).toUpperCase() + difficulty.slice(1)}): ${highscore[difficulty.level]}s`,
+            600, 40);
     }
     
     // Abilites

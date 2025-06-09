@@ -440,6 +440,7 @@ function drawText() {
         // Updates the highscore and saves it to local storage
         if (Number(currentTime) > Number(highscore[difficulty.level])) {
             highscore[difficulty.level] = currentTime;
+            highscoreColor = difficulty.color
 
             userData.highscore = highscore;
             // Saves data every 5 seconds (incase the user disconnects/crashes)
@@ -457,8 +458,7 @@ function drawText() {
         ctx.fillText(`Time Elapsed: ${currentTime}s`, 200, 40);
         ctx.fillText(`Enemy Count: ${allEnemies.length}`, 600, 620);
 
-        if (Number(currentTime) > Number(highscore[difficulty.level])) ctx.fillStyle = difficulty.color;
-        else ctx.fillStyle = "rgb(87, 87, 87)";
+        ctx.fillStyle = highscoreColor;
         // Displays the highest score and the current difficulty (capitalized)
         ctx.fillText(
             `Highest Time (${difficulty.level.charAt(0).toUpperCase() + difficulty.level.slice(1)}): ${highscore[difficulty.level]}s`,
@@ -748,6 +748,7 @@ function collisions() {
         // Gives the player some time to get out of an enemy they dashed onto (0.5s)
         if (!dash.activated || !(now - dash.lastUsed < 500)) {
             if (distance < player.radius + enemy.radius) {
+                highscoreColor = "rgb(87, 87, 87)";
                 difficulty.color = "rgb(87, 87, 87)";
                 gameState = "gameOver"
 

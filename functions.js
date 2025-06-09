@@ -85,9 +85,18 @@ function recordMouseClicked() {
     // Difficulty Choice
     else if (gameState == "selectDifficulty") {
         if (mouseOver.easy || mouseOver.medium || mouseOver.hard) {
-            if (mouseOver.easy) player.difficulty = "easy";
-            else if (mouseOver.medium) player.difficulty = "medium";
-            else if (mouseOver.hard) player.difficulty = "hard";
+            if (mouseOver.easy) {
+                difficulty.level = "easy";
+                difficulty.color = "rgb(0, 225, 255)";
+            }
+            else if (mouseOver.medium) {
+                difficulty.level = "medium";
+                difficulty.color = "rgb(255, 255, 0)";
+            }
+            else if (mouseOver.hard) {
+                difficulty.level = "hard";
+                difficulty.color = "rgb(0, 0, 0)";
+            }
 
             restartGame()
             mouseMovementOn = previousMM;
@@ -482,7 +491,7 @@ function drawText() {
         ctx.fillText(`Time Elapsed: ${currentTime}s`, 200, 40);
         ctx.fillText(`Enemy Count: ${allEnemies.length}`, 600, 620);
 
-        ctx.fillStyle = highscoreColor;
+        ctx.fillStyle = difficulty.color;
         // Displays the highesscore and the current difficulty (capitalized)
         ctx.fillText(`Highest Time (${difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}): ${highscore[difficulty]}s`, 600, 40);
     }
@@ -770,7 +779,7 @@ function collisions() {
         // Gives the player some time to get out of an enemy they dashed onto (0.5s)
         if (!dash.activated || now - dash.lastUsed < 500) {
             if (distance < player.radius + enemy.radius) {
-                highscoreColor = "rgb(87, 87, 87)";
+                difficulty.color = "rgb(87, 87, 87)";
                 gameState = "gameOver"
 
                 // Saves data once the user dies

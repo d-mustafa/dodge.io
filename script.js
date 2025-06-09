@@ -85,16 +85,14 @@ if (localData) {
     // retrieves the users local data and watches for corrupted data
     try {
         userData = JSON.parse(saveData);
+        // updates the player and highscore to the users local data
+        player = userData.player
+        highscore = userData.highscore
     } catch (exception) {
         console.warn('Saved data was invalid, resetting.', exception);
         localStorage.removeItem('localUserData');
         reset = true;
-        break;
     }
-    
-    // updates the player and highscore to the users local data
-    player = userData.player
-    highscore = userData.highscore
 }
 
 if (reset || !localData){

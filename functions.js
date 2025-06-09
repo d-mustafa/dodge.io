@@ -457,7 +457,7 @@ function drawText() {
         else ctx.fillStyle = "rgb(87, 87, 87)";
         // Displays the highest score and the current difficulty (capitalized)
         ctx.fillText(
-            `Highest Time (${difficulty.level.charAt(0).toUpperCase() + difficulty.slice(1)}): ${highscore[difficulty.level]}s`,
+            `Highest Time (${difficulty.level.charAt(0).toUpperCase() + difficulty.level.slice(1)}): ${highscore[difficulty.level]}s`,
             600, 40);
     }
     

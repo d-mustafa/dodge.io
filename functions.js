@@ -1,6 +1,8 @@
 // KEYBAORD AND MOUSE EVENTS
 // keeps track of when certain buttons are pressed/held
 function recordKeyDown(event) {
+    if (now - loadingGame <= 5000) return;
+        
     if (event.code == "KeyW") {
         wPressed = true;
     }
@@ -29,6 +31,8 @@ function recordKeyDown(event) {
 
 // keeps track of when certain buttons are released
 function recordKeyUp(event) {
+    if (now - loadingGame <= 5000) return;
+    
     if (event.code == "KeyW") {
         wPressed = false;
     }
@@ -52,6 +56,8 @@ function recordKeyUp(event) {
 
 // Keeps track of clicking certain areas on the screen. Needed to make buttons work.
 function recordMouseClicked() {
+    if (now - loadingGame <= 5000) return;
+    
     // Variable to keep mouse movement the way it was if the player pressed a button
     let previousMM;
     

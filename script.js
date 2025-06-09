@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("periodic data saving, (every 5 seconds)");
+console.log("periodic data saving and typo debugging");
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 let gameState = "startScreen";
@@ -84,7 +84,7 @@ let reset = false;
 if (localData) {
     // retrieves the users local data and watches for corrupted data
     try {
-        userData = JSON.parse(saveData);
+        userData = JSON.parse(localData);
         // updates the player and highscore to the users local data
         player = userData.player
         highscore = userData.highscore

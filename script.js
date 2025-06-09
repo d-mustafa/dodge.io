@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("finna crashout lowky")
+console.log("Local data attempt");
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 let gameState = "startScreen";
@@ -27,7 +27,7 @@ let mouseOver = {
     easy: false,
     medium: false,
     hard: false,
-}
+};
 
 let mouseX;
 let mouseY;
@@ -48,8 +48,8 @@ let player = {
     color: "rgb(255, 255, 255)",
     subColor: "rgb(230, 230, 230)",
     dodger: "weaver",
-}
-let allEnemies = []
+};
+let allEnemies = [];
 
 // Time
 let now = Date.now();
@@ -61,7 +61,7 @@ let highscore =  {
     easy: 0,
     medium: 0,
     hard: 0,
-}
+};
 let highscoreColor = "rgb(87, 87, 87)";
 
 // Abilities
@@ -72,7 +72,25 @@ let dash = {
     speed: 0.5,
     cooldown: 1100, // cooldowns are in milliseconds
     lastUsed: 0,
+};
+
+
+// USER DATA
+const saveData = localStorage.setItem('localUserData'); // load savedData (if it exists)
+let userData;
+
+if (saveData) {
+    userData = JSON.parse(savedData)
+} else {
+    userData = {
+        highscore: highscore,
+        player: player,
+    };
+    localStorage.setItem('localUserData', JSON.stringfly(userData));
 }
+
+
+
 
 requestAnimationFrame(draw)
 

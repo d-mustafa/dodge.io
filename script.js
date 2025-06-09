@@ -49,22 +49,7 @@ let player = {
     subColor: "rgb(230, 230, 230)",
     dodger: "weaver",
 };
-let allEnemies = [];
 
-// Time
-let now = Date.now();
-let startTime = Date.now();
-let currentTime = ((now-startTime) / 1000).toFixed(2);
-let enemySpawnPeriod = 3000;
-let lastSpawn = Date.now();
-let highscore =  {
-    easy: 0,
-    medium: 0,
-    hard: 0,
-};
-let highscoreColor = "rgb(87, 87, 87)";
-
-// Abilities
 let dash = {
     usable: true,
     activated: false,
@@ -74,6 +59,26 @@ let dash = {
     lastUsed: 0,
 };
 
+let allEnemies = [];
+
+// Time and difficulty
+let now = Date.now();
+let startTime = Date.now();
+let currentTime = ((now-startTime) / 1000).toFixed(2);
+let enemySpawnPeriod = 3000;
+let lastSpawn = Date.now();
+
+let highscoreColor = "rgb(87, 87, 87)";
+let highscore =  {
+    easy: 0,
+    medium: 0,
+    hard: 0,
+};
+
+let difficulty = {
+    level: "",
+    color: "",
+}
 
 // USER DATA
 let lastSave = 0; // tracks how often data is saved (during gameplay)

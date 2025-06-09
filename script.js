@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("difficulty color");
+console.log("startscreen");
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 let gameState = "loading";

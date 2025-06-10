@@ -2,6 +2,7 @@
 console.log("decelerator radii");
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
+
 let gameState = "loading";
 
 // Keyboard
@@ -34,8 +35,8 @@ let mouseY;
 // Tracks the mouse's coordinates throughout the entire window
 window.addEventListener('mousemove', (event) => {
     const rect = cnv.getBoundingClientRect();
-    mouseX = event.pageX - rect.left;
-    mouseY = event.pageY - rect.top;
+    mouseX = event.clientX - rect.left;
+    mouseY = event.clientY - rect.top;
 });
 
 // Player & Enemies

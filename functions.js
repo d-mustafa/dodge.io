@@ -1,5 +1,4 @@
-// KEYBAORD AND MOUSE EVENTS
-// keeps track of when certain buttons are pressed/held
+// KEYBAORD AND MOUSE EVENTS (player inputs)
 function recordKeyDown(event) {
     if (now - loadingGame <= 5000) return;
     
@@ -17,7 +16,6 @@ function recordKeyDown(event) {
     }
 }
 
-// keeps track of when certain buttons are released
 function recordKeyUp(event) {
     if (now - loadingGame <= 5000) return;
     
@@ -29,12 +27,10 @@ function recordKeyUp(event) {
     if (!wPressed && !aPressed && !sPressed && !dPressed) keyboardMovementOn = false;
 }
 
-// Keeps track of clicking certain areas on the screen. Needed to make buttons work.
 function recordMouseClicked() {
     if (now - loadingGame <= 5000) return;
-    
-    // Variable to keep mouse movement the way it was if the player pressed a button
-    let previousMM;
+       
+    let previousMM; // Variable to keep mouse movement the way it was if the player pressed a button
     
     // Mouse Movement
     if (mouseMovementOn) {
@@ -100,7 +96,7 @@ function recordMouseClicked() {
 
 
 // FUNCTIONS THAT DRAWS STUFF TO THE SCREEN
-// Draws the main menu
+
 function drawStartScreen() {
     if (gameState == "startScreen" || gameState == "selectDifficulty") {
         // PLAY BUTTON //
@@ -243,7 +239,6 @@ function drawStartScreen() {
     }
 }
 
-// Draws the difficulty options screen
 function drawDifficultySelection() {
     function decideFillStyle(bool, color1, color2) {
         if (bool) {
@@ -275,7 +270,7 @@ function drawDifficultySelection() {
 
     ctx.font = "25px 'Lucida Console'";
     ctx.fillText("EASY", 60, 230);
-    ctx.font = "15px 'Lucida Console'";
+    ctx.font = "14px 'Lucida Console'";
     ctx.fillText("Normal Enemies", 60, 280);
 
 
@@ -283,26 +278,24 @@ function drawDifficultySelection() {
 
     ctx.font = "25px 'Lucida Console'";
     ctx.fillText("MEDIUM", 310, 230);
-    ctx.font = "15px 'Lucida Console'";
-    ctx.fillText("Decelerating Enemies", 310, 280);
+    ctx.font = "14px 'Lucida Console'";
+    ctx.fillText("+Decelerating Enemies", 310, 280);
 
 
     ctx.fillStyle = "rgb(0, 0, 0)";
 
     ctx.font = "25px 'Lucida Console'";
     ctx.fillText("HARD", 560, 230);
-    ctx.font = "15px 'Lucida Console'";
-    ctx.fillText("Homing Enemies", 560, 280);
+    ctx.font = "14px 'Lucida Console'";
+    ctx.fillText("+Homing Enemies", 560, 280);
 }
 
-// Convenience function to draw simple circles
 function drawCircle(x, y, r = 12.5) {
     ctx.beginPath()
     ctx.arc(x, y, r, Math.PI * 2, 0)
     ctx.fill()
 }
 
-// Draws the character selection screen
 function drawDodgerSelection() {
     // Inner function to make life easier
     function decideFillStyle(bool, color1, color2) {
@@ -318,11 +311,9 @@ function drawDodgerSelection() {
     decideFillStyle(mouseOver.weaver, "rgb(230, 230, 230)", "rgb(220, 220, 220)");
     ctx.fillRect(50, 200, 200, 100);
     
-
     mouseOver.jsab = (mouseX > 300 && mouseX < 500) && (mouseY > 200 && mouseY < 300);
     decideFillStyle(mouseOver.jsab, "rgb(220, 0, 0)", "rgb(200, 0, 0)");
     ctx.fillRect(300, 200, 200, 100);
-    
 
     mouseOver.jötunn = (mouseX > 550 && mouseX < 750) && (mouseY > 200 && mouseY < 300);
     decideFillStyle(mouseOver.jötunn, "rgb(70, 175, 219)", "rgb(65, 166, 209)");
@@ -358,7 +349,6 @@ function drawDodgerSelection() {
     ctx.fillText("ABILITY: STAGNATION", 560, 280);
 }
 
-// Draws the game over screen
 function drawGameOver() {
     const grad = ctx.createLinearGradient(250, 50, 550, 150)
     const grad2 = ctx.createLinearGradient(250, 150, 550, 50)
@@ -411,14 +401,13 @@ function drawGameOver() {
     ctx.strokeText('Try Again', 480, 135);
 }
 
-function drawPlayer() { // self explanatory no?
+function drawPlayer() {
     ctx.fillStyle = player.color
     ctx.beginPath()
     ctx.arc(player.x, player.y, player.radius, Math.PI*2, 0)
     ctx.fill()
 }
 
-// Loops through the allEnemies array and draws all of them with their own unique attributes
 function drawEnemies() {
     allEnemies.forEach(enemy => {
         ctx.fillStyle = enemy.color
@@ -431,8 +420,7 @@ function drawEnemies() {
     })
 }
 
-// draws the current time, highest time, and enemy count
-function drawText() {
+function drawText() { // draws the current time, highest time, and enemy count
     if (gameState == "gameOn") {
         // Current time in seconds
         currentTime = ((now-startTime) / 1000).toFixed(2);
@@ -496,8 +484,7 @@ function drawText() {
     else if (player.dodger == "jötunn") ctx.fillText(`Passive: Stagnation`, textX, 620);
 }
 
-// Creates an individual enemy with unique attributes
-function createEnemy() {
+function createEnemy() { // Creates an individual enemy with unique attributes
     let oneEnemy = {
         x: (Math.random() * (cnv.width-60))+30,  // between 30 and 770
         y: (Math.random() * (cnv.height-60))+30,  // between 30 and 520
@@ -548,7 +535,6 @@ function createEnemy() {
     return oneEnemy;
 }
 
-// Spawns an enemy every 3s
 function spawnEnemyPeriodically() {
     if (allEnemies.length < 100 && now - lastSpawn >= enemySpawnPeriod) {
         allEnemies.push(createEnemy());  
@@ -567,7 +553,6 @@ function spawnEnemyPeriodically() {
 }
 
 // PLAYER AND ENEMY MOVEMENT
-// Keeps track of WASD inputs to move the player
 function keyboardControls() {
     if (keyboardMovementOn){
         if (!dash.activated){
@@ -597,7 +582,6 @@ function keyboardControls() {
     }
 }
 
-// Keeps track of the cursor to move the player towards it
 function mouseMovement() {
     if (mouseMovementOn && !keyboardMovementOn) {
         const dx = mouseX - player.x;
@@ -710,8 +694,8 @@ function moveEnemies() {
 
 // GAMESTATE CHANGES
 
-// Resets certain variables once the play button is pressed
-function restartGame() {
+
+function restartGame() { // Resets certain variables once the play button is pressed
     allEnemies = []
     // The starting amount of enemies is different based on the difficulty
     startAmount = 10;
@@ -738,16 +722,15 @@ function restartGame() {
     gameState = "gameOn"
 }
 
-// Keeps track of when the player touches any enemy in the allEnemies array
-function collisions() {
+function collisions() { // Keeps track of when the player touches any enemy in the allEnemies array
     let underAura = 0;
     allEnemies.forEach(enemy => {
         const dx = player.x - enemy.x;
         const dy = player.y - enemy.y;
         const distance = Math.hypot(dx, dy);
 
-        // Gives the player some time to get out of an enemy they dashed onto (0.5s)
-        if (!dash.activated || !(now - dash.lastUsed < 500)) {
+        // Gives the player some time to get out of an enemy they dashed onto (0.3s)
+        if (!dash.activated && !(now - dash.lastUsed < 300)) {
             if (distance < player.radius + enemy.radius) {
                 highscoreColor = "rgb(87, 87, 87)";
                 difficulty.color = "rgb(87, 87, 87)";
@@ -769,8 +752,7 @@ function collisions() {
 
 // ABILITIES
 
-// Player abilities
-function abilities() {
+function abilities() { // player-specific
     if (player.dodger === "jsab") {
         // Dash gives the player a powerful but short-lived burst of speed
         if (dash.activated){
@@ -836,8 +818,7 @@ function abilities() {
     }
 }
 
-// Enemy abilities
-function enemyAbilitiesAndStats(enemy) {
+function enemyAbilitiesAndStats(enemy) { // enemy-specific
     num = Math.random();
 
     // All enemies on easy difficulty have no abilities

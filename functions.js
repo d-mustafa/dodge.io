@@ -2,15 +2,15 @@
 function recordKeyDown(event) {
     if (now - loadingGame <= 5000) return;
     
-    if (event.code == "KeyW") wPressed = true;
-    if (event.code == "KeyA") aPressed = true;
-    if (event.code == "KeyS") sPressed = true;
-    if (event.code == "KeyD") dPressed = true;
-    if (event.code == "ShiftLeft" || event.code == "ShiftRight") shiftPressed = 0.7;
+    if (event.code === "KeyW") wPressed = true;
+    if (event.code === "KeyA") aPressed = true;
+    if (event.code === "KeyS") sPressed = true;
+    if (event.code === "KeyD") dPressed = true;
+    if (event.code === "ShiftLeft" || event.code == "ShiftRight") shiftPressed = 0.7;
     if (wPressed || aPressed || sPressed || dPressed) keyboardMovementOn = true;
     
-    if ((event.code == "KeyQ" || event.code == "KeyJ") && gameState != "gameOver") {
-        if (player.dodger == "jsab" && dash.usable) {
+    if ((event.code === "KeyQ" || event.code === "KeyJ") && gameState !== "gameOver") {
+        if (player.dodger === "jsab" && dash.usable) {
             dash.activated = true;
         }
     }
@@ -19,16 +19,17 @@ function recordKeyDown(event) {
 function recordKeyUp(event) {
     if (now - loadingGame <= 5000) return;
     
-    if (event.code == "KeyW") wPressed = false;
-    if (event.code == "KeyA") aPressed = false;
-    if (event.code == "KeyS") sPressed = false;
-    if (event.code == "KeyD") dPressed = false;
-    if (event.code == "ShiftLeft" || event.code == "ShiftRight") shiftPressed = 1;
+    if (event.code === "KeyW") wPressed = false;
+    if (event.code === "KeyA") aPressed = false;
+    if (event.code === "KeyS") sPressed = false;
+    if (event.code === "KeyD") dPressed = false;
+    if (event.code === "ShiftLeft" || event.code === "ShiftRight") shiftPressed = 1;
     if (!wPressed && !aPressed && !sPressed && !dPressed) keyboardMovementOn = false;
 }
 
 function recordMouseClicked() {
-    if (now - loadingGame <= 5000) return;
+    if (now - loadingGame >= 1000) skipLoading = true;
+    else if (now - loadingGame <= 5000) return;
        
     let previousMM; // Variable to keep mouse movement the way it was if the player pressed a button
     
@@ -42,33 +43,35 @@ function recordMouseClicked() {
     }
     
     // Start screen Buttons
-    if (gameState == "startScreen") {
-        if (mouseOver.play) gameState = "selectDifficulty"
-        else if (mouseOver.selector) gameState = "selectDodger"
+    if (innerGameState === "mainMenu") {
+        if (mouseOver.play) innerGameState = "selectDifficulty"
+        else if (mouseOver.selector) innerGameState = "selectDodger"
         if (mouseOver.play || mouseOver.selector) mouseMovementOn = previousMM;
     }
     // Back to start screen buttons
-    else if (gameState == "gameOver" && mouseOver.restart ||
-             gameState == "selectDodger" && mouseOver.selector ||
-             gameState == "selectDifficulty" && mouseOver.play) {
+    else if (gameState === "gameOver" && mouseOver.restart ||
+            innerGameState === "selectDodger" && mouseOver.selector ||
+            innerGameState === "selectDifficulty" && mouseOver.play) {
         gameState = "startScreen";
+        innerGameState = "mainMenu";
         mouseMovementOn = previousMM;
     }
 
     // Difficulty Choice
-    else if (gameState == "selectDifficulty") {
+    else if (innerGameState === "selectDifficulty") {
         if (mouseOver.easy || mouseOver.medium || mouseOver.hard) {
             if (mouseOver.easy) difficulty = {level: "easy", color: "rgb(0, 225, 255)"};
             if (mouseOver.medium) difficulty = {level: "medium", color: "rgb(255, 255, 0)"};
             if (mouseOver.hard) difficulty = {level: "hard", color: "rgb(0, 0, 0)"};
 
+            innerGameState = 'inGame';
             mouseMovementOn = previousMM;
-            restartGame()
+            restartGame();
         }
     }
     
     // Hero Choice
-    else if (gameState == "selectDodger") {
+    else if (innerGameState === "selectDodger") {
         if (mouseOver.weaver || mouseOver.jsab || mouseOver.jötunn) {
             if (mouseOver.weaver) {
                 player.dodger = "weaver";
@@ -96,11 +99,10 @@ function recordMouseClicked() {
 
 
 // FUNCTIONS THAT DRAWS STUFF TO THE SCREEN
-
 function drawStartScreen() {
-    if (gameState == "startScreen" || gameState == "selectDifficulty") {
+    if (innerGameState === "mainMenu" || innerGameState === "selectDifficulty") {
         // PLAY BUTTON //
-        let playBtn = {
+        const playBtn = {
             x: 250,
             y: 75,
             w: 300,
@@ -108,9 +110,7 @@ function drawStartScreen() {
         }
         playBtn.xw = playBtn.x + playBtn.w
         playBtn.yh = playBtn.y + playBtn.h
-        
         mouseOver.play = (mouseX > playBtn.x && mouseX < playBtn.xw) && (mouseY > playBtn.y && mouseY < playBtn.yh)
-        
         const playGrad = ctx.createLinearGradient(playBtn.x, playBtn.y, playBtn.xw, playBtn.yh)
         const playGrad2 = ctx.createLinearGradient(playBtn.x, playBtn.yh, playBtn.xw, playBtn.y)
         
@@ -130,47 +130,37 @@ function drawStartScreen() {
 
         ctx.fillStyle = playGrad;
         ctx.fillRect(playBtn.x, playBtn.y, playBtn.w, playBtn.h)
-
         ctx.strokeStyle = playGrad2;
         ctx.beginPath()
         ctx.moveTo(playBtn.x, playBtn.yh)
         ctx.lineTo(playBtn.xw, playBtn.y)
         ctx.stroke()
 
-
-        let color1 = 'lime'
-        let color2 = 'white'
-
-        if (mouseOver.play) {
-            color1 = 'white'
-            color2 = 'lime'
-        } else {
-            color1 = 'lime'
-            color2 = 'white'
-        }
-        
         ctx.font = '30px Arial';
         ctx.textAlign = 'center';
+        let greenBtnColors = ['lime', 'white']
+
+        if (mouseOver.play) greenBtnColors = ['white', 'lime'];
+        else greenBtnColors = ['lime', 'white'];
         
-        // swaps between 2 types of buttons for going in and out of the character selection screen
-        // (this way i dont need to rewrite over 50 lines of code)
-        if (gameState == "startScreen") {
-            ctx.strokeStyle = color1;
+        // swaps between 2 types of buttons for going in and out of the difficulty selection screen
+        if (innerGameState === "mainMenu") {
+            ctx.strokeStyle = greenBtnColors[0];
             ctx.strokeText('Start', playBtn.x + 70, playBtn.y + 30);
         
-            ctx.strokeStyle = color2;
+            ctx.strokeStyle = greenBtnColors[1];
             ctx.strokeText('Playing', playBtn.x + 220, playBtn.y + 85);
-        } else if (gameState == "selectDifficulty") {
-            ctx.strokeStyle = color1;
+        } else if (innerGameState === "selectDifficulty") {
+            ctx.strokeStyle = greenBtnColors[0];
             ctx.strokeText('Back To', playBtn.x + 70, playBtn.y + 30);
         
-            ctx.strokeStyle = color2;
+            ctx.strokeStyle = greenBtnColors[1];
             ctx.strokeText('Main Menu', playBtn.x + 220, playBtn.y + 85);
         }
     }
-    if (gameState == "startScreen"  || gameState == "selectDodger") {
+    if (innerGameState === "mainMenu" || innerGameState === "selectDodger") {
                 // DODGER SLECTOR BUTTON //
-        let selectorBtn = {
+        const selectorBtn = {
             x: 250,
             y: 475,
             w: 300,
@@ -178,9 +168,7 @@ function drawStartScreen() {
         }
         selectorBtn.xw = selectorBtn.x + selectorBtn.w
         selectorBtn.yh = selectorBtn.y + selectorBtn.h
-        
         mouseOver.selector = (mouseX > selectorBtn.x && mouseX < selectorBtn.xw) && (mouseY > selectorBtn.y && mouseY < selectorBtn.yh);
-        
         const selectorGrad = ctx.createLinearGradient(selectorBtn.x, selectorBtn.y, selectorBtn.xw, selectorBtn.yh)
         const selectorGrad2 = ctx.createLinearGradient(selectorBtn.x, selectorBtn.yh, selectorBtn.xw, selectorBtn.y)
         
@@ -206,37 +194,35 @@ function drawStartScreen() {
         ctx.lineTo(selectorBtn.xw, selectorBtn.y)
         ctx.stroke()
 
-        let color3 = 'grey'
-        let color4 = 'white'
-
-        if (mouseOver.selector) {
-            color3 = 'white'
-            color4 = 'grey'
-        }
-        else {
-            color3 = 'grey'
-            color4 = 'white'
-        }
-
         ctx.font = '30px Arial';
         ctx.textAlign = 'center';
-        
-        // swaps between 2 types of buttons for going in and out of the character selection screen
-        // (this way i dont need to rewrite over 50 lines of code)
-        if (gameState == "startScreen") {
-            ctx.strokeStyle = color3;
+        let greyBtnColors = ['grey', 'white']
+
+        if (mouseOver.selector) greyBtnColors = ['white', 'grey'];
+        else greyBtnColors = ['grey', 'white'];
+
+        // swaps between 2 types of buttons for going in and out of the dodger selection screen
+        if (innerGameState === "mainMenu") {
+            ctx.strokeStyle = greyBtnColors[0];
             ctx.strokeText('Dodger', selectorBtn.x + 70, selectorBtn.y + 30);
         
-            ctx.strokeStyle = color4;
+            ctx.strokeStyle = greyBtnColors[1];
             ctx.strokeText('Selector', selectorBtn.x + 220, selectorBtn.y + 85);
-        } else if (gameState == "selectDodger") {
-            ctx.strokeStyle = color3;
+        } else if (innerGameState === "selectDodger") {
+            ctx.strokeStyle = greyBtnColors[0];
             ctx.strokeText('Back To', selectorBtn.x + 70, selectorBtn.y + 30);
         
-            ctx.strokeStyle = color4;
+            ctx.strokeStyle = greyBtnColors[1];
             ctx.strokeText('Main Menu', selectorBtn.x + 220, selectorBtn.y + 85);
         }
     }
+    if (innerGameState === "mainMenu" || innerGameState === "settings") {
+    
+    }
+}
+
+function drawSettings() {
+
 }
 
 function drawDifficultySelection() {
@@ -552,6 +538,7 @@ function spawnEnemyPeriodically() {
     }
 }
 
+
 // PLAYER AND ENEMY MOVEMENT
 function keyboardControls() {
     if (keyboardMovementOn){
@@ -693,8 +680,6 @@ function moveEnemies() {
 
 
 // GAMESTATE CHANGES
-
-
 function restartGame() { // Resets certain variables once the play button is pressed
     allEnemies = []
     // The starting amount of enemies is different based on the difficulty
@@ -751,7 +736,6 @@ function collisions() { // Keeps track of when the player touches any enemy in t
 }
 
 // ABILITIES
-
 function abilities() { // player-specific
     if (player.dodger === "jsab") {
         // Dash gives the player a powerful but short-lived burst of speed

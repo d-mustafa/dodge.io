@@ -4,6 +4,7 @@ const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 
 let gameState = "loading";
+let innerGameState = "mainMenu";
 
 // Keyboard
 document.addEventListener("keydown", recordKeyDown)
@@ -64,6 +65,12 @@ let allEnemies = [];
 
 // Time and difficulty
 let now = Date.now();
+
+let loadingGame = Date.now();
+let loadingTextChange = Date.now();
+let LI = 0; // loading index
+let skipLoading = false;
+
 let startTime = Date.now();
 let currentTime = ((now-startTime) / 1000).toFixed(2);
 let enemySpawnPeriod = 3000;
@@ -81,10 +88,6 @@ let difficulty = {
 }
 
 // USER DATA
-let loadingGame = Date.now();
-let loadingTextChange = Date.now();
-let LI = 0; // loading index
-    
 let lastSave = 0; // tracks how often data is saved (during gameplay)
 const localData = localStorage.getItem('localUserData'); // load savedData (if it exists)
 let userData;
@@ -116,7 +119,6 @@ if (resetLocalData || !localData){
     // saves the new user data to local storage
     localStorage.setItem('localUserData', JSON.stringify(userData));
 }
-
 
 // Crash data to track when the user leaves/crashes
 const localCrashData = localStorage.getItem('localCrashData');
@@ -153,9 +155,7 @@ window.addEventListener('beforeunload', () => {
         crashData.leaveOnLoading++;
         crashData.lastLeftOn = "Loading Screen";
     }
-    else if (gameState === "startScreen" ||
-        gameState === "selectDifficulty" ||
-        gameState === "selectDodger")    {
+    else if (gameState === "startScreen")    {
         crashData.leaveOnMenu++;
         crashData.lastLeftOn = "Main Menu";
     }
@@ -180,7 +180,7 @@ function draw() {
     ctx.fillRect(0, 0, cnv.width, cnv.height);
 
     // Loading Screen
-    if (now - loadingGame <= 5000) { // Takes 5 seconds to load the game
+    if (now - loadingGame <= 5000 && !skipLoading) { // Takes 5 seconds to load the game safely
         options = ["Loading.", "Loading..", "Loading..."];
         if (now - loadingTextChange >= 1000) { // change the text every second
             loadingTextChange = Date.now();
@@ -192,8 +192,17 @@ function draw() {
         ctx.font = "40px 'Verdana'";
         ctx.textAlign = "center";
         ctx.fillText(options[LI], cnv.width/2, cnv.height/2);
+
+        ctx.font = "30px 'Verdana'";
+        ctx.fillText(`${now - loadingGame}/5000`, cnv.width/2, cnv.height/2 + 50);
+
+        if (now - loadingGame >= 1000) {
+            ctx.font = "20px 'Verdana'";
+            ctx.textAlign = "left";
+            ctx.fillText("click anywhere on the screen to skip", 20, cnv.height - 20);
+        }
     }
-    else if (now - loadingGame > 5000 && gameState == "loading") gameState = "startScreen";
+    else if ((now - loadingGame > 5000 || skipLoading) && gameState == "loading") gameState = "startScreen";
 
     // Actual Game
     if (gameState == "startScreen") {
@@ -201,28 +210,11 @@ function draw() {
         drawText();
             
         drawStartScreen();
-        drawPlayer();
-            
-        keyboardControls();
-        mouseMovement();
-    }
-    else if (gameState == "selectDifficulty") {
-        abilities();
-        drawText();
-    
-        drawStartScreen();
-        drawDifficultySelection();
-        drawPlayer();
-            
-        keyboardControls();
-        mouseMovement();
-    }
-    else if (gameState == "selectDodger") {
-        abilities();
-        drawText();
-    
-        drawStartScreen();
-        drawDodgerSelection();
+
+        if (innerGameState == "settings") drawSettings();
+        else if (innerGameState == "selectDifficulty") drawDifficultySelection();
+        else if (innerGameState == "selectDodger") drawDodgerSelection();
+
         drawPlayer();
             
         keyboardControls();

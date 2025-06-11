@@ -28,33 +28,63 @@ function recordKeyUp(event) {
 }
 
 function recordMouseClicked() {
-    if (now - loadingGame >= 1000) skipLoading = true;
-    else if (now - loadingGame <= 5000) return;
+    if (now - loadingGame >= 1000 && gameState == "loading") {
+        skipLoading = true;
+        return;
+    }
+    else if (now - loadingGame <= 5000 && gameState == "loading") return;
        
     let previousMM; // Variable to keep mouse movement the way it was if the player pressed a button
     
     // Mouse Movement
-    if (mouseMovementOn) {
+    if (mouseMovementOn && !settings.disableMM) {
         mouseMovementOn = false;
         previousMM = true;
-    } else if (!mouseMovementOn) {
+    } else if (!mouseMovementOn && !settings.disableMM) {
         mouseMovementOn = true;
         previousMM = false;
     }
     
-    // Start screen Buttons
+    // Start screen buttons
     if (innerGameState === "mainMenu") {
-        if (mouseOver.play) innerGameState = "selectDifficulty"
-        else if (mouseOver.selector) innerGameState = "selectDodger"
-        if (mouseOver.play || mouseOver.selector) mouseMovementOn = previousMM;
+        if (mouseOver.play) innerGameState = "selectDifficulty";
+        else if (mouseOver.settings) innerGameState = "settings";
+        else if (mouseOver.selector) innerGameState = "selectDodger";
+
+        if (mouseOver.play || mouseOver.settings || mouseOver.selector) mouseMovementOn = previousMM;
     }
-    // Back to start screen buttons
+    // Buttons that redirect back to the start screen
     else if (gameState === "gameOver" && mouseOver.restart ||
+            innerGameState === "settings" && mouseOver.settings ||
             innerGameState === "selectDodger" && mouseOver.selector ||
             innerGameState === "selectDifficulty" && mouseOver.play) {
         gameState = "startScreen";
         innerGameState = "mainMenu";
         mouseMovementOn = previousMM;
+    }
+
+    // Settings
+    else if (innerGameState === "settings") {
+        if (mouseOver.enemyOutBtn || mouseOver.disableMMBtn) {
+            if (mouseOver.enemyOutBtn) {
+                if (settings.enemyOutlines) settings.enemyOutlines = false;
+                else if (!settings.enemyOutlines) settings.enemyOutlines = true;
+            }
+            if (mouseOver.disableMMBtn) {
+                if (settings.disableMM) settings.disableMM = false;
+                else if (!settings.disableMM) {
+                    settings.disableMM = true;
+                    mouseMovementOn = false;
+                }
+            }
+
+            // Saves the users settings options
+            userData.settings = settings;
+            localStorage.setItem('localUserData', JSON.stringify(userData));
+
+            if (!settings.disableMM) mouseMovementOn = previousMM;
+        }
+
     }
 
     // Difficulty Choice
@@ -90,7 +120,7 @@ function recordMouseClicked() {
             }
 
             mouseMovementOn = previousMM;
-            // saves the current players dodger to local storage
+            // saves the players values to the local storage to keep track of the players dodger
             userData.player = player;
             localStorage.setItem('localUserData', JSON.stringify(userData));
         }
@@ -138,7 +168,7 @@ function drawStartScreen() {
 
         ctx.font = '30px Arial';
         ctx.textAlign = 'center';
-        let greenBtnColors = ['lime', 'white']
+        let greenBtnColors = ['lime', 'white'];
 
         if (mouseOver.play) greenBtnColors = ['white', 'lime'];
         else greenBtnColors = ['lime', 'white'];
@@ -196,7 +226,7 @@ function drawStartScreen() {
 
         ctx.font = '30px Arial';
         ctx.textAlign = 'center';
-        let greyBtnColors = ['grey', 'white']
+        let greyBtnColors = ['grey', 'white'];
 
         if (mouseOver.selector) greyBtnColors = ['white', 'grey'];
         else greyBtnColors = ['grey', 'white'];
@@ -217,11 +247,38 @@ function drawStartScreen() {
         }
     }
     if (innerGameState === "mainMenu" || innerGameState === "settings") {
-    
+        const gear = { x: 750, y: 600,}
+        const distGear = Math.hypot(770 - mouseX, 620 - mouseY); // (770, 620) is the center of the gear
+
+        mouseOver.settings = distGear < 30;
+
+        if (innerGameState === "mainMenu") ctx.drawImage(document.getElementById("gear-filled"), gear.x, gear.y, 40, 40);
+        else ctx.drawImage(document.getElementById("gear-unfilled"), gear.x, gear.y, 40, 40);
     }
 }
 
 function drawSettings() {
+    // Enemy Outlines
+    mouseOver.enemyOutBtn = (mouseX > 170 && mouseX < 190 && mouseY > 35 && mouseY < 55);
+    if (settings.enemyOutlines) ctx.fillStyle = "lime";
+    else ctx.fillStyle = "red";
+    ctx.fillRect(170, 35, 20, 20);
+
+    ctx.font = 'bold 15px Arial';
+    ctx.textAlign = 'left';
+    ctx.fillStyle = "black";
+    ctx.fillText('Enemy Outlines', 50, 50);
+
+    // Disable Mouse Movement
+    mouseOver.disableMMBtn = (mouseX > 317.5 && mouseX < 337.5 && mouseY > 85 && mouseY < 105);
+    if (settings.disableMM) ctx.fillStyle = "lime";
+    else ctx.fillStyle = "red";
+    ctx.fillRect(317.5, 85, 20, 20);
+
+    ctx.font = 'bold 15px Arial';
+    ctx.textAlign = 'left';
+    ctx.fillStyle = "black";
+    ctx.fillText('Disable Mouse Movement Activation', 50, 100);
 
 }
 
@@ -396,13 +453,18 @@ function drawPlayer() {
 
 function drawEnemies() {
     allEnemies.forEach(enemy => {
-        ctx.fillStyle = enemy.color
-        drawCircle(enemy.x, enemy.y, enemy.radius)
-        
         if (enemy.ability == "decelerator") {
             ctx.fillStyle = "rgba(177, 88, 88, 0.47)"
             drawCircle(enemy.x, enemy.y, enemy.auraRadius);
         }
+
+        if (settings.enemyOutlines) {
+            ctx.fillStyle = "black"
+            drawCircle(enemy.x, enemy.y, enemy.radius * 1.11)
+        }
+
+        ctx.fillStyle = enemy.color
+        drawCircle(enemy.x, enemy.y, enemy.radius)
     })
 }
 
@@ -603,8 +665,7 @@ function mouseMovement() {
     }
 }
 
-// Loops through the allEnemies array to move each enemy with their movex and movey
-function moveEnemies() {
+function moveEnemies() { // Loops through the allEnemies array to move each enemy with their movex and movey
     allEnemies.forEach(enemy => {
         const dx = player.x - enemy.x;
         const dy = player.y - enemy.y;

@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("decelerator radii");
+console.log("settings and thumbnail");
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 
@@ -21,6 +21,7 @@ document.addEventListener("click", recordMouseClicked)
 let mouseMovementOn = false;
 let mouseOver = {
     play: false,
+    settings: false,
     selector: false,
     restart: false,
     weave: false,
@@ -29,11 +30,12 @@ let mouseOver = {
     easy: false,
     medium: false,
     hard: false,
+    enemyOutBtn: false,
+    disableMMBtn: false,
 };
 
 let mouseX;
 let mouseY;
-// Tracks the mouse's coordinates throughout the entire window
 window.addEventListener('mousemove', (event) => {
     const rect = cnv.getBoundingClientRect();
     mouseX = event.clientX - rect.left;
@@ -61,9 +63,14 @@ let dash = {
     lastUsed: 0,
 };
 
+let settings = {
+    enemyOutlines: false,
+    disableMM: false,
+}
+
 let allEnemies = [];
 
-// Time and difficulty
+// Time, Highscore, and Difficulty
 let now = Date.now();
 
 let loadingGame = Date.now();
@@ -73,19 +80,20 @@ let skipLoading = false;
 
 let startTime = Date.now();
 let currentTime = ((now-startTime) / 1000).toFixed(2);
+
 let enemySpawnPeriod = 3000;
 let lastSpawn = Date.now();
+
 let highscoreColor = "rgb(87, 87, 87)";
 let highscore = {
     easy: 0,
     medium: 0,
     hard: 0,
 };
-
 let difficulty = {
     level: "easy",
     color: "rgb(0, 225, 255)",
-}
+};
 
 // USER DATA
 let lastSave = 0; // tracks how often data is saved (during gameplay)
@@ -98,10 +106,11 @@ if (localData) {
     try {
         userData = JSON.parse(localData);
         // updates the player and highscore to the users local data
-        player.dodger = userData.player.dodger
-        player.color = userData.player.color
-        player.subColor = userData.player.subColor
-        highscore = userData.highscore
+        player.dodger = userData.player.dodger;
+        player.color = userData.player.color;
+        player.subColor = userData.player.subColor;
+        highscore = userData.highscore;
+        settings = userData.settings;
     } catch (exception) {
         console.warn('Local user data was invalid, resetting.', exception);
         localStorage.removeItem('localUserData');
@@ -114,6 +123,7 @@ if (resetLocalData || !localData){
     userData = {
         highscore: highscore,
         player: player,
+        settings: settings,
     };
     
     // saves the new user data to local storage
@@ -151,21 +161,15 @@ window.addEventListener('beforeunload', () => {
         localStorage.setItem('localUserData', JSON.stringify(userData));
     }
     
-    if (gameState === "loading") {
-        crashData.leaveOnLoading++;
-        crashData.lastLeftOn = "Loading Screen";
-    }
-    else if (gameState === "startScreen")    {
-        crashData.leaveOnMenu++;
-        crashData.lastLeftOn = "Main Menu";
-    }
-    else if (gameState === "gameOn" || gameState === "gameOver") {
-        crashData.leaveOnPlay++;
-        crashData.lastLeftOn = "During Game";
-    } else {
-        crashData.leaveUnknown++;
-        crashData.lastLeftOn = `Unknown. Gamestate: '${gameState}'.`;
-    }
+    if (gameState === "loading") crashData.leaveOnLoading++;
+
+    else if (gameState === "startScreen") crashData.leaveOnMenu++;
+
+    else if (gameState === "gameOn" || gameState === "gameOver") crashData.leaveOnPlay++;
+
+    else crashData.leaveUnknown++;
+    
+    crashData.lastLeftOn = gameState;
         
     localStorage.setItem('localCrashData', JSON.stringify(crashData));
 })

@@ -1,12 +1,31 @@
+// Convenience Functions
+function skipLoadingViaInput() {
+    if (now - loadingGame >= 1000 && gameState == "loading") {
+        skipLoading = true;
+        return;
+    }
+    else if (now - loadingGame <= 5000 && gameState == "loading") return;
+}
+
+function drawCircle(x, y, r = 12.5) {
+    ctx.beginPath()
+    ctx.arc(x, y, r, Math.PI * 2, 0)
+    ctx.fill()
+}
+
 // KEYBAORD AND MOUSE EVENTS (player inputs)
 function recordKeyDown(event) {
-    if (now - loadingGame <= 5000) return;
+    // stops the page from scrolling when arrow keys are pressed
+    if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].indexOf(event.code) > -1) {
+        event.preventDefault();
+    }
+    skipLoadingViaInput();
     
-    if (event.code === "KeyW") wPressed = true;
-    if (event.code === "KeyA") aPressed = true;
-    if (event.code === "KeyS") sPressed = true;
-    if (event.code === "KeyD") dPressed = true;
-    if (event.code === "ShiftLeft" || event.code == "ShiftRight") shiftPressed = 0.7;
+    if (event.code === "KeyW" || event.code === "ArrowUp") wPressed = true;
+    if (event.code === "KeyA" || event.code === "ArrowLeft") aPressed = true;
+    if (event.code === "KeyS" || event.code === "ArrowDown") sPressed = true;
+    if (event.code === "KeyD" || event.code === "ArrowRight") dPressed = true;
+    if (event.code === "ShiftLeft" || event.code === "ShiftRight") shiftPressed = 0.7;
     if (wPressed || aPressed || sPressed || dPressed) keyboardMovementOn = true;
     
     if ((event.code === "KeyQ" || event.code === "KeyJ") && gameState !== "gameOver") {
@@ -17,22 +36,18 @@ function recordKeyDown(event) {
 }
 
 function recordKeyUp(event) {
-    if (now - loadingGame <= 5000) return;
+    skipLoadingViaInput();
     
-    if (event.code === "KeyW") wPressed = false;
-    if (event.code === "KeyA") aPressed = false;
-    if (event.code === "KeyS") sPressed = false;
-    if (event.code === "KeyD") dPressed = false;
+    if (event.code === "KeyW" || event.code === "ArrowUp") wPressed = false;
+    if (event.code === "KeyA" || event.code === "ArrowLeft") aPressed = false;
+    if (event.code === "KeyS" || event.code === "ArrowDown") sPressed = false;
+    if (event.code === "KeyD" || event.code === "ArrowRight") dPressed = false;
     if (event.code === "ShiftLeft" || event.code === "ShiftRight") shiftPressed = 1;
     if (!wPressed && !aPressed && !sPressed && !dPressed) keyboardMovementOn = false;
 }
 
-function recordMouseClicked() {
-    if (now - loadingGame >= 1000 && gameState == "loading") {
-        skipLoading = true;
-        return;
-    }
-    else if (now - loadingGame <= 5000 && gameState == "loading") return;
+function recordLeftClick() {
+    skipLoadingViaInput();
        
     let previousMM; // Variable to keep mouse movement the way it was if the player pressed a button
     
@@ -102,7 +117,7 @@ function recordMouseClicked() {
     
     // Hero Choice
     else if (innerGameState === "selectDodger") {
-        if (mouseOver.weaver || mouseOver.jsab || mouseOver.jötunn) {
+        if (mouseOver.weaver || mouseOver.jsab || mouseOver.jötunn || mouseOver.jolt) {
             if (mouseOver.weaver) {
                 player.dodger = "weaver";
                 player.color = "rgb(255, 255, 255)";
@@ -118,6 +133,11 @@ function recordMouseClicked() {
                 player.color = "rgb(79, 203, 255)";
                 player.subColor = "rgb(70, 186, 235)";
             }
+            else if (mouseOver.jolt) {
+                player.dodger = "jolt";
+                player.color = "rgb(255, 255, 0)";
+                player.subColor = "rgb(230, 230, 0)";
+            }
 
             mouseMovementOn = previousMM;
             // saves the players values to the local storage to keep track of the players dodger
@@ -127,6 +147,15 @@ function recordMouseClicked() {
     }
 }
 
+function recordRightClick(event) {
+    event.preventDefault();
+    skipLoadingViaInput();
+    if (gameState !== "gameOver") {
+        if (player.dodger === "jsab" && dash.usable) {
+            dash.activated = true;
+        }
+    }
+}
 
 // FUNCTIONS THAT DRAWS STUFF TO THE SCREEN
 function drawStartScreen() {
@@ -333,12 +362,6 @@ function drawDifficultySelection() {
     ctx.fillText("+Homing Enemies", 560, 280);
 }
 
-function drawCircle(x, y, r = 12.5) {
-    ctx.beginPath()
-    ctx.arc(x, y, r, Math.PI * 2, 0)
-    ctx.fill()
-}
-
 function drawDodgerSelection() {
     // Inner function to make life easier
     function decideFillStyle(bool, color1, color2) {
@@ -349,47 +372,70 @@ function drawDodgerSelection() {
         }
     }
 
-    // BackGrounds
-    mouseOver.weaver = (mouseX > 50 && mouseX < 250) && (mouseY > 200 && mouseY < 300);
-    decideFillStyle(mouseOver.weaver, "rgb(230, 230, 230)", "rgb(220, 220, 220)");
-    ctx.fillRect(50, 200, 200, 100);
-    
-    mouseOver.jsab = (mouseX > 300 && mouseX < 500) && (mouseY > 200 && mouseY < 300);
-    decideFillStyle(mouseOver.jsab, "rgb(220, 0, 0)", "rgb(200, 0, 0)");
-    ctx.fillRect(300, 200, 200, 100);
+    // Coordiantes
+    const weaver = { x: 50, y: 50, };
+    mouseOver.weaver = (mouseX > weaver.x && mouseX < weaver.x + 200) && (mouseY > weaver.y && mouseY < weaver.y + 100);
 
-    mouseOver.jötunn = (mouseX > 550 && mouseX < 750) && (mouseY > 200 && mouseY < 300);
+    const jsab = { x: 300, y: 50, };
+    mouseOver.jsab = (mouseX > jsab.x && mouseX < jsab.x + 200) && (mouseY > jsab.y && mouseY < jsab.y + 100);
+
+    const jötunn = { x: 550, y: 50, };
+    mouseOver.jötunn = (mouseX > jötunn.x && mouseX < jötunn.x + 200) && (mouseY > jötunn.y && mouseY < jötunn.y + 100);
+
+    const jolt = { x: 300, y: 200, };
+    mouseOver.jolt = (mouseX > jolt.x && mouseX < jolt.x + 200) && (mouseY > jolt.y && mouseY < jolt.y + 100);
+    
+    // Backgrounds
+    decideFillStyle(mouseOver.weaver, "rgb(230, 230, 230)", "rgb(220, 220, 220)");
+    ctx.fillRect(weaver.x, weaver.y, 200, 100);
+    
+    decideFillStyle(mouseOver.jsab, "rgb(220, 0, 0)", "rgb(200, 0, 0)");
+    ctx.fillRect(jsab.x, jsab.y, 200, 100);
+   
     decideFillStyle(mouseOver.jötunn, "rgb(70, 175, 219)", "rgb(65, 166, 209)");
-    ctx.fillRect(550, 200, 200, 100);
+    ctx.fillRect(jötunn.x, jötunn.y, 200, 100);
+    
+    decideFillStyle(mouseOver.jolt, "rgb(220, 220, 0)", "rgb(200, 200, 0)");
+    ctx.fillRect(jolt.x, jolt.y, 200, 100);
 
     // Text
     ctx.textAlign = 'left';
 
+
     ctx.fillStyle = "rgb(255, 255, 255)";
-    drawCircle(220, 220)
+    drawCircle(weaver.x + 170, weaver.y + 20)
 
     ctx.font = "25px 'Lucida Console'";
-    ctx.fillText("WEAVER", 60, 230);
+    ctx.fillText("WEAVER", weaver.x + 10, weaver.y + 30);
     ctx.font = "15px 'Lucida Console'";
-    ctx.fillText("ABILITY: NONE", 60, 280);
+    ctx.fillText("ABILITY: NONE", weaver.x + 10, weaver.y + 80);
 
 
     ctx.fillStyle = "rgb(255, 0, 0)";
-    drawCircle(470, 220)
+    drawCircle(jsab.x + 170, jsab.y + 20)
 
     ctx.font = "25px 'Lucida Console'";
-    ctx.fillText("JSAB", 310, 230);
+    ctx.fillText("JSAB", jsab.x + 10, jsab.y + 30);
     ctx.font = "15px 'Lucida Console'";
-    ctx.fillText("ABILITY: DASH", 310, 280);
+    ctx.fillText("ABILITY: DASH", jsab.x + 10, jsab.y + 80);
 
 
     ctx.fillStyle = "rgb(79, 203, 255)";
-    drawCircle(730, 220)
+    drawCircle(jötunn.x + 170, jötunn.y + 20)
 
     ctx.font = "25px 'Lucida Console'";
-    ctx.fillText("JÖTUNN", 560, 230);
+    ctx.fillText("JÖTUNN", jötunn.x + 10, jötunn.y + 30);
     ctx.font = "15px 'Lucida Console'";
-    ctx.fillText("ABILITY: STAGNATION", 560, 280);
+    ctx.fillText("ABILITY: STAGNATION", jötunn.x + 10, jötunn.y + 80);
+
+
+    ctx.fillStyle = "rgb(255, 255, 0)";
+    drawCircle(jolt.x + 170, jolt.y + 20)
+
+    ctx.font = "25px 'Lucida Console'";
+    ctx.fillText("JOLT", jolt.x + 10, jolt.y + 30);
+    ctx.font = "15px 'Lucida Console'";
+    ctx.fillText("ABILITY: MINIMIZE", jolt.x + 10, jolt.y + 80);
 }
 
 function drawGameOver() {
@@ -445,10 +491,8 @@ function drawGameOver() {
 }
 
 function drawPlayer() {
-    ctx.fillStyle = player.color
-    ctx.beginPath()
-    ctx.arc(player.x, player.y, player.radius, Math.PI*2, 0)
-    ctx.fill()
+    ctx.fillStyle = player.color;
+    drawCircle(player.x, player.y, player.radius);
 }
 
 function drawEnemies() {
@@ -515,21 +559,38 @@ function drawText() { // draws the current time, highest time, and enemy count
     // No Abiliy
     if (player.dodger == "weaver") ctx.fillText(`Passive: Skill`, textX, 620);
 
+    // Stagnation (Passive)
+    else if (player.dodger == "jötunn") ctx.fillText(`Passive: Stagnation`, textX, 620);
+
     // Dash
     else if (player.dodger == "jsab") {
         // Dash CD
         let dashCDLeft = ((dash.cooldown - (now - dash.lastUsed)) / 1000).toFixed(2);
         if (now - dash.lastUsed >= dash.cooldown) { // 1.1s
             dash.usable = true;
-            ctx.fillText(`Active: Dash(Q/J)`, textX, 620);
+
+            if (mouseMovementOn && !keyboardMovementOn) ctx.fillText(`Active: Dash(RMB)`, textX, 620);
+            else ctx.fillText(`Active: Dash(Q/J)`, textX, 620);
         } else {
             dash.usable = false;
             ctx.fillText(`Active: ${dashCDLeft}s`, textX, 620);
         }
     }
-    
-    // Stagnation (Passive)
-    else if (player.dodger == "jötunn") ctx.fillText(`Passive: Stagnation`, textX, 620);
+
+    // Minimize
+    else if (player.dodger == "jolt") {
+        // Minimize CD
+        let minimizeCDLeft = ((minimize.cooldown - (now - minimize.lastUsed)) / 1000).toFixed(2);
+        if (now - minimize.lastUsed >= minimize.cooldown) { // 1.1s
+            minimize.usable = true;
+
+            if (mouseMovementOn && !keyboardMovementOn) ctx.fillText(`Active: Minimize(RMB)`, textX, 620);
+            else ctx.fillText(`Active: Minimize(Q/J)`, textX, 620);
+        } else {
+            minimize.usable = false;
+            ctx.fillText(`Active: ${minimizeCDLeft}s`, textX, 620);
+        }
+    }
 }
 
 function createEnemy() { // Creates an individual enemy with unique attributes
@@ -798,26 +859,28 @@ function collisions() { // Keeps track of when the player touches any enemy in t
 
 // ABILITIES
 function abilities() { // player-specific
-    if (player.dodger === "jsab") {
-        // Dash gives the player a powerful but short-lived burst of speed
-        if (dash.activated){
-            player.speed += dash.speed;
-            player.color = "rgb(255, 72, 72)";
+    // Dash gives the player a powerful but short-lived burst of speed
+    if (dash.activated){
+        player.speed += dash.speed;
+        player.color = "rgb(255, 72, 72)";
         
-            if (player.speed > 10) {
-                dash.deccelerating = true;
-                dash.speed *= -1;
-                player.speed += dash.speed;
-            }
-            if (player.speed <= 2.5 && dash.deccelerating) {
-                dash.activated = false;
-                dash.deccelerating = false;
-                dash.lastUsed = Date.now();
+        if (player.speed > 10) {
+            dash.deccelerating = true;
+            dash.speed *= -1;
+            player.speed += dash.speed;
+        }
+        if (player.speed <= 2.5 && dash.deccelerating) {
+            dash.activated = false;
+            dash.deccelerating = false;
+            dash.lastUsed = Date.now();
             
-                dash.speed *= -1;
-                player.speed = 2.5;
-                player.color = "rgb(255, 0, 0)";
-            }
+            dash.speed *= -1;
+            player.speed = 2.5;
+
+            if (player.dodger === "weaver") player.color = "white"
+            if (player.dodger === "jsab") player.color = "red"
+            if (player.dodger === "jötunn") player.color ="rgb(79, 203, 255)"
+            if (player.dodger === "jolt") player.color = "yellow"
         }
     }
     // Changes enemy color based on distance to signify that they're being slowed down

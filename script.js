@@ -17,16 +17,21 @@ let dPressed = false;
 let shiftPressed = 1;
 
 // Mouse
-document.addEventListener("click", recordMouseClicked)
+document.addEventListener("click", recordLeftClick);
+document.addEventListener("contextmenu", recordRightClick);
+
 let mouseMovementOn = false;
 let mouseOver = {
     play: false,
     settings: false,
     selector: false,
     restart: false,
-    weave: false,
+
+    weaver: false,
     jsab: false,
     jötunn: false,
+    jolt: false,
+
     easy: false,
     medium: false,
     hard: false,
@@ -59,14 +64,21 @@ let dash = {
     activated: false,
     deccelerating: false,
     speed: 0.5,
-    cooldown: 1100, // cooldowns are in milliseconds
+    cooldown: 1100,
     lastUsed: 0,
 };
+
+let minimize = {
+    usable: true,
+    activated: false,
+    cooldown: 1100,
+    lastUsed: 0,
+}
 
 let settings = {
     enemyOutlines: false,
     disableMM: false,
-}
+};
 
 let allEnemies = [];
 

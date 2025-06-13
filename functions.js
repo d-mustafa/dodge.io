@@ -2,15 +2,25 @@
 function skipLoadingViaInput() {
     if (now - loadingGame >= 1000 && gameState == "loading") {
         skipLoading = true;
-        return;
+        return false;
     }
-    else if (now - loadingGame <= 5000 && gameState == "loading") return;
+    else if (now - loadingGame <= 5000 && gameState == "loading") return false;
 }
 
 function drawCircle(x, y, r = 12.5) {
     ctx.beginPath()
     ctx.arc(x, y, r, Math.PI * 2, 0)
     ctx.fill()
+}
+
+function determinePlayerFacingAngle() {
+    if (lastPressing === "mouse") {
+        const angleToMouse = Math.atan2(dyMouse, dxMouse); // Target angle
+        player.facingAngle = angleToMouse;
+    }
+    else if (lastPressing === "kb") {
+        
+    }
 }
 
 // KEYBAORD AND MOUSE EVENTS (player inputs)
@@ -29,8 +39,23 @@ function recordKeyDown(event) {
     if (wPressed || aPressed || sPressed || dPressed) keyboardMovementOn = true;
     
     if ((event.code === "KeyQ" || event.code === "KeyJ") && gameState !== "gameOver") {
-        if (player.dodger === "jsab" && dash.usable) dash.activated = true;
-        else if (player.dodger === "jolt" && minimize.usable) minimize.activated = true;
+        if (player.dodger === "jsab" && dash.usable && !dash.activated) dash.activated = true;
+        else if (player.dodger === "jolt" && minimize.usable && !minimize.activated) {
+            minimize.activated = true;
+            minimize.facingAngle = player.facingAngle;
+            minimize.x = player.x;
+            minimize.y = player.y;
+            
+            if (lastPressing === "mouse") {
+                minimize.dx = mouseX - player.x;
+                minimize.dy = mouseY - player.y;
+                minimize.dist = Math.hypot(minimize.dx, minimize.dy)
+            } 
+
+            // Code below determines the angle at which the player is facing
+            const angleToMouse = Math.atan2(minimize.dy, minimize.dx); // Target angle
+            minimize.facingAngle = angleToMouse;
+        }
     }
 }
 
@@ -46,6 +71,8 @@ function recordKeyUp(event) {
 }
 
 function recordLeftClick() {
+    // let skip = skipLoadingViaInput();
+    // if (!skip) return;
     skipLoadingViaInput();
        
     let previousMM; // Variable to keep mouse movement the way it was if the player pressed a button
@@ -151,7 +178,11 @@ function recordRightClick(event) {
     skipLoadingViaInput();
     if (gameState !== "gameOver") {
         if (player.dodger === "jsab" && dash.usable) dash.activated = true;
-        else if (player.dodger === "jolt" && minimize.usable) minimize.activated = true;
+        else if (player.dodger === "jolt" && minimize.usable) {
+            minimize.activated = true;
+            minimize.x = player.x;
+            minimize.y = player.y;
+        }
     }
 }
 
@@ -563,12 +594,13 @@ function drawText() { // draws the current time, highest time, and enemy count
     // Dash
     else if (player.dodger == "jsab") {
         // Dash CD
-        let dashCDLeft = ((dash.cooldown - (now - dash.lastUsed)) / 1000).toFixed(2);
-        if (now - dash.lastUsed >= dash.cooldown) { // 1.1s
+        let dashCDLeft = ((1100 - (now - dash.lastEnded)) / 1000).toFixed(2);
+
+        if (now - dash.lastEnded >= 1100) { // 1.1s
             dash.usable = true;
 
-            if (lastPressing === "mouse") ctx.fillText(`Active: Dash(RMB)`, textX, 620);
-            else if (lastPressing === "kb") ctx.fillText(`Active: Dash(Q/J)`, textX, 620);
+            if (lastPressing === "mouse") ctx.fillText(`Active: Dash (RMB)`, textX, 620);
+            else if (lastPressing === "kb") ctx.fillText(`Active: Dash (Q/J)`, textX, 620);
         } else {
             dash.usable = false;
             ctx.fillText(`Active: ${dashCDLeft}s`, textX, 620);
@@ -578,12 +610,13 @@ function drawText() { // draws the current time, highest time, and enemy count
     // Minimize
     else if (player.dodger == "jolt") {
         // Minimize CD
-        let minimizeCDLeft = ((minimize.cooldown - (now - minimize.lastUsed)) / 1000).toFixed(2);
-        if (now - minimize.lastUsed >= minimize.cooldown) { // 1.1s
+        let minimizeCDLeft = ((2000 - (now - minimize.lastEnded)) / 1000).toFixed(2);
+
+        if (now - minimize.lastEnded >= 2000) { // 2s
             minimize.usable = true;
 
-            if (lastPressing === "mouse") ctx.fillText(`Active: Minimize(RMB)`, textX, 620);
-            else if (lastPressing === "kb") ctx.fillText(`Active: Minimize(Q/J)`, textX, 620);
+            if (lastPressing === "mouse") ctx.fillText(`Active: Minimize (RMB)`, textX, 620);
+            else if (lastPressing === "kb") ctx.fillText(`Active: Minimize (Q/J)`, textX, 620);
         } else {
             minimize.usable = false;
             ctx.fillText(`Active: ${minimizeCDLeft}s`, textX, 620);
@@ -614,21 +647,21 @@ function createEnemy() { // Creates an individual enemy with unique attributes
 
     let dx = player.x - oneEnemy.x;
     let dy = player.y - oneEnemy.y;
-    let distance = Math.hypot(dx, dy);
+    let distFromPlayer = Math.hypot(dx, dy);
 
     // used to prevent the enemy from spawning too close to the player
-    while(distance < 300) {
+    while(distFromPlayer < 300) {
         oneEnemy.x = (Math.random() * (cnv.width-60))+30;
         oneEnemy.y = (Math.random() * (cnv.height-60))+30;
 
         dx = player.x - oneEnemy.x;
         dy = player.y - oneEnemy.y;
-        distance = Math.hypot(dx, dy);
+        distFromPlayer = Math.hypot(dx, dy);
     }
 
     // used to make the enemy move toward the player once it spanws
-    oneEnemy.movex = (dx / distance) * oneEnemy.speed;
-    oneEnemy.movey = (dy / distance) * oneEnemy.speed;
+    oneEnemy.movex = (dx / distFromPlayer) * oneEnemy.speed;
+    oneEnemy.movey = (dy / distFromPlayer) * oneEnemy.speed;
 
     // Using base values to extend the possibility of what can be done to the enemies speed
     oneEnemy.baseMoveX = oneEnemy.movex
@@ -637,7 +670,7 @@ function createEnemy() { // Creates an individual enemy with unique attributes
 
     // Initialization foe the angle the enemy moves towards (avoids the weird snapping-towards-the-player effect)
     const angleToPlayer = Math.atan2(dy, dx); // angle toward the player
-    oneEnemy.facingAngle = angleToPlayer
+    oneEnemy.facingAngle = angleToPlayer;
 
     return oneEnemy;
 }
@@ -694,9 +727,9 @@ function keyboardControls() {
 function mouseMovement() {
     if (mouseMovementOn && !keyboardMovementOn) {
         lastPressing = "mouse";
-        const dx = mouseX - player.x;
-        const dy = mouseY - player.y;
-        const distance = Math.hypot(dx, dy);
+        const dxMouse = mouseX - player.x;
+        const dyMouse = mouseY - player.y;
+        const distance = Math.hypot(dxMouse, dyMouse);
         if (!dash.activated) {
             player.speed = 2.5 * shiftPressed * player.slowed;
         }
@@ -707,36 +740,36 @@ function mouseMovement() {
         if (distance < slowStart) {
             const factor = (distance) / (slowStart); // 0 -> 1
             slowFactor = 0.3 + 0.7 * factor; // Transition from 0.3x speed to 1x speed
-            player.x += (dx / distance) * player.speed * slowFactor;
-            player.y += (dy / distance) * player.speed * slowFactor;
+            player.x += (dxMouse / distance) * player.speed * slowFactor;
+            player.y += (dyMouse / distance) * player.speed * slowFactor;
         } else {
-            player.x += (dx / distance) * player.speed;
-            player.y += (dy / distance) * player.speed;
+            player.x += (dxMouse / distance) * player.speed;
+            player.y += (dyMouse / distance) * player.speed;
         }
 
         // Doesn't allow the player to leave the map (wall collisions)
         if (player.x - player.radius  <= 0 || player.x + player.radius  >= cnv.width) {
-            if (distance < slowStart) player.x -= (dx / distance) * player.speed * slowFactor;
-            else player.x -= (dx / distance) * player.speed;
+            if (distance < slowStart) player.x -= (dxMouse / distance) * player.speed * slowFactor;
+            else player.x -= (dxMouse / distance) * player.speed;
         }
         if (player.y - player.radius  <= 0 || player.y + player.radius  >= cnv.height) {
-            if (distance < slowStart) player.y -= (dy / distance) * player.speed * slowFactor;
-            else player.y -= (dy / distance) * player.speed;
+            if (distance < slowStart) player.y -= (dyMouse / distance) * player.speed * slowFactor;
+            else player.y -= (dyMouse / distance) * player.speed;
         }
     }
 }
 
 function moveEnemies() { // Loops through the allEnemies array to move each enemy with their movex and movey
     allEnemies.forEach(enemy => {
-        const dx = player.x - enemy.x;
-        const dy = player.y - enemy.y;
-        const distance = Math.hypot(dx, dy);
+        const dxEnemy = player.x - enemy.x;
+        const dyEnemy = player.y - enemy.y;
+        const enemyDist = Math.hypot(dxEnemy, dyEnemy);
         let homingIn = false;
 
         // Homing enemies move toward the player (if the player is close enough)
         if (enemy.ability === "homing")  {
-            if (distance <= enemy.detectionRadius) {
-                const angleToPlayer = Math.atan2(dy, dx); // Target angle
+            if (enemyDist <= enemy.detectionRadius) {
+                const angleToPlayer = Math.atan2(dyEnemy, dxEnemy); // Target angle
 
                 // Calculate shortest angular difference
                 let angleDiff = angleToPlayer - enemy.facingAngle;
@@ -744,7 +777,7 @@ function moveEnemies() { // Loops through the allEnemies array to move each enem
                 // Normalize to [-PI, PI] for shortest rotation direction
                 angleDiff = Math.atan2(Math.sin(angleDiff), Math.cos(angleDiff));
 
-                const turnSpeed = 0.01; // radians per frame — ill probably tweak this a ton
+                const turnSpeed = 0.01; // radians per frame
                 enemy.facingAngle += Math.sign(angleDiff) * Math.min(Math.abs(angleDiff), turnSpeed);
 
                 // Move forward in direction of facingAngle — speed stays constant
@@ -762,9 +795,9 @@ function moveEnemies() { // Loops through the allEnemies array to move each enem
             const slowStart = 175 - enemy.radius - player.radius;
             const slowEnd = 75 - enemy.radius - player.radius;
 
-            if (distance < slowStart) {
+            if (enemyDist < slowStart) {
                 // Limit distance to avoid going below slowEnd
-                const maxDist = Math.max(distance, slowEnd);
+                const maxDist = Math.max(enemyDist, slowEnd);
                 const factor = (maxDist - slowEnd) / (slowStart - slowEnd);
                 const slowFactor = 0.3 + 0.7 * factor;
 
@@ -824,7 +857,7 @@ function restartGame() { // Resets certain variables once the play button is pre
     currentTime = 0;
     enemySpawnPeriod = 3000;
     lastSpawn = 0;
-    dash.lastUsed = 0;
+    dash.lastEnded = 0;
 
     gameState = "gameOn"
 }
@@ -837,7 +870,7 @@ function collisions() { // Keeps track of when the player touches any enemy in t
         const distance = Math.hypot(dx, dy);
 
         // Gives the player some time to get out of an enemy they dashed onto (0.3s)
-        if (!dash.activated && !(now - dash.lastUsed < 300)) {
+        if (!dash.activated && !(now - dash.lastEnded < 300)) {
             if (distance < player.radius + enemy.radius) {
                 highscoreColor = "rgb(87, 87, 87)";
                 difficulty.color = "rgb(87, 87, 87)";
@@ -859,7 +892,7 @@ function collisions() { // Keeps track of when the player touches any enemy in t
 
 // ABILITIES
 function abilities() { // player-specific
-    // Dash gives the player a powerful but short-lived burst of speed
+    // 'Dash' gives the player a powerful but short-lived burst of speed
     if (dash.activated){
         player.speed += dash.speed;
         player.color = "rgb(255, 72, 72)";
@@ -872,7 +905,7 @@ function abilities() { // player-specific
         if (player.speed <= 2.5 && dash.deccelerating) {
             dash.activated = false;
             dash.deccelerating = false;
-            dash.lastUsed = Date.now();
+            dash.lastEnded = Date.now();
             
             dash.speed *= -1;
             player.speed = 2.5;
@@ -883,46 +916,80 @@ function abilities() { // player-specific
             if (player.dodger === "jolt") player.color = "yellow"
         }
     }
-    // Changes enemy color based on distance to signify that they're being slowed down
+    // Stagnation's effect changes enemy color based on distance to signify that they're being slowed down
     if (player.dodger === "jötunn") {
         allEnemies.forEach(enemy => {
-            const dx = player.x - enemy.x;
-            const dy = player.y - enemy.y;
-            const distance = Math.hypot(dx, dy);
+            const dxEnemy = player.x - enemy.x;
+            const dyEnemy = player.y - enemy.y;
+            const enemyDist = Math.hypot(dxEnemy, dyEnemy);
 
             if (enemy.ability === "none") {
-                if (distance < 100) {
+                if (enemyDist < 100) {
                     enemy.color = "rgb(55, 77, 107)";
-                } else if (distance < 125) {
+                } else if (enemyDist < 125) {
                     enemy.color = "rgb(68, 84, 107)";
-                } else if (distance < 150) {
+                } else if (enemyDist < 150) {
                     enemy.color = "rgb(81, 91, 105)";
-                } else if (distance < 175) {
+                } else if (enemyDist < 175) {
                     enemy.color = "rgb(95, 100, 107)";
                 }
             } else if (enemy.ability === "decelerator") {
-                if (distance < 100) {
+                if (enemyDist < 100) {
                     enemy.color = "rgb(210, 0, 0)";
-                } else if (distance < 125) {
+                } else if (enemyDist < 125) {
                     enemy.color = "rgb(220, 0, 0)";
-                } else if (distance < 150) {
+                } else if (enemyDist < 150) {
                     enemy.color = "rgb(230, 0, 0)";
-                } else if (distance < 175) {
+                } else if (enemyDist < 175) {
                     enemy.color = "rgb(240, 0, 0)";
                 }
             } else if (enemy.ability === "homing") {
-                if (distance < 100) {
+                if (enemyDist < 100) {
                     enemy.color = "rgb(190, 146, 0)";
-                } else if (distance < 125) {
+                } else if (enemyDist < 125) {
                     enemy.color = "rgb(206, 158, 0)";
-                } else if (distance < 150) {
+                } else if (enemyDist < 150) {
                     enemy.color = "rgb(216, 166, 0)";
-                } else if (distance < 175) {
+                } else if (enemyDist < 175) {
                     enemy.color = "rgb(235, 180, 0)";
                 }
             }
 
         })
+    }
+    // 'Minimize' launches a beam that shrinks ememies
+    if (minimize.activated) {
+        ctx.fillStyle = 'rgba(255, 255, 255, 1)'
+
+        ctx.save();
+        ctx.translate(minimize.x, minimize.y);
+        ctx.rotate(minimize.facingAngle);
+
+        ctx.beginPath();
+        ctx.moveTo(0, -minimize.radius);
+        ctx.bezierCurveTo(minimize.radius, -2, minimize.radius, 2, 0, minimize.radius);
+        ctx.bezierCurveTo(minimize.radius/3, 2, minimize.radius/3, -2, 0, -minimize.radius);
+        ctx.fill();
+
+        ctx.restore();
+
+        /*
+                ctx.beginPath();
+        ctx.moveTo(minimize.x, minimize.y-minimize.radius);
+        ctx.bezierCurveTo(minimize.x+minimize.radius, minimize.y-2, minimize.x+minimize.radius, minimize.y+2, minimize.x, minimize.y+minimize.radius);
+        ctx.bezierCurveTo(minimize.x+minimize.radius/3, minimize.y+2, minimize.x+minimize.radius/3, minimize.y-2, minimize.x, minimize.y-minimize.radius);
+        ctx.fill();
+        */
+
+        minimize.radius *= 1.025
+        minimize.x += (minimize.dx/minimize.dist) * 7;
+        minimize.y += (minimize.dy/minimize.dist) * 7;
+
+        if (minimize.radius > 150) {
+            minimize.activated = false;
+            minimize.radius = 15;
+            minimize.lastEnded = Date.now();
+        }
     }
 }
 

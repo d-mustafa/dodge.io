@@ -58,13 +58,13 @@ let player = {
     dodger: "weaver",
     color: "rgb(255, 255, 255)",
     subColor: "rgb(230, 230, 230)",
+    facingAngle: 0,
 };
 
 let dash = {
     usable: true,
     activated: false,
-    cooldown: 1100,
-    lastUsed: 0,
+    lastEnded: 0,
     deccelerating: false,
     speed: 0.5,
 };
@@ -72,8 +72,7 @@ let dash = {
 let minimize = {
     usable: true,
     activated: false,
-    cooldown: 1100,
-    lastUsed: 0,
+    lastEnded: 0,
     radius: 15,
 }
 

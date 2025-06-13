@@ -5,6 +5,7 @@ const ctx = cnv.getContext('2d');
 
 let gameState = "loading";
 let innerGameState = "mainMenu";
+let lastPressing = "kb";
 
 // Keyboard
 document.addEventListener("keydown", recordKeyDown)

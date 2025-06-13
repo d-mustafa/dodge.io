@@ -63,10 +63,10 @@ let player = {
 let dash = {
     usable: true,
     activated: false,
-    deccelerating: false,
-    speed: 0.5,
     cooldown: 1100,
     lastUsed: 0,
+    deccelerating: false,
+    speed: 0.5,
 };
 
 let minimize = {
@@ -74,6 +74,7 @@ let minimize = {
     activated: false,
     cooldown: 1100,
     lastUsed: 0,
+    radius: 15,
 }
 
 let settings = {

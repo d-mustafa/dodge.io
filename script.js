@@ -118,7 +118,13 @@ if (localData) {
     // retrieves the users local data and watches for corrupted data
     try {
         userData = JSON.parse(localData);
-        // updates the player and highscore to the users local data
+
+        // checks to see if the userData is missing any elements and replaces it with default data
+        ["player", "highscore", "settings"].forEach(data => {
+            if (!(data in userData)) userData[data] = eval(data);
+        }); 
+
+        // updates the current data to the locally saved data
         player.dodger = userData.player.dodger;
         player.color = userData.player.color;
         player.subColor = userData.player.subColor;

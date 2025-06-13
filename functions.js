@@ -569,8 +569,8 @@ function drawText() { // draws the current time, highest time, and enemy count
         if (now - dash.lastUsed >= dash.cooldown) { // 1.1s
             dash.usable = true;
 
-            if (mouseMovementOn && !keyboardMovementOn) ctx.fillText(`Active: Dash(RMB)`, textX, 620);
-            else ctx.fillText(`Active: Dash(Q/J)`, textX, 620);
+            if (lastPressing === "mouse") ctx.fillText(`Active: Dash(RMB)`, textX, 620);
+            else if (lastPressing === "kb") ctx.fillText(`Active: Dash(Q/J)`, textX, 620);
         } else {
             dash.usable = false;
             ctx.fillText(`Active: ${dashCDLeft}s`, textX, 620);
@@ -584,8 +584,8 @@ function drawText() { // draws the current time, highest time, and enemy count
         if (now - minimize.lastUsed >= minimize.cooldown) { // 1.1s
             minimize.usable = true;
 
-            if (mouseMovementOn && !keyboardMovementOn) ctx.fillText(`Active: Minimize(RMB)`, textX, 620);
-            else ctx.fillText(`Active: Minimize(Q/J)`, textX, 620);
+            if (lastPressing === "mouse") ctx.fillText(`Active: Minimize(RMB)`, textX, 620);
+            else if (lastPressing === "kb") ctx.fillText(`Active: Minimize(Q/J)`, textX, 620);
         } else {
             minimize.usable = false;
             ctx.fillText(`Active: ${minimizeCDLeft}s`, textX, 620);
@@ -665,6 +665,7 @@ function spawnEnemyPeriodically() {
 // PLAYER AND ENEMY MOVEMENT
 function keyboardControls() {
     if (keyboardMovementOn){
+        lastPressing = "kb";
         if (!dash.activated){
             player.speed = 2.5 * shiftPressed * player.slowed;
         }
@@ -694,6 +695,7 @@ function keyboardControls() {
 
 function mouseMovement() {
     if (mouseMovementOn && !keyboardMovementOn) {
+        lastPressing = "mouse";
         const dx = mouseX - player.x;
         const dy = mouseY - player.y;
         const distance = Math.hypot(dx, dy);

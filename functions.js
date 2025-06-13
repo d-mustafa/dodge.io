@@ -29,9 +29,8 @@ function recordKeyDown(event) {
     if (wPressed || aPressed || sPressed || dPressed) keyboardMovementOn = true;
     
     if ((event.code === "KeyQ" || event.code === "KeyJ") && gameState !== "gameOver") {
-        if (player.dodger === "jsab" && dash.usable) {
-            dash.activated = true;
-        }
+        if (player.dodger === "jsab" && dash.usable) dash.activated = true;
+        else if (player.dodger === "jolt" && minimize.usable) minimize.activated = true;
     }
 }
 
@@ -151,9 +150,8 @@ function recordRightClick(event) {
     event.preventDefault();
     skipLoadingViaInput();
     if (gameState !== "gameOver") {
-        if (player.dodger === "jsab" && dash.usable) {
-            dash.activated = true;
-        }
+        if (player.dodger === "jsab" && dash.usable) dash.activated = true;
+        else if (player.dodger === "jolt" && minimize.usable) minimize.activated = true;
     }
 }
 

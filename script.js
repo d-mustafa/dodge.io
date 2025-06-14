@@ -195,10 +195,8 @@ requestAnimationFrame(draw)
 
 function draw() {
     now = Date.now()
-    if (gameState === "loading") drawPlayer();
     ctx.fillStyle = "rgb(185, 185, 185)";
     ctx.fillRect(0, 0, cnv.width, cnv.height);
-    if (gameState !== "loading") drawPlayer();
 
     // Loading Screen
     if (now - loadingGame <= 5000 && !skipLoading) { // Takes 5 seconds to load the game safely
@@ -229,20 +227,21 @@ function draw() {
     if (gameState == "startScreen") {
         abilities();
         drawText();
-            
         drawStartScreen();
 
         if (innerGameState == "settings") drawSettings();
         else if (innerGameState == "selectDifficulty") drawDifficultySelection();
         else if (innerGameState == "selectDodger") drawDodgerSelection();
-            
+
+        drawPlayer();
         keyboardControls();
         mouseMovement();
     }
     else if (gameState == "gameOn") {
         drawText();
         drawEnemies();
-            
+        drawPlayer();
+        
         keyboardControls();
         mouseMovement();
             
@@ -256,6 +255,7 @@ function draw() {
         drawText();
         drawGameOver();
         drawEnemies();
+        drawPlayer();
     }
     requestAnimationFrame(draw)
 }

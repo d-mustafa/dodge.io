@@ -228,12 +228,12 @@ function draw() {
         abilities();
         drawText();
         drawStartScreen();
-
-        if (innerGameState == "settings") drawSettings();
-        else if (innerGameState == "selectDifficulty") drawDifficultySelection();
-        else if (innerGameState == "selectDodger") drawDodgerSelection();
-
+        
+        if (innerGameState == "selectDifficulty") drawDifficultySelection();
+        if (innerGameState == "selectDodger") drawDodgerSelection();
         drawPlayer();
+        if (innerGameState == "settings") drawSettings();
+        
         keyboardControls();
         mouseMovement();
     }

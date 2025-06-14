@@ -15,9 +15,9 @@ function recordKeyDown(event) {
     // Loading Screen
     if (now - loadingGame >= 1000 && gameState == "loading") {
         skipLoading = true;
-        return false;
+        return;
     }
-    else if (now - loadingGame <= 5000 && gameState == "loading") return false;
+    else if (now - loadingGame <= 5000 && gameState == "loading") return;
     
     // Keyboard Inputs
     if (event.code === "KeyW" || event.code === "ArrowUp") wPressed = true;
@@ -52,9 +52,9 @@ function recordKeyUp(event) {
     // Loading Screen
     if (now - loadingGame >= 1000 && gameState == "loading") {
         skipLoading = true;
-        return false;
+        return;
     }
-    else if (now - loadingGame <= 5000 && gameState == "loading") return false;
+    else if (now - loadingGame <= 5000 && gameState == "loading") return;
 
     // Keyboard Inputs
     if (event.code === "KeyW" || event.code === "ArrowUp") wPressed = false;
@@ -69,9 +69,9 @@ function recordLeftClick() {
     // Loading Screen
     if (now - loadingGame >= 1000 && gameState == "loading") {
         skipLoading = true;
-        return false;
+        return;
     }
-    else if (now - loadingGame <= 5000 && gameState == "loading") return false;
+    else if (now - loadingGame <= 5000 && gameState == "loading") return;
 
     
     let previousMM; // Variable to keep mouse movement the way it previously was if a button was pressed
@@ -178,9 +178,9 @@ function recordRightClick(event) {
     // Loading Screen
     if (now - loadingGame >= 1000 && gameState == "loading") {
         skipLoading = true;
-        return false;
+        return;
     }
-    else if (now - loadingGame <= 5000 && gameState == "loading") return false;
+    else if (now - loadingGame <= 5000 && gameState == "loading") return;
 
     // Ability Activations
     if (gameState !== "gameOver") {

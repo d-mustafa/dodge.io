@@ -47,7 +47,7 @@ function recordKeyDown(event) {
             }
             if (lastPressing === "kb") {
                 minimize.movex = Math.cos(minimize.facingAngle) * 7;
-                minimize.movey = Math.sin(minimize.facingAhngle) * 7;
+                minimize.movey = Math.sin(minimize.facingAngle) * 7;
             }
         }
     }
@@ -189,8 +189,8 @@ function recordRightClick(event) {
 
     // Ability Activations
     if (gameState !== "gameOver") {
-        if (player.dodger === "jsab" && dash.usable) dash.activated = true;
-        else if (player.dodger === "jolt" && minimize.usable) {
+        if (player.dodger === "jsab" && dash.usable && !dash.activated) dash.activated = true;
+        else if (player.dodger === "jolt" && minimize.usable && !minimize.activated) {
             minimize.activated = true;
             minimize.facingAngle = player.facingAngle;
             minimize.x = player.x;

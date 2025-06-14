@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("up to date");
+console.log("dx");
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 

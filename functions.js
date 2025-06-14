@@ -38,8 +38,8 @@ function recordKeyDown(event) {
             minimize.y = player.y;
             
             if (lastPressing === "mouse") {
-                minimize.dx = mouseX - player.x;
-                minimize.dy = mouseY - player.y;
+                minimize.dx = mouseX - minimize.x;
+                minimize.dy = mouseY - minimize.y;
                 minimize.dist = Math.hypot(minimize.dx, minimize.dy)
                 
                 minimize.movex = (minimize.dx/minimize.dist) * 7;
@@ -1023,9 +1023,9 @@ function abilities() { // player-specific
         ctx.fill();
         */
 
-        minimize.radius *= 1.025
-        minimize.x += (minimize.dx/minimize.dist) * 7;
-        minimize.y += (minimize.dy/minimize.dist) * 7;
+        minimize.radius *= 1.025;
+        minimize.x += minimize.movex;
+        minimize.y += minimize.movey;
 
         if (minimize.radius > 150) {
             minimize.activated = false;

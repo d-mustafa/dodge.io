@@ -26,9 +26,11 @@ function recordKeyDown(event) {
     if (event.code === "KeyD" || event.code === "ArrowRight") dPressed = true;
     if (event.code === "ShiftLeft" || event.code === "ShiftRight") shiftPressed = 0.7;
     if (wPressed || aPressed || sPressed || dPressed) keyboardMovementOn = true;
-    
+
+    // Ability controls
     if ((event.code === "KeyQ" || event.code === "KeyJ") && gameState !== "gameOver") {
         if (player.dodger === "jsab" && dash.usable && !dash.activated) dash.activated = true;
+            
         else if (player.dodger === "jolt" && minimize.usable && !minimize.activated) {
             minimize.activated = true;
             minimize.facingAngle = player.facingAngle;
@@ -39,11 +41,14 @@ function recordKeyDown(event) {
                 minimize.dx = mouseX - player.x;
                 minimize.dy = mouseY - player.y;
                 minimize.dist = Math.hypot(minimize.dx, minimize.dy)
-            } 
-
-            // Code below determines the angle at which the player is facing
-            const angleToMouse = Math.atan2(minimize.dy, minimize.dx); // Target angle
-            minimize.facingAngle = angleToMouse;
+                
+                minimize.movex = (minimize.dx/minimize.dist) * 7;
+                minimize.movey = (minimize.dy/minimize.dist) * 7;
+            }
+            if (lastPressing === "kb") {
+                minimize.movex = Math.cos(minimize.facingAngle);
+                minimize.movey = Math.sin(minimize.facingAngle);
+            }
         }
     }
 }
@@ -74,7 +79,7 @@ function recordLeftClick() {
     else if (now - loadingGame <= 5000 && gameState == "loading") return;
 
     
-    let previousMM; // Variable to keep mouse movement the way it previously was if a button was pressed
+    let previousMM = false; // Variable to keep mouse movement the way it previously was if a button was pressed
     
     // Mouse Movement
     if (mouseMovementOn && !settings.disableMM) {
@@ -187,8 +192,22 @@ function recordRightClick(event) {
         if (player.dodger === "jsab" && dash.usable) dash.activated = true;
         else if (player.dodger === "jolt" && minimize.usable) {
             minimize.activated = true;
+            minimize.facingAngle = player.facingAngle;
             minimize.x = player.x;
             minimize.y = player.y;
+            
+            if (lastPressing === "mouse") {
+                minimize.dx = mouseX - player.x;
+                minimize.dy = mouseY - player.y;
+                minimize.dist = Math.hypot(minimize.dx, minimize.dy)
+                
+                minimize.movex = (minimize.dx/minimize.dist) * 7;
+                minimize.movey = (minimize.dy/minimize.dist) * 7;
+            }
+            if (lastPressing === "kb") {
+                minimize.movex = Math.cos(minimize.facingAngle);
+                minimize.movey = Math.sin(minimize.facingAngle);
+            }
         }
     }
 }

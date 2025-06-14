@@ -13,16 +13,6 @@ function drawCircle(x, y, r = 12.5) {
     ctx.fill()
 }
 
-function determinePlayerFacingAngle() {
-    if (lastPressing === "mouse") {
-        const angleToMouse = Math.atan2(dyMouse, dxMouse); // Target angle
-        player.facingAngle = angleToMouse;
-    }
-    else if (lastPressing === "kb") {
-        
-    }
-}
-
 // KEYBAORD AND MOUSE EVENTS (player inputs)
 function recordKeyDown(event) {
     // stops the page from scrolling when arrow keys are pressed
@@ -695,24 +685,26 @@ function spawnEnemyPeriodically() {
 
 // PLAYER AND ENEMY MOVEMENT
 function keyboardControls() {
+    let dx = 0;
+    let dy = 0;
+
+    if (wPressed) dy -= 1;
+    if (sPressed) dy += 1;
+    if (aPressed) dx -= 1;
+    if (dPressed) dx += 1;
+
+    // Normalize diagonal movement
+    if (dx !== 0 && dy !== 0) {
+        const scale = Math.SQRT1_2; // 1 / √2 ≈ 0.7071
+        dx *= scale;
+        dy *= scale;
+    }
+    
+    // Moves the player with the keyboard
     if (keyboardMovementOn){
         lastPressing = "kb";
         if (!dash.activated){
             player.speed = 2.5 * shiftPressed * player.slowed;
-        }
-        let dx = 0;
-        let dy = 0;
-
-        if (wPressed) dy -= 1;
-        if (sPressed) dy += 1;
-        if (aPressed) dx -= 1;
-        if (dPressed) dx += 1;
-
-        // Normalize diagonal movement
-        if (dx !== 0 && dy !== 0) {
-            const scale = Math.SQRT1_2; // 1 / √2 ≈ 0.7071
-            dx *= scale;
-            dy *= scale;
         }
 
         player.x += dx * player.speed;
@@ -722,14 +714,22 @@ function keyboardControls() {
         if (player.x - player.radius  <= 0 || player.x + player.radius  >= cnv.width) player.x -= dx * player.speed;
         if (player.y - player.radius  <= 0 || player.y + player.radius  >= cnv.height) player.y -= dy * player.speed;
     }
+    
+    // Determines the angle the player is facing
+    if (lastPressing === "kb") {
+        if (dx !== 0) player.facingAngle = Math.acos(dx);
+        else if (dy !== 0) player.facingAngle = Math.asin(dy);
+    }
 }
 
 function mouseMovement() {
+    const dxMouse = mouseX - player.x;
+    const dyMouse = mouseY - player.y;
+    const distance = Math.hypot(dxMouse, dyMouse);
+
+    // Moves the player towards the cursor
     if (mouseMovementOn && !keyboardMovementOn) {
         lastPressing = "mouse";
-        const dxMouse = mouseX - player.x;
-        const dyMouse = mouseY - player.y;
-        const distance = Math.hypot(dxMouse, dyMouse);
         if (!dash.activated) {
             player.speed = 2.5 * shiftPressed * player.slowed;
         }
@@ -756,6 +756,12 @@ function mouseMovement() {
             if (distance < slowStart) player.y -= (dyMouse / distance) * player.speed * slowFactor;
             else player.y -= (dyMouse / distance) * player.speed;
         }
+    }
+    
+    // Determines the angle the player is facing
+    if (lastPressing === "mouse") {
+        const angleToMouse = Math.atan2(dyMouse, dxMouse);
+        player.facingAngle = angleToMouse;
     }
 }
 

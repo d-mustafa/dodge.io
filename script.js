@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("facing angle and loading screen bugs x2");
+console.log("facing angle and loading screen bugs x3");
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 
@@ -195,8 +195,9 @@ requestAnimationFrame(draw)
 
 function draw() {
     now = Date.now()
-    drawPlayer();
+    if (gameState === "loading") drawPlayer();
     ctx.fillStyle = "rgb(185, 185, 185)"
+    if (gameState !== "loading") drawPlayer();
     ctx.fillRect(0, 0, cnv.width, cnv.height);
 
     // Loading Screen
@@ -222,7 +223,7 @@ function draw() {
             ctx.fillText("click anywhere on the screen to skip", 20, cnv.height - 20);
         }
     }
-    else if ((now - loadingGame > 5000 || skipLoading) && gameState == "loading") gameState = "startScreen";
+    else if ((now - loadingGame > 5000 || skipLoading) && gameState === "loading") gameState = "startScreen";
 
     // Actual Game
     if (gameState == "startScreen") {

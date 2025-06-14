@@ -139,8 +139,8 @@ if (localData) {
 if (resetLocalData || !localData){
     // creates a new userData for new users
     userData = {
-        highscore: highscore,
         player: player,
+        highscore: highscore,
         settings: settings,
     };
     

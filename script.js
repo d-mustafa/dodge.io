@@ -138,11 +138,7 @@ if (localData) {
 
 if (resetLocalData || !localData){
     // creates a new userData for new users
-    userData = {
-        player: player,
-        highscore: highscore,
-        settings: settings,
-    };
+    userData = { player: player, highscore: highscore, settings: settings, };
     
     // saves the new user data to local storage
     localStorage.setItem('localUserData', JSON.stringify(userData));
@@ -176,6 +172,7 @@ if (!localCrashData || resetCrashData) {
 // saves the game if the website is closed
 window.addEventListener('beforeunload', () => {
     if (gameState !== "loading") { // only save user data if they're not on the loading screen
+        userData = { player: player, highscore: highscore, settings: settings, };
         localStorage.setItem('localUserData', JSON.stringify(userData));
     }
     

@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("dx");
+console.log("facingAhngle");
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 

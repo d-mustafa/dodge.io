@@ -46,8 +46,8 @@ function recordKeyDown(event) {
                 minimize.movey = (minimize.dy/minimize.dist) * 7;
             }
             if (lastPressing === "kb") {
-                minimize.movex = Math.cos(minimize.facingAngle);
-                minimize.movey = Math.sin(minimize.facingAngle);
+                minimize.movex = Math.cos(minimize.facingAngle) * 7;
+                minimize.movey = Math.sin(minimize.facingAngle) * 7;
             }
         }
     }
@@ -205,8 +205,8 @@ function recordRightClick(event) {
                 minimize.movey = (minimize.dy/minimize.dist) * 7;
             }
             if (lastPressing === "kb") {
-                minimize.movex = Math.cos(minimize.facingAngle);
-                minimize.movey = Math.sin(minimize.facingAngle);
+                minimize.movex = Math.cos(minimize.facingAngle) * 7;
+                minimize.movey = Math.sin(minimize.facingAngle) * 7;
             }
         }
     }
@@ -753,8 +753,7 @@ function keyboardControls() {
     
     // Determines the angle the player is facing
     if (lastPressing === "kb") {
-        if (dx !== 0) player.facingAngle = Math.acos(dx);
-        else if (dy !== 0) player.facingAngle = Math.asin(dy);
+        player.facingAngle = Math.atan2(dy, dx);
     }
 }
 
@@ -796,8 +795,7 @@ function mouseMovement() {
     
     // Determines the angle the player is facing
     if (lastPressing === "mouse") {
-        const angleToMouse = Math.atan2(dyMouse, dxMouse);
-        player.facingAngle = angleToMouse;
+        player.facingAngle = Math.atan2(dyMouse, dxMouse);
     }
 }
 

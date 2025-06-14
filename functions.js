@@ -1,12 +1,4 @@
 // Convenience Functions
-function skipLoadingViaInput() {
-    if (now - loadingGame >= 1000 && gameState == "loading") {
-        skipLoading = true;
-        return false;
-    }
-    else if (now - loadingGame <= 5000 && gameState == "loading") return false;
-}
-
 function drawCircle(x, y, r = 12.5) {
     ctx.beginPath()
     ctx.arc(x, y, r, Math.PI * 2, 0)
@@ -19,8 +11,15 @@ function recordKeyDown(event) {
     if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].indexOf(event.code) > -1) {
         event.preventDefault();
     }
-    skipLoadingViaInput();
+
+    // Loading Screen
+    if (now - loadingGame >= 1000 && gameState == "loading") {
+        skipLoading = true;
+        return false;
+    }
+    else if (now - loadingGame <= 5000 && gameState == "loading") return false;
     
+    // Keyboard Inputs
     if (event.code === "KeyW" || event.code === "ArrowUp") wPressed = true;
     if (event.code === "KeyA" || event.code === "ArrowLeft") aPressed = true;
     if (event.code === "KeyS" || event.code === "ArrowDown") sPressed = true;
@@ -50,8 +49,14 @@ function recordKeyDown(event) {
 }
 
 function recordKeyUp(event) {
-    skipLoadingViaInput();
-    
+    // Loading Screen
+    if (now - loadingGame >= 1000 && gameState == "loading") {
+        skipLoading = true;
+        return false;
+    }
+    else if (now - loadingGame <= 5000 && gameState == "loading") return false;
+
+    // Keyboard Inputs
     if (event.code === "KeyW" || event.code === "ArrowUp") wPressed = false;
     if (event.code === "KeyA" || event.code === "ArrowLeft") aPressed = false;
     if (event.code === "KeyS" || event.code === "ArrowDown") sPressed = false;
@@ -61,11 +66,15 @@ function recordKeyUp(event) {
 }
 
 function recordLeftClick() {
-    // let skip = skipLoadingViaInput();
-    // if (!skip) return;
-    skipLoadingViaInput();
-       
-    let previousMM; // Variable to keep mouse movement the way it was if the player pressed a button
+    // Loading Screen
+    if (now - loadingGame >= 1000 && gameState == "loading") {
+        skipLoading = true;
+        return false;
+    }
+    else if (now - loadingGame <= 5000 && gameState == "loading") return false;
+
+    
+    let previousMM; // Variable to keep mouse movement the way it previously was if a button was pressed
     
     // Mouse Movement
     if (mouseMovementOn && !settings.disableMM) {
@@ -165,7 +174,15 @@ function recordLeftClick() {
 
 function recordRightClick(event) {
     event.preventDefault();
-    skipLoadingViaInput();
+
+    // Loading Screen
+    if (now - loadingGame >= 1000 && gameState == "loading") {
+        skipLoading = true;
+        return false;
+    }
+    else if (now - loadingGame <= 5000 && gameState == "loading") return false;
+
+    // Ability Activations
     if (gameState !== "gameOver") {
         if (player.dodger === "jsab" && dash.usable) dash.activated = true;
         else if (player.dodger === "jolt" && minimize.usable) {

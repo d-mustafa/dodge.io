@@ -195,6 +195,7 @@ requestAnimationFrame(draw)
 
 function draw() {
     now = Date.now()
+    drawPlayer();
     ctx.fillStyle = "rgb(185, 185, 185)"
     ctx.fillRect(0, 0, cnv.width, cnv.height);
 
@@ -233,8 +234,6 @@ function draw() {
         if (innerGameState == "settings") drawSettings();
         else if (innerGameState == "selectDifficulty") drawDifficultySelection();
         else if (innerGameState == "selectDodger") drawDodgerSelection();
-
-        drawPlayer();
             
         keyboardControls();
         mouseMovement();
@@ -242,7 +241,6 @@ function draw() {
     else if (gameState == "gameOn") {
         drawText();
         drawEnemies();
-        drawPlayer();
             
         keyboardControls();
         mouseMovement();
@@ -257,7 +255,6 @@ function draw() {
         drawText();
         drawGameOver();
         drawEnemies();
-        drawPlayer();
     }
     requestAnimationFrame(draw)
 }

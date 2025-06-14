@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("facing angle");
+console.log("facing angle and loading screen bugs");
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 

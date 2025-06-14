@@ -20,7 +20,6 @@ let shiftPressed = 1;
 // Mouse
 document.addEventListener("click", recordLeftClick);
 document.addEventListener("contextmenu", recordRightClick);
-
 let mouseMovementOn = false;
 let mouseOver = {
     play: false,

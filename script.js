@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("update data");
+console.log("facing angle");
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 

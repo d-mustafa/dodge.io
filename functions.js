@@ -721,19 +721,19 @@ function spawnEnemyPeriodically() {
 
 // PLAYER AND ENEMY MOVEMENT
 function keyboardControls() {
-    let dx = 0;
-    let dy = 0;
+    let dxKB = 0;
+    let dyKB = 0;
 
-    if (wPressed) dy -= 1;
-    if (sPressed) dy += 1;
-    if (aPressed) dx -= 1;
-    if (dPressed) dx += 1;
+    if (wPressed) dyKB -= 1;
+    if (sPressed) dyKB += 1;
+    if (aPressed) dxKB -= 1;
+    if (dPressed) dxKB += 1;
 
     // Normalize diagonal movement
-    if (dx !== 0 && dy !== 0) {
+    if (dxKB !== 0 && dyKB !== 0) {
         const scale = Math.SQRT1_2; // 1 / √2 ≈ 0.7071
-        dx *= scale;
-        dy *= scale;
+        dxKB *= scale;
+        dyKB *= scale;
     }
     
     // Moves the player with the keyboard
@@ -743,17 +743,17 @@ function keyboardControls() {
             player.speed = 2.5 * shiftPressed * player.slowed;
         }
 
-        player.x += dx * player.speed;
-        player.y += dy * player.speed;
+        player.x += dxKB * player.speed;
+        player.y += dyKB * player.speed;
 
         // Doesn't allow the player to leave the map (wall collisions)
-        if (player.x - player.radius  <= 0 || player.x + player.radius  >= cnv.width) player.x -= dx * player.speed;
-        if (player.y - player.radius  <= 0 || player.y + player.radius  >= cnv.height) player.y -= dy * player.speed;
+        if (player.x - player.radius  <= 0 || player.x + player.radius  >= cnv.width) player.x -= dxKB * player.speed;
+        if (player.y - player.radius  <= 0 || player.y + player.radius  >= cnv.height) player.y -= dyKB * player.speed;
     }
     
     // Determines the angle the player is facing
     if (lastPressing === "kb") {
-        player.facingAngle = Math.atan2(dy, dx);
+        if (dxKB !== 0 || dyKB !== 0) player.facingAngle = Math.atan2(dyKB, dxKB);
     }
 }
 
@@ -795,7 +795,7 @@ function mouseMovement() {
     
     // Determines the angle the player is facing
     if (lastPressing === "mouse") {
-        if (dx !== 0 || dy !== 0) player.facingAngle = Math.atan2(dyMouse, dxMouse);
+        player.facingAngle = Math.atan2(dyMouse, dxMouse);
     }
 }
 

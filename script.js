@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("facing angle and loading screen bugs x3");
+console.log("facing angle and loading screen bugs x44");
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 
@@ -196,9 +196,9 @@ requestAnimationFrame(draw)
 function draw() {
     now = Date.now()
     if (gameState === "loading") drawPlayer();
-    ctx.fillStyle = "rgb(185, 185, 185)"
-    if (gameState !== "loading") drawPlayer();
+    ctx.fillStyle = "rgb(185, 185, 185)";
     ctx.fillRect(0, 0, cnv.width, cnv.height);
+    if (gameState !== "loading") drawPlayer();
 
     // Loading Screen
     if (now - loadingGame <= 5000 && !skipLoading) { // Takes 5 seconds to load the game safely

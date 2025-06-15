@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("facingAhngle");
+console.log("cricle on the beam");
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 

@@ -1,5 +1,5 @@
 // DODGE.IO
-console.log("drawCRicle");
+console.log("translate doesnt change much so hitboxes shouldnt be too hard");
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 

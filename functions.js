@@ -1008,7 +1008,7 @@ function abilities() { // player-specific
         ctx.beginPath();
         ctx.moveTo(0, -minimize.radius);
         ctx.bezierCurveTo(minimize.radius, -2, minimize.radius, 2, 0, minimize.radius);
-        ctx.bezierCurveTo(minimize.radius/3, 2, minimize.radius/3, -2, 0, -minimize.radius);
+        ctx.bezierCurveTo(minimize.radius/2, 2, minimize.radius/2, -2, 0, -minimize.radius);
         ctx.fill();
 
         ctx.restore();

@@ -1013,6 +1013,9 @@ function abilities() { // player-specific
 
         ctx.restore();
 
+        // actual location on canvas
+        drawCricle(minimize.x, minimize.y);
+
         /*
                 ctx.beginPath();
         ctx.moveTo(minimize.x, minimize.y-minimize.radius);

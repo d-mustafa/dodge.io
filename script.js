@@ -76,7 +76,7 @@ let minimize = {
 }
 
 let settings = {
-    enemyOutlines: false,
+    enemyOutlines: true,
     disableMM: false,
 };
 

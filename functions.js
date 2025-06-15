@@ -1012,13 +1012,13 @@ function abilities() { // player-specific
         ctx.fill();
         
         ctx.fillStyle = 'blue'
-        drawCricle(minimize.x, minimize.y);
+        drawCircle(minimize.x, minimize.y);
 
         ctx.restore();
 
         // actual location on canvas
         ctx.fillStyle = 'red'
-        drawCricle(minimize.x, minimize.y);
+        drawCircle(minimize.x, minimize.y);
 
         /*
                 ctx.beginPath();

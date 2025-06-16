@@ -72,7 +72,7 @@ let minimize = {
     usable: true,
     activated: false,
     lastEnded: 0,
-    radius: 15,
+    radius: 25,
 }
 
 let settings = {

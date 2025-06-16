@@ -1,10 +1,4 @@
-// Convenience Functions
-function drawCircle(x, y, r = 12.5) {
-    ctx.beginPath()
-    ctx.arc(x, y, r, Math.PI * 2, 0)
-    ctx.fill()
-}
-
+// DODGE.IO - FUNCTIONS.JS
 // KEYBAORD AND MOUSE EVENTS (player inputs)
 function recordKeyDown(event) {
     // stops the page from scrolling when arrow keys are pressed
@@ -19,7 +13,7 @@ function recordKeyDown(event) {
     }
     else if (now - loadingGame <= 5000 && gameState == "loading") return;
     
-    // Keyboard Inputs
+    // Keyboard Inputs (WASD & Shift)
     if (event.code === "KeyW" || event.code === "ArrowUp") wPressed = true;
     if (event.code === "KeyA" || event.code === "ArrowLeft") aPressed = true;
     if (event.code === "KeyS" || event.code === "ArrowDown") sPressed = true;
@@ -32,12 +26,14 @@ function recordKeyDown(event) {
         if (player.dodger === "jsab" && dash.usable && !dash.activated) dash.activated = true;
             
         else if (player.dodger === "jolt" && minimize.usable && !minimize.activated) {
+            // activate the minimize ability and set certain properties
             minimize.activated = true;
             minimize.facingAngle = player.facingAngle;
             minimize.x = player.x;
             minimize.y = player.y;
-            
+
             if (lastPressing === "mouse") {
+                // distance between the beam and cursor
                 minimize.dx = mouseX - minimize.x;
                 minimize.dy = mouseY - minimize.y;
                 minimize.dist = Math.hypot(minimize.dx, minimize.dy)
@@ -78,8 +74,8 @@ function recordLeftClick() {
     }
     else if (now - loadingGame <= 5000 && gameState == "loading") return;
 
-    
-    let previousMM = false; // Variable to keep mouse movement the way it previously was if a button was pressed
+    // Variable to keep mouse movement the way it previously was if a button was pressed
+    let previousMM = false;
     
     // Mouse Movement
     if (mouseMovementOn && !settings.disableMM) {
@@ -213,6 +209,12 @@ function recordRightClick(event) {
 }
 
 // FUNCTIONS THAT DRAWS STUFF TO THE SCREEN
+function drawCircle(x, y, r = 12.5) {
+    ctx.beginPath()
+    ctx.arc(x, y, r, Math.PI * 2, 0)
+    ctx.fill()
+}
+
 function drawStartScreen() {
     if (innerGameState === "mainMenu" || innerGameState === "selectDifficulty") {
         // PLAY BUTTON //
@@ -1025,16 +1027,20 @@ function abilities() { // player-specific-abilities
             allEnemies.forEach(enemy => {
                 if (ctx.isPointInPath(beamPath, enemy.x, enemy.y)) {
                     enemy.radius = enemy.baseRadius/2;
-                    enemy.resetRadius = Date.now(); // time before radius ends
+                    if (enemy.ability === "decelerator") enemy.auraRadius = enemy.baseAuraRadius/2;
+                    
+                    enemy.resetRadius = Date.now(); // starts the time which an enemy got hit
                 }
             })
 
             ctx.restore();
 
+            // increase the radius of the beam and move it every frame
             minimize.radius *= 1.025;
             minimize.x += minimize.movex;
             minimize.y += minimize.movey;
 
+            // once the radius is greater than 150, end the entire ability
             if (minimize.radius > 150) {
                 minimize.activated = false;
                 minimize.radius = 25;
@@ -1042,9 +1048,16 @@ function abilities() { // player-specific-abilities
             }
         }
         allEnemies.forEach(enemy => {
-            // for enemies under the effect of minimize
-            if (now - enemy.resetRadius > 5000) enemy.radius = enemy.baseRadius;
-            else enemy.radius = enemy.baseRadius/2;
+            // Restore the radius of enemies after 5 seconds have passed
+            if (now - enemy.resetRadius > 5000) {
+                enemy.radius = enemy.baseRadius;
+                if (enemy.ability === "decelerator") enemy.auraRadius = enemy.baseAuraRadius;
+            }
+            // Decrease the radius of enemies under the effect of minimize
+            else {
+                enemy.radius = enemy.baseRadius/2;
+                if (enemy.ability === "decelerator") enemy.auraRadius = enemy.baseAuraRadius/2;
+            }
         })
     }
 }
@@ -1054,30 +1067,33 @@ function enemyAbilitiesAndStats(enemy) {
     num = Math.random();
 
     // All enemies on easy difficulty have no abilities
-    if (difficulty.level == "easy")  enemy.ability = "none";
+    if (difficulty.level === "easy")  enemy.ability = "none";
 
-    else if (difficulty.level == "medium") {
+    else if (difficulty.level === "medium") {
         // 25% Chance to get the decelerator ability
         if (num > 0.75) enemy.ability = "decelerator";
         else enemy.ability = "none";
     }
-    else if (difficulty.level == "hard") {
+        
+    else if (difficulty.level === "hard") {
         // 25% Chance to get the decelerator ability, 15% for the homing ability
         if (num > 0.85) enemy.ability = "homing";
         else if (num > 0.6) enemy.ability = "decelerator";
         else enemy.ability = "none";
     }
 
-    if (enemy.ability == "none") enemy.baseColor = "rgb(100, 100, 100)";
+    
+    if (enemy.ability === "none") enemy.baseColor = "rgb(100, 100, 100)";
 
-    // decelerators need an aura radius for their ability
-    else if (enemy.ability == "decelerator") {
+    // decelerators need an aura radius for their ability (and are red)
+    else if (enemy.ability === "decelerator") {
         enemy.baseColor = "rgb(255, 0, 0)";
         enemy.auraRadius = (Math.random() * 20) + 80;
+        enemy.baseAuraRadius = enemy.auraRadius;
     }
 
-    // homings need a detection radius for their ability
-    else if (enemy.ability == "homing") {
+    // homings need a detection radius for their ability (and are gold)
+    else if (enemy.ability === "homing") {
         enemy.baseColor = "rgb(255, 196, 0)";
         enemy.detectionRadius = 200;
     }

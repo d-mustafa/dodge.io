@@ -656,7 +656,9 @@ function createEnemy() { // Creates an individual enemy with unique attributes
         y: (Math.random() * (cnv.height-60))+30,  // between 30 and 520
         radius: (Math.random() * 7.5) + 10,  // between 10 and 17.5
         color: "rgb(100, 100, 100)",
+        resetRadius: 0,
     }
+    oneEnemy.baseRadius = oneEnemy.radius;
     
     // Initializes the enemy's ability and other important values based on their ability
     enemyAbilitiesAndStats(oneEnemy);
@@ -870,7 +872,6 @@ function moveEnemies() { // Loops through the allEnemies array to move each enem
         // Normalize the angle with the ever reliable Math.atan2()
         enemy.facingAngle = Math.atan2(Math.sin(enemy.facingAngle), Math.cos(enemy.facingAngle));
     })
-
 }
 
 
@@ -895,9 +896,12 @@ function restartGame() { // Resets certain variables once the play button is pre
 
     startTime = Date.now();
     currentTime = 0;
+
     enemySpawnPeriod = 3000;
     lastSpawn = 0;
+
     dash.lastEnded = 0;
+    minimize.lastEnded = 0;
 
     gameState = "gameOn"
 }
@@ -931,7 +935,7 @@ function collisions() { // Keeps track of when the player touches any enemy in t
 }
 
 // ABILITIES
-function abilities() { // player-specific
+function abilities() { // player-specific-abilities
     // 'Dash' gives the player a powerful but short-lived burst of speed
     if (dash.activated){
         player.speed += dash.speed;
@@ -997,47 +1001,56 @@ function abilities() { // player-specific
 
         })
     }
-    // 'Minimize' launches a beam that shrinks ememies
-    if (minimize.activated) {
-        ctx.fillStyle = 'rgba(255, 255, 255, 1)'
+    if (player.dodger === "jolt") {
+        // 'Minimize' launches a beam that shrinks ememies
+        if (minimize.activated) {
+            ctx.fillStyle = 'rgba(255, 255, 255, 1)'
 
-        ctx.save();
-        ctx.translate(minimize.x, minimize.y);
-        ctx.rotate(minimize.facingAngle);
+            // create the beams path
+            const beamPath = new Path2D();
+            beamPath.moveTo(0, -minimize.radius);
+            beamPath.bezierCurveTo(minimize.radius, -2, minimize.radius, 2, 0, minimize.radius);
+            beamPath.bezierCurveTo(minimize.radius/2, 2, minimize.radius/2, -2, 0, -minimize.radius);
 
-        ctx.beginPath();
-        ctx.moveTo(0, -minimize.radius);
-        ctx.bezierCurveTo(minimize.radius, -2, minimize.radius, 2, 0, minimize.radius);
-        ctx.bezierCurveTo(minimize.radius/2, 2, minimize.radius/2, -2, 0, -minimize.radius);
-        ctx.fill();
+            // save and transform the canvas
+            ctx.save();
+            ctx.translate(minimize.x, minimize.y);
+            ctx.rotate(minimize.facingAngle);
 
-        ctx.restore();
+            // draw the beam
+            ctx.fillStyle = 'rgba(255, 255, 255, 1)';
+            ctx.fill(beamPath);
 
-        // actual location on canvas
-        ctx.fillStyle = 'rgba(255, 0, 0, 0.5)'
-        drawCircle(minimize.x, minimize.y, 10);
+            // checks for collisions
+            allEnemies.forEach(enemy => {
+                if (ctx.isPointInPath(beamPath, enemy.x, enemy.y)) {
+                    enemy.radius = enemy.baseRadius/2;
+                    enemy.resetRadius = Date.now(); // time before radius ends
+                }
+            })
 
-        /*
-                ctx.beginPath();
-        ctx.moveTo(minimize.x, minimize.y-minimize.radius);
-        ctx.bezierCurveTo(minimize.x+minimize.radius, minimize.y-2, minimize.x+minimize.radius, minimize.y+2, minimize.x, minimize.y+minimize.radius);
-        ctx.bezierCurveTo(minimize.x+minimize.radius/3, minimize.y+2, minimize.x+minimize.radius/3, minimize.y-2, minimize.x, minimize.y-minimize.radius);
-        ctx.fill();
-        */
+            ctx.restore();
 
-        minimize.radius *= 1.025;
-        minimize.x += minimize.movex;
-        minimize.y += minimize.movey;
+            minimize.radius *= 1.025;
+            minimize.x += minimize.movex;
+            minimize.y += minimize.movey;
 
-        if (minimize.radius > 150) {
-            minimize.activated = false;
-            minimize.radius = 15;
-            minimize.lastEnded = Date.now();
+            if (minimize.radius > 150) {
+                minimize.activated = false;
+                minimize.radius = 25;
+                minimize.lastEnded = Date.now();
+            }
         }
+        allEnemies.forEach(enemy => {
+            // for enemies under the effect of minimize
+            if (now - enemy.resetRadius > 5000) enemy.radius = enemy.baseRadius;
+            else enemy.radius = enemy.baseRadius/2;
+        })
     }
 }
+           
 
-function enemyAbilitiesAndStats(enemy) { // enemy-specific
+function enemyAbilitiesAndStats(enemy) {
     num = Math.random();
 
     // All enemies on easy difficulty have no abilities

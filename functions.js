@@ -136,19 +136,19 @@ function recordLeftClick() {
                 if (mouseOver.medium) difficulty = {level: "medium", color: "rgb(255, 255, 0)"};
                 if (mouseOver.hard) difficulty = {level: "hard", color: "rgb(0, 0, 0)"};
                 
-                innerGameState = 'inGame';
+                innerGameState = 'inEndless';
                 mouseMovementOn = previousMM;
                 restartEndless();
             }
         })
 
-        ["alarmNine"].forEach(level => {
+        ["alarm9"].forEach(level => {
             if (mouserOver[level]) {
-                if (mouseOver.alarmNine) {
-                    difficulty = {level: "Alarm 9", color: "rgb(163, 0, 163)"};
+                if (mouseOver.alarm9) {
+                    music = {name: "Alarm 9", artist: "Blue Cxve", duration: alarm9.duration, color: "rgb(163, 0, 163)"};
                     artist = "Blue Cxve";
                 }
-                innerGameState = 'inGame';
+                innerGameState = 'inMusicMode';
                 mouseMovementOn = previousMM;
                 restartMusicMode();
             }
@@ -403,8 +403,8 @@ function drawDifficultySelection() {
     decideFillStyle(mouseOver.hard, "rgb(60, 60, 60)", "rgb(40, 40, 40)");
     ctx.fillRect(550, 250, 200, 100);
 
-    mouseOver.alarmNine = (mouseX > 50 && mouseX < 250) && (mouseY > 450 && mouseY < 550);
-    decideFillStyle(mouseOver.alarmNine, "rgb(128, 0, 128)", "rgb(100, 0, 100)");
+    mouseOver.alarm9 = (mouseX > 50 && mouseX < 250) && (mouseY > 450 && mouseY < 550);
+    decideFillStyle(mouseOver.alarm9, "rgb(128, 0, 128)", "rgb(100, 0, 100)");
     ctx.fillRect(50, 450, 200, 100);
     
     // Text
@@ -613,8 +613,8 @@ function drawText() { // draws the current time, highest time, and enemy count
         
         // Draws the music name and artist
         ctx.font = "20px Verdana"
-        ctx.fillStyle = difficulty.color;
-        ctx.fillText(`${difficulty.level} - ${artist}`, 600, 620);
+        ctx.fillStyle = music.color;
+        ctx.fillText(`${music.name} - ${music.artist}`, 600, 620);
     }
     
     // Abilites

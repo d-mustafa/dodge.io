@@ -1,5 +1,6 @@
 // DODGE.IO - JSAB.JS
 console.log("music")
+
 function restartMusicMode() {
   alarmNine.currentTime = 0;
   if (difficulty.level === "alarmNine") {
@@ -25,4 +26,8 @@ function pauseAudio(promise, audio) {
       console.warn(error);
     });
   }
+}
+
+function musicCollisions() {
+
 }

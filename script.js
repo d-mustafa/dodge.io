@@ -129,6 +129,7 @@ let music = {
     name: "Alarm 9",
     artist: "Blue Cxve",
     duration: alarmNine.duration,
+    color: "rgb(163, 0, 163)",
 }
 
 

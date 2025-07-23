@@ -142,7 +142,10 @@ function recordLeftClick() {
             }
         })
         if (mouseOver.alarmNine) {
-            if (mouseOver.alarmNine) difficulty = {level: "alarmNine", color: "rgb(163, 0, 163)"};
+            if (mouseOver.alarmNine) {
+                difficulty = {level: "Alarm 9", color: "rgb(163, 0, 163)"};
+                artist = "Blue Cxve";
+            }
             innerGameState = 'inGame';
             mouseMovementOn = previousMM;
             restartMusicMode();
@@ -414,10 +417,10 @@ function drawDifficultySelection() {
     ctx.textAlign = "center";
     ctx.fillStyle = "grey";
     
-    ctx.font = "25px 'Lucida Console'";
+    ctx.font = "30px Arial";
     ctx.fillText("ENDLESS", cnv.width/2, 220);
     
-    ctx.font = "25px 'Lucida Console'";
+    ctx.font = "30px Arial";
     ctx.fillText("MUSIC", cnv.width/2, 420);
 
     // levels
@@ -559,10 +562,11 @@ function drawEnemies() {
 }
 
 function drawText() { // draws the current time, highest time, and enemy count
+    // Current time in seconds
+    currentTime = ((now-startTime) / 1000).toFixed(2);
+    timeLeft = (musicDuration - currentTime).toFixed(2);
+    
     if (gameState === "gameOn") {
-        // Current time in seconds
-        currentTime = ((now-startTime) / 1000).toFixed(2);
-        
         // Updates the highscore and saves it to local storage
         if (Number(currentTime) > Number(highscore[difficulty.level])) {
             highscore[difficulty.level] = currentTime;
@@ -577,9 +581,8 @@ function drawText() { // draws the current time, highest time, and enemy count
         }
 
         // Draws the times and the enemy count
-        ctx.font = "20px 'Verdana'";
+        ctx.font = "20px Verdana";
         ctx.textAlign = 'center';
-            
         ctx.fillStyle = "rgb(87, 87, 87)";
         ctx.fillText(`Time Elapsed: ${currentTime}s`, 200, 40);
         ctx.fillText(`Enemy Count: ${allEnemies.length}`, 600, 620);
@@ -591,6 +594,25 @@ function drawText() { // draws the current time, highest time, and enemy count
             `Highest Time (${difficulty.level.charAt(0).toUpperCase() + difficulty.level.slice(1)}): ${highscore[difficulty.level]}s`,
             600, 40);
     }
+    if (gameState === "musicMode") {
+        // Draws the time left
+        ctx.font = "30px Verdana"
+        ctx.textAlign = 'center';
+
+        let timeLeftColor;
+        if (timeLeft <= 3) timeLeftColor = "rgb(200, 150, 150)";
+        else if (timeLeft <= 2) timeLeftColor = "rgb(200, 100, 100)";
+        else if (timeLeft <= 1) timeLeftColor = "rgb(200, 50, 50)";
+        else timeLeftColor = "rgb(200, 200, 200)";
+        
+        ctx.fillStyle = timeLeftColor;
+        ctx.fillText(`Time Left: ${timeLeft}s`, cnv.width/2, 40);
+        
+        // Draws the music name and artist
+        ctx.font = "20px Verdana"
+        ctx.fillStyle = difficulty.color;
+        ctx.fillText(`${difficulty.level} - ${artist}`, 600, 620);
+    }
     
     // Abilites
     ctx.font = "20px 'Verdana'";
@@ -599,8 +621,8 @@ function drawText() { // draws the current time, highest time, and enemy count
 
     // The text should be centered unless the gameState is gameOn or gameOver
     textX = 200;
-    if (gameState === "gameOn" || gameState === "gameOver") textX = 200
-    else textX = 400
+    if (gameState === "gameOn" || gameState === "gameOver" || gameState === "musicMode") textX = 200
+    else textX = cnv.width/2
 
     // No Abiliy
     if (player.dodger === "evader") ctx.fillText(`Passive: Skill`, textX, 620);

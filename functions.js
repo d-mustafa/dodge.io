@@ -369,34 +369,44 @@ function drawSettings() {
 }
 
 function drawDifficultySelection() {
-    function decideFillStyle(bool, color1, color2) {
+    // BackGrounds
+    function decideFillStyle(bool, lightColor, darkColor) {
         if (bool) {
-            ctx.fillStyle = color1;
+            ctx.fillStyle = lightColor;
         } else {
-            ctx.fillStyle = color2;
+            ctx.fillStyle = darkColor;
         }
     }
 
-    // BackGrounds
     mouseOver.easy = (mouseX > 50 && mouseX < 250) && (mouseY > 200 && mouseY < 300);
     decideFillStyle(mouseOver.easy, "rgb(0, 191, 216)", "rgb(0, 171, 194)");
     ctx.fillRect(50, 200, 200, 100);
-    
 
     mouseOver.medium = (mouseX > 300 && mouseX < 500) && (mouseY > 200 && mouseY < 300);
     decideFillStyle(mouseOver.medium, "rgb(220, 220, 0)", "rgb(200, 200, 0)");
     ctx.fillRect(300, 200, 200, 100);
-    
 
     mouseOver.hard = (mouseX > 550 && mouseX < 750) && (mouseY > 200 && mouseY < 300);
-    decideFillStyle(mouseOver.hard, "rgb(30, 30, 30)", "rgb(50, 50, 50)");
+    decideFillStyle(mouseOver.hard, "rgb(50, 50, 50)", "rgb(30, 30, 30)");
     ctx.fillRect(550, 200, 200, 100);
 
+    
     // Text
+    function drawDifficultyText(color, difficultyName, description, x) {
+        ctx.fillStyle = color;
+        ctx.font = "25px 'Lucida Console'";
+        ctx.fillText(difficultyName, x, 230);
+        ctx.font = "14px 'Lucida Console'";
+        ctx.fillText(description, x, 280);
+    }
+    
     ctx.textAlign = 'left';
-
+    drawDifficultyText("rgb(0, 225, 255)", "EASY", "Normal Enemies", 60);
+    drawDifficultyText("rgb(255, 255, 0)", "MEDIUM", "+Decelerating Enemies", 310);
+    drawDifficultyText("rgb(0, 0, 0)", "HARD", "+Homing Enemies", 310);
+    
+    /*
     ctx.fillStyle = "rgb(0, 225, 255)";
-
     ctx.font = "25px 'Lucida Console'";
     ctx.fillText("EASY", 60, 230);
     ctx.font = "14px 'Lucida Console'";
@@ -404,7 +414,6 @@ function drawDifficultySelection() {
 
 
     ctx.fillStyle = "rgb(255, 255, 0)";
-
     ctx.font = "25px 'Lucida Console'";
     ctx.fillText("MEDIUM", 310, 230);
     ctx.font = "14px 'Lucida Console'";
@@ -412,11 +421,11 @@ function drawDifficultySelection() {
 
 
     ctx.fillStyle = "rgb(0, 0, 0)";
-
     ctx.font = "25px 'Lucida Console'";
     ctx.fillText("HARD", 560, 230);
     ctx.font = "14px 'Lucida Console'";
     ctx.fillText("+Homing Enemies", 560, 280);
+    */
 }
 
 function drawDodgerSelection() {

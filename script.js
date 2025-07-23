@@ -35,6 +35,8 @@ let mouseOver = {
     easy: false,
     medium: false,
     hard: false,
+    alarmNine: false,
+
     enemyOutBtn: false,
     disableMMBtn: false,
 };

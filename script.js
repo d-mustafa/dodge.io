@@ -18,6 +18,7 @@ let shiftPressed = 1;
 
 // Mouse
 document.addEventListener("click", recordLeftClick);
+document.addEventListener("touchstart", (event) => { recordLeftClick(); event.preventDefault(); });
 document.addEventListener("contextmenu", recordRightClick);
 let mouseMovementOn = false;
 let mouseOver = {
@@ -149,22 +150,15 @@ let crashData;
 let resetCrashData = false;
 
 if (localCrashData) {
-    try {
-        crashData = JSON.parse(localCrashData);
-    } catch (exception) {
+    try { crashData = JSON.parse(localCrashData); }
+    catch (exception) {
         console.warn('Crash data was invalid, resetting.', exception);
         localStorage.removeItem('localCrashData');
         resetCrashData = true;
     }
 }
 if (!localCrashData || resetCrashData) {
-    crashData = {
-        leaveOnLoading: 0,
-        leaveOnMenu: 0,
-        leaveOnPlay: 0,
-        leaveUnknown: 0,
-        lastLeftOn: "",
-    };
+    crashData = { leaveOnLoading: 0, leaveOnMenu: 0, leaveOnPlay: 0, leaveUnknown: 0, lastLeftOn: "", };
     localStorage.setItem('localCrashData', JSON.stringify(crashData));
 }
 
@@ -174,17 +168,11 @@ window.addEventListener('beforeunload', () => {
         userData = { player: player, highscore: highscore, settings: settings, };
         localStorage.setItem('localUserData', JSON.stringify(userData));
     }
-    
     if (gameState === "loading") crashData.leaveOnLoading++;
-
     else if (gameState === "startScreen") crashData.leaveOnMenu++;
-
     else if (gameState === "gameOn" || gameState === "gameOver") crashData.leaveOnPlay++;
-
     else crashData.leaveUnknown++;
-    
     crashData.lastLeftOn = gameState;
-        
     localStorage.setItem('localCrashData', JSON.stringify(crashData));
 })
 
@@ -231,7 +219,7 @@ function draw() {
         if (innerGameState == "selectDifficulty") drawDifficultySelection();
         if (innerGameState == "selectDodger") drawDodgerSelection();
         drawPlayer();
-        if (innerGameState == "settings") drawSettings();
+        drawSettings();
         
         keyboardControls();
         mouseMovement();

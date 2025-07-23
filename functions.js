@@ -131,14 +131,22 @@ function recordLeftClick() {
 
     // Difficulty Choice
     else if (innerGameState === "selectDifficulty") {
-        if (mouseOver.easy || mouseOver.medium || mouseOver.hard) {
-            if (mouseOver.easy) difficulty = {level: "easy", color: "rgb(0, 225, 255)"};
-            if (mouseOver.medium) difficulty = {level: "medium", color: "rgb(255, 255, 0)"};
-            if (mouseOver.hard) difficulty = {level: "hard", color: "rgb(0, 0, 0)"};
-
+        ["easy", "medium", "hard"].forEach(level => {
+            if (mouseOver[level]) {
+                if (mouseOver.easy) difficulty = {level: "easy", color: "rgb(0, 225, 255)"};
+                if (mouseOver.medium) difficulty = {level: "medium", color: "rgb(255, 255, 0)"};
+                if (mouseOver.hard) difficulty = {level: "hard", color: "rgb(0, 0, 0)"};
+                
+                innerGameState = 'inGame';
+                mouseMovementOn = previousMM;
+                restartEndless();
+            }
+        })
+        if (mouseOver.alarmNine) {
+            if (mouseOver.alarmNine) difficulty = {level: "alarmNine", color: "rgb(163, 0, 163)"};
             innerGameState = 'inGame';
             mouseMovementOn = previousMM;
-            restartGame();
+            restartMusic();
         }
     }
     
@@ -691,7 +699,7 @@ function spawnEnemyPeriodically() {
     if (allEnemies.length < 100 && now - lastSpawn >= enemySpawnPeriod) {
         allEnemies.push(createEnemy());  
 
-        // filter and re-order the array just like in the restartGame() function (prevents inconsistent overlapping)
+        // filter and re-order the array just like in the restartEndless() function (prevents inconsistent overlapping)
         allEnemies = [
             ...allEnemies.filter(enemy => enemy.ability === "decelerator"),
             ...allEnemies.filter(enemy => enemy.ability !== "decelerator")
@@ -860,7 +868,7 @@ function moveEnemies() { // Loops through the allEnemies array to move each enem
 
 
 // GAMESTATE CHANGES
-function restartGame() { // Resets certain variables once the play button is pressed
+function restartEndless() { // Resets certain variables once the play button is pressed
     allEnemies = []
     // The starting amount of enemies is different based on the difficulty
     startAmount = 10;

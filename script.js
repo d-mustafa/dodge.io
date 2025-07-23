@@ -112,10 +112,13 @@ let difficulty = {
     color: "rgb(0, 225, 255)",
 };
 
-// Elements
-alarmNineSong = document.createElement("audio");
+// Music
+alarmNine = document.createElement("audio");
+alarmNine.src = "Music/Alarm 9.mp3";
+alarmNine.preload = "none";
+let alarmNinePromise;
 
-// USER DATA
+// User Data
 let lastSave = 0; // tracks how often data is saved (during gameplay)
 const localData = localStorage.getItem('localUserData'); // load savedData (if it exists)
 let userData;

@@ -1,5 +1,5 @@
 // DODGE.IO - JSAB.JS
-console.log("music")
+console.log("musicCollisions");
 
 function restartMusicMode() {
   alarmNine.currentTime = 0;

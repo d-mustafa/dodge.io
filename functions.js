@@ -146,7 +146,7 @@ function recordLeftClick() {
             if (mouseOver.alarmNine) difficulty = {level: "alarmNine", color: "rgb(163, 0, 163)"};
             innerGameState = 'inGame';
             mouseMovementOn = previousMM;
-            restartMusic();
+            restartMusicMode();
         }
     }
     

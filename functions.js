@@ -874,7 +874,6 @@ function restartEndless() { // Resets certain variables once the play button is 
     startAmount = 10;
     if (difficulty.level === "medium") startAmount = 20;
     if (difficulty.level === "hard") startAmount = 30;
-    
     for(let i = 1; i < startAmount; i++) {
         allEnemies.push(createEnemy());
     }
@@ -886,15 +885,13 @@ function restartEndless() { // Resets certain variables once the play button is 
         ...allEnemies.filter(enemy => enemy.ability !== "decelerator")
     ]
 
+    
     startTime = Date.now();
     currentTime = 0;
-
     enemySpawnPeriod = 3000;
     lastSpawn = 0;
-
     dash.lastEnded = 0;
     shockwave.lastEnded = 0;
-
     gameState = "gameOn"
 }
 

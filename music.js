@@ -9,7 +9,7 @@ function restartMusicMode() {
   }
 
   startTime = Date.now();
-  currentTime = (now-startTime) / 1000;
+  currentTime = ((now-startTime) / 1000).toFixed(2);
   timeLeft = (musicDuration - currentTime).toFixed(2);
   dash.lastEnded = 0;
   shockwave.lastEnded = 0;

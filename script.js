@@ -1,4 +1,4 @@
-console.log("hello world")
+console.log("shockwave")
 // DODGE.IO - SCRIPT.JS
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');

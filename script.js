@@ -216,20 +216,20 @@ function draw() {
     else if ((now - loadingGame > 5000 || skipLoading) && gameState === "loading") gameState = "startScreen";
 
     // Actual Game
-    if (gameState == "startScreen") {
+    if (gameState === "startScreen") {
         abilities();
         drawText();
         drawStartScreen();
         
-        if (innerGameState == "selectDifficulty") drawDifficultySelection();
-        if (innerGameState == "selectDodger") drawDodgerSelection();
+        if (innerGameState === "selectDifficulty") drawDifficultySelection();
+        if (innerGameState === "selectDodger") drawDodgerSelection();
         drawPlayer();
         drawSettings();
         
         keyboardControls();
         mouseMovement();
     }
-    else if (gameState == "gameOn") {
+    else if (gameState === "gameOn") {
         drawText();
         drawEnemies();
         drawPlayer();
@@ -243,7 +243,7 @@ function draw() {
             
         collisions();
     }
-    else if (gameState == "gameOver") {
+    else if (gameState === "gameOver") {
         drawText();
         drawGameOver();
         drawEnemies();

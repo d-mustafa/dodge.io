@@ -332,40 +332,39 @@ function drawStartScreen() {
             ctx.strokeText('Main Menu', selectorBtn.x + 220, selectorBtn.y + 85);
         }
     }
-    if (innerGameState === "mainMenu" || innerGameState === "settings") {
-        const gear = { x: 750, y: 600,}
-        const distGear = Math.hypot(770 - mouseX, 620 - mouseY); // (770, 620) is the center of the gear
-
-        mouseOver.settings = distGear < 30;
-
-        if (innerGameState === "mainMenu") ctx.drawImage(document.getElementById("gear-filled"), gear.x, gear.y, 40, 40);
-        else ctx.drawImage(document.getElementById("gear-unfilled"), gear.x, gear.y, 40, 40);
-    }
 }
 
 function drawSettings() {
-    // Enemy Outlines
-    mouseOver.enemyOutBtn = (mouseX > 170 && mouseX < 190 && mouseY > 35 && mouseY < 55);
-    if (settings.enemyOutlines) ctx.fillStyle = "lime";
-    else ctx.fillStyle = "red";
-    ctx.fillRect(170, 35, 20, 20);
+    const gear = { x: 750, y: 600, }
+    const distGear = Math.hypot(770 - mouseX, 620 - mouseY); // (770, 620) is the center of the gear
+    mouseOver.settings = distGear < 30;
 
-    ctx.font = 'bold 15px Arial';
-    ctx.textAlign = 'left';
-    ctx.fillStyle = "black";
-    ctx.fillText('Enemy Outlines', 50, 50);
-
-    // Disable Mouse Movement
-    mouseOver.disableMMBtn = (mouseX > 317.5 && mouseX < 337.5 && mouseY > 85 && mouseY < 105);
-    if (settings.disableMM) ctx.fillStyle = "lime";
-    else ctx.fillStyle = "red";
-    ctx.fillRect(317.5, 85, 20, 20);
-
-    ctx.font = 'bold 15px Arial';
-    ctx.textAlign = 'left';
-    ctx.fillStyle = "black";
-    ctx.fillText('Disable Mouse Movement Activation', 50, 100);
-
+    if (innerGameState === "mainMenu") ctx.drawImage(document.getElementById("gear-filled"), gear.x, gear.y, 40, 40);
+    else if (innerGameState === "settings") {
+        ctx.drawImage(document.getElementById("gear-unfilled"), gear.x, gear.y, 40, 40);
+        
+        // Enemy Outlines
+        mouseOver.enemyOutBtn = (mouseX > 170 && mouseX < 190 && mouseY > 35 && mouseY < 55);
+        if (settings.enemyOutlines) ctx.fillStyle = "lime";
+        else ctx.fillStyle = "red";
+        ctx.fillRect(170, 35, 20, 20);
+    
+        ctx.font = 'bold 15px Arial';
+        ctx.textAlign = 'left';
+        ctx.fillStyle = "black";
+        ctx.fillText('Enemy Outlines', 50, 50);
+    
+        // Disable Mouse Movement
+        mouseOver.disableMMBtn = (mouseX > 317.5 && mouseX < 337.5 && mouseY > 85 && mouseY < 105);
+        if (settings.disableMM) ctx.fillStyle = "lime";
+        else ctx.fillStyle = "red";
+        ctx.fillRect(317.5, 85, 20, 20);
+    
+        ctx.font = 'bold 15px Arial';
+        ctx.textAlign = 'left';
+        ctx.fillStyle = "black";
+        ctx.fillText('Disable Mouse Movement Activation', 50, 100);
+    }
 }
 
 function drawDifficultySelection() {

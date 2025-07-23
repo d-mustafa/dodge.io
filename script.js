@@ -112,6 +112,9 @@ let difficulty = {
     color: "rgb(0, 225, 255)",
 };
 
+// Elements
+alarmNineSong = document.createElement("audio");
+
 // USER DATA
 let lastSave = 0; // tracks how often data is saved (during gameplay)
 const localData = localStorage.getItem('localUserData'); // load savedData (if it exists)
@@ -240,7 +243,6 @@ function draw() {
         spawnEnemyPeriodically();
         moveEnemies();
         abilities();
-            
         collisions();
     }
     else if (gameState === "gameOver") {
@@ -248,6 +250,16 @@ function draw() {
         drawGameOver();
         drawEnemies();
         drawPlayer();
+    }
+    else if (gameState === "musicOn") {
+        drawText();
+        drawPlayer();
+        
+        keyboardControls();
+        mouseMovement();
+
+        abilities();
+        musicCollisions();
     }
     requestAnimationFrame(draw)
 }

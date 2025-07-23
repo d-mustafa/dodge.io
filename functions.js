@@ -220,7 +220,7 @@ function drawStartScreen() {
         // PLAY BUTTON //
         const playBtn = {
             x: 250,
-            y: 75,
+            y: 50,
             w: 300,
             h: 100,
         }
@@ -377,32 +377,49 @@ function drawDifficultySelection() {
         }
     }
 
-    mouseOver.easy = (mouseX > 50 && mouseX < 250) && (mouseY > 200 && mouseY < 300);
+    mouseOver.easy = (mouseX > 50 && mouseX < 250) && (mouseY > 250 && mouseY < 350);
     decideFillStyle(mouseOver.easy, "rgb(0, 191, 216)", "rgb(0, 171, 194)");
-    ctx.fillRect(50, 200, 200, 100);
+    ctx.fillRect(50, 250, 200, 100);
 
-    mouseOver.medium = (mouseX > 300 && mouseX < 500) && (mouseY > 200 && mouseY < 300);
+    mouseOver.medium = (mouseX > 300 && mouseX < 500) && (mouseY > 250 && mouseY < 350);
     decideFillStyle(mouseOver.medium, "rgb(220, 220, 0)", "rgb(200, 200, 0)");
-    ctx.fillRect(300, 200, 200, 100);
+    ctx.fillRect(300, 250, 200, 100);
 
-    mouseOver.hard = (mouseX > 550 && mouseX < 750) && (mouseY > 200 && mouseY < 300);
+    mouseOver.hard = (mouseX > 550 && mouseX < 750) && (mouseY > 250 && mouseY < 350);
     decideFillStyle(mouseOver.hard, "rgb(60, 60, 60)", "rgb(40, 40, 40)");
-    ctx.fillRect(550, 200, 200, 100);
+    ctx.fillRect(550, 250, 200, 100);
 
+    mouseOver.alarmNine = (mouseX > 550 && mouseX < 750) && (mouseY > 450 && mouseY < 550);
+    decideFillStyle(mouseOver.alarmNine, "rgb(0, 220, 0)", "rgb(0, 200, 0)");
+    ctx.fillRect(50, 450, 200, 100);
     
     // Text
-    function drawDifficultyText(color, difficultyName, description, x) {
+    function drawDifficultyText(color, difficultyName, description, x, y) {
         ctx.fillStyle = color;
         ctx.font = "25px 'Lucida Console'";
-        ctx.fillText(difficultyName, x, 230);
+        ctx.fillText(difficultyName, x, y);
         ctx.font = "14px 'Lucida Console'";
-        ctx.fillText(description, x, 280);
+        ctx.fillText(description, x, y + 50);
     }
     
+    // titles
+    ctx.textAlign = 'middle';
+    ctx.fillStyle = "grey";
+    
+    ctx.font = "25px 'Lucida Console'";
+    ctx.fillText("ENDLESS", cnv.width/2, 200);
+    
+    ctx.font = "25px 'Lucida Console'";
+    ctx.fillText("MUSIC", cnv.width/2, 400);
+
+    // levels
     ctx.textAlign = 'left';
-    drawDifficultyText("rgb(0, 225, 255)", "EASY", "Normal Enemies", 60);
-    drawDifficultyText("rgb(255, 255, 0)", "MEDIUM", "+Decelerating Enemies", 310);
-    drawDifficultyText("rgb(0, 0, 0)", "HARD", "+Homing Enemies", 560);
+    
+    drawDifficultyText("rgb(0, 225, 255)", "EASY", "Normal Enemies", 60, 280);
+    drawDifficultyText("rgb(255, 255, 0)", "MEDIUM", "+Decelerating Enemies", 310, 280);
+    drawDifficultyText("rgb(0, 0, 0)", "HARD", "+Homing Enemies", 560, 280);
+    
+    drawDifficultyText("rgb(0, 255, 0)", "ALARM NINE", "By Blue Cxve", 60, 480);
 }
 
 function drawDodgerSelection() {
@@ -415,7 +432,7 @@ function drawDodgerSelection() {
         }
     }
 
-    // Coordiantes
+    // Coordinates
     const evader = { x: 50, y: 50, };
     mouseOver.evader = (mouseX > evader.x && mouseX < evader.x + 200) && (mouseY > evader.y && mouseY < evader.y + 100);
 
@@ -457,42 +474,6 @@ function drawDodgerSelection() {
     drawDodgerText("rgb(255, 0, 0)", "JSAB", "ABILITY: DASH", jsab);
     drawDodgerText("rgb(79, 203, 255)", "JÖTUNN", "ABILITY: STAGNATION", jötunn);
     drawDodgerText("rgb(255, 255, 0)", "JOLT", "ABILITY: SHOCKWAVE", jolt);
-
-    /*
-    ctx.fillStyle = "rgb(255, 255, 255)";
-    drawCircle(evader.x + 170, evader.y + 20)
-
-    ctx.font = "25px 'Lucida Console'";
-    ctx.fillText("EVADER", evader.x + 10, evader.y + 30);
-    ctx.font = "15px 'Lucida Console'";
-    ctx.fillText("ABILITY: NONE", evader.x + 10, evader.y + 80);
-
-
-    ctx.fillStyle = "rgb(255, 0, 0)";
-    drawCircle(jsab.x + 170, jsab.y + 20)
-
-    ctx.font = "25px 'Lucida Console'";
-    ctx.fillText("JSAB", jsab.x + 10, jsab.y + 30);
-    ctx.font = "15px 'Lucida Console'";
-    ctx.fillText("ABILITY: DASH", jsab.x + 10, jsab.y + 80);
-
-
-    ctx.fillStyle = "rgb(79, 203, 255)";
-    drawCircle(jötunn.x + 170, jötunn.y + 20)
-
-    ctx.font = "25px 'Lucida Console'";
-    ctx.fillText("JÖTUNN", jötunn.x + 10, jötunn.y + 30);
-    ctx.font = "15px 'Lucida Console'";
-    ctx.fillText("ABILITY: STAGNATION", jötunn.x + 10, jötunn.y + 80);
-
-
-    ctx.fillStyle = "rgb(255, 255, 0)";
-    drawCircle(jolt.x + 170, jolt.y + 20)
-
-    ctx.font = "25px 'Lucida Console'";
-    ctx.fillText("JOLT", jolt.x + 10, jolt.y + 30);
-    ctx.font = "15px 'Lucida Console'";
-    ctx.fillText("ABILITY: SHOCKWAVE", jolt.x + 10, jolt.y + 80); */
 }
 
 function drawGameOver() {

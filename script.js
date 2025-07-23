@@ -17,10 +17,15 @@ let dPressed = false;
 let shiftPressed = 1;
 
 // Mouse
-document.addEventListener("click", recordLeftClick);
-document.addEventListener("touchstart", recordLeftClick);
-document.addEventListener("contextmenu", recordRightClick);
+let mousePressed;
 let mouseMovementOn = false;
+document.addEventListener("mousedown", () => {mousePressed = true});
+document.addEventListener("mouseup", () => {mousePressed = false});
+document.addEventListener("touchstart", () => {mousePressed = true; recordLeftClick();});
+document.addEventListener("touchend", () => {mousePressed = false});
+
+document.addEventListener("click", recordLeftClick);
+document.addEventListener("contextmenu", recordRightClick);
 let mouseOver = {
     play: false,
     settings: false,

@@ -141,15 +141,18 @@ function recordLeftClick() {
                 restartEndless();
             }
         })
-        if (mouseOver.alarmNine) {
-            if (mouseOver.alarmNine) {
-                difficulty = {level: "Alarm 9", color: "rgb(163, 0, 163)"};
-                artist = "Blue Cxve";
+
+        ["alarmNine"].forEach(level => {
+            if (mouserOver[level]) {
+                if (mouseOver.alarmNine) {
+                    difficulty = {level: "Alarm 9", color: "rgb(163, 0, 163)"};
+                    artist = "Blue Cxve";
+                }
+                innerGameState = 'inGame';
+                mouseMovementOn = previousMM;
+                restartMusicMode();
             }
-            innerGameState = 'inGame';
-            mouseMovementOn = previousMM;
-            restartMusicMode();
-        }
+        })
     }
     
     // Hero Choice

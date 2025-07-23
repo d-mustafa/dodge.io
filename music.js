@@ -1,5 +1,5 @@
 // DODGE.IO - JSAB.JS
-console.log("Music");
+console.log("Mouser");
 
 function restartMusicMode() {
   if (music.name === "Alarm 9") {

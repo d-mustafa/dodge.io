@@ -408,10 +408,10 @@ function drawDifficultySelection() {
     ctx.fillStyle = "grey";
     
     ctx.font = "25px 'Lucida Console'";
-    ctx.fillText("ENDLESS", cnv.width/2, 200);
+    ctx.fillText("ENDLESS", cnv.width/2, 220);
     
     ctx.font = "25px 'Lucida Console'";
-    ctx.fillText("MUSIC", cnv.width/2, 400);
+    ctx.fillText("MUSIC", cnv.width/2, 420);
 
     // levels
     ctx.textAlign = "left";

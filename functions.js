@@ -404,7 +404,7 @@ function drawDifficultySelection() {
     }
     
     // titles
-    ctx.textAlign = 'middle';
+    ctx.textAlign = 'center';
     ctx.fillStyle = "grey";
     
     ctx.font = "25px 'Lucida Console'";

@@ -97,6 +97,7 @@ let skipLoading = false;
 
 let startTime = Date.now();
 let currentTime = ((now-startTime) / 1000).toFixed(2);
+let timeLeft;
 
 let enemySpawnPeriod = 3000;
 let lastSpawn = Date.now();
@@ -113,10 +114,13 @@ let difficulty = {
 };
 
 // Music
-alarmNine = document.createElement("audio");
+let musicDuration;
+
+let alarmNine = document.createElement("audio");
 alarmNine.src = "Music/Alarm 9.mp3";
 alarmNine.preload = "none";
 let alarmNinePromise;
+
 
 // User Data
 let lastSave = 0; // tracks how often data is saved (during gameplay)

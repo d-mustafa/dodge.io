@@ -28,7 +28,7 @@ let mouseOver = {
     selector: false,
     restart: false,
 
-    weaver: false,
+    evader: false,
     jsab: false,
     jötunn: false,
     jolt: false,
@@ -55,7 +55,7 @@ let player = {
     radius: 15,
     speed: 2.5,
     slowed: 1,
-    dodger: "weaver",
+    dodger: "evader",
     color: "rgb(255, 255, 255)",
     subColor: "rgb(230, 230, 230)",
     facingAngle: 0,
@@ -69,7 +69,7 @@ let dash = {
     speed: 0.5,
 };
 
-let minimize = {
+let shockwave = {
     usable: true,
     activated: false,
     lastEnded: 0,

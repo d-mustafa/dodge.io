@@ -386,7 +386,7 @@ function drawDifficultySelection() {
     ctx.fillRect(300, 200, 200, 100);
 
     mouseOver.hard = (mouseX > 550 && mouseX < 750) && (mouseY > 200 && mouseY < 300);
-    decideFillStyle(mouseOver.hard, "rgb(50, 50, 50)", "rgb(30, 30, 30)");
+    decideFillStyle(mouseOver.hard, "rgb(60, 60, 60)", "rgb(40, 40, 40)");
     ctx.fillRect(550, 200, 200, 100);
 
     

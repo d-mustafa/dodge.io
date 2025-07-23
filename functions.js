@@ -552,7 +552,7 @@ function drawEnemies() {
 }
 
 function drawText() { // draws the current time, highest time, and enemy count
-    if (gameState == "gameOn") {
+    if (gameState === "gameOn") {
         // Current time in seconds
         currentTime = ((now-startTime) / 1000).toFixed(2);
         
@@ -590,19 +590,19 @@ function drawText() { // draws the current time, highest time, and enemy count
     ctx.textAlign = 'center';
     ctx.fillStyle = player.subColor;
 
-    // The text should be centered unless the gameState is gameOn
+    // The text should be centered unless the gameState is gameOn or gameOver
     textX = 200;
-    if (gameState == "gameOn") textX = 200
+    if (gameState === "gameOn" || gameState === "gameOver") textX = 200
     else textX = 400
 
     // No Abiliy
-    if (player.dodger == "evader") ctx.fillText(`Passive: Skill`, textX, 620);
+    if (player.dodger === "evader") ctx.fillText(`Passive: Skill`, textX, 620);
 
     // Stagnation
-    else if (player.dodger == "jötunn") ctx.fillText(`Passive: Stagnation`, textX, 620);
+    else if (player.dodger === "jötunn") ctx.fillText(`Passive: Stagnation`, textX, 620);
 
     // Dash
-    else if (player.dodger == "jsab") {
+    else if (player.dodger === "jsab") {
         // Dash CD
         let dashCDLeft = ((1100 - (now - dash.lastEnded)) / 1000).toFixed(2);
 
@@ -618,7 +618,7 @@ function drawText() { // draws the current time, highest time, and enemy count
     }
 
     // Shockwave
-    else if (player.dodger == "jolt") {
+    else if (player.dodger === "jolt") {
         // Shockwave CD
         let shockwaveCDLeft = ((2000 - (now - shockwave.lastEnded)) / 1000).toFixed(2);
 
@@ -647,12 +647,12 @@ function createEnemy() { // Creates an individual enemy with unique attributes
     // Initializes the enemy's ability and other important values based on their ability
     enemyAbilitiesAndStats(oneEnemy);
     
-    if (difficulty.level == "easy") oneEnemy.speed = Math.random() + 1; // between 1 and 2
+    if (difficulty.level === "easy") oneEnemy.speed = Math.random() + 1; // between 1 and 2
 
-    if (difficulty.level == "medium") oneEnemy.speed = Math.random() + 1.25; // between 1.25 and 2.25
+    if (difficulty.level === "medium") oneEnemy.speed = Math.random() + 1.25; // between 1.25 and 2.25
     
-    if (difficulty.level == "hard") {
-        if (oneEnemy.ability == "homing") oneEnemy.speed = (Math.random() * 0.7) + 1.5; // between 1.5 and 2.2
+    if (difficulty.level === "hard") {
+        if (oneEnemy.ability === "homing") oneEnemy.speed = (Math.random() * 0.7) + 1.5; // between 1.5 and 2.2
         else oneEnemy.speed = Math.random() + 1.5; // between 1.5 and 2.5 (as fast as the player)
     }
     

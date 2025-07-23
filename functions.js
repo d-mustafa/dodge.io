@@ -354,27 +354,26 @@ function drawSettings() {
     else if (innerGameState === "settings") {
         ctx.drawImage(document.getElementById("gear-unfilled"), gear.x, gear.y, 40, 40);
         
-        // Enemy Outlines
+        ctx.font = "bold 15px Arial";
+        ctx.textAlign = "left";
+        ctx.fillStyle = "black";
+        
+        // Enemy Outlines Button
         mouseOver.enemyOutBtn = (mouseX > 170 && mouseX < 190 && mouseY > 35 && mouseY < 55);
         if (settings.enemyOutlines) ctx.fillStyle = "lime";
         else ctx.fillStyle = "red";
         ctx.fillRect(170, 35, 20, 20);
+        ctx.fillText("Enemy Outlines", 50, 50);
     
-        ctx.font = 'bold 15px Arial';
-        ctx.textAlign = 'left';
-        ctx.fillStyle = "black";
-        ctx.fillText('Enemy Outlines', 50, 50);
-    
-        // Disable Mouse Movement
+        // Disable Mouse Movement Button
         mouseOver.disableMMBtn = (mouseX > 317.5 && mouseX < 337.5 && mouseY > 85 && mouseY < 105);
         if (settings.disableMM) ctx.fillStyle = "lime";
         else ctx.fillStyle = "red";
         ctx.fillRect(317.5, 85, 20, 20);
-    
-        ctx.font = 'bold 15px Arial';
-        ctx.textAlign = 'left';
-        ctx.fillStyle = "black";
-        ctx.fillText('Disable Mouse Movement Activation', 50, 100);
+        ctx.fillText("Disable Mouse Movement Activation", 50, 100);
+
+        // Music Volume Slider
+        ctx.fillText("Music Volume", 50, 150);
     }
 }
 

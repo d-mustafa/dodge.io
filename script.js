@@ -23,6 +23,7 @@ document.addEventListener("mousedown", () => {mousePressed = true});
 document.addEventListener("mouseup", () => {mousePressed = false});
 document.addEventListener("touchstart", () => {mousePressed = true; recordLeftClick();});
 document.addEventListener("touchend", () => {mousePressed = false});
+document.addEventListener("touchcancel", () => {mousePressed = false});
 
 document.addEventListener("click", recordLeftClick);
 document.addEventListener("contextmenu", recordRightClick);

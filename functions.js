@@ -25,25 +25,25 @@ function recordKeyDown(event) {
     if ((event.code === "KeyQ" || event.code === "KeyJ") && gameState !== "gameOver") {
         if (player.dodger === "jsab" && dash.usable && !dash.activated) dash.activated = true;
             
-        else if (player.dodger === "jolt" && minimize.usable && !minimize.activated) {
-            // activate the minimize ability and set certain properties
-            minimize.activated = true;
-            minimize.facingAngle = player.facingAngle;
-            minimize.x = player.x;
-            minimize.y = player.y;
+        else if (player.dodger === "jolt" && shockwave.usable && !shockwave.activated) {
+            // activate the shockwave ability and set certain properties
+            shockwave.activated = true;
+            shockwave.facingAngle = player.facingAngle;
+            shockwave.x = player.x;
+            shockwave.y = player.y;
 
             if (lastPressing === "mouse") {
                 // distance between the beam and cursor
-                minimize.dx = mouseX - minimize.x;
-                minimize.dy = mouseY - minimize.y;
-                minimize.dist = Math.hypot(minimize.dx, minimize.dy)
+                shockwave.dx = mouseX - shockwave.x;
+                shockwave.dy = mouseY - shockwave.y;
+                shockwave.dist = Math.hypot(shockwave.dx, shockwave.dy)
                 
-                minimize.movex = (minimize.dx/minimize.dist) * 7;
-                minimize.movey = (minimize.dy/minimize.dist) * 7;
+                shockwave.movex = (shockwave.dx/shockwave.dist) * 7;
+                shockwave.movey = (shockwave.dy/shockwave.dist) * 7;
             }
             if (lastPressing === "kb") {
-                minimize.movex = Math.cos(minimize.facingAngle) * 7;
-                minimize.movey = Math.sin(minimize.facingAngle) * 7;
+                shockwave.movex = Math.cos(shockwave.facingAngle) * 7;
+                shockwave.movey = Math.sin(shockwave.facingAngle) * 7;
             }
         }
     }
@@ -143,9 +143,9 @@ function recordLeftClick() {
     
     // Hero Choice
     else if (innerGameState === "selectDodger") {
-        if (mouseOver.weaver || mouseOver.jsab || mouseOver.jötunn || mouseOver.jolt) {
-            if (mouseOver.weaver) {
-                player.dodger = "weaver";
+        if (mouseOver.evader || mouseOver.jsab || mouseOver.jötunn || mouseOver.jolt) {
+            if (mouseOver.evader) {
+                player.dodger = "evader";
                 player.color = "rgb(255, 255, 255)";
                 player.subColor = "rgb(230, 230, 230)";
             }
@@ -186,23 +186,23 @@ function recordRightClick(event) {
     // Ability Activations
     if (gameState !== "gameOver") {
         if (player.dodger === "jsab" && dash.usable && !dash.activated) dash.activated = true;
-        else if (player.dodger === "jolt" && minimize.usable && !minimize.activated) {
-            minimize.activated = true;
-            minimize.facingAngle = player.facingAngle;
-            minimize.x = player.x;
-            minimize.y = player.y;
+        else if (player.dodger === "jolt" && shockwave.usable && !shockwave.activated) {
+            shockwave.activated = true;
+            shockwave.facingAngle = player.facingAngle;
+            shockwave.x = player.x;
+            shockwave.y = player.y;
             
             if (lastPressing === "mouse") {
-                minimize.dx = mouseX - player.x;
-                minimize.dy = mouseY - player.y;
-                minimize.dist = Math.hypot(minimize.dx, minimize.dy)
+                shockwave.dx = mouseX - player.x;
+                shockwave.dy = mouseY - player.y;
+                shockwave.dist = Math.hypot(shockwave.dx, shockwave.dy)
                 
-                minimize.movex = (minimize.dx/minimize.dist) * 7;
-                minimize.movey = (minimize.dy/minimize.dist) * 7;
+                shockwave.movex = (shockwave.dx/shockwave.dist) * 7;
+                shockwave.movey = (shockwave.dy/shockwave.dist) * 7;
             }
             if (lastPressing === "kb") {
-                minimize.movex = Math.cos(minimize.facingAngle) * 7;
-                minimize.movey = Math.sin(minimize.facingAngle) * 7;
+                shockwave.movex = Math.cos(shockwave.facingAngle) * 7;
+                shockwave.movey = Math.sin(shockwave.facingAngle) * 7;
             }
         }
     }
@@ -403,28 +403,6 @@ function drawDifficultySelection() {
     drawDifficultyText("rgb(0, 225, 255)", "EASY", "Normal Enemies", 60);
     drawDifficultyText("rgb(255, 255, 0)", "MEDIUM", "+Decelerating Enemies", 310);
     drawDifficultyText("rgb(0, 0, 0)", "HARD", "+Homing Enemies", 560);
-    
-    /*
-    ctx.fillStyle = "rgb(0, 225, 255)";
-    ctx.font = "25px 'Lucida Console'";
-    ctx.fillText("EASY", 60, 230);
-    ctx.font = "14px 'Lucida Console'";
-    ctx.fillText("Normal Enemies", 60, 280);
-
-
-    ctx.fillStyle = "rgb(255, 255, 0)";
-    ctx.font = "25px 'Lucida Console'";
-    ctx.fillText("MEDIUM", 310, 230);
-    ctx.font = "14px 'Lucida Console'";
-    ctx.fillText("+Decelerating Enemies", 310, 280);
-
-
-    ctx.fillStyle = "rgb(0, 0, 0)";
-    ctx.font = "25px 'Lucida Console'";
-    ctx.fillText("HARD", 560, 230);
-    ctx.font = "14px 'Lucida Console'";
-    ctx.fillText("+Homing Enemies", 560, 280);
-    */
 }
 
 function drawDodgerSelection() {
@@ -438,8 +416,8 @@ function drawDodgerSelection() {
     }
 
     // Coordiantes
-    const weaver = { x: 50, y: 50, };
-    mouseOver.weaver = (mouseX > weaver.x && mouseX < weaver.x + 200) && (mouseY > weaver.y && mouseY < weaver.y + 100);
+    const evader = { x: 50, y: 50, };
+    mouseOver.evader = (mouseX > evader.x && mouseX < evader.x + 200) && (mouseY > evader.y && mouseY < evader.y + 100);
 
     const jsab = { x: 300, y: 50, };
     mouseOver.jsab = (mouseX > jsab.x && mouseX < jsab.x + 200) && (mouseY > jsab.y && mouseY < jsab.y + 100);
@@ -451,8 +429,8 @@ function drawDodgerSelection() {
     mouseOver.jolt = (mouseX > jolt.x && mouseX < jolt.x + 200) && (mouseY > jolt.y && mouseY < jolt.y + 100);
     
     // Backgrounds
-    decideFillStyle(mouseOver.weaver, "rgb(230, 230, 230)", "rgb(220, 220, 220)");
-    ctx.fillRect(weaver.x, weaver.y, 200, 100);
+    decideFillStyle(mouseOver.evader, "rgb(230, 230, 230)", "rgb(220, 220, 220)");
+    ctx.fillRect(evader.x, evader.y, 200, 100);
     
     decideFillStyle(mouseOver.jsab, "rgb(220, 0, 0)", "rgb(200, 0, 0)");
     ctx.fillRect(jsab.x, jsab.y, 200, 100);
@@ -464,16 +442,30 @@ function drawDodgerSelection() {
     ctx.fillRect(jolt.x, jolt.y, 200, 100);
 
     // Text
+    function drawDodgerText(color, dodgerName, description, dodger) {
+        ctx.fillStyle = color;
+        drawCircle(dodger.x + 170, dodger.y + 20)
+        
+        ctx.font = "25px 'Lucida Console'";
+        ctx.fillText(dodgerName, dodger.x + 10, dodger.y + 30);
+        ctx.font = "15px 'Lucida Console'";
+        ctx.fillText(description, dodger.x + 10, dodger.y + 80);
+    }
+    
     ctx.textAlign = 'left';
+    drawDodgerText("rgb(255, 255, 255)", "EVADER", "ABILITY: NONE", evader);
+    drawDodgerText("rgb(255, 0, 0)", "JSAB", "ABILITY: DASH", jsab);
+    drawDodgerText("rgb(79, 203, 255)", "JÖTUNN", "ABILITY: STAGNATION", jötunn);
+    drawDodgerText("rgb(255, 255, 0)", "JOLT", "ABILITY: SHOCKWAVE", jolt);
 
-
+    /*
     ctx.fillStyle = "rgb(255, 255, 255)";
-    drawCircle(weaver.x + 170, weaver.y + 20)
+    drawCircle(evader.x + 170, evader.y + 20)
 
     ctx.font = "25px 'Lucida Console'";
-    ctx.fillText("WEAVER", weaver.x + 10, weaver.y + 30);
+    ctx.fillText("EVADER", evader.x + 10, evader.y + 30);
     ctx.font = "15px 'Lucida Console'";
-    ctx.fillText("ABILITY: NONE", weaver.x + 10, weaver.y + 80);
+    ctx.fillText("ABILITY: NONE", evader.x + 10, evader.y + 80);
 
 
     ctx.fillStyle = "rgb(255, 0, 0)";
@@ -500,7 +492,7 @@ function drawDodgerSelection() {
     ctx.font = "25px 'Lucida Console'";
     ctx.fillText("JOLT", jolt.x + 10, jolt.y + 30);
     ctx.font = "15px 'Lucida Console'";
-    ctx.fillText("ABILITY: MINIMIZE", jolt.x + 10, jolt.y + 80);
+    ctx.fillText("ABILITY: SHOCKWAVE", jolt.x + 10, jolt.y + 80); */
 }
 
 function drawGameOver() {
@@ -622,9 +614,9 @@ function drawText() { // draws the current time, highest time, and enemy count
     else textX = 400
 
     // No Abiliy
-    if (player.dodger == "weaver") ctx.fillText(`Passive: Skill`, textX, 620);
+    if (player.dodger == "evader") ctx.fillText(`Passive: Skill`, textX, 620);
 
-    // Stagnation (Passive)
+    // Stagnation
     else if (player.dodger == "jötunn") ctx.fillText(`Passive: Stagnation`, textX, 620);
 
     // Dash
@@ -643,19 +635,19 @@ function drawText() { // draws the current time, highest time, and enemy count
         }
     }
 
-    // Minimize
+    // Shockwave
     else if (player.dodger == "jolt") {
-        // Minimize CD
-        let minimizeCDLeft = ((2000 - (now - minimize.lastEnded)) / 1000).toFixed(2);
+        // Shockwave CD
+        let shockwaveCDLeft = ((2000 - (now - shockwave.lastEnded)) / 1000).toFixed(2);
 
-        if (now - minimize.lastEnded >= 2000) { // 2s
-            minimize.usable = true;
+        if (now - shockwave.lastEnded >= 2000) { // 2s
+            shockwave.usable = true;
 
-            if (lastPressing === "mouse") ctx.fillText(`Active: Minimize (RMB)`, textX, 620);
-            else if (lastPressing === "kb") ctx.fillText(`Active: Minimize (Q/J)`, textX, 620);
+            if (lastPressing === "mouse") ctx.fillText(`Active: Shockwave (RMB)`, textX, 620);
+            else if (lastPressing === "kb") ctx.fillText(`Active: Shockwave (Q/J)`, textX, 620);
         } else {
-            minimize.usable = false;
-            ctx.fillText(`Active: ${minimizeCDLeft}s`, textX, 620);
+            shockwave.usable = false;
+            ctx.fillText(`Active: ${shockwaveCDLeft}s`, textX, 620);
         }
     }
 }
@@ -911,7 +903,7 @@ function restartGame() { // Resets certain variables once the play button is pre
     lastSpawn = 0;
 
     dash.lastEnded = 0;
-    minimize.lastEnded = 0;
+    shockwave.lastEnded = 0;
 
     gameState = "gameOn"
 }
@@ -964,7 +956,7 @@ function abilities() { // player-specific-abilities
             dash.speed *= -1;
             player.speed = 2.5;
 
-            if (player.dodger === "weaver") player.color = "white"
+            if (player.dodger === "evader") player.color = "white"
             if (player.dodger === "jsab") player.color = "red"
             if (player.dodger === "jötunn") player.color ="rgb(79, 203, 255)"
             if (player.dodger === "jolt") player.color = "yellow"
@@ -1012,20 +1004,20 @@ function abilities() { // player-specific-abilities
         })
     }
     if (player.dodger === "jolt") {
-        // 'Minimize' launches a beam that shrinks ememies
-        if (minimize.activated) {
+        // 'Shockwave' launches a beam that shrinks ememies
+        if (shockwave.activated) {
             ctx.fillStyle = 'rgba(255, 255, 255, 1)'
 
             // create the beams path
             const beamPath = new Path2D();
-            beamPath.moveTo(0, -minimize.radius);
-            beamPath.bezierCurveTo(minimize.radius, -2, minimize.radius, 2, 0, minimize.radius);
-            beamPath.bezierCurveTo(minimize.radius/2, 2, minimize.radius/2, -2, 0, -minimize.radius);
+            beamPath.moveTo(0, -shockwave.radius);
+            beamPath.bezierCurveTo(shockwave.radius, -2, shockwave.radius, 2, 0, shockwave.radius);
+            beamPath.bezierCurveTo(shockwave.radius/2, 2, shockwave.radius/2, -2, 0, -shockwave.radius);
 
             // save and transform the canvas
             ctx.save();
-            ctx.translate(minimize.x, minimize.y);
-            ctx.rotate(minimize.facingAngle);
+            ctx.translate(shockwave.x, shockwave.y);
+            ctx.rotate(shockwave.facingAngle);
 
             // draw the beam
             ctx.fillStyle = 'rgba(255, 255, 255, 1)';
@@ -1044,24 +1036,24 @@ function abilities() { // player-specific-abilities
             ctx.restore();
 
             // increase the radius of the beam and move it every frame
-            minimize.radius *= 1.025;
-            minimize.x += minimize.movex;
-            minimize.y += minimize.movey;
+            shockwave.radius *= 1.025;
+            shockwave.x += shockwave.movex;
+            shockwave.y += shockwave.movey;
 
             // once the radius is greater than 150, end the entire ability
-            if (minimize.radius > 150) {
-                minimize.activated = false;
-                minimize.radius = 25;
-                minimize.lastEnded = Date.now();
+            if (shockwave.radius >= 150) {
+                shockwave.activated = false;
+                shockwave.radius = 25;
+                shockwave.lastEnded = Date.now();
             }
         }
         allEnemies.forEach(enemy => {
             // Restore the radius of enemies after 5 seconds have passed
-            if (now - enemy.resetRadius > 5000) {
+            if (now - enemy.resetRadius >= 5000) {
                 enemy.radius = enemy.baseRadius;
                 if (enemy.ability === "decelerator") enemy.auraRadius = enemy.baseAuraRadius;
             }
-            // Decrease the radius of enemies under the effect of minimize
+            // Decrease the radius of enemies under the effect of shockwave
             else {
                 enemy.radius = enemy.baseRadius/2;
                 if (enemy.ability === "decelerator") enemy.auraRadius = enemy.baseAuraRadius/2;

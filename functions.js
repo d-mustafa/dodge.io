@@ -1,5 +1,5 @@
 // DODGE.IO - FUNCTIONS.JS
-console.log("diff")
+console.log("pruple")
 // KEYBAORD AND MOUSE EVENTS (player inputs)
 function recordKeyDown(event) {
     // stops the page from scrolling when arrow keys are pressed
@@ -391,7 +391,7 @@ function drawDifficultySelection() {
     ctx.fillRect(550, 250, 200, 100);
 
     mouseOver.alarmNine = (mouseX > 50 && mouseX < 250) && (mouseY > 450 && mouseY < 550);
-    decideFillStyle(mouseOver.alarmNine, "rgb(0, 220, 0)", "rgb(0, 200, 0)");
+    decideFillStyle(mouseOver.alarmNine, "rgb(128, 0, 128)", "rgb(100, 0, 100)");
     ctx.fillRect(50, 450, 200, 100);
     
     // Text
@@ -420,7 +420,7 @@ function drawDifficultySelection() {
     drawDifficultyText("rgb(255, 255, 0)", "MEDIUM", "+Decelerating Enemies", 310, 280);
     drawDifficultyText("rgb(0, 0, 0)", "HARD", "+Homing Enemies", 560, 280);
     
-    drawDifficultyText("rgb(0, 255, 0)", "ALARM NINE", "By Blue Cxve", 60, 480);
+    drawDifficultyText("rgb(163, 0, 163)", "ALARM NINE", "By Blue Cxve", 60, 480);
 }
 
 function drawDodgerSelection() {

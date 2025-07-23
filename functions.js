@@ -402,7 +402,7 @@ function drawDifficultySelection() {
     ctx.textAlign = 'left';
     drawDifficultyText("rgb(0, 225, 255)", "EASY", "Normal Enemies", 60);
     drawDifficultyText("rgb(255, 255, 0)", "MEDIUM", "+Decelerating Enemies", 310);
-    drawDifficultyText("rgb(0, 0, 0)", "HARD", "+Homing Enemies", 310);
+    drawDifficultyText("rgb(0, 0, 0)", "HARD", "+Homing Enemies", 560);
     
     /*
     ctx.fillStyle = "rgb(0, 225, 255)";

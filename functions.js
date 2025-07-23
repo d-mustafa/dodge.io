@@ -567,7 +567,7 @@ function drawEnemies() {
 function drawText() { // draws the current time, highest time, and enemy count
     // Current time in seconds
     currentTime = ((now-startTime) / 1000).toFixed(2);
-    timeLeft = (musicDuration - currentTime).toFixed(2);
+    timeLeft = (music.duration - currentTime).toFixed(2);
     
     if (gameState === "gameOn") {
         // Updates the highscore and saves it to local storage

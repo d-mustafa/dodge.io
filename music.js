@@ -2,10 +2,10 @@
 console.log("musicCollisions");
 
 function restartMusicMode() {
-  alarmNine.currentTime = 0;
-  if (difficulty.level === "Alarm 9") {
-    alarmNine.play();
-    music.duration = alarmNine.duration;
+  if (music.name === "Alarm 9") {
+    alarm9.currentTime = 0;
+    alarm9.play();
+    music.duration = alarm9.duration;
   }
 
   startTime = Date.now();

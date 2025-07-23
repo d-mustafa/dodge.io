@@ -390,7 +390,7 @@ function drawDifficultySelection() {
     decideFillStyle(mouseOver.hard, "rgb(60, 60, 60)", "rgb(40, 40, 40)");
     ctx.fillRect(550, 250, 200, 100);
 
-    mouseOver.alarmNine = (mouseX > 550 && mouseX < 750) && (mouseY > 450 && mouseY < 550);
+    mouseOver.alarmNine = (mouseX > 50 && mouseX < 250) && (mouseY > 450 && mouseY < 550);
     decideFillStyle(mouseOver.alarmNine, "rgb(0, 220, 0)", "rgb(0, 200, 0)");
     ctx.fillRect(50, 450, 200, 100);
     
@@ -404,7 +404,7 @@ function drawDifficultySelection() {
     }
     
     // titles
-    ctx.textAlign = 'center';
+    ctx.textAlign = "center";
     ctx.fillStyle = "grey";
     
     ctx.font = "25px 'Lucida Console'";
@@ -414,7 +414,7 @@ function drawDifficultySelection() {
     ctx.fillText("MUSIC", cnv.width/2, 400);
 
     // levels
-    ctx.textAlign = 'left';
+    ctx.textAlign = "left";
     
     drawDifficultyText("rgb(0, 225, 255)", "EASY", "Normal Enemies", 60, 280);
     drawDifficultyText("rgb(255, 255, 0)", "MEDIUM", "+Decelerating Enemies", 310, 280);

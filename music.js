@@ -5,12 +5,12 @@ function restartMusicMode() {
   alarmNine.currentTime = 0;
   if (difficulty.level === "Alarm 9") {
     alarmNine.play();
-    musicDuration = alarmNine.duration;
+    music.duration = alarmNine.duration;
   }
 
   startTime = Date.now();
   currentTime = ((now-startTime) / 1000).toFixed(2);
-  timeLeft = (musicDuration - currentTime).toFixed(2);
+  timeLeft = (music.duration - currentTime).toFixed(2);
   dash.lastEnded = 0;
   shockwave.lastEnded = 0;
   gameState = "musicMode";

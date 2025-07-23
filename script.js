@@ -121,6 +121,7 @@ let difficulty = {
 
 // Music
 let musicDuration;
+let artist;
 
 let alarmNine = document.createElement("audio");
 alarmNine.src = "Music/Alarm 9.mp3";

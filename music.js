@@ -1,5 +1,5 @@
 // DODGE.IO - JSAB.JS
-console.log("musicCollisions");
+console.log("music");
 
 function restartMusicMode() {
   if (music.name === "Alarm 9") {

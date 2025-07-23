@@ -254,7 +254,7 @@ function draw() {
         drawEnemies();
         drawPlayer();
     }
-    else if (gameState === "musicOn") {
+    else if (gameState === "musicMode") {
         drawText();
         drawPlayer();
         

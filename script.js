@@ -43,10 +43,13 @@ let mouseOver = {
 
 let mouseX;
 let mouseY;
+let track = false;
 window.addEventListener('mousemove', (event) => {
     const rect = cnv.getBoundingClientRect();
     mouseX = event.clientX - rect.left;
     mouseY = event.clientY - rect.top;
+
+    if (track) console.log(`x: ${mouseX} || y: ${mouseY}`);
 });
 
 // Player & Enemies

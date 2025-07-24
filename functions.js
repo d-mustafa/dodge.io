@@ -1,4 +1,4 @@
-console.log("metadata")// DODGE.IO - FUNCTIONS.JS
+//console.log("metadata")// DODGE.IO - FUNCTIONS.JS
 // KEYBAORD AND MOUSE EVENTS (player inputs)
 function recordKeyDown(event) {
     // stops the page from scrolling when arrow keys are pressed
@@ -142,7 +142,7 @@ function recordLeftClick() {
             }
         })
 
-        ["alarm9"].forEach(level => {
+        /*["alarm9"].forEach(level => {
             if (mouseOver[level]) {
                 if (mouseOver.alarm9) {
                     alarm9.addEventListener("loadedmetadata", () => { 
@@ -153,7 +153,9 @@ function recordLeftClick() {
                 mouseMovementOn = previousMM;
                 restartMusicMode();
             }
-        })
+        })*/
+        if (mouseOver?.alarm9) console.log("exists");
+        else console.log("doesn't exist");
     }
     
     // Hero Choice
@@ -433,7 +435,7 @@ function drawDifficultySelection() {
     drawDifficultyText("rgb(255, 255, 0)", "MEDIUM", "+Decelerating Enemies", 310, 280);
     drawDifficultyText("rgb(0, 0, 0)", "HARD", "+Homing Enemies", 560, 280);
     
-    drawDifficultyText("rgb(163, 0, 163)", "ALARM NINE", "By Blue Cxve", 60, 480);
+    drawDifficultyText("rgb(163, 0, 163)", "ALARM 9", "By Blue Cxve", 60, 480);
 }
 
 function drawDodgerSelection() {

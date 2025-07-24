@@ -140,7 +140,6 @@ function recordLeftClick() {
                 if (mouseOver.easy) difficulty = {level: "easy", color: "rgb(0, 225, 255)"};
                 if (mouseOver.medium) difficulty = {level: "medium", color: "rgb(255, 255, 0)"};
                 if (mouseOver.hard) difficulty = {level: "hard", color: "rgb(0, 0, 0)"};
-                innerGameState = 'inEndless';
                 mouseMovementOn = previousMM;
                 restartEndless();
             }
@@ -148,12 +147,6 @@ function recordLeftClick() {
         ["alarm9"].forEach(level => {
             if (mouseOver[level]) {
                 if (mouseOver.alarm9) music = {var: alarm9, name: "Alarm 9", artist: "Blue Cxve", color: "rgb(163, 0, 163)"};
-
-                volume = Math.floor((settings.volumeSliderX - 165) / 1.5);
-                music.var.volume = volume/100;
-                music.var.currentTime = 0;
-                music.promise = music.var.play();
-                innerGameState = 'inMusicMode';
                 mouseMovementOn = previousMM;
                 restartMusicMode();
             }
@@ -943,7 +936,6 @@ function restartEndless() { // Resets certain variables once the play button is 
         ...allEnemies.filter(enemy => enemy.ability === "decelerator"),
         ...allEnemies.filter(enemy => enemy.ability !== "decelerator")
     ]
-
     
     startTime = Date.now();
     currentTime = 0;
@@ -951,6 +943,7 @@ function restartEndless() { // Resets certain variables once the play button is 
     lastSpawn = 0;
     dash.lastEnded = 0;
     shockwave.lastEnded = 0;
+    innerGameState = 'inEndless';
     gameState = "gameOn"
 }
 

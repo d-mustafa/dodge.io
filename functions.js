@@ -1,4 +1,4 @@
-console.log("var final")// DODGE.IO - FUNCTIONS.JS
+console.log("same alarm9 problem")// DODGE.IO - FUNCTIONS.JS
 // KEYBAORD AND MOUSE EVENTS (player inputs)
 function recordKeyDown(event) {
     // stops the page from scrolling when arrow keys are pressed
@@ -146,7 +146,7 @@ function recordLeftClick() {
         })
         ["alarm9"].forEach(level => {
             if (mouseOver[level]) {
-                if (mouseOver.alarm9) music = {var: alarm9, name: "Alarm 9", artist: "Blue Cxve", color: "rgb(163, 0, 163)"};
+                if (mouseOver?.alarm9) music = {var: alarm9, name: "Alarm 9", artist: "Blue Cxve", color: "rgb(163, 0, 163)"};
                 mouseMovementOn = previousMM;
                 restartMusicMode();
             }

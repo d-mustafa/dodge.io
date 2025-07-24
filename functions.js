@@ -1,4 +1,4 @@
-console.log("range and volume")// DODGE.IO - FUNCTIONS.JS
+console.log("3)// DODGE.IO - FUNCTIONS.JS
 // KEYBAORD AND MOUSE EVENTS (player inputs)
 function recordKeyDown(event) {
     // stops the page from scrolling when arrow keys are pressed
@@ -412,10 +412,10 @@ function drawSettings() {
         ctx.fillStyle = "black";
         ctx.fillText("Music Volume", 50, 150);
 
-        ctx.font = "15px Arial";
+        ctx.font = "bold 15px Arial";
         ctx.fillStyle = "white";
-        volume = Math.floor((settings.volumeSliderX - 160)/1.5);
-        ctx.fillText(`${volume}`, 345, 150);
+        volume = Math.floor((settings.volumeSliderX - 165) / 1.5);
+        ctx.fillText(`${volume}`, 330, 150);
     }
 }
 

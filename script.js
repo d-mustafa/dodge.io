@@ -1,4 +1,4 @@
-console.log("240")// DODGE.IO - SCRIPT.JS
+console.log("240 and volume")// DODGE.IO - SCRIPT.JS
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 
@@ -129,6 +129,8 @@ let music = {
     color: "rgb(163, 0, 163)",
     promise: "",
 }
+let volume = 50;
+
 let alarm9 = document.createElement("audio");
 alarm9.src = "Music/Alarm 9.mp3";
 alarm9.preload = "metadata";

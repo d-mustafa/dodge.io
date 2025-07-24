@@ -17,13 +17,13 @@ let dPressed = false;
 let shiftPressed = 1;
 
 // Mouse
-let mousePressed;
+let mouseDown;
 let mouseMovementOn = false;
-document.addEventListener("mousedown", () => {mousePressed = true});
-document.addEventListener("mouseup", () => {mousePressed = false});
-document.addEventListener("touchstart", () => {mousePressed = true; recordLeftClick();});
-document.addEventListener("touchend", () => {mousePressed = false});
-document.addEventListener("touchcancel", () => {mousePressed = false});
+document.addEventListener("mousedown", () => {mouseDown = true});
+document.addEventListener("mouseup", () => {mouseDown = false});
+document.addEventListener("touchstart", () => {mouseDown = true; recordLeftClick();});
+document.addEventListener("touchend", () => {mouseDown = false});
+document.addEventListener("touchcancel", () => {mouseDown = false});
 
 document.addEventListener("click", recordLeftClick);
 document.addEventListener("contextmenu", recordRightClick);

@@ -75,7 +75,7 @@ function recordLeftClick() {
     else if (now - loadingGame <= 5000 && gameState == "loading") return;
 
     // Variable to keep mouse movement the way it previously was if a button was pressed
-    let previousMM = false;
+    previousMM = false;
     
     // Mouse Movement
     if (mouseMovementOn && !settings.disableMM) {
@@ -386,24 +386,27 @@ function drawSettings() {
         ctx.fillText("Disable Mouse Movement Activation", 50, 100);
 
         // Music Volume Slider
-        mouseOver.volumeSlider = (mouseX > settings.volumeSliderX - 10 && mouseX < settings.volumeSliderX + 10) && (mouseY > 135 && mouseY < 155)
+        const distVolumeSlider = Math.hypot(settings.volumeSliderX - mouseX, 145 - mouseY);
+        mouseOver.volumeSlider = distVolumeSlider < 15;
         if (mouseDown && mouseOver.volumeSlider) {
-            if (mouseX <= 310 && mouseX >= 160) settings.volumeSliderX = mouseX;
-            if (mouseX >= 310) settings.volumeSliderX = 310;
-            if (mouseX <= 160) settings.volumeSliderX = 160;
+            if (mouseX <= 315 && mouseX >= 165) settings.volumeSliderX = mouseX;
+            if (mouseX >= 315) settings.volumeSliderX = 315;
+            if (mouseX <= 165) settings.volumeSliderX = 165;
+
+            mouseMovementOn = previousMM;
         }
 
         // outline
         ctx.strokestyle = "white";
         ctx.linewidth = 2;
         ctx.beginPath();
-        ctx.roundRect(160, 140, 150, 10, 5);
+        ctx.roundRect(165, 140, 150, 10, 5);
         ctx.stroke();
 
         // fill
         ctx.fillStyle = "white";
         ctx.beginPath();
-        ctx.roundRect(160, 140, settings.volumeSliderX - 160, 10, 5);
+        ctx.roundRect(165, 140, settings.volumeSliderX - 165, 10, 5);
         ctx.fill();
 
         drawCircle(settings.volumeSliderX, 145, 10);

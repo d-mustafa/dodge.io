@@ -1,6 +1,4 @@
-// DODGE.IO - JSAB.JS
-console.log("Mouser");
-
+console.log("Mouser");// DODGE.IO - JSAB.JS
 function restartMusicMode() {
   if (music.name === "Alarm 9") {
     alarm9.currentTime = 0;

@@ -1,4 +1,4 @@
-console.log("updated");// DODGE.IO - JSAB.JS
+console.log("insta-complete");// DODGE.IO - JSAB.JS
 function restartMusicMode() {
   volume = Math.floor((settings.volumeSliderX - 165) / 1.5);
   music.var.volume = volume/100;
@@ -50,7 +50,7 @@ function drawEndLevel() {
       ctx.fillText("Level", cnv.width/2, cnv.height/2 - 25);
       ctx.fillText("Complete", cnv.width/2, cnv.height/2 + 25);
     }
-  }
+  } else startTime = Date.now();
 }
 
 function createBeam() {

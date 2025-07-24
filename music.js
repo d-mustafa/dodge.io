@@ -1,5 +1,6 @@
 console.log("alarm9 volume");// DODGE.IO - JSAB.JS
 function restartMusicMode() {
+  volume = Math.floor((settings.volumeSliderX - 165) / 1.5);
   if (music.name === "Alarm 9") {
     alarm9.currentTime = 0;
     alarm9.volume = volume/100;

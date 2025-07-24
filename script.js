@@ -273,8 +273,8 @@ function draw() {
     }
     else if (gameState === "musicMode") {
         drawText();
-        drawPlayer();
         drawEndLevel();
+        drawPlayer();
         
         keyboardControls();
         mouseMovement();

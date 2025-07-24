@@ -56,7 +56,7 @@ window.addEventListener('mousemove', (event) => {
     mouseX = event.clientX - rect.left;
     mouseY = event.clientY - rect.top;
 
-    if (track) console.log(`x: ${mouseX} || y: ${mouseY}`);
+    if (track) console.log(`x: ${mouseX.toFixed(2)} || y: ${mouseY.toFixed(2)}`);
 });
 
 // Player & Enemies

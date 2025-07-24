@@ -1,4 +1,4 @@
-console.log("danger");// DODGE.IO - JSAB.JS
+console.log("danger spawn time range");// DODGE.IO - JSAB.JS
 function restartMusicMode() {
   allEnemies = [];
   volume = Math.floor((settings.volumeSliderX - 165) / 1.5);

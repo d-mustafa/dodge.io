@@ -1,8 +1,13 @@
-console.log("removed the normal currentTime and startTime");// DODGE.IO - JSAB.JS
+console.log("restartMusicMode");// DODGE.IO - JSAB.JS
 function restartMusicMode() {
+  volume = Math.floor((settings.volumeSliderX - 165) / 1.5);
+  music.var.volume = volume/100;
+  music.var.currentTime = 0;
+  music.promise = music.var.play();
   timeLeft = (music.var.duration - music.var.currentTime).toFixed(2);
   dash.lastEnded = 0;
   shockwave.lastEnded = 0;
+  innerGameState = 'inMusicMode';
   gameState = "musicMode";
 }
 

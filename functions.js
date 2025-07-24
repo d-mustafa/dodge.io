@@ -387,7 +387,7 @@ function drawSettings() {
 
         // Music Volume Slider
         const distVolumeSlider = Math.hypot(settings.volumeSliderX - mouseX, 145 - mouseY);
-        mouseOver.volumeSlider = distVolumeSlider < 15;
+        mouseOver.volumeSlider = distVolumeSlider < 20;
         if (mouseDown && mouseOver.volumeSlider) {
             if (mouseX <= 315 && mouseX >= 165) settings.volumeSliderX = mouseX;
             if (mouseX >= 315) settings.volumeSliderX = 315;
@@ -641,13 +641,13 @@ function drawText() { // draws the current time, highest time, and enemy count
         ctx.textAlign = 'center';
 
         let timeLeftColor;
-        if (timeLeft <= 3) timeLeftColor = "rgb(200, 150, 150)";
-        else if (timeLeft <= 2) timeLeftColor = "rgb(200, 100, 100)";
-        else if (timeLeft <= 1) timeLeftColor = "rgb(200, 50, 50)";
-        else timeLeftColor = "rgb(200, 200, 200)";
+        if (timeLeft <= 3) timeLeftColor = "rgb(235, 150, 150)";
+        else if (timeLeft <= 2) timeLeftColor = "rgb(235, 100, 100)";
+        else if (timeLeft <= 1) timeLeftColor = "rgb(235, 50, 50)";
+        else timeLeftColor = "rgb(235, 235, 235)";
         
         ctx.fillStyle = timeLeftColor;
-        ctx.fillText(`Time Left: ${timeLeft}s`, cnv.width/2, 40);
+        ctx.fillText(`${timeLeft}s`, cnv.width/2, 40);
         
         // Draws the music name and artist
         ctx.font = "20px Verdana"

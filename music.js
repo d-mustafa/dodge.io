@@ -30,8 +30,8 @@ function drawEndLevel() {
     ctx.fillRect(rectX, rectY, 200, 200);
 
     // Find the closest point on the rectangle to the circle
-    let closestX = Math.max(rectX, Math.min(player.x, rectX + rect.width));
-    let closestY = Math.max(rectY, Math.min(player.y, rectY + rect.height));
+    let closestX = Math.max(rectX, Math.min(player.x, rectX + 200));
+    let closestY = Math.max(rectY, Math.min(player.y, rectY + 200));
 
     let dx = player.x - closestX;
     let dy = player.y - closestY;

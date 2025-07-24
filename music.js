@@ -25,16 +25,31 @@ function pauseAudio() { // Pause music without causing errors
 function drawEndLevel() {
   if (timeLeft <= 0) {
     ctx.fillStyle = "rgb(0, 255, 0)";
-    ctx.fillRect(cnv.width/2, cnv.height/2, 100, 100);
+    ctx.fillRect(cnv.width/2, cnv.height/2, 200, 200);
 
-    dist = Math.hypot(player.x - cnv.width/2, player.y - cnv.height/2);
+    // Find the closest point on the rectangle to the circle
+    let closestX = Math.max(rect.x, Math.min(circle.x, rect.x + rect.width));
+    let closestY = Math.max(rect.y, Math.min(circle.y, rect.y + rect.height));
+    
+    // Calculate the distance from the circle's center to this point
+    let dx = circle.x - closestX;
+    let dy = circle.y - closestY;
+    let distance = Math.hypot(dx, dy);
+    
+    ctx.textAlign = "center";
+    ctx.fillStyle = "white";
+    ctx.font = "30px Verdana";
 
-    if (dist + player.radius <= 100) {
-
+    if (distance <= circle.radius*2) {
+      ctx.fillText(`Exiting In ${Math.ceil(5 - (now-startTime)/1000)}`, x, y);
+      if (now - startTime >= 5000) {
+        gameState = "startScreen";
+        innerGameState = "mainMenu";
+      }
     }
-
-    if (player.x + player.radius < cnv.width/2 + 100) {
-      
+    else {
+      startTime = Date.now();
+      ctx.fillText("Level Complete", x, y);
     }
   }
 }

@@ -638,9 +638,7 @@ function drawText() { // draws the current time, highest time, and enemy count
         else timeLeftColor = "rgb(235, 235, 235)";
         
         ctx.fillStyle = timeLeftColor;
-
-        if (timeLeft <= 0) ctx.fillText(`0s`, cnv.width/2, 40);
-        else ctx.fillText(`${timeLeft}s`, cnv.width/2, 40);
+        ctx.fillText(`${timeLeft}s`, cnv.width/2, 40);
         
         // Draws the music name and artist
         ctx.font = "20px Verdana"

@@ -67,21 +67,30 @@ function createBeam() {
 }
 
 function createBomb() {
-
+  let bomb = {
+    x: Math.random() * cnv.width,
+    y: Math.random() * cnv.height,
+    r: (Math.random() * 30) + 20,
+    colorValue: 185,
+    get color() {
+      return `rgb(${this.colorValue}, ${this.colorValue}, ${this.colorValue})`;
+    },
+  }
+  return bomb;
 }
 
 function spawnAndDrawDanger() {
-  [2, 3, 3.5, 4, 4.5].forEach(timeStamp => {
-    if (music.var.currentTime === timeStamp) {
-      allEnemies.push(createBeam());
-    }
-  })
-
-  allEnemies.forEach(danger => {
-    ctx.fillStyle = danger.color;
-    danger.colorValue += 0.05;
-    ctx.fillRect(danger.x, 0, danger.width, cnv.height);
-  })
+    [2, 3, 3.5, 4, 4.5].forEach(timeStamp => {
+        if (music.var.currentTime === timeStamp) {
+            allEnemies.push(createBeam());
+        }
+    })
+  
+    allEnemies.forEach(danger => {
+        ctx.fillStyle = danger.color;
+        danger.colorValue += 0.05;
+        ctx.fillRect(danger.x, 0, danger.width, cnv.height);
+    })
 }
 
 function musicCollisions() {

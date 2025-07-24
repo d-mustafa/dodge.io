@@ -1,4 +1,4 @@
-console.log("cnv.width/2, cnv.height/2");// DODGE.IO - JSAB.JS
+console.log("(cnv.width/2 - 100);");// DODGE.IO - JSAB.JS
 function restartMusicMode() {
   volume = Math.floor((settings.volumeSliderX - 165) / 1.5);
   music.var.volume = volume/100;
@@ -24,8 +24,8 @@ function pauseAudio() { // Pause music without causing errors
 
 function drawEndLevel() {
   if (timeLeft <= 0) {
-    let rectX = cnv.width/4;
-    let rectY = cnv.height/4;
+    let rectX = (cnv.width/2 - 100);
+    let rectY = (cnv.height/2 - 100);
     ctx.fillStyle = "rgb(0, 255, 0)";
     ctx.fillRect(rectX, rectY, 200, 200);
 

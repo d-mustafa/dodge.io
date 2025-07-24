@@ -1,4 +1,4 @@
-console.log("danger spawn time range (0.0005), type shi");// DODGE.IO - MUSIC.JS
+console.log("danger spawn time range (0.0005)");// DODGE.IO - MUSIC.JS
 function restartMusicMode() {
     allEnemies = [];
     volume = Math.floor((settings.volumeSliderX - 165) / 1.5);

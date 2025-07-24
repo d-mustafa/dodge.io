@@ -24,16 +24,17 @@ function pauseAudio() { // Pause music without causing errors
 
 function drawEndLevel() {
   if (timeLeft <= 0) {
+    let rectX = cnv.width/4;
+    let rectY = cnv.height/4;
     ctx.fillStyle = "rgb(0, 255, 0)";
-    ctx.fillRect(cnv.width/2, cnv.height/2, 200, 200);
+    ctx.fillRect(rectX, rectY, 200, 200);
 
     // Find the closest point on the rectangle to the circle
-    let closestX = Math.max(rect.x, Math.min(circle.x, rect.x + rect.width));
-    let closestY = Math.max(rect.y, Math.min(circle.y, rect.y + rect.height));
-    
-    // Calculate the distance from the circle's center to this point
-    let dx = circle.x - closestX;
-    let dy = circle.y - closestY;
+    let closestX = Math.max(rectX, Math.min(player.x, rectX + rect.width));
+    let closestY = Math.max(rectY, Math.min(player.y, rectY + rect.height));
+
+    let dx = player.x - closestX;
+    let dy = player.y - closestY;
     let distance = Math.hypot(dx, dy);
     
     ctx.textAlign = "center";

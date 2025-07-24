@@ -143,15 +143,16 @@ function recordLeftClick() {
                 mouseMovementOn = previousMM;
                 restartEndless();
             }
-        })
-        ["alarm9"].forEach(level => {
-            console.log(mouseOver);
-            if (mouseOver[level]) {
-                if (mouseOver?.alarm9) music = {var: alarm9, name: "Alarm 9", artist: "Blue Cxve", color: "rgb(163, 0, 163)"};
-                mouseMovementOn = previousMM;
-                restartMusicMode();
-            }
-        })
+        });
+        if (mouseOver) {
+            ["alarm9"].forEach(level => {
+                if (mouseOver[level]) {
+                    if (mouseOver?.alarm9) music = {var: alarm9, name: "Alarm 9", artist: "Blue Cxve", color: "rgb(163, 0, 163)"};
+                    mouseMovementOn = previousMM;
+                    restartMusicMode();
+                }
+            })
+        }
     }
     
     // Hero Choice

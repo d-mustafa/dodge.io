@@ -1,4 +1,4 @@
-console.log("red and green")// DODGE.IO - FUNCTIONS.JS
+console.log("slider early")// DODGE.IO - FUNCTIONS.JS
 // KEYBAORD AND MOUSE EVENTS (player inputs)
 function recordKeyDown(event) {
     // stops the page from scrolling when arrow keys are pressed
@@ -381,6 +381,14 @@ function drawSettings() {
         ctx.fillText("Disable Mouse Movement Activation", 50, 100);
 
         // Music Volume Slider
+        ctx.strokestyle = "white";
+        ctx.linewidth = 2;
+        ctx.beginPath();
+        ctx.roundRect(160, 135, 310, 10, 5);
+        ctx.stroke();
+
+        drawCircle(200, 140, 10);
+
         ctx.fillStyle = "black";
         ctx.fillText("Music Volume", 50, 150);
     }

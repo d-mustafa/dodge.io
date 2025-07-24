@@ -1,4 +1,4 @@
-console.log("CT")// DODGE.IO - SCRIPT.JS
+console.log("EndLevel")// DODGE.IO - SCRIPT.JS
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 

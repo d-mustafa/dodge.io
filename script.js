@@ -274,7 +274,7 @@ function draw() {
     else if (gameState === "musicMode") {
         drawText();
         drawEndLevel();
-        spawnAndDrawDanger()
+        spawnAndDrawDanger();
         drawPlayer();
         
         keyboardControls();

@@ -1,4 +1,4 @@
-console.log("e");// DODGE.IO - JSAB.JS
+console.log("updated");// DODGE.IO - JSAB.JS
 function restartMusicMode() {
   volume = Math.floor((settings.volumeSliderX - 165) / 1.5);
   music.var.volume = volume/100;
@@ -34,7 +34,7 @@ function drawEndLevel() {
     ctx.font = "30px Verdana";
     if (
       player.x + player.radius <= rectX + 200 && 
-      player.x - player.raius >= rectX &&
+      player.x - player.radius >= rectX &&
       player.y + player.radius <= rectY + 200 &&
       player.y - player.radius >= rectY
     ) {

@@ -1,12 +1,11 @@
-console.log("track fully fixed")// DODGE.IO - SCRIPT.JS
+console.log("previousMM")// DODGE.IO - SCRIPT.JS
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 
 let gameState = "loading";
 let innerGameState = "mainMenu";
-let lastPressing = "kb";
-
 // Keyboard
+let lastPressing = "kb";
 document.addEventListener("keydown", recordKeyDown)
 document.addEventListener("keyup", recordKeyUp)
 let keyboardMovementOn = false;
@@ -19,6 +18,7 @@ let shiftPressed = 1;
 // Mouse
 let mouseDown;
 let mouseMovementOn = false;
+let previousMM = false;
 document.addEventListener("mousedown", () => {mouseDown = true});
 document.addEventListener("mouseup", () => {mouseDown = false});
 document.addEventListener("touchstart", () => {mouseDown = true; recordLeftClick();});

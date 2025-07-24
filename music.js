@@ -1,4 +1,4 @@
-console.log("(cnv.width/2 - 100);");// DODGE.IO - JSAB.JS
+console.log("circle");// DODGE.IO - JSAB.JS
 function restartMusicMode() {
   volume = Math.floor((settings.volumeSliderX - 165) / 1.5);
   music.var.volume = volume/100;
@@ -41,7 +41,7 @@ function drawEndLevel() {
     ctx.fillStyle = "white";
     ctx.font = "30px Verdana";
 
-    if (distance <= circle.radius*2) {
+    if (distance <= player.radius*2) {
       ctx.fillText(`Exiting In ${Math.ceil(5 - (now-startTime)/1000)}`, cnv.width/2, cnv.height/2);
       if (now - startTime >= 5000) {
         gameState = "startScreen";

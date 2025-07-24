@@ -641,9 +641,9 @@ function drawText() { // draws the current time, highest time, and enemy count
         ctx.textAlign = 'center';
 
         let timeLeftColor;
-        if (timeLeft <= 3) timeLeftColor = "rgb(235, 150, 150)";
-        else if (timeLeft <= 2) timeLeftColor = "rgb(235, 100, 100)";
-        else if (timeLeft <= 1) timeLeftColor = "rgb(235, 50, 50)";
+        if (timeLeft <= 3) timeLeftColor = "rgb(235, 157, 157)";
+        else if (timeLeft <= 2) timeLeftColor = "rgb(235, 79, 79)";
+        else if (timeLeft <= 1) timeLeftColor = "rgb(235, 0, 0)";
         else timeLeftColor = "rgb(235, 235, 235)";
         
         ctx.fillStyle = timeLeftColor;

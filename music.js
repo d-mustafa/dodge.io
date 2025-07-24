@@ -2,6 +2,7 @@ console.log("Mouser");// DODGE.IO - JSAB.JS
 function restartMusicMode() {
   if (music.name === "Alarm 9") {
     alarm9.currentTime = 0;
+    alarm9.volume = volume/100;
     music.promise = alarm9.play();
     music.duration = alarm9.duration;
   }

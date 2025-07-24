@@ -31,7 +31,7 @@ function drawEndLevel() {
     
     ctx.textAlign = "center";
     ctx.fillStyle = "white";
-    ctx.font = "25px Verdana";
+    ctx.font = "30px Verdana";
     if (
       player.x + player.radius <= rectX + 200 && 
       player.x - player.raius >= rectX &&

@@ -1,4 +1,4 @@
-console.log("=")// DODGE.IO - SCRIPT.JS
+console.log("==")// DODGE.IO - SCRIPT.JS
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 
@@ -123,7 +123,7 @@ let difficulty = {
 let music = {
     name: "Alarm 9",
     artist: "Blue Cxve",
-    duration: null,
+    duration: 0,
     color: "rgb(163, 0, 163)",
 }
 let alarm9 = document.createElement("audio");

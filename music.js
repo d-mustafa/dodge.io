@@ -2,7 +2,7 @@ console.log("Mouser");// DODGE.IO - JSAB.JS
 function restartMusicMode() {
   if (music.name === "Alarm 9") {
     alarm9.currentTime = 0;
-    alarm9.play();
+    music.promise = alarm9.play();
     music.duration = alarm9.duration;
   }
 
@@ -14,10 +14,9 @@ function restartMusicMode() {
   gameState = "musicMode";
 }
 
-function pauseAudio(promise, audio) {
-  // Pause music without causing errors
-  if (promise !== undefined) {
-    promise.then(_ => {
+function pauseAudio(audio) { // Pause music without causing errors
+  if (music.promise !== undefined) {
+    music.promise.then(_ => {
       audio.pause();
     })
     .catch(error => {

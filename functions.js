@@ -143,8 +143,6 @@ function recordLeftClick() {
         })
 
         ["alarm9"].forEach(level => {
-            console.log(mouseOver["alarm9"])
-            console.log(mouseOver[level])
             if (mouseOver[level]) {
                 if (mouseOver.alarm9) {
                     alarm9.addEventListener("loadedmetadata", () => { 

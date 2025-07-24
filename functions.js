@@ -1,4 +1,4 @@
-console.log("slider meh")// DODGE.IO - FUNCTIONS.JS
+console.log("volumeSliderX")// DODGE.IO - FUNCTIONS.JS
 // KEYBAORD AND MOUSE EVENTS (player inputs)
 function recordKeyDown(event) {
     // stops the page from scrolling when arrow keys are pressed
@@ -99,6 +99,12 @@ function recordLeftClick() {
             innerGameState === "settings" && mouseOver.settings ||
             innerGameState === "selectDodger" && mouseOver.selector ||
             innerGameState === "selectDifficulty" && mouseOver.play) {
+
+        if (innerGameState === "settings") {
+            // Saves the users settings options
+            userData.settings = settings;
+            localStorage.setItem('localUserData', JSON.stringify(userData));
+        }
         gameState = "startScreen";
         innerGameState = "mainMenu";
         mouseMovementOn = previousMM;
@@ -125,7 +131,6 @@ function recordLeftClick() {
 
             if (!settings.disableMM) mouseMovementOn = previousMM;
         }
-
     }
 
     // Difficulty Choice
@@ -291,7 +296,7 @@ function drawStartScreen() {
         }
     }
     if (innerGameState === "mainMenu" || innerGameState === "selectDodger") {
-                // DODGER SLECTOR BUTTON //
+        // DODGER SLECTOR BUTTON //
         const selectorBtn = {
             x: 250,
             y: 475,
@@ -351,7 +356,7 @@ function drawStartScreen() {
 }
 
 function drawSettings() {
-    const gear = { x: 750, y: 600, }
+    const gear = { x: 750, y: 600, };
     const distGear = Math.hypot(gear.x+20 - mouseX, gear.y+20 - mouseY); // (770, 620) is the center of the gear
     mouseOver.settings = distGear < 30;
 
@@ -381,14 +386,27 @@ function drawSettings() {
         ctx.fillText("Disable Mouse Movement Activation", 50, 100);
 
         // Music Volume Slider
+        mouseOver.volumeSlider = (mouseX > settings.volumeSliderX - 10 && mouseX < settings.volumeSliderX + 10) && (mouseY > 135 && mouseY < 155)
+        if (mouseDown && mouseOver.volumeSlider) {
+            if (mouseX <= 310 && mouseX >= 160) settings.volumeSliderX = mouseX;
+            if (mouseX >= 310) settings.volumeSliderX = 310;
+            if (mouseX <= 160) settings.volumeSliderX = 160;
+        }
+
+        // outline
         ctx.strokestyle = "white";
         ctx.linewidth = 2;
         ctx.beginPath();
         ctx.roundRect(160, 140, 150, 10, 5);
         ctx.stroke();
 
+        // fill
         ctx.fillStyle = "white";
-        drawCircle(200, 145, 10);
+        ctx.beginPath();
+        ctx.roundRect(160, 140, settings.volumeSliderX - 160, 10, 5);
+        ctx.fill();
+
+        drawCircle(settings.volumeSliderX, 145, 10);
 
         ctx.fillStyle = "black";
         ctx.fillText("Music Volume", 50, 150);

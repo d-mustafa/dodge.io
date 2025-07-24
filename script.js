@@ -125,6 +125,7 @@ let music = {
     artist: "Blue Cxve",
     duration: 0,
     color: "rgb(163, 0, 163)",
+    promise: "",
 }
 let alarm9 = document.createElement("audio");
 alarm9.src = "Music/Alarm 9.mp3";

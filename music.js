@@ -88,7 +88,7 @@ function spawnAndDrawDanger() {
   
     allEnemies.forEach(danger => {
         ctx.fillStyle = danger.color;
-        danger.colorValue += 0.05;
+        danger.colorValue += 0.5;
         ctx.fillRect(danger.x, 0, danger.width, cnv.height);
     })
 }

@@ -146,7 +146,11 @@ function recordLeftClick() {
             console.log(mouseOver["alarm9"])
             console.log(mouseOver[level])
             if (mouseOver[level]) {
-                if (mouseOver.alarm9) music = {name: "Alarm 9", artist: "Blue Cxve", duration: alarm9.duration, color: "rgb(163, 0, 163)"};
+                if (mouseOver.alarm9) {
+                    alarm9.addEventListener("loadedmetadata", () => { 
+                        music = {name: "Alarm 9", artist: "Blue Cxve", duration: alarm9.duration, color: "rgb(163, 0, 163)"};
+                    })
+                }
                 innerGameState = 'inMusicMode';
                 mouseMovementOn = previousMM;
                 restartMusicMode();

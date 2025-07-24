@@ -90,6 +90,7 @@ let shockwave = {
 let settings = {
     enemyOutlines: true,
     disableMM: false,
+    volumeSliderX: 200,
 };
 
 let allEnemies = [];

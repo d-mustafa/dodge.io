@@ -112,7 +112,7 @@ function recordLeftClick() {
 
     // Settings
     else if (innerGameState === "settings") {
-        if (mouseOver.enemyOutBtn || mouseOver.disableMMBtn) {
+        if (mouseOver.enemyOutBtn || mouseOver.disableMMBtn || mouseOver.volumeSlider) {
             if (mouseOver.enemyOutBtn) {
                 if (settings.enemyOutlines) settings.enemyOutlines = false;
                 else if (!settings.enemyOutlines) settings.enemyOutlines = true;
@@ -392,8 +392,6 @@ function drawSettings() {
             if (mouseX <= 315 && mouseX >= 165) settings.volumeSliderX = mouseX;
             if (mouseX >= 315) settings.volumeSliderX = 315;
             if (mouseX <= 165) settings.volumeSliderX = 165;
-
-            mouseMovementOn = previousMM;
         }
 
         // outline

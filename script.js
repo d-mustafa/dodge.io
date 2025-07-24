@@ -122,22 +122,17 @@ let difficulty = {
 };
 
 // Music
-let music = {
-    name: "Alarm 9",
-    artist: "Blue Cxve",
-    duration: 0,
-    currentTime: 0,
-    color: "rgb(163, 0, 163)",
-    promise: "",
-}
 let volume = 50;
 
 let alarm9 = document.createElement("audio");
 alarm9.src = "Music/Alarm 9.mp3";
 alarm9.preload = "metadata";
-let alarm9Promise;
-
-alarm9.addEventListener("loadedmetadata", () => { music.duration = alarm9.duration });
+let music = {
+    var: alarm9,
+    name: "Alarm 9",
+    artist: "Blue Cxve",
+    color: "rgb(163, 0, 163)",
+}
 
 
 // User Data

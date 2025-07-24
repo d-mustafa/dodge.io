@@ -53,6 +53,14 @@ function drawEndLevel() {
   }
 }
 
+function createBeam() {
+
+}
+
+function createBomb() {
+
+}
+
 function musicCollisions() {
 
 }

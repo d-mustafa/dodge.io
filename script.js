@@ -45,6 +45,7 @@ let mouseOver = {
 
     enemyOutBtn: false,
     disableMMBtn: false,
+    volumeSlider: false,
 };
 
 let mouseX;

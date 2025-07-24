@@ -1,4 +1,4 @@
-console.log("inside");// DODGE.IO - JSAB.JS
+console.log("4 texts");// DODGE.IO - JSAB.JS
 function restartMusicMode() {
   volume = Math.floor((settings.volumeSliderX - 165) / 1.5);
   music.var.volume = volume/100;

@@ -1,4 +1,4 @@
-console.log("240 and volume")// DODGE.IO - SCRIPT.JS
+console.log("CT")// DODGE.IO - SCRIPT.JS
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 
@@ -126,6 +126,7 @@ let music = {
     name: "Alarm 9",
     artist: "Blue Cxve",
     duration: 0,
+    currentTime: 0,
     color: "rgb(163, 0, 163)",
     promise: "",
 }

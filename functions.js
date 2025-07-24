@@ -352,7 +352,7 @@ function drawStartScreen() {
 
 function drawSettings() {
     const gear = { x: 750, y: 600, }
-    const distGear = Math.hypot(770 - mouseX, 620 - mouseY); // (770, 620) is the center of the gear
+    const distGear = Math.hypot(gear.x+20 - mouseX, gear.y+20 - mouseY); // (770, 620) is the center of the gear
     mouseOver.settings = distGear < 30;
 
     if (innerGameState === "mainMenu") ctx.drawImage(document.getElementById("gear-filled"), gear.x, gear.y, 40, 40);
@@ -384,10 +384,11 @@ function drawSettings() {
         ctx.strokestyle = "white";
         ctx.linewidth = 2;
         ctx.beginPath();
-        ctx.roundRect(160, 135, 310, 10, 5);
+        ctx.roundRect(160, 140, 150, 10, 5);
         ctx.stroke();
 
-        drawCircle(200, 140, 10);
+        ctx.fillStyle = "white";
+        drawCircle(200, 145, 10);
 
         ctx.fillStyle = "black";
         ctx.fillText("Music Volume", 50, 150);

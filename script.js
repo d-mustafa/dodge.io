@@ -131,7 +131,7 @@ alarm9.src = "Music/Alarm 9.mp3";
 alarm9.preload = "metadata";
 let alarm9Promise;
 
-alarm9.addEventListener("loadedmetadata", () => { alarm9.duration });
+alarm9.addEventListener("loadedmetadata", () => { music.duration = alarm9.duration });
 
 
 // User Data

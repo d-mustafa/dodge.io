@@ -1,4 +1,4 @@
-console.log("EndLevel")// DODGE.IO - SCRIPT.JS
+console.log("spawnAndDrawDanger")// DODGE.IO - SCRIPT.JS
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 
@@ -274,6 +274,7 @@ function draw() {
     else if (gameState === "musicMode") {
         drawText();
         drawEndLevel();
+        spawnAndDrawDanger()
         drawPlayer();
         
         keyboardControls();

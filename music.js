@@ -1,6 +1,6 @@
 console.log("removed the normal currentTime and startTime");// DODGE.IO - JSAB.JS
 function restartMusicMode() {
-  timeLeft = (music.duration - music.currentTime).toFixed(2);
+  timeLeft = (music.var.duration - music.var.currentTime).toFixed(2);
   dash.lastEnded = 0;
   shockwave.lastEnded = 0;
   gameState = "musicMode";

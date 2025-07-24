@@ -1,4 +1,4 @@
-console.log("previousMM")// DODGE.IO - SCRIPT.JS
+console.log("240")// DODGE.IO - SCRIPT.JS
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 
@@ -90,7 +90,7 @@ let shockwave = {
 let settings = {
     enemyOutlines: true,
     disableMM: false,
-    volumeSliderX: 235,
+    volumeSliderX: 240,
 };
 
 let allEnemies = [];

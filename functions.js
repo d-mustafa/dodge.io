@@ -135,27 +135,26 @@ function recordLeftClick() {
                 if (mouseOver.easy) difficulty = {level: "easy", color: "rgb(0, 225, 255)"};
                 if (mouseOver.medium) difficulty = {level: "medium", color: "rgb(255, 255, 0)"};
                 if (mouseOver.hard) difficulty = {level: "hard", color: "rgb(0, 0, 0)"};
-                
                 innerGameState = 'inEndless';
                 mouseMovementOn = previousMM;
                 restartEndless();
             }
         })
 
-        /*["alarm9"].forEach(level => {
+            
+        if (mouseOver.alarm9) console.log("exists");
+        else console.log("doesn't exist");
+        
+        ["alarm9"].forEach(level => {
             if (mouseOver[level]) {
-                if (mouseOver.alarm9) {
-                    alarm9.addEventListener("loadedmetadata", () => { 
-                        music = {name: "Alarm 9", artist: "Blue Cxve", duration: alarm9.duration, color: "rgb(163, 0, 163)"};
-                    })
+                if (mouseOver?.alarm9) {
+                    music = {name: "Alarm 9", artist: "Blue Cxve", duration: alarm9.duration, color: "rgb(163, 0, 163)"}
                 }
                 innerGameState = 'inMusicMode';
                 mouseMovementOn = previousMM;
                 restartMusicMode();
             }
-        })*/
-        if (mouseOver?.alarm9) console.log("exists");
-        else console.log("doesn't exist");
+        })
     }
     
     // Hero Choice

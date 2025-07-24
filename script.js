@@ -120,17 +120,18 @@ let difficulty = {
 };
 
 // Music
-let alarm9 = document.createElement("audio");
-alarm9.src = "Music/Alarm 9.mp3";
-alarm9.preload = "none";
-let alarm9Promise;
-
 let music = {
     name: "Alarm 9",
     artist: "Blue Cxve",
-    duration: alarm9.duration,
+    duration: null,
     color: "rgb(163, 0, 163)",
 }
+let alarm9 = document.createElement("audio");
+alarm9.src = "Music/Alarm 9.mp3";
+alarm9.preload = "metadata";
+let alarm9Promise;
+
+alarm9.addEventListener("loadedmetadata", () => { alarm9.duration });
 
 
 // User Data

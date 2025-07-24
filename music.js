@@ -75,7 +75,7 @@ function spawnAndDrawDanger() {
     if (music.var.currentTime === timeStamp) {
       allEnemies.push(createBeam());
     }
-  }
+  })
 
   allEnemies.forEach(danger => {
     ctx.fillStyle = danger.color;

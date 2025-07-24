@@ -1,4 +1,4 @@
-console.log("startTIme");// DODGE.IO - JSAB.JS
+console.log("cnv.width/2, cnv.height/2");// DODGE.IO - JSAB.JS
 function restartMusicMode() {
   volume = Math.floor((settings.volumeSliderX - 165) / 1.5);
   music.var.volume = volume/100;

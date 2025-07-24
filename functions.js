@@ -1,4 +1,4 @@
-console.log("3")// DODGE.IO - FUNCTIONS.JS
+console.log("var")// DODGE.IO - FUNCTIONS.JS
 // KEYBAORD AND MOUSE EVENTS (player inputs)
 function recordKeyDown(event) {
     // stops the page from scrolling when arrow keys are pressed
@@ -145,16 +145,14 @@ function recordLeftClick() {
                 restartEndless();
             }
         })
-
-            
-        if (mouseOver.alarm9) console.log("exists");
-        else console.log("doesn't exist");
-        
         ["alarm9"].forEach(level => {
             if (mouseOver[level]) {
-                if (mouseOver.alarm9) {
-                    music = {name: "Alarm 9", artist: "Blue Cxve", duration: alarm9.duration, color: "rgb(163, 0, 163)"}
-                }
+                if (mouseOver.alarm9) music = {var: alarm9, name: "Alarm 9", artist: "Blue Cxve", color: "rgb(163, 0, 163)"};
+
+                volume = Math.floor((settings.volumeSliderX - 165) / 1.5);
+                music.var.volume = volume/100;
+                music.var.currentTime = 0;
+                music.promise = music.var.play();
                 innerGameState = 'inMusicMode';
                 mouseMovementOn = previousMM;
                 restartMusicMode();
@@ -606,7 +604,7 @@ function drawEnemies() {
 function drawText() { // draws the current time, highest time, and enemy count
     // Current time in seconds
     currentTime = ((now-startTime) / 1000).toFixed(2);
-    timeLeft = (music.duration - currentTime).toFixed(2);
+    timeLeft = (music.var.duration - music.var.currentTime).toFixed(2);
     
     if (gameState === "gameOn") {
         // Updates the highscore and saves it to local storage
@@ -632,9 +630,7 @@ function drawText() { // draws the current time, highest time, and enemy count
         if (highscoreColor === difficulty.color) ctx.font = "bold 20px 'Verdana'";
         ctx.fillStyle = highscoreColor;
         // Displays the highest score and the current difficulty (capitalized)
-        ctx.fillText(
-            `Highest Time (${difficulty.level.charAt(0).toUpperCase() + difficulty.level.slice(1)}): ${highscore[difficulty.level]}s`,
-            600, 40);
+        ctx.fillText(`Highest Time (${difficulty.level.charAt(0).toUpperCase() + difficulty.level.slice(1)}): ${highscore[difficulty.level]}s`, 600, 40);
     }
     if (gameState === "musicMode") {
         // Draws the time left

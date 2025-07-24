@@ -361,13 +361,14 @@ function drawSettings() {
         
         ctx.font = "bold 15px Arial";
         ctx.textAlign = "left";
-        ctx.fillStyle = "black";
         
         // Enemy Outlines Button
         mouseOver.enemyOutBtn = (mouseX > 170 && mouseX < 190 && mouseY > 35 && mouseY < 55);
         if (settings.enemyOutlines) ctx.fillStyle = "lime";
         else ctx.fillStyle = "red";
         ctx.fillRect(170, 35, 20, 20);
+
+        ctx.fillStyle = "black";
         ctx.fillText("Enemy Outlines", 50, 50);
     
         // Disable Mouse Movement Button
@@ -375,9 +376,12 @@ function drawSettings() {
         if (settings.disableMM) ctx.fillStyle = "lime";
         else ctx.fillStyle = "red";
         ctx.fillRect(317.5, 85, 20, 20);
+
+        ctx.fillStyle = "black";
         ctx.fillText("Disable Mouse Movement Activation", 50, 100);
 
         // Music Volume Slider
+        ctx.fillStyle = "black";
         ctx.fillText("Music Volume", 50, 150);
     }
 }

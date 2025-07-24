@@ -56,27 +56,27 @@ function drawEndLevel() {
 
 function createBeam() {
     let beam = {
-      type: "beam",
-      x: Math.random() * cnv.width,
-      width: (Math.random() * 80) + 20,
-      colorValue: 185,
-      get color() {
-        return `rgb(${this.colorValue}, ${this.colorValue}, ${this.colorValue})`;
-      },
+        type: "beam",
+        x: Math.random() * cnv.width,
+        width: (Math.random() * 80) + 20,
+        colorValue: 185,
+        get color() {
+            return `rgb(${this.colorValue}, ${this.colorValue}, ${this.colorValue})`;
+        },
     }
     return beam;
 }
 
 function createBomb() {
     let bomb = {
-      type: "bomb",
-      x: Math.random() * cnv.width,
-      y: Math.random() * cnv.height,
-      r: (Math.random() * 30) + 20,
-      colorValue: 185,
-      get color() {
-        return `rgb(${this.colorValue}, ${this.colorValue}, ${this.colorValue})`;
-      },
+        type: "bomb",
+        x: Math.random() * cnv.width,
+        y: Math.random() * cnv.height,
+        r: (Math.random() * 30) + 20,
+        colorValue: 185,
+        get color() {
+            return `rgb(${this.colorValue}, ${this.colorValue}, ${this.colorValue})`;
+        },
     }
     return bomb;
 }
@@ -89,9 +89,11 @@ function spawnAndDrawDanger() {
     })
   
     allEnemies.forEach(danger => {
-        ctx.fillStyle = danger.color;
-        danger.colorValue += 0.5;
-        ctx.fillRect(danger.x, 0, danger.width, cnv.height);
+        if (danger.type === "beam") {
+            ctx.fillStyle = danger.color;
+            danger.colorValue += 0.5;
+            ctx.fillRect(danger.x, 0, danger.width, cnv.height);
+        }
     })
 }
 

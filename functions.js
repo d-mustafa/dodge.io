@@ -364,8 +364,8 @@ function drawSettings() {
     else if (innerGameState === "settings") {
         ctx.drawImage(document.getElementById("gear-unfilled"), gear.x, gear.y, 40, 40);
         
-        ctx.font = "bold 15px Arial";
         ctx.textAlign = "left";
+        ctx.font = "bold 15px Arial";
         
         // Enemy Outlines Button
         mouseOver.enemyOutBtn = (mouseX > 170 && mouseX < 190 && mouseY > 35 && mouseY < 55);
@@ -411,11 +411,12 @@ function drawSettings() {
 
         ctx.fillStyle = "black";
         ctx.fillText("Music Volume", 50, 150);
-
+        
+        ctx.textAlign = "center";
         ctx.font = "bold 15px Arial";
         ctx.fillStyle = "white";
         volume = Math.floor((settings.volumeSliderX - 165) / 1.5);
-        ctx.fillText(`${volume}`, 330, 150);
+        ctx.fillText(`${volume}`, 340, 150);
     }
 }
 

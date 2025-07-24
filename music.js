@@ -41,7 +41,7 @@ function drawEndLevel() {
     ctx.font = "30px Verdana";
 
     if (distance <= circle.radius*2) {
-      ctx.fillText(`Exiting In ${Math.ceil(5 - (now-startTime)/1000)}`, x, y);
+      ctx.fillText(`Exiting In ${Math.ceil(5 - (now-startTime)/1000)}`, cnv.width/2, cnv.height/2);
       if (now - startTime >= 5000) {
         gameState = "startScreen";
         innerGameState = "mainMenu";
@@ -49,7 +49,7 @@ function drawEndLevel() {
     }
     else {
       startTime = Date.now();
-      ctx.fillText("Level Complete", x, y);
+      ctx.fillText("Level Complete", cnv.width/2, cnv.height/2);
     }
   }
 }

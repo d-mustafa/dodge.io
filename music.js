@@ -1,4 +1,4 @@
-console.log("danger spawn time range (0.0005)");// DODGE.IO - MUSIC.JS
+console.log("danger spawn time range variable");// DODGE.IO - MUSIC.JS
 function restartMusicMode() {
     allEnemies = [];
     volume = Math.floor((settings.volumeSliderX - 165) / 1.5);
@@ -80,10 +80,10 @@ function createBomb() {
     }
     return bomb;
 }
-
+let range = 0.0005;
 function spawnAndDrawDanger() {
     [2, 3, 3.5, 4, 4.5].forEach(timestamp => {
-        if (music.var.currentTime >= timestamp - 0.0005 && music.var.currentTime <= timestamp + 0.0005) {
+        if (music.var.currentTime >= timestamp - range && music.var.currentTime <= timestamp + range) {
             allEnemies.push(createBeam());
         }
     })

@@ -81,7 +81,7 @@ function createBomb() {
 
 function spawnAndDrawDanger() {
     [2, 3, 3.5, 4, 4.5].forEach(timeStamp => {
-        if (music.var.currentTime === timeStamp) {
+        if (music.var.currentTime >= timeStamp - 0.02 && music.var.currentTime <= timestamp + 0.02) {
             allEnemies.push(createBeam());
         }
     })

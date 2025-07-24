@@ -31,14 +31,15 @@ function drawEndLevel() {
     
     ctx.textAlign = "center";
     ctx.fillStyle = "white";
-    ctx.font = "30px Verdana";
+    ctx.font = "25px Verdana";
     if (
       player.x + player.radius <= rectX + 200 && 
       player.x - player.raius >= rectX &&
       player.y + player.radius <= rectY + 200 &&
       player.y - player.radius >= rectY
     ) {
-      ctx.fillText(`Exiting In ${Math.ceil(5 - (now-startTime)/1000)}`, cnv.width/2, cnv.height/2);
+      ctx.fillText(`Exiting In`, cnv.width/2, cnv.height/2 - 25);
+      ctx.fillText(`${Math.ceil(5 - (now-startTime)/1000)}`, cnv.width/2, cnv.height/2 + 25);
       if (now - startTime >= 5000) {
         gameState = "startScreen";
         innerGameState = "mainMenu";
@@ -46,7 +47,8 @@ function drawEndLevel() {
     }
     else {
       startTime = Date.now();
-      ctx.fillText("Level Complete", cnv.width/2, cnv.height/2);
+      ctx.fillText("Level", cnv.width/2, cnv.height/2 - 25);
+      ctx.fillText("Complete", cnv.width/2, cnv.height/2 + 25);
     }
   }
 }

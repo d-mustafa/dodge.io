@@ -28,20 +28,16 @@ function drawEndLevel() {
     let rectY = (cnv.height/2 - 100);
     ctx.fillStyle = "rgb(0, 255, 0)";
     ctx.fillRect(rectX, rectY, 200, 200);
-
-    // Find the closest point on the rectangle to the circle
-    let closestX = Math.max(rectX, Math.min(player.x, rectX + 200));
-    let closestY = Math.max(rectY, Math.min(player.y, rectY + 200));
-
-    let dx = player.x - closestX;
-    let dy = player.y - closestY;
-    let distance = Math.hypot(dx, dy);
     
     ctx.textAlign = "center";
     ctx.fillStyle = "white";
     ctx.font = "30px Verdana";
-
-    if (distance <= player.radius*2) {
+    if (
+      player.x + player.radius <= rectX + 200 && 
+      player.x - player.raius >= rectX &&
+      player.y + player.radius <= rectY + 200 &&
+      player.y - player.radius >= rectY
+    ) {
       ctx.fillText(`Exiting In ${Math.ceil(5 - (now-startTime)/1000)}`, cnv.width/2, cnv.height/2);
       if (now - startTime >= 5000) {
         gameState = "startScreen";

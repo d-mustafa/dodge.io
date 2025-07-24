@@ -1,4 +1,4 @@
-console.log("danger spawn time range (fixed), type shi");// DODGE.IO - MUSIC.JS
+console.log("danger spawn time range (0.00001), type shi");// DODGE.IO - MUSIC.JS
 function restartMusicMode() {
     allEnemies = [];
     volume = Math.floor((settings.volumeSliderX - 165) / 1.5);
@@ -34,10 +34,10 @@ function drawEndLevel() {
         ctx.fillStyle = "white";
         ctx.font = "30px Verdana";
         if (
-          player.x + player.radius <= rectX + 200 && 
-          player.x - player.radius >= rectX &&
-          player.y + player.radius <= rectY + 200 &&
-          player.y - player.radius >= rectY
+            player.x + player.radius <= rectX + 200 && 
+            player.x - player.radius >= rectX &&
+            player.y + player.radius <= rectY + 200 &&
+            player.y - player.radius >= rectY
         ) {
             ctx.fillText(`Exiting In`, cnv.width/2, cnv.height/2 - 25);
             ctx.fillText(`${Math.ceil(5 - (now-startTime)/1000)}`, cnv.width/2, cnv.height/2 + 25);
@@ -83,7 +83,7 @@ function createBomb() {
 
 function spawnAndDrawDanger() {
     [2, 3, 3.5, 4, 4.5].forEach(timestamp => {
-        if (music.var.currentTime >= timestamp - 0.02 && music.var.currentTime <= timestamp + 0.02) {
+        if (music.var.currentTime >= timestamp - 0.00001 && music.var.currentTime <= timestamp + 0.00001) {
             allEnemies.push(createBeam());
         }
     })
@@ -92,7 +92,15 @@ function spawnAndDrawDanger() {
         if (danger.type === "beam") {
             ctx.fillStyle = danger.color;
             danger.colorValue += 0.5;
+            
             ctx.fillRect(danger.x, 0, danger.width, cnv.height);
+        } else if (danger.type === "bomb") {
+            ctx.fillStyle = danger.color;
+            danger.colorValue += 0.5;
+            
+            ctx.beginPath();
+            ctx.arc(danger.x, danger.y, danger.r, 0, Math.PI * 2);
+            ctx.fill();
         }
     })
 }

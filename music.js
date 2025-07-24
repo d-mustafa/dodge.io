@@ -1,5 +1,6 @@
 console.log("insta-complete");// DODGE.IO - JSAB.JS
 function restartMusicMode() {
+  allEnemies = [];
   volume = Math.floor((settings.volumeSliderX - 165) / 1.5);
   music.var.volume = volume/100;
   music.var.currentTime = 0;
@@ -54,11 +55,33 @@ function drawEndLevel() {
 }
 
 function createBeam() {
-
+  let beam = {
+    x: Math.random() * cnv.width,
+    width: (Math.random() * 80) + 20,
+    colorValue: 185,
+    get color() {
+      return `rgb(${this.colorValue}, ${this.colorValue}, ${this.colorValue})`;
+    },
+  }
+  return beam;
 }
 
 function createBomb() {
 
+}
+
+function spawnAndDrawDanger() {
+  [2, 3, 3.5, 4, 4.5].forEach(timeStamp => {
+    if (music.var.currentTime === timeStamp) {
+      allEnemies.push(createBeam());
+    }
+  }
+
+  allEnemies.forEach(danger => {
+    ctx.fillStyle = danger.color;
+    danger.colorValue += 0.05;
+    ctx.fillRect(danger.x, 0, danger.width, cnv.height);
+  })
 }
 
 function musicCollisions() {

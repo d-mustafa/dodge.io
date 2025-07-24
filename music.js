@@ -58,7 +58,7 @@ function createBeam() {
     let beam = {
         type: "beam",
         x: Math.random() * cnv.width,
-        width: (Math.random() * 80) + 20,
+        width: (Math.random() * 70) + 80,
         colorValue: 185,
         get color() {
             return `rgb(${this.colorValue}, ${this.colorValue}, ${this.colorValue})`;
@@ -91,12 +91,12 @@ function spawnAndDrawDanger() {
     allEnemies.forEach(danger => {
         if (danger.type === "beam") {
             ctx.fillStyle = danger.color;
-            danger.colorValue += 0.5;
+            danger.colorValue += 0.25;
             
             ctx.fillRect(danger.x, 0, danger.width, cnv.height);
         } else if (danger.type === "bomb") {
             ctx.fillStyle = danger.color;
-            danger.colorValue += 0.5;
+            danger.colorValue += 0.25;
             
             ctx.beginPath();
             ctx.arc(danger.x, danger.y, danger.r, 0, Math.PI * 2);

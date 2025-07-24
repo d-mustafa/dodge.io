@@ -1,4 +1,4 @@
-console.log("danger spawn time range, type shi");// DODGE.IO - MUSIC.JS
+console.log("danger spawn time range (fixed), type shi");// DODGE.IO - MUSIC.JS
 function restartMusicMode() {
     allEnemies = [];
     volume = Math.floor((settings.volumeSliderX - 165) / 1.5);
@@ -82,8 +82,8 @@ function createBomb() {
 }
 
 function spawnAndDrawDanger() {
-    [2, 3, 3.5, 4, 4.5].forEach(timeStamp => {
-        if (music.var.currentTime >= timeStamp - 0.02 && music.var.currentTime <= timestamp + 0.02) {
+    [2, 3, 3.5, 4, 4.5].forEach(timestamp => {
+        if (music.var.currentTime >= timestamp - 0.02 && music.var.currentTime <= timestamp + 0.02) {
             allEnemies.push(createBeam());
         }
     })

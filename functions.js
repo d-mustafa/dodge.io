@@ -134,7 +134,7 @@ function recordLeftClick() {
     }
 
     // Difficulty Choice
-    else if (innerGameState === "selectDifficulty") {
+    else if (innerGameState === "selectDifficulty" && mouseOver) {
         ["easy", "medium", "hard"].forEach(level => {
             if (mouseOver[level]) {
                 if (mouseOver.easy) difficulty = {level: "easy", color: "rgb(0, 225, 255)"};
@@ -144,15 +144,13 @@ function recordLeftClick() {
                 restartEndless();
             }
         });
-        if (mouseOver) {
-            ["alarm9"].forEach(level => {
-                if (mouseOver[level]) {
-                    if (mouseOver?.alarm9) music = {var: alarm9, name: "Alarm 9", artist: "Blue Cxve", color: "rgb(163, 0, 163)"};
-                    mouseMovementOn = previousMM;
-                    restartMusicMode();
-                }
-            })
-        }
+        ["alarm9"].forEach(level => {
+            if (mouseOver[level]) {
+                if (mouseOver?.alarm9) music = {var: alarm9, name: "Alarm 9", artist: "Blue Cxve", color: "rgb(163, 0, 163)"};
+                mouseMovementOn = previousMM;
+                restartMusicMode();
+            }
+        })
     }
     
     // Hero Choice

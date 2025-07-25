@@ -90,7 +90,7 @@ function spawnAndDrawDanger() {
     }
 
     // Enemy Deleting
-    allEnemies = allEnemies.filter(danger => danger.colorValue < 255);
+    allEnemies = allEnemies.filter(danger => danger.colorValue < 250);
 
     // Enemy Drawing
     allEnemies.forEach(danger => {

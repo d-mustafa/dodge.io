@@ -1,4 +1,4 @@
-console.log("game over, restart and exit button");// DODGE.IO - MUSIC.JS
+console.log("restart and exit button");// DODGE.IO - MUSIC.JS
 function restartMusicMode() {
     allEnemies = [];
     player.lives = 3;
@@ -64,10 +64,7 @@ function drawEndLevel() {
         if (inRedoRect) {
             ctx.fillText(`Restarting In`, 550, cnv.height/2 - 25);
             ctx.fillText(`${Math.ceil(5 - (now-startTime)/1000)}`, 550, cnv.height/2 + 25);
-            if (now - startTime >= 5000) {
-                gameState = "startScreen";
-                innerGameState = "mainMenu";
-            }
+            if (now - startTime >= 5000) restartMusicMode();
         }
         else {
             ctx.fillText("Restart", 550, cnv.height/2 - 25);
@@ -149,26 +146,27 @@ function spawnAndDrawDanger() {
 
 function musicCollisions() {
     allEnemies.forEach(danger => {
-        if (timeLeft > 0 && danger.colorValue >= 250 && now - player.hit >= 1500 && !dash.activated && !(now - dash.lastEnded < 300)) {
+        if (timeLeft > 0 && innerGameState !== "musicModeFail" && danger.colorValue >= 250 && now - player.hit >= 1500 && !dash.activated && !(now - dash.lastEnded < 300)) {
             if (danger.type === "beam") {
                 if ((danger.variant === "vertical" && player.x + player.radius >= danger.x && player.x - player.radius <= danger.x + danger.w) ||
                    (danger.variant === "horizontal" && player.y + player.radius >= danger.y && player.y - player.radius <= danger.y + danger.h)) {
                     player.lives--;
                     player.hit = Date.now();
-                    pauseAudio();
-                    innerGameState = "musicModeFail";
                 }
             }
             if (danger.type === "bomb") {
                 if (Math.hypot(player.x - danger.x, player.y - danger.y) <= player.radius + danger.radius) {
                     player.lives--;
                     player.hit = Date.now();
-                    pauseAudio();
-                    innerGameState = "musicModeFail";
                 }
             }
         }
     })
+    if (player.lives === 0 && innerGameState !== "musicModeFail") {
+        pauseAudio();
+        innerGameState = "musicModeFail";
+    }
+    
     // Draws player lives
     ctx.textAlign = "center";
     ctx.font = "20px Impact";

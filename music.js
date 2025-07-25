@@ -15,10 +15,10 @@ function restartMusicMode() {
     gameState = "musicMode";
 }
 
-function pauseAudio() { // Pause music without causing errors
-    if (music.promise !== undefined) {
-        music.promise.then(_ => {
-            music.var.pause();
+function pauseAudio(promise, audio) { // Pause music without causing errors
+    if (promise !== undefined) {
+        promise.then(_ => {
+            audio.pause();
         })
         .catch(error => {
             console.warn(error);
@@ -164,18 +164,22 @@ function musicCollisions() {
                    (danger.variant === "horizontal" && player.y + player.radius >= danger.y && player.y - player.radius <= danger.y + danger.h)) {
                     player.lives--;
                     player.hit = Date.now();
+                    sharpPop.currentTime = 0;
+                    sharpPop.play();
                 }
             }
             if (danger.type === "bomb") {
                 if (Math.hypot(player.x - danger.x, player.y - danger.y) <= player.radius + danger.radius) {
                     player.lives--;
                     player.hit = Date.now();
+                    sharpPop.currentTime = 0;
+                    sharpPop.play();
                 }
             }
         }
     })
     if (player.lives === 0 && innerGameState !== "musicModeFail" && innerGameState !== "mainMenu") {
-        pauseAudio();
+        pauseAudio(music.promise, music.var);
         innerGameState = "musicModeFail";
     }
     

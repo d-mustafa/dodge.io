@@ -1,4 +1,4 @@
-console.log("randomized x's for testing, smaller width, no collisions once time left is less than zero");// DODGE.IO - MUSIC.JS
+console.log("beam variants");// DODGE.IO - MUSIC.JS
 function restartMusicMode() {
     allEnemies = [];
     player.lives = 3;
@@ -56,19 +56,25 @@ function drawEndLevel() {
 function createBeam() {
     let beam = {
         type: "beam",
+        variant: Math.random(),
         x: Math.random() * cnv.width,
+        y: Math.random() * cnv.height,
         w: (Math.random() * 20) + 80,
+        h: (Math.random() * 20) + 50,
         colorValue: 185,
         get color() {
             return `rgb(${this.colorValue}, ${this.colorValue}, ${this.colorValue})`;
         },
     }
+    if (beam.variant > 0.5) beam.variant = "vertical";
+    else beam.variant = "horizontal";
     return beam;
 }
 
 function createBomb() {
     let bomb = {
         type: "bomb",
+        variant: Math.random(),
         x: Math.random() * cnv.width,
         y: Math.random() * cnv.height,
         r: (Math.random() * 30) + 20,
@@ -85,9 +91,14 @@ function spawnAndDrawDanger() {
     if (timestampIndex < music.timestamps.length) {
         if (music.var.currentTime >= music.timestamps[timestampIndex]) {
             allEnemies.unshift(createBeam());
+            
             // determines the dangers x value based off the timestamp
             let xMulti = Math.floor(music.timestamps[timestampIndex]*100/cnv.width);
             allEnemies[0].x = (music.timestamps[timestampIndex]*100)-(cnv.width*xMulti);
+
+            // determines the dangers y value based off the timestamp
+            let yMulti = Math.floor(music.timestamps[timestampIndex]*100/cnv.height);
+            allEnemies[0].y = (music.timestamps[timestampIndex]*100)-(cnv.height*yMulti);
             
             timestampIndex++;
         }
@@ -98,19 +109,14 @@ function spawnAndDrawDanger() {
 
     // Enemy Drawing
     allEnemies.forEach(danger => {
+        ctx.fillStyle = danger.color;
+        danger.colorValue += 0.25;
+        
         if (danger.type === "beam") {
-            ctx.fillStyle = danger.color;
-            danger.colorValue += 0.25;
-            
-            ctx.fillRect(danger.x, 0, danger.w, cnv.height);
-        } else if (danger.type === "bomb") {
-            ctx.fillStyle = danger.color;
-            danger.colorValue += 0.5;
-            
-            ctx.beginPath();
-            ctx.arc(danger.x, danger.y, danger.r, 0, Math.PI * 2);
-            ctx.fill();
+            if (danger.variant === "vertical") ctx.fillRect(danger.x, 0, danger.w, cnv.height);
+            if (danger.variant === "horizontal") ctx.fillRect(0, danger.y, cnv.width, danger.h);
         }
+        else if (danger.type === "bomb") drawCircle(danger.x, danger.y, danger.r);
     })
 }
 
@@ -118,13 +124,14 @@ function musicCollisions() {
     allEnemies.forEach(danger => {
         if (timeLeft > 0 && danger.colorValue >= 250 && now - player.hit >= 1500 && !dash.activated && !(now - dash.lastEnded < 300)) {
             if (danger.type === "beam") {
-                if (player.x + player.radius >= danger.x && player.x - player.radius <= danger.x + danger.w) {
+                if ((danger.variant === "vertical" && player.x + player.radius >= danger.x && player.x - player.radius <= danger.x + danger.w) ||
+                   (danger.variant === "horizontal" && player.y + player.radius >= danger.y && player.y - player.radius <= danger.y + danger.h)) {
                     player.lives--;
                     player.hit = Date.now();
                 }
             }
             if (danger.type === "bomb") {
-                if (Math.hypot(player.x - danger.x, player.y - danger.y) < player.radius + danger.radius) {
+                if (Math.hypot(player.x - danger.x, player.y - danger.y) <= player.radius + danger.radius) {
                     player.lives--;
                     player.hit = Date.now();
                 }

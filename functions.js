@@ -1,4 +1,4 @@
-// DODGE.IO - FUNCTIONS.JS
+console.log("draw player lives")// DODGE.IO - FUNCTIONS.JS
 // KEYBAORD AND MOUSE EVENTS (player inputs)
 function recordKeyDown(event) {
     // stops the page from scrolling when arrow keys are pressed
@@ -644,10 +644,15 @@ function drawText() { // draws the current time, highest time, and enemy count
         ctx.font = "20px Verdana"
         ctx.fillStyle = music.color;
         ctx.fillText(`${music.name} - ${music.artist}`, 600, 620);
+
+        // Draws player lives
+        ctx.font = "20px Impact"
+        ctx.fillStyle = player.subColor;
+        ctx.fillText(player.lives, player.x, player.y);
     }
     
     // Abilites
-    ctx.font = "20px 'Verdana'";
+    ctx.font = "20px Verdana";
     ctx.textAlign = 'center';
     ctx.fillStyle = player.subColor;
 

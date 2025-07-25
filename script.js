@@ -133,6 +133,7 @@ let music = {
     name: "Alarm 9",
     artist: "Blue Cxve",
     color: "rgb(163, 0, 163)",
+    subColor: "rgb(163, 0, 163)",
     timestamps: [],
 }
 

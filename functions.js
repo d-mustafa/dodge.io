@@ -1,4 +1,4 @@
-console.log("white 0 timeleft")// DODGE.IO - FUNCTIONS.JS
+console.log("circle function now has a type parameter")// DODGE.IO - FUNCTIONS.JS
 // KEYBAORD AND MOUSE EVENTS (player inputs)
 function recordKeyDown(event) {
     // stops the page from scrolling when arrow keys are pressed
@@ -229,10 +229,11 @@ function recordRightClick(event) {
 }
 
 // FUNCTIONS THAT DRAWS STUFF TO THE SCREEN
-function drawCircle(x, y, r = 12.5) {
+function drawCircle(x, y, r = 12.5, type = "fill") {
     ctx.beginPath()
     ctx.arc(x, y, r, Math.PI * 2, 0)
-    ctx.fill()
+    if (type === "fill") ctx.fill();
+    else if (type === "stroke") ctx.stroke();
 }
 
 function drawStartScreen() {

@@ -66,6 +66,10 @@ function drawEndLevel() {
             ctx.fillText(`Exiting In`, 250, cnv.height/2 - 25);
             ctx.fillText(`${Math.ceil(3 - (now-startTime)/1000)}`, 250, cnv.height/2 + 25);
             if (now - startTime >= 3000) {
+                music = {var: aNewStart,name: "A New Start", artist: "Thygan Buch",
+                         color: "rgb(105, 105, 105)", subColor: "rgb(115, 115, 115)",};
+                music.var.currentTime = 0;
+                music.promise = music.var.play();
                 gameState = "startScreen";
                 innerGameState = "mainMenu";
             }

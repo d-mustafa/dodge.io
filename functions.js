@@ -1,4 +1,4 @@
-console.log("Title Names")// DODGE.IO - FUNCTIONS.JS
+console.log("sfx slider added")// DODGE.IO - FUNCTIONS.JS
 // KEYBAORD AND MOUSE EVENTS (player inputs)
 function recordKeyDown(event) {
     // stops the page from scrolling when arrow keys are pressed

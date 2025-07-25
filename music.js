@@ -1,4 +1,4 @@
-console.log("vol/100");// DODGE.IO - MUSIC.JS
+console.log("vol/100, 3 2 1");// DODGE.IO - MUSIC.JS
 function restartMusicMode() {
     allEnemies = [];
     player.lives = 3;
@@ -64,7 +64,7 @@ function drawEndLevel() {
         // Exit Rect Conditional
         if (inExitRect) {
             ctx.fillText(`Exiting In`, 250, cnv.height/2 - 25);
-            ctx.fillText(`${Math.ceil(5 - (now-startTime)/1000)}`, 250, cnv.height/2 + 25);
+            ctx.fillText(`${Math.ceil(3 - (now-startTime)/1000)}`, 250, cnv.height/2 + 25);
             if (now - startTime >= 3000) {
                 gameState = "startScreen";
                 innerGameState = "mainMenu";
@@ -78,7 +78,7 @@ function drawEndLevel() {
         // Redo Rect conditional
         if (inRedoRect) {
             ctx.fillText(`Restarting In`, 550, cnv.height/2 - 25);
-            ctx.fillText(`${Math.ceil(5 - (now-startTime)/1000)}`, 550, cnv.height/2 + 25);
+            ctx.fillText(`${Math.ceil(3 - (now-startTime)/1000)}`, 550, cnv.height/2 + 25);
             if (now - startTime >= 3000) restartMusicMode();
         }
         else {

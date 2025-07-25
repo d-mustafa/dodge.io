@@ -1,17 +1,22 @@
-console.log("endlessOn")// DODGE.IO - FUNCTIONS.JS
+console.log("loadingScreen()")// DODGE.IO - FUNCTIONS.JS
+
+function loadingScreen() {
+    if (now - loadingGame >= 1000 && gameState == "loading") {
+        skipLoading = true;
+        music = {var: aNewStart,name: "A New Start", artist: "Thygan Buch",
+             color: "rgb(105, 105, 105)", subColor: "rgb(115, 115, 115)",};
+        return true;
+    }
+    else if (now - loadingGame <= 5000 && gameState == "loading") return true;
+}
+
 // KEYBAORD AND MOUSE EVENTS (player inputs)
 function recordKeyDown(event) {
     // stops the page from scrolling when arrow keys are pressed
     if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].indexOf(event.code) > -1) {
         event.preventDefault();
     }
-
-    // Loading Screen
-    if (now - loadingGame >= 1000 && gameState == "loading") {
-        skipLoading = true;
-        return;
-    }
-    else if (now - loadingGame <= 5000 && gameState == "loading") return;
+    if (loadingScreen()) return;
     
     // Keyboard Inputs (WASD & Shift)
     if (event.code === "KeyW" || event.code === "ArrowUp") wPressed = true;
@@ -50,14 +55,7 @@ function recordKeyDown(event) {
 }
 
 function recordKeyUp(event) {
-    // Loading Screen
-    if (now - loadingGame >= 1000 && gameState == "loading") {
-        skipLoading = true;
-        return;
-    }
-    else if (now - loadingGame <= 5000 && gameState == "loading") return;
-
-    // Keyboard Inputs
+    if (loadingScreen()) return;
     if (event.code === "KeyW" || event.code === "ArrowUp") wPressed = false;
     if (event.code === "KeyA" || event.code === "ArrowLeft") aPressed = false;
     if (event.code === "KeyS" || event.code === "ArrowDown") sPressed = false;
@@ -67,12 +65,7 @@ function recordKeyUp(event) {
 }
 
 function recordLeftClick() {
-    // Loading Screen
-    if (now - loadingGame >= 1000 && gameState == "loading") {
-        skipLoading = true;
-        return;
-    }
-    else if (now - loadingGame <= 5000 && gameState == "loading") return;
+    if (loadingScreen()) return;
 
     // Variable to keep mouse movement the way it previously was if a button was pressed
     previousMM = false;
@@ -99,12 +92,13 @@ function recordLeftClick() {
             innerGameState === "settings" && mouseOver.settings ||
             innerGameState === "selectDodger" && mouseOver.selector ||
             innerGameState === "selectDifficulty" && mouseOver.play) {
-
         if (innerGameState === "settings") {
             // Saves the users settings options
             userData.settings = settings;
             localStorage.setItem('localUserData', JSON.stringify(userData));
         }
+        music.var.currentTime = 0;
+        music.promise = music.var.play();
         gameState = "startScreen";
         innerGameState = "mainMenu";
         mouseMovementOn = previousMM;
@@ -137,20 +131,22 @@ function recordLeftClick() {
     else if (innerGameState === "selectDifficulty" && mouseOver) {
         ["easy", "medium", "hard"].forEach(level => {
             if (mouseOver[level]) {
+                pauseAudio(music.promise, music.var);
                 if (mouseOver.easy) difficulty = {level: "easy", color: "rgb(0, 225, 255)"};
                 if (mouseOver.medium) difficulty = {level: "medium", color: "rgb(255, 255, 0)"};
                 if (mouseOver.hard) difficulty = {level: "hard", color: "rgb(0, 0, 0)"};
-                music = {var: interstellar, name: "interstellar", artist: "pandora., chillwithme & cødy", color: "rgb(105, 105, 105)", subColor: "rgb(115, 115, 115)",};
+                music = {var: interstellar, name: "interstellar", artist: "pandora., chillwithme & cødy",
+                         color: "rgb(105, 105, 105)", subColor: "rgb(115, 115, 115)",};
                 mouseMovementOn = previousMM;
                 restartEndless();
             }
         });
         ["alarm9"].forEach(level => {
             if (mouseOver[level]) {
+                pauseAudio(music.promise, music.var);
                 if (mouseOver?.alarm9) {
                     music = {var: alarm9, name: "Alarm 9", artist: "Blue Cxve", color: "rgb(163, 0, 163)", subColor: "rgb(173, 0, 173)",
                              timestamps: [0.079, 2.79, 3.13, 3.49, 3.81, 4.17, 5.58, 6.28, 6.99, 7.7, 8.4, 9.1, 9.8, 10.5, 11.9, 12.6],};
-                    
                     for (let i = 1; i < 11; i++) { // loop amount: 11, wavelength: 11.5
                         repeatedPoints = music.timestamps.slice(1, 16).map(x => x + 11.5*i);
                         music.timestamps = music.timestamps.concat(repeatedPoints);
@@ -196,13 +192,7 @@ function recordLeftClick() {
 
 function recordRightClick(event) {
     event.preventDefault();
-
-    // Loading Screen
-    if (now - loadingGame >= 1000 && gameState == "loading") {
-        skipLoading = true;
-        return;
-    }
-    else if (now - loadingGame <= 5000 && gameState == "loading") return;
+    if (loadingScreen()) return;
 
     // Ability Activations
     if (gameState !== "endlessOver") {
@@ -238,6 +228,13 @@ function drawCircle(x, y, r = 12.5, type = "fill") {
 }
 
 function drawStartScreen() {
+    volume = Math.floor((settings.volumeSliderX - 165) / 1.5);
+    music.var.volume = volume/100;
+    if (music.var.currentTime === music.var.duration) {
+        music.var.currentTime = 0;
+        music.promise = music.var.play();
+    }
+    
     if (innerGameState === "mainMenu" || innerGameState === "selectDifficulty") {
         // PLAY BUTTON //
         const playBtn = {
@@ -361,6 +358,9 @@ function drawSettings() {
     const distGear = Math.hypot(gear.x+20 - mouseX, gear.y+20 - mouseY); // (770, 620) is the center of the gear
     mouseOver.settings = distGear < 30;
 
+    volume = Math.floor((settings.volumeSliderX - 165) / 1.5);
+    sfxVolume = Math.floor((settings.sfxSliderX - 152) / 1.5);
+
     if (innerGameState === "mainMenu") ctx.drawImage(document.getElementById("gear-filled"), gear.x, gear.y, 40, 40);
     else if (innerGameState === "settings") {
         ctx.drawImage(document.getElementById("gear-unfilled"), gear.x, gear.y, 40, 40);
@@ -428,8 +428,6 @@ function drawSettings() {
         ctx.textAlign = "center";
         ctx.font = "bold 15px Arial";
         ctx.fillStyle = "white";
-        volume = Math.floor((settings.volumeSliderX - 165) / 1.5);
-        sfxVolume = Math.floor((settings.sfxSliderX - 152) / 1.5);
         ctx.fillText(`${volume}`, 340, 150);
         ctx.fillText(`${sfxVolume}`, 327, 200);
     }

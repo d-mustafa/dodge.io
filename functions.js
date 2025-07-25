@@ -1,4 +1,4 @@
-console.log("sfx slider added")// DODGE.IO - FUNCTIONS.JS
+console.log("placeholders")// DODGE.IO - FUNCTIONS.JS
 // KEYBAORD AND MOUSE EVENTS (player inputs)
 function recordKeyDown(event) {
     // stops the page from scrolling when arrow keys are pressed
@@ -462,12 +462,12 @@ function drawDifficultySelection() {
 
     // mouserOver.song2 = (mouseX > 300 && mouseX < 500) && (mouseY > 450 && mouseY < 550);
     // decideFillStyle(mouseOver.song2, "rgb(220, 220, 220)", "rgb(200, 200, 200)");
-    ctx.fillStyle = "grey";
+    ctx.fillStyle = "rgb(200, 200, 200)";
     ctx.fillRect(300, 450, 200, 100);
 
     // mouserOver.song3 = (mouseX > 550 && mouseX < 750) && (mouseY > 450 && mouseY < 550);
     // decideFillStyle(mouseOver.song3, "rgb(220, 220, 220)", "rgb(200, 200, 200)");
-    ctx.fillStyle = "grey";
+    ctx.fillStyle = "rgb(200, 200, 200)";
     ctx.fillRect(550, 450, 200, 100);
     
     // Text
@@ -497,8 +497,8 @@ function drawDifficultySelection() {
     drawDifficultyText("rgb(0, 0, 0)", "HARD", "+Homing Enemies", 560, 280);
     
     drawDifficultyText("rgb(163, 0, 163)", "ALARM 9", "By Blue Cxve", 60, 480);
-    drawDifficultyText("rgb(255, 225, 255)", "SONG 2", "By Author 2", 310, 480);
-    drawDifficultyText("rgb(255, 225, 255)", "SONG 3", "By Author 3", 560, 480);
+    drawDifficultyText("rgb(255, 255, 255)", "SONG 2", "By Author 2", 310, 480);
+    drawDifficultyText("rgb(255, 255, 255)", "SONG 3", "By Author 3", 560, 480);
 }
 
 function drawDodgerSelection() {

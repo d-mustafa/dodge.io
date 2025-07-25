@@ -1,4 +1,4 @@
-console.log("growthfactor and layers");// DODGE.IO - MUSIC.JS
+console.log("growthfactor and layers, sharpPop implemented");// DODGE.IO - MUSIC.JS
 function restartMusicMode() {
     allEnemies = [];
     player.lives = 3;

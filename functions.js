@@ -3,8 +3,6 @@ console.log("loadingScreen()")// DODGE.IO - FUNCTIONS.JS
 function loadingScreen() {
     if (now - loadingGame >= 1000 && gameState == "loading") {
         skipLoading = true;
-        music = {var: aNewStart,name: "A New Start", artist: "Thygan Buch",
-             color: "rgb(105, 105, 105)", subColor: "rgb(115, 115, 115)",};
         return true;
     }
     else if (now - loadingGame <= 5000 && gameState == "loading") return true;

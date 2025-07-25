@@ -113,16 +113,18 @@ function spawnAndDrawDanger() {
 
 function musicCollisions() {
     allEnemies.forEach(danger => {
-        if (danger.type === "beam" && danger.colorValue >= 250 && now - player.hit >= 1500) {
-            if (player.x + player.radius >= danger.x && player.x - player.radius <= danger.x + danger.w) {
-                player.lives--;
-                player.hit = Date.now();
+        if (danger.colorValue >= 250 && now - player.hit >= 1500 && !dash.activated && !(now - dash.lastEnded < 300)) {
+            if (danger.type === "beam") {
+                if (player.x + player.radius >= danger.x && player.x - player.radius <= danger.x + danger.w) {
+                    player.lives--;
+                    player.hit = Date.now();
+                }
             }
-        }
-        if (danger.type === "bomb" && danger.colorValue >= 250 && now - player.hit >= 1500) {
-            if (Math.hypot(player.x - danger.x, player.y - danger.y) < player.radius + danger.radius) {
-                player.lives--;
-                player.hit = Date.now();
+            if (danger.type === "bomb") {
+                if (Math.hypot(player.x - danger.x, player.y - danger.y) < player.radius + danger.radius) {
+                    player.lives--;
+                    player.hit = Date.now();
+                }
             }
         }
     })

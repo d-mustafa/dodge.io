@@ -146,7 +146,7 @@ function recordLeftClick() {
         });
         ["alarm9"].forEach(level => {
             if (mouseOver[level]) {
-                if (mouseOver?.alarm9) music = {var: alarm9, name: "Alarm 9", artist: "Blue Cxve", color: "rgb(163, 0, 163)"};
+                if (mouseOver?.alarm9) music = {var: alarm9, name: "Alarm 9", artist: "Blue Cxve", color: "rgb(163, 0, 163)", timestamps: [2, 3, 3.5, 4, 4.5],};
                 mouseMovementOn = previousMM;
                 restartMusicMode();
             }

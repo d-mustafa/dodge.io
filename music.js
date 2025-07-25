@@ -92,11 +92,13 @@ function spawnAndDrawDanger() {
         if (danger.type === "beam") {
             ctx.fillStyle = danger.color;
             danger.colorValue += 0.25;
+            if (danger.colorValue >= 255) danger.colorValue = 255;
             
             ctx.fillRect(danger.x, 0, danger.width, cnv.height);
         } else if (danger.type === "bomb") {
             ctx.fillStyle = danger.color;
             danger.colorValue += 0.25;
+            if (danger.colorValue >= 255) danger.colorValue = 255;
             
             ctx.beginPath();
             ctx.arc(danger.x, danger.y, danger.r, 0, Math.PI * 2);

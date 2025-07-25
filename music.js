@@ -172,7 +172,7 @@ function musicCollisions() {
             }
         }
     })
-    if (player.lives === 0 && innerGameState !== "musicModeFail") {
+    if (player.lives === 0 && innerGameState !== "musicModeFail" && innerGameState !== "mainMenu") {
         pauseAudio();
         innerGameState = "musicModeFail";
     }

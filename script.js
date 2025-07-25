@@ -46,6 +46,7 @@ let mouseOver = {
     enemyOutBtn: false,
     disableMMBtn: false,
     volumeSlider: false,
+    sfxSlider: false,
 };
 
 let mouseX;
@@ -91,7 +92,7 @@ let settings = {
     enemyOutlines: true,
     disableMM: false,
     volumeSliderX: 240,
-    sfxVolumeSliderX: 240,
+    sfxSliderX: 240,
 };
 
 let allEnemies = [];

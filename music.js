@@ -57,7 +57,7 @@ function createBeam() {
     let beam = {
         type: "beam",
         x: Math.random() * cnv.width,
-        w: (Math.random() * 70) + 80,
+        w: (Math.random() * 20) + 80,
         colorValue: 185,
         get color() {
             return `rgb(${this.colorValue}, ${this.colorValue}, ${this.colorValue})`;
@@ -116,7 +116,7 @@ function spawnAndDrawDanger() {
 
 function musicCollisions() {
     allEnemies.forEach(danger => {
-        if (danger.colorValue >= 250 && now - player.hit >= 1500 && !dash.activated && !(now - dash.lastEnded < 300)) {
+        if (timeLeft > 0 && danger.colorValue >= 250 && now - player.hit >= 1500 && !dash.activated && !(now - dash.lastEnded < 300)) {
             if (danger.type === "beam") {
                 if (player.x + player.radius >= danger.x && player.x - player.radius <= danger.x + danger.w) {
                     player.lives--;

@@ -1,4 +1,4 @@
-console.log("randomized x's for testing");// DODGE.IO - MUSIC.JS
+console.log("randomized x's for testing, smaller width, no collisions once time left is less than zero");// DODGE.IO - MUSIC.JS
 function restartMusicMode() {
     allEnemies = [];
     player.lives = 3;

@@ -1,4 +1,4 @@
-console.log("restart and exit button, growthfactor, gamestate2");// DODGE.IO - MUSIC.JS
+console.log("restart and exit button, growthfactor");// DODGE.IO - MUSIC.JS
 function restartMusicMode() {
     allEnemies = [];
     player.lives = 3;
@@ -34,24 +34,26 @@ function drawEndLevel() {
         let redoX = 450;
         let redoY = (cnv.height/2 - 100);
         let inRedoRect = player.x + player.radius <= redoX + 200 && player.x - player.radius >= redoX && player.y + player.radius <= redoY + 200 && player.y - player.radius >= redoY;
-
-        // Loading Rect
-        let growthFactor = ((now-startTime)/1000)*40;
-        if (inExitRect) {
-            ctx.fillStyle = "rgb(0, 250, 0)";
-            ctx.fillRect(exitX, exitY, growthFactor, growthFactor);
-        } else if (inRedoRect) {
-            ctx.fillStyle = "rgb(250, 0, 0)";
-            ctx.fillRect(redoX, redoY, growthFactor, growthFactor);
-        }
         
         // Exit Rect
-        if (timeLeft <= 0) ctx.fillStyle = "rgb(0, 220, 0)";
-        if (innerGameState === "musicModeFail") ctx.fillStyle = "rgb(220, 0, 0)";
+        if (timeLeft <= 0) ctx.fillStyle = "rgb(0, 235, 0)";
+        if (innerGameState === "musicModeFail") ctx.fillStyle = "rgb(235, 0, 0)";
         ctx.fillRect(exitX, exitY, 200, 200);
+        
         // Redo Rect
         ctx.fillStyle = music.color;
         ctx.fillRect(redoX, redoY, 200, 200);
+        
+        // Loading Rect
+        let growthFactor = ((now-startTime)/1000)*40;
+        if (inExitRect) {
+            if (timeLeft <= 0) ctx.fillStyle = "rgb(0, 245, 0)";
+            if (innerGameState === "musicModeFail") ctx.fillStyle = "rgb(245, 0, 0)";
+            ctx.fillRect(exitX, exitY, growthFactor, growthFactor);
+        } else if (inRedoRect) {
+            ctx.fillStyle = music.subColor;
+            ctx.fillRect(redoX, redoY, growthFactor, growthFactor);
+        }
         
         ctx.textAlign = "center";
         ctx.font = "30px Verdana";

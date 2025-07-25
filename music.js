@@ -34,7 +34,7 @@ function drawEndLevel() {
         ctx.fillRect(rectX, rectY, 200, 200);
         
         ctx.textAlign = "center";
-        ctx.fillStyle = "white";
+        ctx.fillStyle = "rgb(235, 235, 235)";
         ctx.font = "30px Verdana";
         if (player.x + player.radius <= rectX + 200 && player.x - player.radius >= rectX &&
             player.y + player.radius <= rectY + 200 && player.y - player.radius >= rectY) {

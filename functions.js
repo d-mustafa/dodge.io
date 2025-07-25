@@ -22,7 +22,7 @@ function recordKeyDown(event) {
     if (wPressed || aPressed || sPressed || dPressed) keyboardMovementOn = true;
 
     // Ability controls
-    if ((event.code === "KeyQ" || event.code === "KeyJ") && gameState !== "gameOver") {
+    if ((event.code === "KeyQ" || event.code === "KeyJ") && gameState !== "endlessOver") {
         if (player.dodger === "jsab" && dash.usable && !dash.activated) dash.activated = true;
             
         else if (player.dodger === "jolt" && shockwave.usable && !shockwave.activated) {
@@ -95,7 +95,7 @@ function recordLeftClick() {
         if (mouseOver.play || mouseOver.settings || mouseOver.selector) mouseMovementOn = previousMM;
     }
     // Buttons that redirect back to the start screen
-    else if (gameState === "gameOver" && mouseOver.restart ||
+    else if (gameState === "endlessOver" && mouseOver.restart ||
             innerGameState === "settings" && mouseOver.settings ||
             innerGameState === "selectDodger" && mouseOver.selector ||
             innerGameState === "selectDifficulty" && mouseOver.play) {
@@ -205,7 +205,7 @@ function recordRightClick(event) {
     else if (now - loadingGame <= 5000 && gameState == "loading") return;
 
     // Ability Activations
-    if (gameState !== "gameOver") {
+    if (gameState !== "endlessOver") {
         if (player.dodger === "jsab" && dash.usable && !dash.activated) dash.activated = true;
         else if (player.dodger === "jolt" && shockwave.usable && !shockwave.activated) {
             shockwave.activated = true;
@@ -590,18 +590,18 @@ function drawGameOver() {
     ctx.font = '30px Arial';
     ctx.textAlign = 'center';
 
-    let gameOverColor = 'red'
+    let endlessOverColor = 'red'
     let tryAgainColor = 'white'
     if (mouseOver.restart) {
-        gameOverColor = 'white'
+        endlessOverColor = 'white'
         tryAgainColor = 'red'
     }
     else {
-        gameOverColor = 'red'
+        endlessOverColor = 'red'
         tryAgainColor = 'white'
     }
     
-    ctx.strokeStyle = gameOverColor;
+    ctx.strokeStyle = endlessOverColor;
     ctx.strokeText('Game Over', 335, 80);
 
     ctx.strokeStyle = tryAgainColor;
@@ -635,7 +635,7 @@ function drawText() { // draws the current time, highest time, and enemy count
     currentTime = ((now-startTime) / 1000).toFixed(2);
     timeLeft = (music.var.duration - music.var.currentTime).toFixed(2);
     
-    if (gameState === "gameOn") {
+    if (gameState === "endlessOn") {
         // Updates the highscore and saves it to local storage
         if (Number(currentTime) > Number(highscore[difficulty.level])) {
             highscore[difficulty.level] = currentTime;
@@ -687,9 +687,9 @@ function drawText() { // draws the current time, highest time, and enemy count
     ctx.textAlign = 'center';
     ctx.fillStyle = player.subColor;
 
-    // The text should be centered unless the gameState is gameOn or gameOver
+    // The text should be centered unless the gameState is endlessOn or endlessOver
     textX = 200;
-    if (gameState === "gameOn" || gameState === "gameOver" || gameState === "musicMode") textX = 200
+    if (gameState === "endlessOn" || gameState === "endlessOver" || gameState === "musicMode") textX = 200
     else textX = cnv.width/2
 
     // No Abiliy
@@ -961,18 +961,24 @@ function restartEndless() { // Resets certain variables once the play button is 
     allEnemies = []
     // The starting amount of enemies is different based on the difficulty
     startAmount = 10;
-    if (difficulty.level === "medium") startAmount = 20;
-    if (difficulty.level === "hard") startAmount = 30;
+    if (difficulty.level === "medium") startAmount = 15;
+    if (difficulty.level === "hard") startAmount = 20;
     for(let i = 1; i < startAmount; i++) {
         allEnemies.push(createEnemy());
     }
-    
     // Re-order the allEnemies array to draw the enemies with the auras (decelerator enemies) first
     // this prevents inconsistent overlapping when they're drawn
     allEnemies = [
         ...allEnemies.filter(enemy => enemy.ability === "decelerator"),
         ...allEnemies.filter(enemy => enemy.ability !== "decelerator")
     ]
+
+    volume = Math.floor((settings.volumeSliderX - 165) / 1.5);
+    sfxVolume = Math.floor((settings.sfxSliderX - 152) / 1.5);
+    sharpPop.volume = sfxVolume/100;
+    music.var.volume = volume/100;
+    music.var.currentTime = 0;
+    music.promise = music.var.play();
     
     startTime = Date.now();
     currentTime = 0;
@@ -980,8 +986,8 @@ function restartEndless() { // Resets certain variables once the play button is 
     lastSpawn = 0;
     dash.lastEnded = 0;
     shockwave.lastEnded = 0;
-    innerGameState = 'inEndless';
-    gameState = "gameOn"
+    innerGameState = "inEndless";
+    gameState = "endlessOn"
 }
 
 function collisions() { // Keeps track of when the player touches any enemy in the allEnemies array
@@ -990,21 +996,19 @@ function collisions() { // Keeps track of when the player touches any enemy in t
         const dx = player.x - enemy.x;
         const dy = player.y - enemy.y;
         const distance = Math.hypot(dx, dy);
-
         // Gives the player some time to get out of an enemy they dashed onto (0.3s)
         if (!dash.activated && !(now - dash.lastEnded < 300)) {
             if (distance < player.radius + enemy.radius) {
+                pauseAudio(music.promise, music.var);
                 highscoreColor = "rgb(87, 87, 87)";
                 difficulty.color = "rgb(87, 87, 87)";
-                gameState = "gameOver"
-
+                gameState = "endlessOver";
                 // Saves data once the user dies
                 userData.highscore = highscore;
                 localStorage.setItem('localUserData', JSON.stringify(userData));
             }
         }
-
-        if (gameState === "gameOver") underAura = 0;
+        if (gameState === "endlessOver") underAura = 0;
         else if (enemy.ability === "decelerator" && distance < player.radius + enemy.auraRadius) underAura++;
     });
     

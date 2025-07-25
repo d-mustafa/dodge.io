@@ -1,4 +1,4 @@
-console.log("sfxVolumeSliderX")// DODGE.IO - SCRIPT.JS
+console.log("interstellar")// DODGE.IO - SCRIPT.JS
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 
@@ -142,7 +142,11 @@ let music = {
     color: "rgb(163, 0, 163)",
     subColor: "rgb(173, 0, 173)",
     timestamps: [],
+    promise: "alarm9.play()",
 }
+let interstellar = document.createElement("audio");
+interstellar.src = "Audio/interstellar.mp3";
+interstellar.preload = "metadata";
 
 // User Data
 let lastSave = 0; // tracks how often data is saved (during gameplay)

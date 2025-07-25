@@ -640,7 +640,7 @@ function drawText() { // draws the current time, highest time, and enemy count
 
         let timeLeftColor;
         
-        if (timeLeft > 4 || timeLeft === 0) timeLeftColor = "rgb(235, 235, 235)";
+        if (timeLeft > 4 || timeLeft == 0) timeLeftColor = "rgb(235, 235, 235)";
         else if (timeLeft >= 3) timeLeftColor = "rgb(235, 235, 30)";
         else if (timeLeft >= 2) timeLeftColor = "rgb(235, 102.5, 30)";
         else if (timeLeft > 0) timeLeftColor = "rgb(235, 0, 0)";

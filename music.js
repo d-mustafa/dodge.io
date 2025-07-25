@@ -1,4 +1,4 @@
-console.log("moving lives + 7.5");// DODGE.IO - MUSIC.JS
+console.log("xMulti");// DODGE.IO - MUSIC.JS
 function restartMusicMode() {
     allEnemies = [];
     player.lives = 3;
@@ -56,7 +56,6 @@ function drawEndLevel() {
 function createBeam() {
     let beam = {
         type: "beam",
-        x: Math.random() * cnv.width,
         w: (Math.random() * 70) + 80,
         colorValue: 185,
         get color() {
@@ -69,7 +68,6 @@ function createBeam() {
 function createBomb() {
     let bomb = {
         type: "bomb",
-        x: Math.random() * cnv.width,
         y: Math.random() * cnv.height,
         r: (Math.random() * 30) + 20,
         colorValue: 185,
@@ -84,8 +82,12 @@ function spawnAndDrawDanger() {
     // Enemy Spawning
     if (timestampIndex < music.timestamps.length) {
         if (music.var.currentTime >= music.timestamps[timestampIndex]) {
-            timestampIndex++;
             allEnemies.push(createBeam());
+            // determines the dangers x value based off the timestamp
+            let xMulti = Math.floor(music.timestamps[timestampIndex]*100/cnv.width)
+            allEnemies[allEnemies.length-1].x = (music.timestamps[timestampIndex]*100)-(cnv.width*xMulti);
+            
+            timestampIndex++;
         }
     }
 
@@ -94,7 +96,6 @@ function spawnAndDrawDanger() {
 
     // Enemy Drawing
     allEnemies.forEach(danger => {
-        
         if (danger.type === "beam") {
             ctx.fillStyle = danger.color;
             danger.colorValue += 0.25;

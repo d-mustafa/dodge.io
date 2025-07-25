@@ -1,4 +1,4 @@
-console.log("alarm9 timestamps (looped)")// DODGE.IO - FUNCTIONS.JS
+console.log("white 0 timeleft")// DODGE.IO - FUNCTIONS.JS
 // KEYBAORD AND MOUSE EVENTS (player inputs)
 function recordKeyDown(event) {
     // stops the page from scrolling when arrow keys are pressed
@@ -639,11 +639,11 @@ function drawText() { // draws the current time, highest time, and enemy count
         ctx.textAlign = 'center';
 
         let timeLeftColor;
-        if (timeLeft <= 1) timeLeftColor = "rgb(0, 0, 0)";
-        else if (timeLeft <= 2) timeLeftColor = "rgb(235, 0, 0)";
-        else if (timeLeft <= 3) timeLeftColor = "rgb(235, 102.5, 30)";
-        else if (timeLeft <= 4) timeLeftColor = "rgb(235, 235, 30)";
-        else timeLeftColor = "rgb(235, 235, 235)";
+        
+        if (timeLeft > 4 || timeLeft === 0) timeLeftColor = "rgb(235, 235, 235)";
+        else if (timeLeft >= 3) timeLeftColor = "rgb(235, 235, 30)";
+        else if (timeLeft >= 2) timeLeftColor = "rgb(235, 102.5, 30)";
+        else if (timeLeft > 0) timeLeftColor = "rgb(235, 0, 0)";
         
         ctx.fillStyle = timeLeftColor;
         ctx.fillText(`${timeLeft}s`, cnv.width/2, 40);

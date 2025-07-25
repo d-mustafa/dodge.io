@@ -1,4 +1,4 @@
-console.log("beam variants");// DODGE.IO - MUSIC.JS
+console.log("game over, restart and exit button");// DODGE.IO - MUSIC.JS
 function restartMusicMode() {
     allEnemies = [];
     player.lives = 3;
@@ -27,30 +27,57 @@ function pauseAudio() { // Pause music without causing errors
 }
 
 function drawEndLevel() {
-    if (timeLeft <= 0) {
-        let rectX = (cnv.width/2 - 100);
-        let rectY = (cnv.height/2 - 100);
-        ctx.fillStyle = "rgb(0, 255, 0)";
-        ctx.fillRect(rectX, rectY, 200, 200);
+    if (timeLeft <= 0 || innerGameState === "musicModeFail") {
+        let exitX = 150;
+        let exitY = (cnv.height/2 - 100);
+        let inExitRect = player.x + player.radius <= exitX + 200 && player.x - player.radius >= exitX && player.y + player.radius <= exitY + 200 && player.y - player.radius >= exitY;
+        let redoX = 450;
+        let redoY = (cnv.height/2 - 100);
+        let inRedoRect = player.x + player.radius <= redoX + 200 && player.x - player.radius >= redoX && player.y + player.radius <= redoY + 200 && player.y - player.radius >= redoY;
+        
+        if (timeLeft <= 0) ctx.fillStyle = "rgb(0, 235, 0)";
+        if (innerGameState === "musicModeFail") ctx.fillStyle = "rgb(235, 0, 0)";
+        ctx.fillRect(exitX, exitY, 200, 200);
+
+        ctx.fillStyle = music.color;
+        ctx.fillRect(redoX, redoY, 200, 200);
         
         ctx.textAlign = "center";
-        ctx.fillStyle = "rgb(235, 235, 235)";
         ctx.font = "30px Verdana";
-        if (player.x + player.radius <= rectX + 200 && player.x - player.radius >= rectX &&
-            player.y + player.radius <= rectY + 200 && player.y - player.radius >= rectY) {
-            ctx.fillText(`Exiting In`, cnv.width/2, cnv.height/2 - 25);
-            ctx.fillText(`${Math.ceil(5 - (now-startTime)/1000)}`, cnv.width/2, cnv.height/2 + 25);
+        ctx.fillStyle = "rgb(235, 235, 235)";
+
+        // Exit Rectangle
+        if (inExitRect) {
+            ctx.fillText(`Exiting In`, 250, cnv.height/2 - 25);
+            ctx.fillText(`${Math.ceil(5 - (now-startTime)/1000)}`, 250, cnv.height/2 + 25);
             if (now - startTime >= 5000) {
                 gameState = "startScreen";
                 innerGameState = "mainMenu";
             }
         }
         else {
-            startTime = Date.now();
-            ctx.fillText("Level", cnv.width/2, cnv.height/2 - 25);
-            ctx.fillText("Complete", cnv.width/2, cnv.height/2 + 25);
+            ctx.fillText("Level", 250, cnv.height/2 - 25);
+            if (timeLeft <= 0) ctx.fillText("Complete", 250, cnv.height/2 + 25);
+            if (innerGameState === "musicModeFail") ctx.fillText("Failed", 250, cnv.height/2 + 25);
         }
-    } else startTime = Date.now();
+        // Restart Rectangle
+        if (inRedoRect) {
+            ctx.fillText(`Restarting In`, 550, cnv.height/2 - 25);
+            ctx.fillText(`${Math.ceil(5 - (now-startTime)/1000)}`, 550, cnv.height/2 + 25);
+            if (now - startTime >= 5000) {
+                gameState = "startScreen";
+                innerGameState = "mainMenu";
+            }
+        }
+        else {
+            ctx.fillText("Restart", 550, cnv.height/2 - 25);
+            ctx.fillText("Level", 550, cnv.height/2 + 25);
+        }
+
+        // Reset StartTime
+        if (!inExitRect && !inRedoRect) startTime = Date.now();
+    }
+    if (timeLeft > 0 && innerGameState !== "musicModeFail") startTime = Date.now();
 }
 
 function createBeam() {
@@ -128,12 +155,16 @@ function musicCollisions() {
                    (danger.variant === "horizontal" && player.y + player.radius >= danger.y && player.y - player.radius <= danger.y + danger.h)) {
                     player.lives--;
                     player.hit = Date.now();
+                    pauseAudio();
+                    innerGameState = "musicModeFail";
                 }
             }
             if (danger.type === "bomb") {
                 if (Math.hypot(player.x - danger.x, player.y - danger.y) <= player.radius + danger.radius) {
                     player.lives--;
                     player.hit = Date.now();
+                    pauseAudio();
+                    innerGameState = "musicModeFail";
                 }
             }
         }

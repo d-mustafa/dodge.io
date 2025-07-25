@@ -1,4 +1,4 @@
-console.log("restart and exit button, growthfactor");// DODGE.IO - MUSIC.JS
+console.log("restart and exit button, growthfactor, gamestate");// DODGE.IO - MUSIC.JS
 function restartMusicMode() {
     allEnemies = [];
     player.lives = 3;

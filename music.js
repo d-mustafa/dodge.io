@@ -1,4 +1,4 @@
-console.log("lives");// DODGE.IO - MUSIC.JS
+console.log("moving lives");// DODGE.IO - MUSIC.JS
 function restartMusicMode() {
     allEnemies = [];
     player.lives = 3;

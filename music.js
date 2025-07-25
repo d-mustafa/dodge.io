@@ -84,7 +84,7 @@ function createBomb() {
 
 function spawnAndDrawDanger() {
     // Enemy Spawning
-    if (timestampIndex < music.timestamps.length)
+    if (timestampIndex < music.timestamps.length) {
         if (music.var.currentTime >= music.timestamps[timestampIndex]) {
             timestampIndex++;
             allEnemies.push(createBeam());

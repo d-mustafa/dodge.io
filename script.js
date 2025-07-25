@@ -208,7 +208,6 @@ window.addEventListener('beforeunload', () => {
 
 // Drawing the game
 requestAnimationFrame(draw)
-let yD = 7;
 function draw() {
     now = Date.now()
     ctx.fillStyle = "rgb(185, 185, 185)";
@@ -273,7 +272,6 @@ function draw() {
         drawPlayer();
     }
     else if (gameState === "musicMode") {
-        player.livesY = player.y + yD;
         spawnAndDrawDanger();
         drawText();
         drawEndLevel();
@@ -287,5 +285,4 @@ function draw() {
     }
     requestAnimationFrame(draw)
 }
-
 draw()

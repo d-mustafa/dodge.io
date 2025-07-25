@@ -2,7 +2,7 @@ console.log("lives");// DODGE.IO - MUSIC.JS
 function restartMusicMode() {
     allEnemies = [];
     player.lives = 3;
-    player.hit = Date.now();
+    player.hit = 0
     volume = Math.floor((settings.volumeSliderX - 165) / 1.5);
     timestampIndex = 0;
     music.var.volume = volume/100;

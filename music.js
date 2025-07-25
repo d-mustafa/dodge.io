@@ -1,4 +1,4 @@
-console.log("growthfactor and layers, sharpPop implemented");// DODGE.IO - MUSIC.JS
+console.log("sideLength/2, sharpPop implemented");// DODGE.IO - MUSIC.JS
 function restartMusicMode() {
     allEnemies = [];
     player.lives = 3;
@@ -45,14 +45,14 @@ function drawEndLevel() {
         ctx.fillRect(redoX, redoY, 200, 200);
         
         // Loading Rect
-        let growthFactor = ((now-startTime)/1000)*40;
+        let sideLength = ((now-startTime)/1000)*40;
         if (inExitRect) {
             if (timeLeft <= 0) ctx.fillStyle = "rgb(0, 245, 0)";
             if (innerGameState === "musicModeFail") ctx.fillStyle = "rgb(245, 0, 0)";
-            ctx.fillRect(exitX, exitY, growthFactor, growthFactor);
+            ctx.fillRect(exitX + (100-sideLength/2), exitY + (100-sideLength/2), sideLength, sideLength);
         } else if (inRedoRect) {
             ctx.fillStyle = music.subColor;
-            ctx.fillRect(redoX, redoY, growthFactor, growthFactor);
+            ctx.fillRect(redoX + (100-sideLength/2), redoY + (100-sideLength/2), sideLength, sideLength);
         }
         
         ctx.textAlign = "center";

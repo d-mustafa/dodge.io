@@ -1,4 +1,4 @@
-console.log("loadingScreen()")// DODGE.IO - FUNCTIONS.JS
+console.log("check for loadingScreen() bugs")// DODGE.IO - FUNCTIONS.JS
 
 function loadingScreen() {
     if (now - loadingGame >= 1000 && gameState == "loading") {

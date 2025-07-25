@@ -1,4 +1,4 @@
-console.log("moving lives + 5");// DODGE.IO - MUSIC.JS
+console.log("moving lives + 7.5");// DODGE.IO - MUSIC.JS
 function restartMusicMode() {
     allEnemies = [];
     player.lives = 3;
@@ -130,5 +130,5 @@ function musicCollisions() {
     ctx.textAlign = "center";
     ctx.font = "20px Impact";
     ctx.fillStyle = player.subColor;
-    ctx.fillText(player.lives, player.x, player.y+5);
+    ctx.fillText(player.lives, player.x, player.y+7.5);
 }

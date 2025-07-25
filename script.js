@@ -123,6 +123,8 @@ let difficulty = {
 
 // Music
 let volume = 50;
+let timestamps;
+let timestampIndex;
 
 let alarm9 = document.createElement("audio");
 alarm9.src = "Music/Alarm 9.mp3";

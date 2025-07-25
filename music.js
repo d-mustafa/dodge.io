@@ -1,6 +1,8 @@
-console.log("remove enemies and collisions");// DODGE.IO - MUSIC.JS
+console.log("lives");// DODGE.IO - MUSIC.JS
 function restartMusicMode() {
     allEnemies = [];
+    player.lives = 3;
+    player.hit;
     volume = Math.floor((settings.volumeSliderX - 165) / 1.5);
     timestampIndex = 0;
     music.var.volume = volume/100;
@@ -100,7 +102,7 @@ function spawnAndDrawDanger() {
             ctx.fillRect(danger.x, 0, danger.w, cnv.height);
         } else if (danger.type === "bomb") {
             ctx.fillStyle = danger.color;
-            danger.colorValue += 0.25;
+            danger.colorValue += 0.5;
             
             ctx.beginPath();
             ctx.arc(danger.x, danger.y, danger.r, 0, Math.PI * 2);
@@ -111,14 +113,16 @@ function spawnAndDrawDanger() {
 
 function musicCollisions() {
     allEnemies.forEach(danger => {
-        if (danger.type === "beam") {
+        if (danger.type === "beam" && danger.colorValue >= 255 && now - player.hit >= 1500) {
             if (player.x + player.radius >= danger.x && player.x - player.radius <= danger.x + danger.w) {
-                console.log("collision w/ beam!");
+                player.lives--;
+                player.hit = Date.now();
             }
         }
-        if (danger.type === "bomb") {
+        if (danger.type === "bomb" && danger.colorValue >= 255 && now - player.hit >= 1500) {
             if (Math.hypot(player.x - danger.x, player.y - danger.y) < player.radius + danger.radius) {
-                console.log("collision w/ bomb!");
+                player.lives--;
+                player.hit = Date.now();
             }
         }
     })

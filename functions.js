@@ -459,6 +459,16 @@ function drawDifficultySelection() {
     mouseOver.alarm9 = (mouseX > 50 && mouseX < 250) && (mouseY > 450 && mouseY < 550);
     decideFillStyle(mouseOver.alarm9, "rgb(128, 0, 128)", "rgb(100, 0, 100)");
     ctx.fillRect(50, 450, 200, 100);
+
+    // mouserOver.song2 = (mouseX > 300 && mouseX < 500) && (mouseY > 450 && mouseY < 550);
+    // decideFillStyle(mouseOver.song2, "rgb(220, 220, 220)", "rgb(200, 200, 200)");
+    ctx.fillStyle = "grey";
+    ctx.fillRect(300, 450, 200, 100);
+
+    // mouserOver.song3 = (mouseX > 550 && mouseX < 750) && (mouseY > 450 && mouseY < 550);
+    // decideFillStyle(mouseOver.song3, "rgb(220, 220, 220)", "rgb(200, 200, 200)");
+    ctx.fillStyle = "grey";
+    ctx.fillRect(550, 450, 200, 100);
     
     // Text
     function drawDifficultyText(color, difficultyName, description, x, y) {
@@ -477,7 +487,7 @@ function drawDifficultySelection() {
     ctx.fillText("ENDLESS LEVELS", cnv.width/2, 220);
     
     ctx.font = "30px Arial";
-    ctx.fillText("MUSIC LEVELS", cnv.width/2, 420);
+    ctx.fillText("NORMAL LEVELS", cnv.width/2, 420);
 
     // levels
     ctx.textAlign = "left";
@@ -487,6 +497,8 @@ function drawDifficultySelection() {
     drawDifficultyText("rgb(0, 0, 0)", "HARD", "+Homing Enemies", 560, 280);
     
     drawDifficultyText("rgb(163, 0, 163)", "ALARM 9", "By Blue Cxve", 60, 480);
+    drawDifficultyText("rgb(255, 225, 255)", "SONG 2", "By Author 2", 310, 480);
+    drawDifficultyText("rgb(255, 225, 255)", "SONG 3", "By Author 3", 560, 480);
 }
 
 function drawDodgerSelection() {

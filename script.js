@@ -128,13 +128,10 @@ let volume = 50;
 let sfxVolume = 50;
 let timestampIndex;
 
-let sharpPop = document.createElement("audio");
-sharpPop.src = "Audio/sharp-pop.mp3";
-sharpPop.preload = "metadata";
-
 let alarm9 = document.createElement("audio");
 alarm9.src = "Audio/Alarm 9.mp3";
 alarm9.preload = "metadata";
+
 let music = {
     var: alarm9,
     name: "Alarm 9",
@@ -144,9 +141,18 @@ let music = {
     timestamps: [],
     promise: "alarm9.play()",
 }
+
+let aNewStart = document.createElement("audio");
+aNewStart.src = "Audio/A New Start.mp3";
+aNewStart.preload = "metadata";
+
 let interstellar = document.createElement("audio");
 interstellar.src = "Audio/interstellar.mp3";
 interstellar.preload = "metadata";
+
+let sharpPop = document.createElement("audio");
+sharpPop.src = "Audio/sharp-pop.mp3";
+sharpPop.preload = "metadata";
 
 // User Data
 let lastSave = 0; // tracks how often data is saved (during gameplay)

@@ -1,4 +1,4 @@
-console.log("spawnAndDrawDanger")// DODGE.IO - SCRIPT.JS
+console.log("sharpPop")// DODGE.IO - SCRIPT.JS
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 
@@ -128,7 +128,6 @@ let timestampIndex;
 let sharpPop = document.createElement("audio");
 sharpPop.src = "Audio/sharp-pop.mp3";
 sharpPop.preload = "metadata";
-let sharpPopPromise;
 
 let alarm9 = document.createElement("audio");
 alarm9.src = "Audio/Alarm 9.mp3";

@@ -95,6 +95,8 @@ function recordLeftClick() {
             userData.settings = settings;
             localStorage.setItem('localUserData', JSON.stringify(userData));
         }
+        music = {var: aNewStart,name: "A New Start", artist: "Thygan Buch",
+        color: "rgb(105, 105, 105)", subColor: "rgb(115, 115, 115)",};
         music.var.currentTime = 0;
         music.promise = music.var.play();
         gameState = "startScreen";

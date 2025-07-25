@@ -5,7 +5,7 @@ function restartMusicMode() {
     player.hit = 0;
     volume = Math.floor((settings.volumeSliderX - 165) / 1.5);
     sfxVolume = Math.floor((settings.sfxSliderX - 152) / 1.5);
-    sharpPop.volume = sfxVolume;
+    sharpPop.volume = sfxVolume/100;
     music.var.volume = volume/100;
     music.var.currentTime = 0;
     music.promise = music.var.play();

@@ -1,4 +1,4 @@
-console.log("placeholders")// DODGE.IO - FUNCTIONS.JS
+console.log("endlessOn")// DODGE.IO - FUNCTIONS.JS
 // KEYBAORD AND MOUSE EVENTS (player inputs)
 function recordKeyDown(event) {
     // stops the page from scrolling when arrow keys are pressed
@@ -635,7 +635,7 @@ function drawText() { // draws the current time, highest time, and enemy count
     currentTime = ((now-startTime) / 1000).toFixed(2);
     timeLeft = (music.var.duration - music.var.currentTime).toFixed(2);
     
-    if (gameState === "endlessOn") {
+    if (gameState === "endlessMode") {
         // Updates the highscore and saves it to local storage
         if (Number(currentTime) > Number(highscore[difficulty.level])) {
             highscore[difficulty.level] = currentTime;
@@ -687,9 +687,9 @@ function drawText() { // draws the current time, highest time, and enemy count
     ctx.textAlign = 'center';
     ctx.fillStyle = player.subColor;
 
-    // The text should be centered unless the gameState is endlessOn or endlessOver
+    // The text should be centered unless the gameState is endlessMode or endlessOver
     textX = 200;
-    if (gameState === "endlessOn" || gameState === "endlessOver" || gameState === "musicMode") textX = 200
+    if (gameState === "endlessMode" || gameState === "endlessOver" || gameState === "musicMode") textX = 200
     else textX = cnv.width/2
 
     // No Abiliy
@@ -987,7 +987,7 @@ function restartEndless() { // Resets certain variables once the play button is 
     dash.lastEnded = 0;
     shockwave.lastEnded = 0;
     innerGameState = "inEndless";
-    gameState = "endlessOn"
+    gameState = "endlessMode"
 }
 
 function collisions() { // Keeps track of when the player touches any enemy in the allEnemies array

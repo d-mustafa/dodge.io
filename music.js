@@ -1,4 +1,4 @@
-console.log("sideLength/2, sharpPop implemented");// DODGE.IO - MUSIC.JS
+console.log("3 sec left");// DODGE.IO - MUSIC.JS
 function restartMusicMode() {
     allEnemies = [];
     player.lives = 3;
@@ -44,8 +44,8 @@ function drawEndLevel() {
         ctx.fillStyle = music.color;
         ctx.fillRect(redoX, redoY, 200, 200);
         
-        // Loading Rect
-        let sideLength = ((now-startTime)/1000)*40;
+        // Loading Rect (now-starttime = time left in milliseconds, 200 = width, 3000 = max time in milliseconds)
+        let sideLength = (now-startTime)*200/3000;
         if (inExitRect) {
             if (timeLeft <= 0) ctx.fillStyle = "rgb(0, 245, 0)";
             if (innerGameState === "musicModeFail") ctx.fillStyle = "rgb(245, 0, 0)";
@@ -63,7 +63,7 @@ function drawEndLevel() {
         if (inExitRect) {
             ctx.fillText(`Exiting In`, 250, cnv.height/2 - 25);
             ctx.fillText(`${Math.ceil(5 - (now-startTime)/1000)}`, 250, cnv.height/2 + 25);
-            if (now - startTime >= 5000) {
+            if (now - startTime >= 3000) {
                 gameState = "startScreen";
                 innerGameState = "mainMenu";
             }
@@ -77,7 +77,7 @@ function drawEndLevel() {
         if (inRedoRect) {
             ctx.fillText(`Restarting In`, 550, cnv.height/2 - 25);
             ctx.fillText(`${Math.ceil(5 - (now-startTime)/1000)}`, 550, cnv.height/2 + 25);
-            if (now - startTime >= 5000) restartMusicMode();
+            if (now - startTime >= 3000) restartMusicMode();
         }
         else {
             ctx.fillText("Restart", 550, cnv.height/2 - 25);

@@ -1,4 +1,4 @@
-console.log("alarm9 timestamps (accurate)")// DODGE.IO - FUNCTIONS.JS
+console.log("alarm9 timestamps (looped)")// DODGE.IO - FUNCTIONS.JS
 // KEYBAORD AND MOUSE EVENTS (player inputs)
 function recordKeyDown(event) {
     // stops the page from scrolling when arrow keys are pressed
@@ -146,8 +146,15 @@ function recordLeftClick() {
         });
         ["alarm9"].forEach(level => {
             if (mouseOver[level]) {
-                if (mouseOver?.alarm9) music = {var: alarm9, name: "Alarm 9", artist: "Blue Cxve", color: "rgb(163, 0, 163)",
+                if (mouseOver?.alarm9) {
+                    music = {var: alarm9, name: "Alarm 9", artist: "Blue Cxve", color: "rgb(163, 0, 163)",
                     timestamps: [0.079, 2.79, 3.13, 3.49, 3.81, 4.17, 5.58, 6.28, 6.99, 7.7, 8.4, 9.1, 9.8, 10.5, 11.9, 12.6],};
+                    
+                    for (let i = 1; i < 11; i++) { // loop amount: 11, wavelength: 11.5
+                        repeatedPoints = music.timestamps.slice(1, 16).map(x => x + 11.5*i);
+                        music.timestamps = music.timestamps.concat(repeatedPoints);
+                    }
+                }
                 mouseMovementOn = previousMM;
                 restartMusicMode();
             }

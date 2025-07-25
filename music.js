@@ -1,4 +1,4 @@
-console.log("3 sec left");// DODGE.IO - MUSIC.JS
+console.log("vol/100");// DODGE.IO - MUSIC.JS
 function restartMusicMode() {
     allEnemies = [];
     player.lives = 3;

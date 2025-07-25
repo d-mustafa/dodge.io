@@ -126,7 +126,7 @@ let volume = 50;
 let timestampIndex;
 
 let alarm9 = document.createElement("audio");
-alarm9.src = "Music/Alarm 9.mp3";
+alarm9.src = "Audio/Alarm 9.mp3";
 alarm9.preload = "metadata";
 let music = {
     var: alarm9,

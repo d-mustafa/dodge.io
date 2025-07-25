@@ -1,4 +1,4 @@
-console.log("xMulti");// DODGE.IO - MUSIC.JS
+console.log("randomized x's for testing");// DODGE.IO - MUSIC.JS
 function restartMusicMode() {
     allEnemies = [];
     player.lives = 3;
@@ -56,6 +56,7 @@ function drawEndLevel() {
 function createBeam() {
     let beam = {
         type: "beam",
+        x: Math.random() * cnv.width,
         w: (Math.random() * 70) + 80,
         colorValue: 185,
         get color() {
@@ -68,6 +69,7 @@ function createBeam() {
 function createBomb() {
     let bomb = {
         type: "bomb",
+        x: Math.random() * cnv.width,
         y: Math.random() * cnv.height,
         r: (Math.random() * 30) + 20,
         colorValue: 185,

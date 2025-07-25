@@ -645,11 +645,6 @@ function drawText() { // draws the current time, highest time, and enemy count
         ctx.font = "20px Verdana"
         ctx.fillStyle = music.color;
         ctx.fillText(`${music.name} - ${music.artist}`, 600, 620);
-
-        // Draws player lives
-        ctx.font = "20px Impact"
-        ctx.fillStyle = player.subColor;
-        ctx.fillText(player.lives, player.x, player.y);
     }
     
     // Abilites

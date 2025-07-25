@@ -217,7 +217,7 @@ window.addEventListener('beforeunload', () => {
     }
     if (gameState === "loading") crashData.leaveOnLoading++;
     else if (gameState === "startScreen") crashData.leaveOnMenu++;
-    else if (gameState === "gameOn" || gameState === "gameOver") crashData.leaveOnPlay++;
+    else if (gameState === "endlessOn" || gameState === "endlessOver") crashData.leaveOnPlay++;
     else crashData.leaveUnknown++;
     crashData.lastLeftOn = gameState;
     localStorage.setItem('localCrashData', JSON.stringify(crashData));
@@ -270,7 +270,7 @@ function draw() {
         keyboardControls();
         mouseMovement();
     }
-    else if (gameState === "gameOn") {
+    else if (gameState === "endlessOn") {
         drawText();
         drawEnemies();
         drawPlayer();
@@ -283,7 +283,7 @@ function draw() {
         abilities();
         collisions();
     }
-    else if (gameState === "gameOver") {
+    else if (gameState === "endlessOver") {
         drawText();
         drawGameOver();
         drawEnemies();

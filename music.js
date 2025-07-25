@@ -1,7 +1,8 @@
-console.log("danger spawn time range variable");// DODGE.IO - MUSIC.JS
+console.log("timestamps");// DODGE.IO - MUSIC.JS
 function restartMusicMode() {
     allEnemies = [];
     volume = Math.floor((settings.volumeSliderX - 165) / 1.5);
+    timestampIndex = 0;
     music.var.volume = volume/100;
     music.var.currentTime = 0;
     music.promise = music.var.play();
@@ -80,14 +81,17 @@ function createBomb() {
     }
     return bomb;
 }
-let range = 0.0005;
+
 function spawnAndDrawDanger() {
-    [2, 3, 3.5, 4, 4.5].forEach(timestamp => {
-        if (music.var.currentTime >= timestamp - range && music.var.currentTime <= timestamp + range) {
+    // Enemy Spawning
+    if (timestampIndex < music.timestamps.length)
+        if (music.var.currentTime >= music.timestamps[timestampIndex]) {
+            timestampIndex++;
             allEnemies.push(createBeam());
         }
-    })
+    }
   
+    // Enemy Drawing
     allEnemies.forEach(danger => {
         if (danger.type === "beam") {
             ctx.fillStyle = danger.color;

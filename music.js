@@ -130,5 +130,5 @@ function musicCollisions() {
     ctx.textAlign = "center";
     ctx.font = "20px Impact";
     ctx.fillStyle = player.subColor;
-    ctx.fillText(player.lives, player.x, player.y);
+    ctx.fillText(player.lives, player.x, player.y+10);
 }

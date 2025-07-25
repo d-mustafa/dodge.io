@@ -1,4 +1,4 @@
-console.log("circle function now has a type parameter")// DODGE.IO - FUNCTIONS.JS
+console.log("Title Names")// DODGE.IO - FUNCTIONS.JS
 // KEYBAORD AND MOUSE EVENTS (player inputs)
 function recordKeyDown(event) {
     // stops the page from scrolling when arrow keys are pressed
@@ -460,10 +460,10 @@ function drawDifficultySelection() {
     ctx.fillStyle = "grey";
     
     ctx.font = "30px Arial";
-    ctx.fillText("ENDLESS", cnv.width/2, 220);
+    ctx.fillText("ENDLESS LEVELS", cnv.width/2, 220);
     
     ctx.font = "30px Arial";
-    ctx.fillText("MUSIC", cnv.width/2, 420);
+    ctx.fillText("MUSIC LEVELS", cnv.width/2, 420);
 
     // levels
     ctx.textAlign = "left";
@@ -650,7 +650,7 @@ function drawText() { // draws the current time, highest time, and enemy count
         ctx.fillText(`${timeLeft}s`, cnv.width/2, 40);
         
         // Draws the music name and artist
-        ctx.font = "20px Verdana"
+        ctx.font = "20px Verdana";
         ctx.fillStyle = music.color;
         ctx.fillText(`${music.name} - ${music.artist}`, 600, 620);
     }

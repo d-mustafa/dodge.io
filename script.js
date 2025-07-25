@@ -123,7 +123,6 @@ let difficulty = {
 
 // Music
 let volume = 50;
-let timestamps;
 let timestampIndex;
 
 let alarm9 = document.createElement("audio");
@@ -134,8 +133,8 @@ let music = {
     name: "Alarm 9",
     artist: "Blue Cxve",
     color: "rgb(163, 0, 163)",
+    timestamps: [],
 }
-
 
 // User Data
 let lastSave = 0; // tracks how often data is saved (during gameplay)

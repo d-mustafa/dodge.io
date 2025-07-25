@@ -3,7 +3,7 @@ const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 
 let gameState = "loading";
-let innerGameState = "mainMenu";
+let innerGameState = "loading";
 // Keyboard
 let lastPressing = "kb";
 document.addEventListener("keydown", recordKeyDown)
@@ -254,7 +254,12 @@ function draw() {
             ctx.fillText("click anywhere on the screen to skip", 20, cnv.height - 20);
         }
     }
-    else if ((now - loadingGame > 5000 || skipLoading) && gameState === "loading") gameState = "startScreen";
+    else if ((now - loadingGame > 5000 || skipLoading) && gameState === "loading") {
+        music = {var: aNewStart,name: "A New Start", artist: "Thygan Buch",
+             color: "rgb(105, 105, 105)", subColor: "rgb(115, 115, 115)",};
+        gameState = "startScreen";
+        innerGameState = "mainMenu";
+    }
 
     // Actual Game
     if (gameState === "startScreen") {

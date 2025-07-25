@@ -112,7 +112,7 @@ function recordLeftClick() {
 
     // Settings
     else if (innerGameState === "settings") {
-        if (mouseOver.enemyOutBtn || mouseOver.disableMMBtn || mouseOver.volumeSlider) {
+        if (mouseOver.enemyOutBtn || mouseOver.disableMMBtn || mouseOver.volumeSlider || mouseOver.sfxSlider) {
             if (mouseOver.enemyOutBtn) {
                 if (settings.enemyOutlines) settings.enemyOutlines = false;
                 else if (!settings.enemyOutlines) settings.enemyOutlines = true;
@@ -367,14 +367,18 @@ function drawSettings() {
         ctx.textAlign = "left";
         ctx.font = "bold 15px Arial";
         
+        // Settings Title Texts
+        ctx.fillStyle = "black";
+        ctx.fillText("Enemy Outlines", 50, 50);
+        ctx.fillText("Disable Mouse Movement Activation", 50, 100);
+        ctx.fillText("Music Volume", 50, 150);
+        ctx.fillText("SFX Volume", 50, 200);
+        
         // Enemy Outlines Button
         mouseOver.enemyOutBtn = (mouseX > 170 && mouseX < 190 && mouseY > 35 && mouseY < 55);
         if (settings.enemyOutlines) ctx.fillStyle = "lime";
         else ctx.fillStyle = "red";
         ctx.fillRect(170, 35, 20, 20);
-
-        ctx.fillStyle = "black";
-        ctx.fillText("Enemy Outlines", 50, 50);
     
         // Disable Mouse Movement Button
         mouseOver.disableMMBtn = (mouseX > 317.5 && mouseX < 337.5 && mouseY > 85 && mouseY < 105);
@@ -382,41 +386,51 @@ function drawSettings() {
         else ctx.fillStyle = "red";
         ctx.fillRect(317.5, 85, 20, 20);
 
-        ctx.fillStyle = "black";
-        ctx.fillText("Disable Mouse Movement Activation", 50, 100);
-
-        // Music Volume Slider
-        const distVolumeSlider = Math.hypot(settings.volumeSliderX - mouseX, 145 - mouseY);
-        mouseOver.volumeSlider = distVolumeSlider < 20;
+        // Music Volume Slider & SFX Volume Slider (wider than the actual rectangles for larger hitbox)
+        mouseOver.volumeSlider = mouseX >= 155 && mouseX <= 325 && mouseY >= 130 && mouseY <= 160;
+        mouseOver.sfxSlider = mouseX >= 142 && mouseX <= 312 && mouseY >= 180 && mouseY <= 210;
+        
         if (mouseDown && mouseOver.volumeSlider) {
-            if (mouseX <= 315 && mouseX >= 165) settings.volumeSliderX = mouseX;
+            if (mouseX >= 165 && mouseX <= 315) settings.volumeSliderX = mouseX;
             if (mouseX >= 315) settings.volumeSliderX = 315;
             if (mouseX <= 165) settings.volumeSliderX = 165;
         }
+        if (mouseDown && mouseOver.sfxSlider) {
+            if (mouseX >= 152 && mouseX <= 302) settings.sfxSliderX = mouseX;
+            if (mouseX >= 302) settings.sfxSliderX = 302;
+            if (mouseX <= 152) settings.sfxSliderX = 152;
+        }
 
-        // outline
+        // volume bar outline
         ctx.strokestyle = "white";
         ctx.linewidth = 2;
         ctx.beginPath();
         ctx.roundRect(165, 140, 150, 10, 5);
         ctx.stroke();
+        ctx.beginPath();
+        ctx.roundRect(152, 190, 150, 10, 5);
+        ctx.stroke();
 
-        // fill
+        // volume bar fill
         ctx.fillStyle = "white";
         ctx.beginPath();
         ctx.roundRect(165, 140, settings.volumeSliderX - 165, 10, 5);
         ctx.fill();
-
-        drawCircle(settings.volumeSliderX, 145, 10);
-
-        ctx.fillStyle = "black";
-        ctx.fillText("Music Volume", 50, 150);
+        ctx.beginPath();
+        ctx.roundRect(152, 190, settings.sfxSliderX - 152, 10, 5);
+        ctx.fill();
         
+        drawCircle(settings.volumeSliderX, 145, 10);
+        drawCircle(settings.sfxSliderX, 195, 10);
+
+        // volume text
         ctx.textAlign = "center";
         ctx.font = "bold 15px Arial";
         ctx.fillStyle = "white";
         volume = Math.floor((settings.volumeSliderX - 165) / 1.5);
+        sfxVolume = Math.floor((settings.sfxSliderX - 152) / 1.5);
         ctx.fillText(`${volume}`, 340, 150);
+        ctx.fillText(`${sfxVolume}`, 327, 200);
     }
 }
 

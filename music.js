@@ -1,4 +1,4 @@
-console.log("250");// DODGE.IO - MUSIC.JS
+console.log("lives");// DODGE.IO - MUSIC.JS
 function restartMusicMode() {
     allEnemies = [];
     player.lives = 3;
@@ -126,4 +126,9 @@ function musicCollisions() {
             }
         }
     })
+    // Draws player lives
+    ctx.textAlign = "center";
+    ctx.font = "20px Impact";
+    ctx.fillStyle = player.subColor;
+    ctx.fillText(player.lives, player.x, player.y);
 }

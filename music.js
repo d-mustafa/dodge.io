@@ -1,4 +1,4 @@
-console.log("restart and exit button");// DODGE.IO - MUSIC.JS
+console.log("restart and exit button, growthfactor");// DODGE.IO - MUSIC.JS
 function restartMusicMode() {
     allEnemies = [];
     player.lives = 3;
@@ -34,11 +34,22 @@ function drawEndLevel() {
         let redoX = 450;
         let redoY = (cnv.height/2 - 100);
         let inRedoRect = player.x + player.radius <= redoX + 200 && player.x - player.radius >= redoX && player.y + player.radius <= redoY + 200 && player.y - player.radius >= redoY;
-        
-        if (timeLeft <= 0) ctx.fillStyle = "rgb(0, 235, 0)";
-        if (innerGameState === "musicModeFail") ctx.fillStyle = "rgb(235, 0, 0)";
-        ctx.fillRect(exitX, exitY, 200, 200);
 
+        // Loading Rect
+        let growthFactor = ((now-startTime)/1000)*40;
+        if (inExitRect) {
+            ctx.fillStyle = "rgb(0, 250, 0)";
+            ctx.fillRect(exitX, exitY, growthFactor, growthFactor);
+        } else if (inRedoRect) {
+            ctx.fillStyle = "rgb(250, 0, 0)";
+            ctx.fillRect(redoX, redoY, growthFactor, growthFactor);
+        }
+        
+        // Exit Rect
+        if (timeLeft <= 0) ctx.fillStyle = "rgb(0, 220, 0)";
+        if (innerGameState === "musicModeFail") ctx.fillStyle = "rgb(220, 0, 0)";
+        ctx.fillRect(exitX, exitY, 200, 200);
+        // Redo Rect
         ctx.fillStyle = music.color;
         ctx.fillRect(redoX, redoY, 200, 200);
         
@@ -46,7 +57,7 @@ function drawEndLevel() {
         ctx.font = "30px Verdana";
         ctx.fillStyle = "rgb(235, 235, 235)";
 
-        // Exit Rectangle
+        // Exit Rect Conditional
         if (inExitRect) {
             ctx.fillText(`Exiting In`, 250, cnv.height/2 - 25);
             ctx.fillText(`${Math.ceil(5 - (now-startTime)/1000)}`, 250, cnv.height/2 + 25);
@@ -60,7 +71,7 @@ function drawEndLevel() {
             if (timeLeft <= 0) ctx.fillText("Complete", 250, cnv.height/2 + 25);
             if (innerGameState === "musicModeFail") ctx.fillText("Failed", 250, cnv.height/2 + 25);
         }
-        // Restart Rectangle
+        // Redo Rect conditional
         if (inRedoRect) {
             ctx.fillText(`Restarting In`, 550, cnv.height/2 - 25);
             ctx.fillText(`${Math.ceil(5 - (now-startTime)/1000)}`, 550, cnv.height/2 + 25);
@@ -70,7 +81,6 @@ function drawEndLevel() {
             ctx.fillText("Restart", 550, cnv.height/2 - 25);
             ctx.fillText("Level", 550, cnv.height/2 + 25);
         }
-
         // Reset StartTime
         if (!inExitRect && !inRedoRect) startTime = Date.now();
     }

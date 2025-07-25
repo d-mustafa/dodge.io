@@ -1,4 +1,4 @@
-console.log("timestamps");// DODGE.IO - MUSIC.JS
+console.log("remove enemies and collisions");// DODGE.IO - MUSIC.JS
 function restartMusicMode() {
     allEnemies = [];
     volume = Math.floor((settings.volumeSliderX - 165) / 1.5);
@@ -34,12 +34,8 @@ function drawEndLevel() {
         ctx.textAlign = "center";
         ctx.fillStyle = "white";
         ctx.font = "30px Verdana";
-        if (
-            player.x + player.radius <= rectX + 200 && 
-            player.x - player.radius >= rectX &&
-            player.y + player.radius <= rectY + 200 &&
-            player.y - player.radius >= rectY
-        ) {
+        if (player.x + player.radius <= rectX + 200 && player.x - player.radius >= rectX &&
+            player.y + player.radius <= rectY + 200 && player.y - player.radius >= rectY) {
             ctx.fillText(`Exiting In`, cnv.width/2, cnv.height/2 - 25);
             ctx.fillText(`${Math.ceil(5 - (now-startTime)/1000)}`, cnv.width/2, cnv.height/2 + 25);
             if (now - startTime >= 5000) {
@@ -59,7 +55,7 @@ function createBeam() {
     let beam = {
         type: "beam",
         x: Math.random() * cnv.width,
-        width: (Math.random() * 70) + 80,
+        w: (Math.random() * 70) + 80,
         colorValue: 185,
         get color() {
             return `rgb(${this.colorValue}, ${this.colorValue}, ${this.colorValue})`;
@@ -90,19 +86,21 @@ function spawnAndDrawDanger() {
             allEnemies.push(createBeam());
         }
     }
-  
+
+    // Enemy Deleting
+    allEnemies = allEnemies.filter(danger => danger.colorValue < 255);
+
     // Enemy Drawing
     allEnemies.forEach(danger => {
+        
         if (danger.type === "beam") {
             ctx.fillStyle = danger.color;
             danger.colorValue += 0.25;
-            if (danger.colorValue >= 255) danger.colorValue = 255;
             
-            ctx.fillRect(danger.x, 0, danger.width, cnv.height);
+            ctx.fillRect(danger.x, 0, danger.w, cnv.height);
         } else if (danger.type === "bomb") {
             ctx.fillStyle = danger.color;
             danger.colorValue += 0.25;
-            if (danger.colorValue >= 255) danger.colorValue = 255;
             
             ctx.beginPath();
             ctx.arc(danger.x, danger.y, danger.r, 0, Math.PI * 2);
@@ -112,5 +110,16 @@ function spawnAndDrawDanger() {
 }
 
 function musicCollisions() {
-
+    allEnemies.forEach(danger => {
+        if (danger.type === "beam") {
+            if (player.x + player.radius >= danger.x && player.x - player.radius <= danger.x + danger.w) {
+                console.log("collision w/ beam!");
+            }
+        }
+        if (danger.type === "bomb") {
+            if (Math.hypot(player.x - danger.x, player.y - danger.y) < player.radius + danger.radius) {
+                console.log("collision w/ bomb!");
+            }
+        }
+    })
 }

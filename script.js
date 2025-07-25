@@ -1,4 +1,4 @@
-console.log("sharpPop")// DODGE.IO - SCRIPT.JS
+console.log("sfxVolumeSliderX")// DODGE.IO - SCRIPT.JS
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 
@@ -91,6 +91,7 @@ let settings = {
     enemyOutlines: true,
     disableMM: false,
     volumeSliderX: 240,
+    sfxVolumeSliderX: 240,
 };
 
 let allEnemies = [];
@@ -123,6 +124,7 @@ let difficulty = {
 
 // Music
 let volume = 50;
+let sfxVolume = 50;
 let timestampIndex;
 
 let sharpPop = document.createElement("audio");

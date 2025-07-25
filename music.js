@@ -84,7 +84,7 @@ function spawnAndDrawDanger() {
         if (music.var.currentTime >= music.timestamps[timestampIndex]) {
             allEnemies.unshift(createBeam());
             // determines the dangers x value based off the timestamp
-            let xMulti = Math.floor(music.timestamps[timestampIndex]*100/cnv.width)
+            let xMulti = Math.floor(music.timestamps[timestampIndex]*100/cnv.width);
             allEnemies[0].x = (music.timestamps[timestampIndex]*100)-(cnv.width*xMulti);
             
             timestampIndex++;

@@ -1,8 +1,7 @@
-console.log("xMulti, livesY");// DODGE.IO - MUSIC.JS
+console.log("xMulti");// DODGE.IO - MUSIC.JS
 function restartMusicMode() {
     allEnemies = [];
     player.lives = 3;
-    player.livesY = player.y + 7;
     player.hit = 0;
     volume = Math.floor((settings.volumeSliderX - 165) / 1.5);
     timestampIndex = 0;
@@ -134,5 +133,5 @@ function musicCollisions() {
     ctx.textAlign = "center";
     ctx.font = "20px Impact";
     ctx.fillStyle = player.subColor;
-    ctx.fillText(player.lives, player.x, player.livesY);
+    ctx.fillText(player.lives, player.x, player.y + 6.5);
 }

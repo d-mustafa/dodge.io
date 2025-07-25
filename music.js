@@ -4,10 +4,12 @@ function restartMusicMode() {
     player.lives = 3;
     player.hit = 0;
     volume = Math.floor((settings.volumeSliderX - 165) / 1.5);
-    timestampIndex = 0;
+    sfxVolume = Math.floor((settings.sfxSliderX - 155) / 1.5);
+    sharpPop.volume = sfxVolume;
     music.var.volume = volume/100;
     music.var.currentTime = 0;
     music.promise = music.var.play();
+    timestampIndex = 0;
     timeLeft = (music.var.duration - music.var.currentTime).toFixed(2);
     dash.lastEnded = 0;
     shockwave.lastEnded = 0;

@@ -1,4 +1,4 @@
-console.log("interstellar")// DODGE.IO - SCRIPT.JS
+console.log("endlessMode")// DODGE.IO - SCRIPT.JS
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 
@@ -217,7 +217,7 @@ window.addEventListener('beforeunload', () => {
     }
     if (gameState === "loading") crashData.leaveOnLoading++;
     else if (gameState === "startScreen") crashData.leaveOnMenu++;
-    else if (gameState === "endlessOn" || gameState === "endlessOver") crashData.leaveOnPlay++;
+    else if (gameState === "endlessMode" || gameState === "endlessOver") crashData.leaveOnPlay++;
     else crashData.leaveUnknown++;
     crashData.lastLeftOn = gameState;
     localStorage.setItem('localCrashData', JSON.stringify(crashData));
@@ -270,7 +270,7 @@ function draw() {
         keyboardControls();
         mouseMovement();
     }
-    else if (gameState === "endlessOn") {
+    else if (gameState === "endlessMode") {
         drawText();
         drawEnemies();
         drawPlayer();
@@ -283,7 +283,7 @@ function draw() {
         abilities();
         collisions();
     }
-    else if (gameState === "endlessOver") {
+    else if (gameState === "endlessMode") {
         drawText();
         drawGameOver();
         drawEnemies();

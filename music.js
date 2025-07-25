@@ -1,4 +1,4 @@
-console.log("vol/100, 3 2 1");// DODGE.IO - MUSIC.JS
+console.log("Main Menu music complete");// DODGE.IO - MUSIC.JS
 function restartMusicMode() {
     allEnemies = [];
     player.lives = 3;

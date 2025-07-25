@@ -1,4 +1,4 @@
-console.log("xMulti");// DODGE.IO - MUSIC.JS
+console.log("xMulti, livesY");// DODGE.IO - MUSIC.JS
 function restartMusicMode() {
     allEnemies = [];
     player.lives = 3;

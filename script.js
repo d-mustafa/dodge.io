@@ -103,7 +103,7 @@ let now = Date.now();
 let loadingGame = Date.now();
 let loadingTextChange = Date.now();
 let LI = 0; // loading index
-let skipLoading = false;
+let endLoading = false;
 
 let startTime = Date.now();
 let currentTime = ((now-startTime) / 1000).toFixed(2);
@@ -232,7 +232,7 @@ function draw() {
     ctx.fillRect(0, 0, cnv.width, cnv.height);
 
     // Loading Screen
-    if (now - loadingGame <= 5000 && !skipLoading) { // Takes 5 seconds to load the game safely
+    if (now - loadingGame <= 5000 && !endLoading) { // Takes 5 seconds to load the game safely
         options = ["Loading.", "Loading..", "Loading..."];
         if (now - loadingTextChange >= 1000) { // change the text every second
             loadingTextChange = Date.now();
@@ -254,7 +254,17 @@ function draw() {
             ctx.fillText("click anywhere on the screen to skip", 20, cnv.height - 20);
         }
     }
-    else if ((now - loadingGame > 5000 || skipLoading) && gameState === "loading") {
+    else if (now - loadingGame > 5000 && !endLoading) {
+        ctx.fillStyle = "rgb(87, 87, 87)";
+        ctx.font = "40px Verdana";
+        ctx.textAlign = "center";
+        ctx.fillText("Dodge.io", cnv.width/2, cnv.height/2);
+
+        ctx.font = "20px Verdana";
+        ctx.textAlign = "left";
+        ctx.fillText("click anywhere on the screen to start", 20, cnv.height - 20);
+    }
+    else if (endLoading && gameState === "loading") {
         music = {var: aNewStart,name: "A New Start", artist: "Thygan Buch",
              color: "rgb(105, 105, 105)", subColor: "rgb(115, 115, 115)",};
         music.var.currentTime = 0;

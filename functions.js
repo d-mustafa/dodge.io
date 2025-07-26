@@ -1,4 +1,4 @@
-console.log("timestamp delay")// DODGE.IO - FUNCTIONS.JS
+console.log("new songs")// DODGE.IO - FUNCTIONS.JS
 
 function loadingScreen() {
     if (now - loadingGame >= 1000 && gameState == "loading") {
@@ -144,7 +144,7 @@ function recordLeftClick() {
                 restartEndless();
             }
         });
-        ["alarm9"].forEach(level => {
+        ["alarm9", "astralProjection", "divine"].forEach(level => {
             if (mouseOver[level]) {
                 pauseAudio(music.promise, music.var);
                 if (mouseOver?.alarm9) {
@@ -155,6 +155,14 @@ function recordLeftClick() {
                         music.timestamps = music.timestamps.concat(repeatedPoints);
                     }
                     music.timestamps = music.timestamps.map(x => x-0.025); // delay slightly for better visual to audio sync
+                }
+                if (mouseOver?.astralProjection) {
+                    music = {var: astralProjection, name: "Astral Projection", artist: "Hallmore", color: "rgb(163, 0, 163)", subColor: "rgb(173, 0, 173)",
+                             timestamps: [],};
+                }
+                if (mouseOver?.divine) {
+                    music = {var: divine, name: "Divine", artist: "SOTAREKO", color: "rgb(163, 0, 163)", subColor: "rgb(173, 0, 173)",
+                             timestamps: [],};
                 }
                 mouseMovementOn = previousMM;
                 restartMusicMode();
@@ -495,8 +503,8 @@ function drawDifficultySelection() {
     drawDifficultyText("rgb(255, 255, 0)", "MEDIUM", "+Decelerating Enemies", 310, 280);
     drawDifficultyText("rgb(0, 0, 0)", "HARD", "+Homing Enemies", 560, 280);
     
-    drawDifficultyText("rgb(163, 0, 163)", "ALARM 9", "by Blue Cxve", 60, 480);
-    drawDifficultyText("rgb(255, 255, 255)", "SONG 2", "by Author 2", 310, 480);
+    drawDifficultyText("rgb(163, 0, 163)", "ALARM 9", "Beams", 60, 480);
+    drawDifficultyText("rgb(255, 255, 255)", "HALLMORE", "+Bombs & Rings", 310, 480);
     drawDifficultyText("rgb(255, 255, 255)", "SONG 3", "by Author 3", 560, 480);
 }
 

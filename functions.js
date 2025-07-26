@@ -1,4 +1,4 @@
-console.log("endLoading")// DODGE.IO - FUNCTIONS.JS
+console.log("new loading screen")// DODGE.IO - FUNCTIONS.JS
 
 function loadingScreen() {
     if (now - loadingGame >= 1000 && gameState == "loading") {

@@ -470,7 +470,7 @@ function drawDifficultySelection() {
     ctx.fillRect(50, 450, 200, 100);
 
     mouseOver.astralProjection = (mouseX > 300 && mouseX < 500) && (mouseY > 450 && mouseY < 550);
-    ecideFillStyle(mouseOver.astralProjection, "rgb(240, 240, 240)", "rgb(220, 220, 220)");
+    decideFillStyle(mouseOver.astralProjection, "rgb(240, 240, 240)", "rgb(220, 220, 220)");
     ctx.fillRect(300, 450, 200, 100);
 
     mouseOver.divine = (mouseX > 550 && mouseX < 750) && (mouseY > 450 && mouseY < 550);

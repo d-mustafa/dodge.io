@@ -121,18 +121,20 @@ function createBeam() {
 }
 
 function createBomb() {
-    let bomb = {
-        type: "bomb",
+    let circle = {
+        type: "circle",
         variant: Math.random(),
         x: Math.random() * cnv.width,
         y: Math.random() * cnv.height,
-        r: (Math.random() * 30) + 20,
+        r: (Math.random() * 20) + 100,
         colorValue: 185,
         get color() {
             return `rgb(${this.colorValue}, ${this.colorValue}, ${this.colorValue})`;
         },
+        if (circle.variant > 0.5) circle.variant = "bomb";
+        else circle.variant = "ring";
     }
-    return bomb;
+    return circle;
 }
 
 function spawnAndDrawDanger() {
@@ -165,7 +167,13 @@ function spawnAndDrawDanger() {
             if (danger.variant === "vertical") ctx.fillRect(danger.x, 0, danger.w, cnv.height);
             if (danger.variant === "horizontal") ctx.fillRect(0, danger.y, cnv.width, danger.h);
         }
-        else if (danger.type === "bomb") drawCircle(danger.x, danger.y, danger.r);
+        else if (danger.type === "circle") {
+            if (danger.variant === "bomb") drawCircle(danger.x, danger.y, danger.r);
+            if (danger.variant === "ring") {
+                ctx.linewidth = danger.r/10;
+                drawCircle(danger.x, danger.y, danger.r, "stroke");
+            }
+        }
     })
 }
 
@@ -181,8 +189,10 @@ function musicCollisions() {
                     sharpPop.play();
                 }
             }
-            if (danger.type === "bomb") {
-                if (Math.hypot(player.x - danger.x, player.y - danger.y) <= player.radius + danger.radius) {
+            if (danger.type === "circle") {
+                let distance = Math.hypot(player.x - danger.x, player.y - danger.y);
+                if ((danger.variant === "bomb" && distance <= danger.r+player.radius) ||
+                   (danger.variant === "ring" && distance <= danger.r+player.radius && distance >= danger.r-danger.r/10-player.radius)) {
                     player.lives--;
                     player.hit = Date.now();
                     sharpPop.currentTime = 0;

@@ -264,8 +264,7 @@ function draw() {
             ctx.fillText("click anywhere on the screen to skip", 20, cnv.height - 20);
         }
         
-        music = {var: aNewStart,name: "A New Start", artist: "Thygan Buch",
-             color: "rgb(105, 105, 105)", subColor: "rgb(115, 115, 115)",};
+        music = {var: aNewStart, name: "A New Start", artist: "Thygan Buch"};
         music.var.currentTime = 0;
     }
     else if (now - loadingGame > 5000 && !endLoading) {

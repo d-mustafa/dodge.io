@@ -42,6 +42,8 @@ let mouseOver = {
     medium: false,
     hard: false,
     alarm9: false,
+    hallmore: false,
+    divine: false,
 
     enemyOutBtn: false,
     disableMMBtn: false,
@@ -129,7 +131,7 @@ let sfxVolume = 50;
 let timestampIndex;
 
 let alarm9 = document.createElement("audio");
-alarm9.src = "Audio/Alarm 9.mp3";
+alarm9.src = "Audio/Alarm 9 - Blue Cxve.mp3";
 alarm9.preload = "metadata";
 
 let music = {
@@ -143,12 +145,20 @@ let music = {
 }
 
 let aNewStart = document.createElement("audio");
-aNewStart.src = "Audio/A New Start.mp3";
+aNewStart.src = "Audio/A New Start - Thygan Buch.mp3";
 aNewStart.preload = "metadata";
 
 let interstellar = document.createElement("audio");
-interstellar.src = "Audio/interstellar.mp3";
+interstellar.src = "Audio/interstellar - pandora., chillwithme, & cødy.mp3";
 interstellar.preload = "metadata";
+
+let hallmore = document.createElement("audio");
+hallmore.src = "Audio/Astral Projection - Hallmore.mp3";
+hallmore.preload = "metadata";
+
+let divine = document.createElement("audio");
+divine.src = "Audio/Divine - SOTAREKO.mp3";
+divine.preload = "metadata";
 
 let sharpPop = document.createElement("audio");
 sharpPop.src = "Audio/sharp-pop.mp3";

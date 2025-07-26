@@ -28,6 +28,13 @@ function pauseAudio(promise, audio) { // Pause music without causing errors
     }
 }
 
+function loopAudio() {
+    if (music.var.currentTime === music.var.duration) {
+        music.var.currentTime = 0;
+        music.promise = music.var.play();
+    }
+}
+
 function drawEndLevel() {
     if (timeLeft <= 0 || innerGameState === "musicModeFail") {
         let exitX = 150;

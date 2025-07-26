@@ -1,5 +1,4 @@
 console.log("lots of color matching")// DODGE.IO - FUNCTIONS.JS
-
 function loadingScreen(validInput) {
     if (validInput || endLoading) {
         if (now - loadingGame >= 1000 && gameState == "loading") {

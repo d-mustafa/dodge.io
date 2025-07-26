@@ -1,4 +1,4 @@
-console.log("divine btn color change")// DODGE.IO - FUNCTIONS.JS
+console.log("lots of color matching")// DODGE.IO - FUNCTIONS.JS
 
 function loadingScreen(validInput) {
     if (validInput || endLoading) {
@@ -99,8 +99,7 @@ function recordLeftClick() {
         }
         // Plays 'A New Start' when users are redirected back to the Main Menu
         if (gameState === "endlessOver") {
-            music = {var: aNewStart,name: "A New Start", artist: "Thygan Buch",
-            color: "rgb(105, 105, 105)", subColor: "rgb(115, 115, 115)",};
+            music = {var: aNewStart, name: "A New Start", artist: "Thygan Buch"};
             music.var.currentTime = 0;
             music.promise = music.var.play();
         }
@@ -150,7 +149,8 @@ function recordLeftClick() {
             if (mouseOver[level]) {
                 pauseAudio(music.promise, music.var);
                 if (mouseOver?.alarm9) {
-                    music = {var: alarm9, name: "Alarm 9", artist: "Blue Cxve", color: "rgb(163, 0, 163)", subColor: "rgb(173, 0, 173)",
+                    music = {var: alarm9, name: "Alarm 9", artist: "Blue Cxve",
+                             color: "rgb(100, 0, 100)", subColor: "rgb(128, 0, 128)", textColor: "rgb(163, 0, 163)",
                              timestamps: [0.079, 2.79, 3.13, 3.49, 3.81, 4.17, 5.58, 6.28, 6.99, 7.7, 8.4, 9.1, 9.8, 10.5, 11.9, 12.6],};
                     for (let i = 1; i < 11; i++) { // loop amount: 11, wavelength: 11.5
                         repeatedPoints = music.timestamps.slice(1, 16).map(x => x + 11.5*i);
@@ -159,11 +159,13 @@ function recordLeftClick() {
                     music.timestamps = music.timestamps.map(x => x-0.025); // delay slightly for better visual to audio sync
                 }
                 if (mouseOver?.astralProjection) {
-                    music = {var: astralProjection, name: "Astral Projection", artist: "Hallmore", color: "rgb(163, 0, 163)", subColor: "rgb(173, 0, 173)",
+                    music = {var: astralProjection, name: "Astral Projection", artist: "Hallmore",
+                             color: "rgb(220, 220, 220)", subColor: "rgb(240, 240, 240)", textColor: "rgb(0, 0, 0)",
                              timestamps: [],};
                 }
                 if (mouseOver?.divine) {
-                    music = {var: divine, name: "Divine", artist: "SOTAREKO", color: "rgb(163, 0, 163)", subColor: "rgb(173, 0, 173)",
+                    music = {var: divine, name: "Divine", artist: "SOTAREKO",
+                             color: "rgb(223, 255, 156)", subColor: "rgb(224, 255, 232)", textColor: "rgb(255, 165, 252)",
                              timestamps: [],};
                 }
                 mouseMovementOn = previousMM;

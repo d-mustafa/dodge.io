@@ -42,7 +42,7 @@ let mouseOver = {
     medium: false,
     hard: false,
     alarm9: false,
-    hallmore: false,
+    astralProjection: false,
     divine: false,
 
     enemyOutBtn: false,
@@ -152,9 +152,9 @@ let interstellar = document.createElement("audio");
 interstellar.src = "Audio/interstellar - pandora., chillwithme, & cødy.mp3";
 interstellar.preload = "metadata";
 
-let hallmore = document.createElement("audio");
-hallmore.src = "Audio/Astral Projection - Hallmore.mp3";
-hallmore.preload = "metadata";
+let astralProjection = document.createElement("audio");
+astralProjection.src = "Audio/Astral Projection - Hallmore.mp3";
+astralProjection.preload = "metadata";
 
 let divine = document.createElement("audio");
 divine.src = "Audio/Divine - SOTAREKO.mp3";

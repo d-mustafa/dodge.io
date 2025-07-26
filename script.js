@@ -275,6 +275,7 @@ function draw() {
 
     // Actual Game
     if (gameState === "startScreen") {
+        loopAudio();
         abilities();
         drawText();
         drawStartScreen();
@@ -288,6 +289,7 @@ function draw() {
         mouseMovement();
     }
     else if (gameState === "endlessMode") {
+        loopAudio();
         drawText();
         drawEnemies();
         drawPlayer();

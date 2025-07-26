@@ -131,9 +131,12 @@ function createBomb() {
         get color() {
             return `rgb(${this.colorValue}, ${this.colorValue}, ${this.colorValue})`;
         },
-        if (circle.variant > 0.5) circle.variant = "bomb";
-        else circle.variant = "ring";
+        get linewidth() {
+            return `${this.r/10}`;
+        },
     }
+    if (circle.variant > 0.5) circle.variant = "bomb";
+    else circle.variant = "ring";
     return circle;
 }
 
@@ -170,7 +173,7 @@ function spawnAndDrawDanger() {
         else if (danger.type === "circle") {
             if (danger.variant === "bomb") drawCircle(danger.x, danger.y, danger.r);
             if (danger.variant === "ring") {
-                ctx.linewidth = danger.r/10;
+                ctx.linewidth = danger.linewidth;
                 drawCircle(danger.x, danger.y, danger.r, "stroke");
             }
         }
@@ -192,7 +195,7 @@ function musicCollisions() {
             if (danger.type === "circle") {
                 let distance = Math.hypot(player.x - danger.x, player.y - danger.y);
                 if ((danger.variant === "bomb" && distance <= danger.r+player.radius) ||
-                   (danger.variant === "ring" && distance <= danger.r+player.radius && distance >= danger.r-danger.r/10-player.radius)) {
+                   (danger.variant === "ring" && distance <= danger.r+player.radius && distance >= danger.r-danger.linewidth-player.radius)) {
                     player.lives--;
                     player.hit = Date.now();
                     sharpPop.currentTime = 0;

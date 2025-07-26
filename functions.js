@@ -233,10 +233,6 @@ function drawCircle(x, y, r = 12.5, type = "fill") {
 function drawStartScreen() {
     volume = Math.floor((settings.volumeSliderX - 165) / 1.5);
     music.var.volume = volume/100;
-    if (music.var.currentTime === music.var.duration) {
-        music.var.currentTime = 0;
-        music.promise = music.var.play();
-    }
     
     if (innerGameState === "mainMenu" || innerGameState === "selectDifficulty") {
         // PLAY BUTTON //

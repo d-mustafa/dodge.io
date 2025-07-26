@@ -120,19 +120,19 @@ function createBeam() {
     return beam;
 }
 
-function createBomb() {
+function createCircle() {
     let circle = {
         type: "circle",
         variant: Math.random(),
         x: Math.random() * cnv.width,
         y: Math.random() * cnv.height,
-        r: (Math.random() * 20) + 100,
+        r: (Math.random() * 40) + 80,
         colorValue: 185,
         get color() {
             return `rgb(${this.colorValue}, ${this.colorValue}, ${this.colorValue})`;
         },
         get lineWidth() {
-            return `${this.r/10}`;
+            return `${this.r/3.5}`;
         },
     }
     if (circle.variant > 0.5) circle.variant = "bomb";
@@ -195,7 +195,8 @@ function musicCollisions() {
             if (danger.type === "circle") {
                 let distance = Math.hypot(player.x-danger.x, player.y-danger.y);
                 if ((danger.variant === "bomb" && distance <= danger.r+player.radius) ||
-                   (danger.variant === "ring" && distance <= danger.r+player.radius && distance >= danger.r-danger.lineWidth-player.radius)) {
+                   (danger.variant === "ring" && distance <= danger.r+danger.lineWidth/2+player.radius &&
+                    distance >= danger.r-danger.lineWidth/2-player.radius)) {
                     player.lives--;
                     player.hit = Date.now();
                     sharpPop.currentTime = 0;

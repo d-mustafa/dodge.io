@@ -1,4 +1,4 @@
-console.log("Endless Over")// DODGE.IO - FUNCTIONS.JS
+console.log("timestamp delay")// DODGE.IO - FUNCTIONS.JS
 
 function loadingScreen() {
     if (now - loadingGame >= 1000 && gameState == "loading") {
@@ -154,6 +154,7 @@ function recordLeftClick() {
                         repeatedPoints = music.timestamps.slice(1, 16).map(x => x + 11.5*i);
                         music.timestamps = music.timestamps.concat(repeatedPoints);
                     }
+                    music.timestamps = music.timestamps.map(x => x-0.025); // delay slightly for better visual to audio sync
                 }
                 mouseMovementOn = previousMM;
                 restartMusicMode();

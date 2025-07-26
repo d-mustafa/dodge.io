@@ -1,4 +1,4 @@
-console.log("validInput")// DODGE.IO - FUNCTIONS.JS
+console.log("ecideFillStyle")// DODGE.IO - FUNCTIONS.JS
 
 function loadingScreen(validInput) {
     if (validInput || endLoading) {

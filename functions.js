@@ -1,11 +1,13 @@
 console.log("buttons")// DODGE.IO - FUNCTIONS.JS
 
-function loadingScreen() {
-    if (now - loadingGame >= 1000 && gameState == "loading") {
-        endLoading = true;
-        return true;
+function loadingScreen(validInput) {
+    if (validInput || endLoading) {
+        if (now - loadingGame >= 1000 && gameState == "loading") {
+            endLoading = true;
+            return true;
+        }
+        else if (now - loadingGame <= 5000 && gameState == "loading") return true;
     }
-    else if (now - loadingGame <= 5000 && gameState == "loading") return true;
 }
 
 // KEYBAORD AND MOUSE EVENTS (player inputs)
@@ -14,7 +16,7 @@ function recordKeyDown(event) {
     if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].indexOf(event.code) > -1) {
         event.preventDefault();
     }
-    if (loadingScreen()) return;
+    if (loadingScreen(false)) return;
     
     // Keyboard Inputs (WASD & Shift)
     if (event.code === "KeyW" || event.code === "ArrowUp") wPressed = true;
@@ -53,7 +55,7 @@ function recordKeyDown(event) {
 }
 
 function recordKeyUp(event) {
-    if (loadingScreen()) return;
+    if (loadingScreen(false)) return;
     if (event.code === "KeyW" || event.code === "ArrowUp") wPressed = false;
     if (event.code === "KeyA" || event.code === "ArrowLeft") aPressed = false;
     if (event.code === "KeyS" || event.code === "ArrowDown") sPressed = false;
@@ -63,7 +65,7 @@ function recordKeyUp(event) {
 }
 
 function recordLeftClick() {
-    if (loadingScreen()) return;
+    if (loadingScreen(true)) return;
 
     // Variable to keep mouse movement the way it previously was if a button was pressed
     previousMM = false;
@@ -204,7 +206,7 @@ function recordLeftClick() {
 
 function recordRightClick(event) {
     event.preventDefault();
-    if (loadingScreen()) return;
+    if (loadingScreen(true)) return;
 
     // Ability Activations
     if (gameState !== "endlessOver") {
@@ -467,11 +469,11 @@ function drawDifficultySelection() {
     decideFillStyle(mouseOver.alarm9, "rgb(128, 0, 128)", "rgb(100, 0, 100)");
     ctx.fillRect(50, 450, 200, 100);
 
-    mouserOver.astralProjection = (mouseX > 300 && mouseX < 500) && (mouseY > 450 && mouseY < 550);
+    mouseOver.astralProjection = (mouseX > 300 && mouseX < 500) && (mouseY > 450 && mouseY < 550);
     ecideFillStyle(mouseOver.astralProjection, "rgb(240, 240, 240)", "rgb(220, 220, 220)");
     ctx.fillRect(300, 450, 200, 100);
 
-    mouserOver.divine = (mouseX > 550 && mouseX < 750) && (mouseY > 450 && mouseY < 550);
+    mouseOver.divine = (mouseX > 550 && mouseX < 750) && (mouseY > 450 && mouseY < 550);
     decideFillStyle(mouseOver.divine, "rgb(223, 255, 156)", "rgb(255, 165, 252)");
     ctx.fillRect(550, 450, 200, 100);
     

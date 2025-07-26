@@ -1,4 +1,4 @@
-console.log("linewidth");// DODGE.IO - MUSIC.JS
+console.log("textColor");// DODGE.IO - MUSIC.JS
 function restartMusicMode() {
     allEnemies = [];
     player.lives = 3;
@@ -66,15 +66,14 @@ function drawEndLevel() {
         
         ctx.textAlign = "center";
         ctx.font = "30px Verdana";
-        ctx.fillStyle = "rgb(235, 235, 235)";
+        ctx.fillStyle = music.textColor;
 
         // Exit Rect Conditional
         if (inExitRect) {
             ctx.fillText(`Exiting In`, 250, cnv.height/2 - 25);
             ctx.fillText(`${Math.ceil(3 - (now-startTime)/1000)}`, 250, cnv.height/2 + 25);
             if (now - startTime >= 3000) {
-                music = {var: aNewStart,name: "A New Start", artist: "Thygan Buch",
-                         color: "rgb(105, 105, 105)", subColor: "rgb(115, 115, 115)",};
+                music = {var: aNewStart, name: "A New Start", artist: "Thygan Buch"};
                 music.var.currentTime = 0;
                 music.promise = music.var.play();
                 gameState = "startScreen";

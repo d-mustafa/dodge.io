@@ -670,23 +670,18 @@ function drawText() { // draws the current time, highest time, and enemy count
     }
     if (gameState === "musicMode") {
         // Draws the time left
-        ctx.font = "30px Verdana"
+        ctx.font = "30px Verdana";
         ctx.textAlign = 'center';
 
         let timeLeftColor;
         
-        if (timeLeft > 4 || timeLeft == 0) timeLeftColor = "rgb(235, 235, 235)";
+        if (timeLeft > 4 || timeLeft == 0) timeLeftColor = music.textColor;
         else if (timeLeft >= 3) timeLeftColor = "rgb(235, 235, 30)";
         else if (timeLeft >= 2) timeLeftColor = "rgb(235, 102.5, 30)";
         else if (timeLeft > 0) timeLeftColor = "rgb(235, 0, 0)";
         
         ctx.fillStyle = timeLeftColor;
         ctx.fillText(`${timeLeft}s`, cnv.width/2, 40);
-        
-        // Draws the music name and artist
-        ctx.font = "20px Verdana";
-        ctx.fillStyle = music.color;
-        ctx.fillText(`${music.name} - ${music.artist}`, 600, 620);
     }
     
     // Credits artist in the bottom left corner
@@ -702,7 +697,7 @@ function drawText() { // draws the current time, highest time, and enemy count
 
     // The text should be centered unless the gameState is endlessMode or endlessOver
     textX = 200;
-    if (gameState === "endlessMode" || gameState === "endlessOver" || gameState === "musicMode") textX = 200
+    if (gameState === "endlessMode" || gameState === "endlessOver") textX = 200
     else textX = cnv.width/2
 
     // No Abiliy

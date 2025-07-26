@@ -1,4 +1,4 @@
-console.log("lots of color matching")// DODGE.IO - FUNCTIONS.JS
+console.log("stroke")// DODGE.IO - FUNCTIONS.JS
 function loadingScreen(validInput) {
     if (validInput || endLoading) {
         if (now - loadingGame >= 1000 && gameState == "loading") {
@@ -276,6 +276,7 @@ function drawStartScreen() {
 
         ctx.fillStyle = playGrad;
         ctx.fillRect(playBtn.x, playBtn.y, playBtn.w, playBtn.h)
+        ctx.lineWidth = 1;
         ctx.strokeStyle = playGrad2;
         ctx.beginPath()
         ctx.moveTo(playBtn.x, playBtn.yh)
@@ -334,6 +335,7 @@ function drawStartScreen() {
 
         ctx.fillStyle = selectorGrad;
         ctx.fillRect(selectorBtn.x, selectorBtn.y, selectorBtn.w, selectorBtn.h)
+        ctx.lineWidth = 1;
         ctx.strokeStyle = selectorGrad2;
         ctx.beginPath()
         ctx.moveTo(selectorBtn.x, selectorBtn.yh)
@@ -586,6 +588,7 @@ function drawGameOver() {
     ctx.fillStyle = grad;
     ctx.fillRect(250, 50, 300, 100)
 
+    ctx.lineWidth = 1;
     ctx.strokeStyle = grad2;
     ctx.beginPath()
     ctx.moveTo(250, 150)

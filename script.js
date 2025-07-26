@@ -1,4 +1,4 @@
-console.log("endlessModex2")// DODGE.IO - SCRIPT.JS
+console.log("loopAudio()")// DODGE.IO - SCRIPT.JS
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 

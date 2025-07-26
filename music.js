@@ -1,4 +1,4 @@
-console.log("Main Menu music complete");// DODGE.IO - MUSIC.JS
+console.log("credits");// DODGE.IO - MUSIC.JS
 function restartMusicMode() {
     allEnemies = [];
     player.lives = 3;

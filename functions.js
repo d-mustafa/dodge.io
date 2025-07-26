@@ -467,14 +467,12 @@ function drawDifficultySelection() {
     decideFillStyle(mouseOver.alarm9, "rgb(128, 0, 128)", "rgb(100, 0, 100)");
     ctx.fillRect(50, 450, 200, 100);
 
-    // mouserOver.song2 = (mouseX > 300 && mouseX < 500) && (mouseY > 450 && mouseY < 550);
-    // decideFillStyle(mouseOver.song2, "rgb(220, 220, 220)", "rgb(200, 200, 200)");
-    ctx.fillStyle = "rgb(200, 200, 200)";
+    mouserOver.astralProjection = (mouseX > 300 && mouseX < 500) && (mouseY > 450 && mouseY < 550);
+    ecideFillStyle(mouseOver.astralProjection, "rgb(240, 240, 240)", "rgb(220, 220, 220)");
     ctx.fillRect(300, 450, 200, 100);
 
-    // mouserOver.song3 = (mouseX > 550 && mouseX < 750) && (mouseY > 450 && mouseY < 550);
-    // decideFillStyle(mouseOver.song3, "rgb(220, 220, 220)", "rgb(200, 200, 200)");
-    ctx.fillStyle = "rgb(200, 200, 200)";
+    mouserOver.divine = (mouseX > 550 && mouseX < 750) && (mouseY > 450 && mouseY < 550);
+    decideFillStyle(mouseOver.divine, "rgb(223, 255, 156)", "rgb(255, 165, 252)");
     ctx.fillRect(550, 450, 200, 100);
     
     // Text
@@ -503,9 +501,9 @@ function drawDifficultySelection() {
     drawDifficultyText("rgb(255, 255, 0)", "MEDIUM", "+Decelerating Enemies", 310, 280);
     drawDifficultyText("rgb(0, 0, 0)", "HARD", "+Homing Enemies", 560, 280);
     
-    drawDifficultyText("rgb(163, 0, 163)", "ALARM 9", "Beams", 60, 480);
-    drawDifficultyText("rgb(255, 255, 255)", "HALLMORE", "+Bombs & Rings", 310, 480);
-    drawDifficultyText("rgb(255, 255, 255)", "SONG 3", "by Author 3", 560, 480);
+    drawDifficultyText("rgb(163, 0, 163)", "LIMBO", "Beams", 60, 480);
+    drawDifficultyText("rgb(0, 0, 0)", "ANDROMEDA", "+Bombs & Rings", 310, 480);
+    drawDifficultyText("rgb(224, 255, 232)", "DIVINE", "+Spikes", 560, 480);
 }
 
 function drawDodgerSelection() {

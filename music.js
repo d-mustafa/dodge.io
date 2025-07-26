@@ -182,10 +182,10 @@ function spawnAndDrawDanger() {
 
 function musicCollisions() {
     allEnemies.forEach(danger => {
-        if (timeLeft > 0 && innerGameState !== "musicModeFail" && danger.colorValue >= 250 && now - player.hit >= 1500 && !dash.activated && !(now - dash.lastEnded < 300)) {
+        if (timeLeft > 0 && innerGameState !== "musicModeFail" && danger.colorValue >= 250 && now-player.hit >= 1500 && !dash.activated && !(now-dash.lastEnded < 300)) {
             if (danger.type === "beam") {
-                if ((danger.variant === "vertical" && player.x + player.radius >= danger.x && player.x - player.radius <= danger.x + danger.w) ||
-                   (danger.variant === "horizontal" && player.y + player.radius >= danger.y && player.y - player.radius <= danger.y + danger.h)) {
+                if ((danger.variant === "vertical" && player.x+player.radius >= danger.x && player.x-player.radius <= danger.x+danger.w) ||
+                   (danger.variant === "horizontal" && player.y+player.radius >= danger.y && player.y-player.radius <= danger.y+danger.h)) {
                     player.lives--;
                     player.hit = Date.now();
                     sharpPop.currentTime = 0;
@@ -193,7 +193,7 @@ function musicCollisions() {
                 }
             }
             if (danger.type === "circle") {
-                let distance = Math.hypot(player.x - danger.x, player.y - danger.y);
+                let distance = Math.hypot(player.x-danger.x, player.y-danger.y);
                 if ((danger.variant === "bomb" && distance <= danger.r+player.radius) ||
                    (danger.variant === "ring" && distance <= danger.r+player.radius && distance >= danger.r-danger.linewidth-player.radius)) {
                     player.lives--;

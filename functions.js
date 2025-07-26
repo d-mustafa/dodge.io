@@ -1,4 +1,4 @@
-console.log("buttons")// DODGE.IO - FUNCTIONS.JS
+console.log("validInput")// DODGE.IO - FUNCTIONS.JS
 
 function loadingScreen(validInput) {
     if (validInput || endLoading) {

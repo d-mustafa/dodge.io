@@ -66,9 +66,8 @@ function drawEndLevel() {
         
         ctx.textAlign = "center";
         ctx.font = "30px Verdana";
-        ctx.fillStyle = music.textColor;
-
         // Exit Rect Conditional
+        ctx.fillStyle = "rgb(235, 235, 235)";
         if (inExitRect) {
             ctx.fillText(`Exiting In`, 250, cnv.height/2 - 25);
             ctx.fillText(`${Math.ceil(3 - (now-startTime)/1000)}`, 250, cnv.height/2 + 25);
@@ -85,7 +84,9 @@ function drawEndLevel() {
             if (timeLeft <= 0) ctx.fillText("Complete", 250, cnv.height/2 + 25);
             if (innerGameState === "musicModeFail") ctx.fillText("Failed", 250, cnv.height/2 + 25);
         }
+        
         // Redo Rect conditional
+        ctx.fillStyle = music.textColor;
         if (inRedoRect) {
             ctx.fillText(`Restarting In`, 550, cnv.height/2 - 25);
             ctx.fillText(`${Math.ceil(3 - (now-startTime)/1000)}`, 550, cnv.height/2 + 25);

@@ -1,4 +1,4 @@
-console.log("ecideFillStyle")// DODGE.IO - FUNCTIONS.JS
+console.log("divine btn color change")// DODGE.IO - FUNCTIONS.JS
 
 function loadingScreen(validInput) {
     if (validInput || endLoading) {
@@ -474,7 +474,7 @@ function drawDifficultySelection() {
     ctx.fillRect(300, 450, 200, 100);
 
     mouseOver.divine = (mouseX > 550 && mouseX < 750) && (mouseY > 450 && mouseY < 550);
-    decideFillStyle(mouseOver.divine, "rgb(223, 255, 156)", "rgb(255, 165, 252)");
+    decideFillStyle(mouseOver.divine, "rgb(224, 255, 232)", "rgb(223, 255, 156)");
     ctx.fillRect(550, 450, 200, 100);
     
     // Text
@@ -505,7 +505,7 @@ function drawDifficultySelection() {
     
     drawDifficultyText("rgb(163, 0, 163)", "LIMBO", "Beams", 60, 480);
     drawDifficultyText("rgb(0, 0, 0)", "ANDROMEDA", "+Bombs & Rings", 310, 480);
-    drawDifficultyText("rgb(224, 255, 232)", "DIVINE", "+Spikes", 560, 480);
+    drawDifficultyText("rgb(255, 165, 252)", "DIVINE", "+Spikes", 560, 480);
 }
 
 function drawDodgerSelection() {

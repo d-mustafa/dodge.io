@@ -680,6 +680,12 @@ function drawText() { // draws the current time, highest time, and enemy count
         ctx.fillText(`${music.name} - ${music.artist}`, 600, 620);
     }
     
+    // Credits artist in the bottom left corner
+    ctx.fillStyle = "rgb(150, 150, 150)";
+    ctx.font = "12.5px Verdana";
+    ctx.textAlign = "left";
+    ctx.fillText(`Song - ${music.name} by ${music.artist}`, 10, cnv.height - 10);
+    
     // Abilites
     ctx.font = "20px Verdana";
     ctx.textAlign = 'center';

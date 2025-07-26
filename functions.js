@@ -1,8 +1,8 @@
-console.log("check for loadingScreen() bugs")// DODGE.IO - FUNCTIONS.JS
+console.log("endLoading")// DODGE.IO - FUNCTIONS.JS
 
 function loadingScreen() {
     if (now - loadingGame >= 1000 && gameState == "loading") {
-        skipLoading = true;
+        endLoading = true;
         return true;
     }
     else if (now - loadingGame <= 5000 && gameState == "loading") return true;

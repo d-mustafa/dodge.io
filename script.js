@@ -253,6 +253,10 @@ function draw() {
             ctx.textAlign = "left";
             ctx.fillText("click anywhere on the screen to skip", 20, cnv.height - 20);
         }
+        
+        music = {var: aNewStart,name: "A New Start", artist: "Thygan Buch",
+             color: "rgb(105, 105, 105)", subColor: "rgb(115, 115, 115)",};
+        music.var.currentTime = 0;
     }
     else if (now - loadingGame > 5000 && !endLoading) {
         ctx.fillStyle = "rgb(87, 87, 87)";
@@ -265,9 +269,6 @@ function draw() {
         ctx.fillText("click anywhere on the screen to start", 20, cnv.height - 20);
     }
     else if (endLoading && gameState === "loading") {
-        music = {var: aNewStart,name: "A New Start", artist: "Thygan Buch",
-             color: "rgb(105, 105, 105)", subColor: "rgb(115, 115, 115)",};
-        music.var.currentTime = 0;
         music.promise = music.var.play();
         gameState = "startScreen";
         innerGameState = "mainMenu";

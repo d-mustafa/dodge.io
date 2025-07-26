@@ -415,7 +415,7 @@ function drawSettings() {
 
         // volume bar outline
         ctx.strokestyle = "white";
-        ctx.linewidth = 2;
+        ctx.lineWidth = 2;
         ctx.beginPath();
         ctx.roundRect(165, 140, 150, 10, 5);
         ctx.stroke();

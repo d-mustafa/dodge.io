@@ -1,4 +1,4 @@
-console.log("new songs")// DODGE.IO - FUNCTIONS.JS
+console.log("buttons")// DODGE.IO - FUNCTIONS.JS
 
 function loadingScreen() {
     if (now - loadingGame >= 1000 && gameState == "loading") {

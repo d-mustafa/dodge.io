@@ -33,12 +33,6 @@ function loopAudio() {
         music.var.currentTime = 0;
         music.promise = music.var.play();
     }
-
-    // Credits artist in the bottom left corner
-    ctx.fillStyle = "rgb(150, 150, 150)";
-    ctx.font = "12.5px Verdana";
-    ctx.textAlign = "left";
-    if (gameState === "startScreen" || gameState === "endlessMode") ctx.fillText(`Song - ${music.name} by ${music.artist}`, 10, cnv.height - 10);
 }
 
 function drawEndLevel() {

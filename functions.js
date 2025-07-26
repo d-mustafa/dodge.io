@@ -495,9 +495,9 @@ function drawDifficultySelection() {
     drawDifficultyText("rgb(255, 255, 0)", "MEDIUM", "+Decelerating Enemies", 310, 280);
     drawDifficultyText("rgb(0, 0, 0)", "HARD", "+Homing Enemies", 560, 280);
     
-    drawDifficultyText("rgb(163, 0, 163)", "ALARM 9", "By Blue Cxve", 60, 480);
-    drawDifficultyText("rgb(255, 255, 255)", "SONG 2", "By Author 2", 310, 480);
-    drawDifficultyText("rgb(255, 255, 255)", "SONG 3", "By Author 3", 560, 480);
+    drawDifficultyText("rgb(163, 0, 163)", "ALARM 9", "by Blue Cxve", 60, 480);
+    drawDifficultyText("rgb(255, 255, 255)", "SONG 2", "by Author 2", 310, 480);
+    drawDifficultyText("rgb(255, 255, 255)", "SONG 3", "by Author 3", 560, 480);
 }
 
 function drawDodgerSelection() {

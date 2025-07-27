@@ -1,4 +1,4 @@
-console.log("Working on Andromeda, intro+bpm beams")// DODGE.IO - FUNCTIONS.JS
+console.log("Working on Andromeda, intro+bpm beams...")// DODGE.IO - FUNCTIONS.JS
 function loadingScreen(validInput) {
     if (validInput || endLoading) {
         if (now - loadingGame >= 1000 && gameState == "loading") {

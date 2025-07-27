@@ -139,7 +139,7 @@ function createCircle() {
     return circle;
 }
 
-createSpike() {
+function createSpike() {
     let spike = {
         type: "spike",
         variant: "none",

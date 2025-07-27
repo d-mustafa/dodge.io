@@ -1,4 +1,4 @@
-console.log("stroke")// DODGE.IO - FUNCTIONS.JS
+console.log("timestamp, danger]")// DODGE.IO - FUNCTIONS.JS
 function loadingScreen(validInput) {
     if (validInput || endLoading) {
         if (now - loadingGame >= 1000 && gameState == "loading") {
@@ -162,7 +162,7 @@ function recordLeftClick() {
                 if (mouseOver?.astralProjection) {
                     music = {var: astralProjection, name: "Astral Projection", artist: "Hallmore",
                              color: "rgb(220, 220, 220)", subColor: "rgb(240, 240, 240)", textColor: "rgb(0, 0, 0)",
-                             timestamps: [],};
+                             timestamps: [[0.075, "beam"]],};
                 }
                 if (mouseOver?.divine) {
                     music = {var: divine, name: "Divine", artist: "SOTAREKO",

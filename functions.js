@@ -162,8 +162,13 @@ function recordLeftClick() {
                 if (mouseOver?.astralProjection) {
                     music = {var: astralProjection, name: "Astral Projection", artist: "Hallmore",
                              color: "rgb(220, 220, 220)", subColor: "rgb(240, 240, 240)", textColor: "rgb(0, 0, 0)",
-                             timestamps: [[0.075, "beam"], [0.813, "beam"]], [1.982, "beam"], [3.038, "beam"], [4.204, "beam"],
-                            [5.814, "beam"], [6.601, "beam"], [7.811, "beam"]};
+                             timestamps: [/*[0.075, "beam"], [0.813, "beam"], [1.982, "beam"], [3.038, "beam"], [4.204, "beam"],
+                            [5.814, "beam"], [6.601, "beam"], [7.811, "beam"]*/]};
+                    for (let i = 0; i < 20; i++) {
+                        let secondPerBeat = 60 / 128;
+                        let beatTime = 0.075 + (i + secondsPerBeat);
+                        music.timestamps[i] = [beatTime, "beam"];
+                    }
                 }
                 if (mouseOver?.divine) {
                     music = {var: divine, name: "Divine", artist: "SOTAREKO",

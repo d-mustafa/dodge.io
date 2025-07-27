@@ -1,4 +1,4 @@
-console.log("Working on Andromeda")// DODGE.IO - FUNCTIONS.JS
+console.log("Working on Andromeda, misspell")// DODGE.IO - FUNCTIONS.JS
 function loadingScreen(validInput) {
     if (validInput || endLoading) {
         if (now - loadingGame >= 1000 && gameState == "loading") {
@@ -165,7 +165,7 @@ function recordLeftClick() {
                              timestamps: [/*[0.075, "beam"], [0.813, "beam"], [1.982, "beam"], [3.038, "beam"], [4.204, "beam"],
                             [5.814, "beam"], [6.601, "beam"], [7.811, "beam"]*/]};
                     for (let i = 0; i < 20; i++) {
-                        let secondPerBeat = 60 / 128;
+                        let secondsPerBeat = 60 / 128;
                         let beatTime = 0.075 + (i + secondsPerBeat);
                         music.timestamps[i] = [beatTime, "beam"];
                     }

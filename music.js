@@ -1,4 +1,4 @@
-console.log("backUpTS");// DODGE.IO - MUSIC.JS
+console.log("[...backUpTS]");// DODGE.IO - MUSIC.JS
 function restartMusicMode() {
     allEnemies = [];
     player.lives = 3;

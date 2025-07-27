@@ -1,4 +1,4 @@
-console.log("[timestamp, danger]");// DODGE.IO - MUSIC.JS
+console.log("circle");// DODGE.IO - MUSIC.JS
 function restartMusicMode() {
     allEnemies = [];
     player.lives = 3;
@@ -142,18 +142,27 @@ function createCircle() {
 
 function spawnAndDrawDanger() {
     // Enemy Spawning
-    let timeStamp = music.timestamps[timestampIndex][0]
+    let timeStamp = music.timestamps[timestampIndex][0];
+    let dangerType = music.timestamps[timestampIndex][1];
     if (timestampIndex < music.timestamps.length && music.var.currentTime >= timeStamp) {
-        if (music.timestamps[timestampIndex][1] === "beam") {
+        if (dangerType === "beam") {
             allEnemies.unshift(createBeam());
             
-            // determines the dangers x value based off the timestamp
+            // determines the beams x value based off the timestamp
             let xMulti = Math.floor(timeStamp*100/cnv.width);
             allEnemies[0].x = (timeStamp*100)-(cnv.width*xMulti);
             
-            // determines the dangers y value based off the timestamp
+            // determines the beams y value based off the timestamp
             let yMulti = Math.floor(timeStamp*100/cnv.height);
             allEnemies[0].y = (timeStamp*100)-(cnv.height*yMulti);
+        }
+        else if (dangerType === "circle") {
+            allEnemies.unshift(createCircle());
+
+            // the circle's x or y will mimic the player
+            let chooseXorY = Math.random();
+            if (chooseXorY > 0.5) allEnemies[0].x = player.x;
+            else allEnemies[0].y = player.y;
         }
         timestampIndex++;
     }

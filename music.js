@@ -142,20 +142,19 @@ function createCircle() {
 
 function spawnAndDrawDanger() {
     // Enemy Spawning
-    if (timestampIndex < music.timestamps.length) {
-        if (music.var.currentTime >= music.timestamps[timestampIndex]) {
-            allEnemies.unshift(createBeam());
-            
-            // determines the dangers x value based off the timestamp
-            let xMulti = Math.floor(music.timestamps[timestampIndex]*100/cnv.width);
-            allEnemies[0].x = (music.timestamps[timestampIndex]*100)-(cnv.width*xMulti);
-
-            // determines the dangers y value based off the timestamp
-            let yMulti = Math.floor(music.timestamps[timestampIndex]*100/cnv.height);
-            allEnemies[0].y = (music.timestamps[timestampIndex]*100)-(cnv.height*yMulti);
-            
-            timestampIndex++;
-        }
+    let timeStamp = music.timestamps[timestampIndex][0]
+    if (timestampIndex < music.timestamps.length && music.var.currentTime >= timeStamp) {
+        allEnemies.unshift(createBeam());
+        
+        // determines the dangers x value based off the timestamp
+        let xMulti = Math.floor(timeStamp*100/cnv.width);
+        allEnemies[0].x = (timeStamp*100)-(cnv.width*xMulti);
+        
+        // determines the dangers y value based off the timestamp
+        let yMulti = Math.floor(timeStamp*100/cnv.height);
+        allEnemies[0].y = (timeStamp*100)-(cnv.height*yMulti);
+        
+        timestampIndex++;
     }
 
     // Enemy Deleting

@@ -165,8 +165,8 @@ function recordLeftClick() {
                              timestamps: [[0.075, "beam"], [0.300, "beam"], [0.540, "beam"], [0.770, "beam"], [1.006, "beam"],
                             [1.223, "beam"], [1.481, "beam"], [1.709, "beam"]]};
                     let secondsPerBeat = 60 / 128;
-                    let beatTime = 1.931 + (i + secondsPerBeat);
                     for (let i = 0; i < (music.timestamps.duration-1.931)/secondsPerBeat; i++) {
+                        let beatTime = 1.931 + (i + secondsPerBeat);
                         music.timestamps.push() = [beatTime, "beam"];
                     }
                 }

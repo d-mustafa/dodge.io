@@ -153,8 +153,8 @@ function recordLeftClick() {
                              timestamps: [[0.079], [2.79], [3.13], [3.49], [3.81], [4.17], [5.58], [6.28],
                                           [6.99], [7.7], [8.4], [9.1], [9.8], [10.5], [11.9], [12.6]],};
                     music.timestamps.forEach(ts => ts[1] = "beam");
-                    for (let i = 1; i < 11; i++) { // loop amount: 11, wavelength: 11.5
-                        loopedPoints = music.timestamps.slice(1, 16).map(x => [x[0] + 11.5*i, x[1]]);
+                    for (let loopNum = 1; loopNum < 11; loopNum++) { // loop amount: 11, wavelength: 11.5
+                        loopedPoints = music.timestamps.slice(1, 16).map(x => [x[0] + 11.5*loopNum, x[1]]);
                         music.timestamps = music.timestamps.concat(loopedPoints);
                     }
                     music.timestamps = music.timestamps.map(x => [x[0]-0.025, x[1]]); // delay slightly for better visual to audio sync
@@ -166,8 +166,8 @@ function recordLeftClick() {
                              timestamps: [[0.075, "beam"], [0.300, "beam"], [0.540, "beam"], [0.770, "beam"], [1.006, "beam"],
                             [1.223, "beam"], [1.481, "beam"], [1.709, "beam"]]};
                     let secondsPerBeat = 60 / 128;
-                    for (let i = 0; i < (music.var.duration-1.931)/secondsPerBeat; i++) {
-                        let beatTime = 1.931 + (i + secondsPerBeat);
+                    for (let second = 0; second < music.var.duration-1.931-4; second++) { // 4 seconds of silence after the song ends
+                        let beatTime = 1.931 + (second + secondsPerBeat);
                         music.timestamps.push([beatTime, "beam"]);
                     }
                     music.backUpTS = [...music.timestamps];

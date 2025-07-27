@@ -128,7 +128,6 @@ let difficulty = {
 // Music
 let volume = 50;
 let sfxVolume = 50;
-let timestampIndex;
 
 let alarm9 = document.createElement("audio");
 alarm9.src = "Audio/Alarm 9 - Blue Cxve.mp3";

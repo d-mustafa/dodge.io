@@ -144,16 +144,17 @@ function spawnAndDrawDanger() {
     // Enemy Spawning
     let timeStamp = music.timestamps[timestampIndex][0]
     if (timestampIndex < music.timestamps.length && music.var.currentTime >= timeStamp) {
-        allEnemies.unshift(createBeam());
-        
-        // determines the dangers x value based off the timestamp
-        let xMulti = Math.floor(timeStamp*100/cnv.width);
-        allEnemies[0].x = (timeStamp*100)-(cnv.width*xMulti);
-        
-        // determines the dangers y value based off the timestamp
-        let yMulti = Math.floor(timeStamp*100/cnv.height);
-        allEnemies[0].y = (timeStamp*100)-(cnv.height*yMulti);
-        
+        if (music.timestamps[timestampIndex][1] === "beam") {
+            allEnemies.unshift(createBeam());
+            
+            // determines the dangers x value based off the timestamp
+            let xMulti = Math.floor(timeStamp*100/cnv.width);
+            allEnemies[0].x = (timeStamp*100)-(cnv.width*xMulti);
+            
+            // determines the dangers y value based off the timestamp
+            let yMulti = Math.floor(timeStamp*100/cnv.height);
+            allEnemies[0].y = (timeStamp*100)-(cnv.height*yMulti);
+        }
         timestampIndex++;
     }
 

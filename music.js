@@ -139,6 +139,21 @@ function createCircle() {
     return circle;
 }
 
+createSpike() {
+    let spike = {
+        type: "spike",
+        variant: "none",
+        x: Math.random() * cnv.width,
+        y: Math.random() * cnv.height,
+        r: (Math.random() * 40) + 80,
+        colorValue: 185,
+        get color() {
+            return `rgb(${this.colorValue}, ${this.colorValue}, ${this.colorValue})`;
+        },
+    }
+    return spike;
+}
+
 function spawnAndDrawDanger() {
     // Enemy Spawning
     if (music.timestamps.length > 0) {
@@ -155,14 +170,15 @@ function spawnAndDrawDanger() {
                 // determines the beams y value based off the timestamp
                 let yMulti = Math.floor(timeStamp*100/cnv.height);
                 allEnemies[0].y = (timeStamp*100)-(cnv.height*yMulti);
-            }
-            else if (dangerType === "circle") {
+            } else if (dangerType === "circle") {
                 allEnemies.unshift(createCircle());
     
                 // the circle's x or y will mimic the player
                 let chooseXorY = Math.random();
                 if (chooseXorY > 0.5) allEnemies[0].x = player.x;
                 else allEnemies[0].y = player.y;
+            } else if (dangerType === "spike") {
+                allEnemies.unshift(createSpike());
             }
             music.timestamps.splice(0, 1);
         }

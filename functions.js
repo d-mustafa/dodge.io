@@ -167,7 +167,7 @@ function recordLeftClick() {
                     let secondsPerBeat = 60 / 128;
                     for (let i = 0; i < (music.var.duration-1.931)/secondsPerBeat; i++) {
                         let beatTime = 1.931 + (i + secondsPerBeat);
-                        music.timestamps.push() = [beatTime, "beam"];
+                        music.timestamps.push([beatTime, "beam"]);
                     }
                 }
                 if (mouseOver?.divine) {

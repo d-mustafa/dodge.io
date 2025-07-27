@@ -693,10 +693,11 @@ function drawText() { // draws the current time, highest time, and enemy count
         
         ctx.fillStyle = timeLeftColor;
         ctx.fillText(`${timeLeft}s`, cnv.width/2, 40);
+        
+        ctx.fillStyle = music.textColor; // credit fillStyle
     }
-    
+    else ctx.fillStyle = "rgb(150, 150, 150)";
     // Credits artist in the bottom left corner
-    ctx.fillStyle = "rgb(150, 150, 150)";
     ctx.font = "12.5px Verdana";
     ctx.textAlign = "left";
     ctx.fillText(`Song - ${music.name} by ${music.artist}`, 10, cnv.height - 10);

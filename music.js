@@ -9,7 +9,7 @@ function restartMusicMode() {
     music.var.volume = volume/100;
     music.var.currentTime = 0;
     music.promise = music.var.play();
-    music.timestamps = music.backUpTS;
+    music.timestamps = [...music.backUpTS];
     timeLeft = (music.var.duration - music.var.currentTime).toFixed(2);
     dash.lastEnded = 0;
     shockwave.lastEnded = 0;

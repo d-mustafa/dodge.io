@@ -158,7 +158,7 @@ function recordLeftClick() {
                         music.timestamps = music.timestamps.concat(loopedPoints);
                     }
                     music.timestamps = music.timestamps.map(x => [x[0]-0.025, x[1]]); // delay slightly for better visual to audio sync
-                    music.backUpTS = music.timestamps;
+                    music.backUpTS = [...music.timestamps];
                 }
                 if (mouseOver?.astralProjection) {
                     music = {var: astralProjection, name: "Astral Projection", artist: "Hallmore",
@@ -170,13 +170,13 @@ function recordLeftClick() {
                         let beatTime = 1.931 + (i + secondsPerBeat);
                         music.timestamps.push([beatTime, "beam"]);
                     }
-                    music.backUpTS = music.timestamps;
+                    music.backUpTS = [...music.timestamps];
                 }
                 if (mouseOver?.divine) {
                     music = {var: divine, name: "Divine", artist: "SOTAREKO",
                              color: "rgb(223, 255, 156)", subColor: "rgb(224, 255, 232)", textColor: "rgb(255, 165, 252)",
                              timestamps: [],};
-                    music.backUpTS = music.timestamps;
+                    music.backUpTS = [...music.timestamps];
                 }
                 mouseMovementOn = previousMM;
                 restartMusicMode();

@@ -1,4 +1,4 @@
-console.log("linewidth");// DODGE.IO - MUSIC.JS
+console.log("[timestamp, danger]");// DODGE.IO - MUSIC.JS
 function restartMusicMode() {
     allEnemies = [];
     player.lives = 3;

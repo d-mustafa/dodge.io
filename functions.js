@@ -1,4 +1,4 @@
-console.log("Working on Andromeda, adding new timestamps")// DODGE.IO - FUNCTIONS.JS
+console.log("Working on Andromeda, aded moer new timestamps")// DODGE.IO - FUNCTIONS.JS
 function loadingScreen(validInput) {
     if (validInput || endLoading) {
         if (now - loadingGame >= 1000 && gameState == "loading") {
@@ -163,20 +163,31 @@ function recordLeftClick() {
                 if (mouseOver?.astralProjection) {
                     music = {var: astralProjection, name: "Astral Projection", artist: "Hallmore",
                              color: "rgb(220, 220, 220)", subColor: "rgb(240, 240, 240)", textColor: "rgb(0, 0, 0)",
-                             timestamps: [
+                             timestamps: [// Wavelength = 7.475~
+                                          // 8B to DT [0.222] // DB to TD [0.475] // TD to DT [0.493] // DT to 8B [0.49] //
                                           // 8-beam - [0.225, 0.24, 0.23, 0.236, 0.217, 0.258, 0.228]
                                           [0.075, "beam"], [0.300, "beam"], [0.540, "beam"], [0.770, "beam"],
                                           [1.006, "beam"], [1.223, "beam"], [1.481, "beam"], [1.709, "beam"],
                                           // double-triple - [0.48, 0.465, 0.189, 0.256]
                                           [1.931, "circle"], [2.411, "circle"], [2.876, "beam"], [3.065, "beam"], [3.321, "circle"],
-                                          // individual triple
+                                          // triple doubled - [0.189, 0.256, 0.508, 0.202, 0.226]
                                           [3.796, "beam"], [3.985, "beam"], [4.241, "circle"],
                                           [4.749, "beam"], [4.951, "beam"], [5.177, "circle"],
-                                          // double-triple
+                                          // silent double-triple
                                           [5.670, "circle"], [6.150, "circle"], [6.615, "beam"], [6.804, "beam"], [7.060, "circle"],
                                           // 8-beam
                                           [7.550, "beam"], [7.775, "beam"], [8.015, "beam"], [8.245, "beam"],
                                           [8.481, "beam"], [8.698, "beam"], [8.956, "beam"], [9.184, "beam"],
+                                          // double-triple
+                                          [9.406, "circle"], [9.886, "circle"], [10.351, "beam"], [10.540, "beam"], [10.796, "circle"],
+                                          // triple doubled
+                                          [11.271, "beam"], [11.460, "beam"], [11.716, "circle"],
+                                          [12.224, "beam"], [12.426, "beam"], [12.652, "circle"],
+                                          // silent double-triple
+                                          [13.145, "circle"], [13.625, "circle"], [14.090, "beam"], [14.279, "beam"], [14.535, "circle"],
+                                          // 8-beam
+                                          [15.025, "beam"], [15.250, "beam"], [15.490, "beam"], [15.720, "beam"],
+                                          [15.956, "beam"], [16.173, "beam"], [16.431, "beam"], [16.659, "beam"],
                                           ]
                             };
                     let secondsPerBeat = 60 / 128;

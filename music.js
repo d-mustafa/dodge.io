@@ -1,4 +1,4 @@
-console.log("new method for checking timestamps");// DODGE.IO - MUSIC.JS
+console.log("rings being weird");// DODGE.IO - MUSIC.JS
 function restartMusicMode() {
     allEnemies = [];
     player.lives = 3;
@@ -132,7 +132,7 @@ function createCircle() {
             return `rgb(${this.colorValue}, ${this.colorValue}, ${this.colorValue})`;
         },
         get lineWidth() {
-            return `${this.r/3.5}`;
+            return this.r;
         },
     }
     if (circle.variant > 0.5) circle.variant = "bomb";
@@ -193,6 +193,7 @@ function spawnAndDrawDanger() {
     // Enemy Drawing
     allEnemies.forEach(danger => {
         ctx.fillStyle = danger.color;
+        ctx.strokeStyle = danger.color;
         danger.colorValue += 0.25;
         
         if (danger.type === "beam") {

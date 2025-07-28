@@ -1,4 +1,4 @@
-console.log("Working on Andromeda, intro+bpm beams...")// DODGE.IO - FUNCTIONS.JS
+console.log("Working on Andromeda, adding new timestamps")// DODGE.IO - FUNCTIONS.JS
 function loadingScreen(validInput) {
     if (validInput || endLoading) {
         if (now - loadingGame >= 1000 && gameState == "loading") {
@@ -163,10 +163,25 @@ function recordLeftClick() {
                 if (mouseOver?.astralProjection) {
                     music = {var: astralProjection, name: "Astral Projection", artist: "Hallmore",
                              color: "rgb(220, 220, 220)", subColor: "rgb(240, 240, 240)", textColor: "rgb(0, 0, 0)",
-                             timestamps: [[0.075, "beam"], [0.300, "beam"], [0.540, "beam"], [0.770, "beam"], [1.006, "beam"],
-                            [1.223, "beam"], [1.481, "beam"], [1.709, "beam"]]};
+                             timestamps: [
+                                          // 8-beam - [0.225, 0.24, 0.23, 0.236, 0.217, 0.258, 0.228]
+                                          [0.075, "beam"], [0.300, "beam"], [0.540, "beam"], [0.770, "beam"],
+                                          [1.006, "beam"], [1.223, "beam"], [1.481, "beam"], [1.709, "beam"],
+                                          // double-triple - [0.48, 0.465, 0.189, 0.256]
+                                          [1.931, "circle"], [2.411, "circle"], [2.876, "beam"], [3.065, "beam"], [3.321, "circle"],
+                                          // individual triple
+                                          [3.796, "beam"], [3.985, "beam"], [4.241, "circle"],
+                                          [4.749, "beam"], [4.951, "beam"], [5.177, "circle"],
+                                          // double-triple
+                                          [5.670, "circle"], [6.150, "circle"], [6.615, "beam"], [6.804, "beam"], [7.060, "circle"],
+                                          // 8-beam
+                                          [7.550, "beam"], [7.775, "beam"], [8.015, "beam"], [8.245, "beam"],
+                                          [8.481, "beam"], [8.698, "beam"], [8.956, "beam"], [9.184, "beam"],
+                                          ]
+                            };
                     let secondsPerBeat = 60 / 128;
-                    for (let second = 0; second < music.var.duration-1.931-4; second++) { // 4 seconds of silence after the song ends
+                    // 1.931 seconds for the bpm to kick in | 4~ seconds of silence after the song ends
+                    for (let second = 0; second < music.var.duration-1.931-4; second++) { 
                         let beatTime = 1.931 + (second + secondsPerBeat);
                         music.timestamps.push([beatTime, "beam"]);
                     }

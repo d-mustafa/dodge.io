@@ -1,4 +1,4 @@
-console.log("[...backUpTS]");// DODGE.IO - MUSIC.JS
+console.log("new method for checking timestamps");// DODGE.IO - MUSIC.JS
 function restartMusicMode() {
     allEnemies = [];
     player.lives = 3;
@@ -158,30 +158,32 @@ function createSpike() {
 function spawnAndDrawDanger() {
     // Enemy Spawning
     if (music.timestamps.length > 0) {
-        let timeStamp = music.timestamps[0][0];
-        let dangerType = music.timestamps[0][1];
-        if (music.var.currentTime >= timeStamp) {
-            if (dangerType === "beam") {
-                allEnemies.unshift(createBeam());
-                
-                // determines the beams x value based off the timestamp
-                let xMulti = Math.floor(timeStamp*100/cnv.width);
-                allEnemies[0].x = (timeStamp*100)-(cnv.width*xMulti);
-                
-                // determines the beams y value based off the timestamp
-                let yMulti = Math.floor(timeStamp*100/cnv.height);
-                allEnemies[0].y = (timeStamp*100)-(cnv.height*yMulti);
-            } else if (dangerType === "circle") {
-                allEnemies.unshift(createCircle());
-    
-                // the circle's x or y will mimic the player
-                let chooseXorY = Math.random();
-                if (chooseXorY > 0.5) allEnemies[0].x = player.x;
-                else allEnemies[0].y = player.y;
-            } else if (dangerType === "spike") {
-                allEnemies.unshift(createSpike());
+        for (let i = music.timestamps.length-1; i >= 0; i--) {
+            let timestamp = music.timestamps[i][0];
+            let dangerType = music.timestamps[i][1];
+            if (music.var.currentTime >= timestamp) {
+                if (dangerType === "beam") {
+                    allEnemies.unshift(createBeam());
+                    
+                    // determines the beams x value based off the timestamp
+                    let xMulti = Math.floor(timestamp*100/cnv.width);
+                    allEnemies[0].x = (timestamp*100)-(cnv.width*xMulti);
+                    
+                    // determines the beams y value based off the timestamp
+                    let yMulti = Math.floor(timestamp*100/cnv.height);
+                    allEnemies[0].y = (timestamp*100)-(cnv.height*yMulti);
+                } else if (dangerType === "circle") {
+                    allEnemies.unshift(createCircle());
+        
+                    // the circle's x or y will mimic the player
+                    let chooseXorY = Math.random();
+                    if (chooseXorY > 0.5) allEnemies[0].x = player.x;
+                    else allEnemies[0].y = player.y;
+                } else if (dangerType === "spike") {
+                    allEnemies.unshift(createSpike());
+                }
+                music.timestamps.splice(i, 1);
             }
-            music.timestamps.splice(0, 1);
         }
     }
 

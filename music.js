@@ -1,4 +1,4 @@
-console.log("rings being weird");// DODGE.IO - MUSIC.JS
+console.log("horizontal and vertical options");// DODGE.IO - MUSIC.JS
 function restartMusicMode() {
     allEnemies = [];
     player.lives = 3;
@@ -162,8 +162,10 @@ function spawnAndDrawDanger() {
             let timestamp = music.timestamps[i][0];
             let dangerType = music.timestamps[i][1];
             if (music.var.currentTime >= timestamp) {
-                if (dangerType === "beam") {
+                if (dangerType === "beam" || dangerType === "horizontal" || dangerType === "vertical") {
                     allEnemies.unshift(createBeam());
+                    if (dangerType === "horizontal") allEnemies[0].variant = "horizontal";
+                    else if (dangerType === "vertical") allEnemies[0].variant = "vertical";
                     
                     // determines the beams x value based off the timestamp
                     let xMulti = Math.floor(timestamp*100/cnv.width);
@@ -197,12 +199,12 @@ function spawnAndDrawDanger() {
         danger.colorValue += 0.25;
         
         if (danger.type === "beam") {
-            if (danger.variant === "vertical") ctx.fillRect(danger.x, 0, danger.w, cnv.height);
             if (danger.variant === "horizontal") ctx.fillRect(0, danger.y, cnv.width, danger.h);
+            else if (danger.variant === "vertical") ctx.fillRect(danger.x, 0, danger.w, cnv.height);
         }
         else if (danger.type === "circle") {
             if (danger.variant === "bomb") drawCircle(danger.x, danger.y, danger.r);
-            if (danger.variant === "ring") {
+            else if (danger.variant === "ring") {
                 ctx.lineWidth = danger.lineWidth;
                 drawCircle(danger.x, danger.y, danger.r, "stroke");
             }

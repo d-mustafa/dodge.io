@@ -176,6 +176,8 @@ function spawnAndDrawDanger() {
                     allEnemies[0].y = (timestamp*100)-(cnv.height*yMulti);
                 } else if (dangerType === "circle") {
                     allEnemies.unshift(createCircle());
+                    if (dangerType === "bomb") allEnemies[0].variant = "bomb";
+                    else if (dangerType === "ring") allEnemies[0].variant = "ring";
         
                     // the circle's x or y will mimic the player
                     let chooseXorY = Math.random();

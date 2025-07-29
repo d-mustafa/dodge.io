@@ -166,14 +166,15 @@ function recordLeftClick() {
                         [time+0.931, "horizontal"], [time+1.148, "vertical"], [time+1.406, "horizontal"], [time+1.634, "vertical"],
                         ]
                     }
-                    function doubleTriple(time) {
+                    function doubleTriple(time, cutOut=false) {
                         // DT to TD [0.475] // TD to DT [0.493] // DT to 8B [0.49] // 8B to DT [0.222]
                         
                         // double-triple - [0.48, 0.465, 0.189, 0.256]
                         // triple doubled - [0.189, 0.256, 0.508, 0.202, 0.226]
                         // 8-beam - [0.225, 0.24, 0.23, 0.236, 0.217, 0.258, 0.228]
                         
-                        return [// double-triple
+                        let DT = [
+                                // double-triple
                         [time, "bomb"], [time+0.48, "vertical"], [time+0.945, "vertical"], [time+1.134, "vertical"], [time+1.390, "bomb"],
                                 // triple doubled
                         [time+1.865, "vertical"], [time+2.054, "vertical"], [time+2.310, "bomb"],
@@ -182,8 +183,9 @@ function recordLeftClick() {
                         [time+3.739, "vertical"], [time+4.219, "bomb"], [time+4.684, "vertical"], [time+4.873, "vertical"], [time+5.129, "bomb"],
                                 // 8-beam
                         [time+5.619, "horizontal"], [time+5.844, "vertical"], [time+6.084, "horizontal"], [time+6.314, "vertical"],
-                        [time+6.550, "horizontal"], [time+6.767, "vertical"], [time+7.025, "horizontal"], [time+7.253, "vertical"],
                         ];
+                        if (!cutOut) DT.concat([[time+6.550, "horizontal"], [time+6.767, "vertical"], [time+7.025, "horizontal"], [time+7.253, "vertical"],]);
+                        return DT
                     }
                     
                     music = {var: astralProjection, name: "Astral Projection", artist: "Hallmore",
@@ -194,14 +196,14 @@ function recordLeftClick() {
                     music.timestamps = music.timestamps.concat(doubleTriple(music.timestamps[music.timestamps.length-1][0]+0.222));
                     music.timestamps = music.timestamps.concat(doubleTriple(music.timestamps[music.timestamps.length-1][0]+0.222));
                     music.timestamps = music.timestamps.concat(doubleTriple(music.timestamps[music.timestamps.length-1][0]+0.222));
-                    music.timestamps = music.timestamps.concat(doubleTriple(music.timestamps[music.timestamps.length-1][0]+0.222));
-                    
+                    music.timestamps = music.timestamps.concat(doubleTriple(music.timestamps[music.timestamps.length-1][0]+0.222), true);
+                    /*
                     let secondsPerBeat = 60 / 128;
                     // 1.931 seconds for the bpm to kick in | 4~ seconds of silence after the song ends
                     for (let second = 0; second < music.var.duration-1.931-4; second++) { 
                         let beatTime = 1.931 + (second + secondsPerBeat);
                         music.timestamps.push([beatTime, "horizontal"]);
-                    }
+                    }*/
                 }
                 if (mouseOver?.divine) {
                     music = {var: divine, name: "Divine", artist: "SOTAREKO",

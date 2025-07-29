@@ -165,8 +165,8 @@ function recordLeftClick() {
                              timestamps: [// Wavelength = 7.475~
                                           // 8B to DT [0.222] // DB to TD [0.475] // TD to DT [0.493] // DT to 8B [0.49] //
                                           // 8-beam - [0.225, 0.24, 0.23, 0.236, 0.217, 0.258, 0.228]
-                                          [0.075, "horizontal"], [0.300, "horizontal"], [0.540, "horizontal"], [0.770, "horizontal"],
-                                          [1.006, "horizontal"], [1.223, "horizontal"], [1.481, "horizontal"], [1.709, "horizontal"],
+                                          [0.075, "vertical"], [0.300, "horizontal"], [0.540, "vertical"], [0.770, "horizontal"],
+                                          [1.006, "vertical"], [1.223, "horizontal"], [1.481, "vertical"], [1.709, "horizontal"],
                                           // double-triple - [0.48, 0.465, 0.189, 0.256]
                                           [1.931, "circle"], [2.411, "circle"], [2.876, "horizontal"], [3.065, "horizontal"], [3.321, "circle"],
                                           // triple doubled - [0.189, 0.256, 0.508, 0.202, 0.226]

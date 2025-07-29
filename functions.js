@@ -160,40 +160,47 @@ function recordLeftClick() {
                     music.timestamps = music.timestamps.map(x => [x[0]-0.025, x[1]]); // delay slightly for better visual to audio sync
                 }
                 if (mouseOver?.astralProjection) {
+                    function solo8Beam(time) {
+                        return [ // 8-beam - [0.225, 0.24, 0.23, 0.236, 0.217, 0.258, 0.228]
+                        [time, "horizontal"], [time+0.225, "vertical"], [time+0.456, "horizontal"], [time+0.695, "vertical"],
+                        [time+0.931, "horizontal"], [time+1.148, "vertical"], [time+1.406, "horizontal"], [time+1.634, "vertical"],
+                        ]
+                    }
+                    function doubleTriple(time) {
+                        // DT to TD [0.475] // TD to DT [0.493] // DT to 8B [0.49] // 8B to DT [0.222]
+                        
+                        // double-triple - [0.48, 0.465, 0.189, 0.256]
+                        // triple doubled - [0.189, 0.256, 0.508, 0.202, 0.226]
+                        // 8-beam - [0.225, 0.24, 0.23, 0.236, 0.217, 0.258, 0.228]
+                        
+                        return [// double-triple
+                        [time, "bomb"], [time+0.48, "vertical"], [time+0.945, "vertical"], [time+1.134, "vertical"], [time+1.390, "bomb"],
+                                // triple doubled
+                        [time+1.865, "vertical"], [time+2.054, "vertical"], [time+2.310, "bomb"],
+                        [time+2.818, "vertical"], [time+3.020, "vertical"], [time+3.246, "bomb"],
+                                // silent double-triple
+                        [time+3.739, "vertical"], [time+4.219, "bomb"], [time+4.684, "vertical"], [time+4.873, "vertical"], [time+5.129, "bomb"],
+                                // 8-beam
+                        [time+5.619, "horizontal"], [time+5.844, "vertical"], [time+6.084, "horizontal"], [time+6.314, "vertical"],
+                        [time+6.550, "horizontal"], [time+6.767, "vertical"], [time+7.025, "horizontal"], [time+7.253, "vertical"],
+                        ];
+                    }
+                    
                     music = {var: astralProjection, name: "Astral Projection", artist: "Hallmore",
                              color: "rgb(220, 220, 220)", subColor: "rgb(240, 240, 240)", textColor: "rgb(0, 0, 0)",
-                             timestamps: [// Wavelength = 7.475~
-                                          // 8B to DT [0.222] // DB to TD [0.475] // TD to DT [0.493] // DT to 8B [0.49] //
-                                          // 8-beam - [0.225, 0.24, 0.23, 0.236, 0.217, 0.258, 0.228]
-                                          [0.075, "vertical"], [0.300, "horizontal"], [0.540, "vertical"], [0.770, "horizontal"],
-                                          [1.006, "vertical"], [1.223, "horizontal"], [1.481, "vertical"], [1.709, "horizontal"],
-                                          // double-triple - [0.48, 0.465, 0.189, 0.256]
-                                          [1.931, "circle"], [2.411, "circle"], [2.876, "horizontal"], [3.065, "horizontal"], [3.321, "circle"],
-                                          // triple doubled - [0.189, 0.256, 0.508, 0.202, 0.226]
-                                          [3.796, "horizontal"], [3.985, "horizontal"], [4.241, "circle"],
-                                          [4.749, "horizontal"], [4.951, "horizontal"], [5.177, "circle"],
-                                          // silent double-triple
-                                          [5.670, "circle"], [6.150, "circle"], [6.615, "horizontal"], [6.804, "horizontal"], [7.060, "circle"],
-                                          // 8-beam
-                                          [7.550, "horizontal"], [7.775, "horizontal"], [8.015, "horizontal"], [8.245, "horizontal"],
-                                          [8.481, "horizontal"], [8.698, "horizontal"], [8.956, "horizontal"], [9.184, "horizontal"],
-                                          // double-triple
-                                          [9.406, "circle"], [9.886, "circle"], [10.351, "horizontal"], [10.540, "horizontal"], [10.796, "circle"],
-                                          // triple doubled
-                                          [11.271, "horizontal"], [11.460, "horizontal"], [11.716, "circle"],
-                                          [12.224, "horizontal"], [12.426, "horizontal"], [12.652, "circle"],
-                                          // silent double-triple
-                                          [13.145, "circle"], [13.625, "circle"], [14.090, "horizontal"], [14.279, "horizontal"], [14.535, "circle"],
-                                          // 8-beam
-                                          [15.025, "horizontal"], [15.250, "horizontal"], [15.490, "horizontal"], [15.720, "horizontal"],
-                                          [15.956, "horizontal"], [16.173, "horizontal"], [16.431, "horizontal"], [16.659, "horizontal"],
-                                          ]
+                             timestamps: []
                             };
+                    music.timestamps = music.timestamps.concat(solo8Beam(0.075));
+                    music.timestamps = music.timestamps.concat(doubleTriple(music.timestamps[music.timestamps.length-1][0]+0.222));
+                    music.timestamps = music.timestamps.concat(doubleTriple(music.timestamps[music.timestamps.length-1][0]+0.222));
+                    music.timestamps = music.timestamps.concat(doubleTriple(music.timestamps[music.timestamps.length-1][0]+0.222));
+                    music.timestamps = music.timestamps.concat(doubleTriple(music.timestamps[music.timestamps.length-1][0]+0.222));
+                    
                     let secondsPerBeat = 60 / 128;
                     // 1.931 seconds for the bpm to kick in | 4~ seconds of silence after the song ends
                     for (let second = 0; second < music.var.duration-1.931-4; second++) { 
                         let beatTime = 1.931 + (second + secondsPerBeat);
-                        music.timestamps.push([beatTime, "vertical"]);
+                        music.timestamps.push([beatTime, "horizontal"]);
                     }
                 }
                 if (mouseOver?.divine) {

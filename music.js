@@ -1,4 +1,4 @@
-console.log("horizontal and vertical options");// DODGE.IO - MUSIC.JS
+console.log("bomb and ring options");// DODGE.IO - MUSIC.JS
 function restartMusicMode() {
     allEnemies = [];
     player.lives = 3;
@@ -174,7 +174,7 @@ function spawnAndDrawDanger() {
                     // determines the beams y value based off the timestamp
                     let yMulti = Math.floor(timestamp*100/cnv.height);
                     allEnemies[0].y = (timestamp*100)-(cnv.height*yMulti);
-                } else if (dangerType === "circle") {
+                } else if (dangerType === "circle" || dangerType === "bomb" || dangerType === "ring") {
                     allEnemies.unshift(createCircle());
                     if (dangerType === "bomb") allEnemies[0].variant = "bomb";
                     else if (dangerType === "ring") allEnemies[0].variant = "ring";

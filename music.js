@@ -201,8 +201,8 @@ function spawnAndDrawDanger() {
         danger.colorValue += 0.25;
         
         if (danger.type === "beam") {
-            if (danger.variant === "horizontal") ctx.fillRect(0, danger.y, cnv.width, danger.h);
-            else if (danger.variant === "vertical") ctx.fillRect(danger.x, 0, danger.w, cnv.height);
+            if (danger.variant === "horizontal") ctx.fillRect(danger.x, 0, danger.w, cnv.height);
+            else if (danger.variant === "vertical") ctx.fillRect(0, danger.y, cnv.width, danger.h);
         }
         else if (danger.type === "circle") {
             if (danger.variant === "bomb") drawCircle(danger.x, danger.y, danger.r);

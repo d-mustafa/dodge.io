@@ -162,8 +162,8 @@ function recordLeftClick() {
                 if (mouseOver?.astralProjection) {
                     function solo8Beam(time) {
                         return [ // 8-beam - [0.225, 0.24, 0.23, 0.236, 0.217, 0.258, 0.228]
-                        [time, "horizontal"], [time+0.225, "vertical"], [time+0.456, "horizontal"], [time+0.695, "vertical"],
-                        [time+0.931, "horizontal"], [time+1.148, "vertical"], [time+1.406, "horizontal"], [time+1.634, "vertical"],
+                        [time, "horizontal"], [time+0.225, "horizontal"], [time+0.456, "vertical"], [time+0.695, "vertical"],
+                        [time+0.931, "horizontal"], [time+1.148, "horizontal"], [time+1.406, "vertical"], [time+1.634, "vertical"],
                         ]
                     }
                     function doubleTriple(time, cutOut=false) {
@@ -175,16 +175,16 @@ function recordLeftClick() {
                         
                         let DT = [
                                 // double-triple
-                        [time, "bomb"], [time+0.48, "vertical"], [time+0.945, "vertical"], [time+1.134, "vertical"], [time+1.390, "bomb"],
+                        [time, "horizontal"], [time+0.48, "horizontal"], [time+0.945, "vertical"], [time+1.134, "vertical"], [time+1.390, "vertical"],
                                 // triple doubled
-                        [time+1.865, "vertical"], [time+2.054, "vertical"], [time+2.310, "bomb"],
-                        [time+2.818, "vertical"], [time+3.020, "vertical"], [time+3.246, "bomb"],
+                        [time+1.865, "horizontal"], [time+2.054, "horizontal"], [time+2.310, "horizontal"],
+                        [time+2.818, "vertical"], [time+3.020, "vertical"], [time+3.246, "vertical"],
                                 // silent double-triple
-                        [time+3.739, "vertical"], [time+4.219, "bomb"], [time+4.684, "vertical"], [time+4.873, "vertical"], [time+5.129, "bomb"],
+                        /*[time+3.739, "vertical"],*/ [time+4.219, "horizontal"], [time+4.684, "vertical"], [time+4.873, "horizontal"], [time+5.129, "vertical"],
                                 // 8-beam
-                        [time+5.619, "horizontal"], [time+5.844, "vertical"], [time+6.084, "horizontal"], [time+6.314, "vertical"],
+                        [time+5.619, "horizontal"], [time+5.844, "horizontal"], [time+6.084, "vertical"], [time+6.314, "vertical"],
                         ];
-                        if (!cutOut) DT.concat([[time+6.550, "horizontal"], [time+6.767, "vertical"], [time+7.025, "horizontal"], [time+7.253, "vertical"],]);
+                        if (!cutOut) DT = DT.concat([[time+6.550, "horizontal"], [time+6.767, "horizontal"], [time+7.025, "vertical"], [time+7.253, "vertical"],]);
                         return DT
                     }
                     
@@ -193,10 +193,11 @@ function recordLeftClick() {
                              timestamps: []
                             };
                     music.timestamps = music.timestamps.concat(solo8Beam(0.075));
-                    music.timestamps = music.timestamps.concat(doubleTriple(music.timestamps[music.timestamps.length-1][0]+0.222));
+                    music.timestamps = music.timestamps.concat(doubleTriple(1.931));
                     music.timestamps = music.timestamps.concat(doubleTriple(music.timestamps[music.timestamps.length-1][0]+0.222));
                     music.timestamps = music.timestamps.concat(doubleTriple(music.timestamps[music.timestamps.length-1][0]+0.222));
                     music.timestamps = music.timestamps.concat(doubleTriple(music.timestamps[music.timestamps.length-1][0]+0.222), true);
+                    music.timestamps = music.timestamps.map(x => [x[0]-0.025, x[1]]);
                     /*
                     let secondsPerBeat = 60 / 128;
                     // 1.931 seconds for the bpm to kick in | 4~ seconds of silence after the song ends

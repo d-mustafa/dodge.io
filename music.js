@@ -1,4 +1,4 @@
-console.log("bomb and ring options");// DODGE.IO - MUSIC.JS
+console.log("circles spawn directly on top of you");// DODGE.IO - MUSIC.JS
 function restartMusicMode() {
     allEnemies = [];
     player.lives = 3;
@@ -179,12 +179,13 @@ function spawnAndDrawDanger() {
                     if (dangerType === "bomb") allEnemies[0].variant = "bomb";
                     else if (dangerType === "ring") allEnemies[0].variant = "ring";
         
-                    // the circle's x or y will mimic the player
-                    let chooseXorY = Math.random();
-                    if (chooseXorY > 0.5) allEnemies[0].x = player.x;
-                    else allEnemies[0].y = player.y;
+                    // the circle's x and y will mimic the players
+                    allEnemies[0].x = player.x;
+                    allEnemies[0].y = player.y;
                 } else if (dangerType === "spike") {
                     allEnemies.unshift(createSpike());
+
+                    // spikes aim and shoot at the player
                 }
                 music.timestamps.splice(i, 1);
             }

@@ -1,4 +1,4 @@
-console.log("back in the fucking game, baby")// DODGE.IO - FUNCTIONS.JS
+console.log("beams inbetween bombs")// DODGE.IO - FUNCTIONS.JS
 function loadingScreen(validInput) {
     if (validInput || endLoading) {
         if (now - loadingGame >= 1000 && gameState == "loading") {
@@ -185,14 +185,14 @@ function recordLeftClick() {
                         [time+5.619, "horizontal"], [time+5.844, "horizontal"], [time+6.084, "vertical"], [time+6.314, "vertical"],
                         ];
                         if (!cutOut8B) DT = DT.concat([[time+6.550, "horizontal"], [time+6.767, "horizontal"], [time+7.025, "vertical"], [time+7.253, "vertical"],]);
-                        return DT
+                        return DT;
                     }
                     function drumBuildUp(time) { // 31.925
-                        return [// 15-bomb (16th cuts out) // avg 0.470
-                        [time, "bomb"], [time+0.479, "bomb"], [time+0.912, "bomb"], [time+1.411, "bomb"], [time+1.885, "bomb"],
-                        [time+2.356, "bomb"], [time+2.819, "bomb"], [time+3.296, "bomb"], [time+3.761, "bomb"], [time+4.236, "bomb"],
-                        [time+4.695, "bomb"], [time+5.165, "bomb"], [time+5.638, "bomb"], [time+6.106, "bomb"], [time+6.575, "bomb"],
-
+                        DBU = [// 15-bomb (16th cuts out) // 0.242 horiz, 0.356 vert
+                        [time, "bomb"], [time+0.479, "bomb"], [time+0.912, "bomb"], [time+1.411, "bomb"], [time+1.885, "bomb"], 
+                        [time+2.356, "bomb"], [time+2.819, "bomb"], [time+3.296, "bomb"], [time+3.761, "bomb"], [time+4.236, "bomb"], 
+                        [time+4.695, "bomb"], [time+5.165, "bomb"], [time+5.638, "bomb"], [time+6.106, "bomb"], [time+6.575, "bomb"], 
+                            
                             // 16-bomb, drum tempo increased // avg 0.235
                         [time+7.509, "bomb"], [time+7.744, "bomb"], [time+7.979, "bomb"], [time+8.214, "bomb"],
                         [time+8.449, "bomb"], [time+8.684, "bomb"], [time+8.919, "bomb"], [time+9.153, "bomb"],
@@ -205,7 +205,21 @@ function recordLeftClick() {
 
                             // quintuple ring
                         [time+13.140, "ring"], [time+13.610, "ring"], [time+14.077, "ring"], [time+14.547, "ring"], [time+14.780, "ring"],
-                        ]
+                        ];
+                        // in-betweens
+                        for (let i = 0; i < DBU.length; i++) {
+                            if (i < 15) {
+                                DBU = DBU.concat([
+                                    [DBU[i][0]+0.242, "horizontal"], [DBU[i][0]+0.356, "vertical"];
+                                ])
+                            } (i < 39) {
+                                DBU = DBU.concat ([
+                                    [DBU[i][0], "horizontal"], [DBU[i][0], "vertical"];
+                                ])
+                            }
+                        }
+                        console.log(DBU);
+                        return DBU;
                     }
                     music = {var: astralProjection, name: "Astral Projection", artist: "Hallmore",
                              color: "rgb(220, 220, 220)", subColor: "rgb(240, 240, 240)", textColor: "rgb(0, 0, 0)",

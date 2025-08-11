@@ -1,4 +1,4 @@
-console.log("final section added")// DODGE.IO - FUNCTIONS.JS
+console.log("bombs to match the 4-beam and 5-beam")// DODGE.IO - FUNCTIONS.JS
 function loadingScreen(validInput) {
     if (validInput || endLoading) {
         if (now - loadingGame >= 1000 && gameState == "loading") {
@@ -220,21 +220,26 @@ function recordLeftClick() {
                     }
                     function ending(time) {
                         let finale =  [ // 6-beat
-                        [time, "ring"], [time, "horizontal"], [time+0.459, "ring"], [time+0.459, "horizontal"],
-                        [time+0.942, "ring"], [time+0.942, "horizontal"], [time+1.405, "ring"], [time+1.405, "horizontal"],
-                        [time+1.879, "ring"], [time+1.879, "horizontal"], [time+2.329, "ring"], [time+2.329, "horizontal"],
+                        [time, "ring"], [time+0.459, "ring"], [time+0.942, "ring"],
+                        [time+1.405, "ring"], [time+1.879, "ring"], [time+2.329, "ring"],
+                        [time, "horizontal"], [time+0.459, "horizontal"], [time+0.942, "horizontal"],
+                        [time+1.405, "horizontal"], [time+1.879, "horizontal"], [time+2.329, "horizontal"],
+                            
                         [time+2.827, "bomb"],
 
                             // 4-beam
-                        [time+2.827, "vertical"], [time+3.061, "horizontal"], [time+3.269, "vertical"], [time+3.495, "horizontal"], 
+                        [time+2.827, "vertical"], [time+3.061, "horizontal"], [time+3.269, "vertical"], [time+3.495, "horizontal"],
+                        [time+2.827, "bomb"], [time+3.061, "bomb"], [time+3.269, "bomb"], [time+3.495, "bomb"],
 
                             // 6-beat
-                        [time+3.755, "ring"], [time+3.755, "vertical"], [time+4.214, "ring"], [time+4.214, "vertical"],
-                        [time+4.691, "ring"], [time+4.691, "vertical"], [time+5.140, "ring"], [time+5.140, "vertical"],
-                        [time+5.631, "ring"], [time+5.631, "vertical"], [time+6.094, "ring"], [time+6.094, "vertical"],
+                        [time+3.755, "ring"], [time+4.214, "ring"], [time+4.691, "ring"],
+                        [time+5.140, "ring"], [time+5.631, "ring"],  [time+6.094, "ring"],
+                        [time+3.755, "vertical"], [time+4.214, "vertical"], [time+4.691, "vertical"],
+                        [time+5.140, "vertical"], [time+5.631, "vertical"], [time+6.094, "vertical"],
 
                             // 5-beam
                         [time+6.279, "vertical"], [time+6.578, "horizontal"], [time+6.796, "vertical"], [time+7.101, "horizontal"], [time+7.276, "vertical"],
+                        [time+6.279, "bomb"], [time+6.578, "bomb"], [time+6.796, "bomb"], [time+7.101, "bomb"], [time+7.276, "bomb"],
 
                             // drum build up
                         [time+7.509, "bomb"], [time+7.946, "bomb"], [time+8.429, "bomb"], [time+8.903, "bomb"],

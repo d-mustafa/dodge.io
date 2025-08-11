@@ -1,4 +1,4 @@
-console.log("bombs to match the 4-beam and 5-beam")// DODGE.IO - FUNCTIONS.JS
+console.log("bug fix")// DODGE.IO - FUNCTIONS.JS
 function loadingScreen(validInput) {
     if (validInput || endLoading) {
         if (now - loadingGame >= 1000 && gameState == "loading") {

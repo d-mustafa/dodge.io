@@ -214,7 +214,7 @@ function recordLeftClick() {
                             // in-betweens
                         for (let i = 0; i < DBU.length; i++) {
                             if (i < 15) DBU = DBU.concat([[DBU[i][0]+0.242, "horizontal"], [DBU[i][0]+0.356, "vertical"],]);
-                            else if (i < 39) DBU = DBU.concat ([ [DBU[i][0], "horizontal"], [DBU[i][0], "vertical"],]);
+                            else if (i < 39) DBU = DBU.concat([ [DBU[i][0], "horizontal"], [DBU[i][0], "vertical"],]);
                         }
                         return DBU;
                     }
@@ -250,8 +250,8 @@ function recordLeftClick() {
                             // final echo
                         [time+14.538, "ring"],
                         ]
-                            // in-betweens
-                        for (let i = 34; i < 49; i++) { finale = finale.concat([[finale[i][0], "vertical"], [finale[i][0], "horizontal"]]); }
+                            // layers
+                        for (let i = 42; i < finale.length - 1; i++) { finale = finale.concat([ [finale[i][0], "vertical"], [finale[i][0], "horizontal"] ]); }
                         return finale;
                     }
                     music = {var: astralProjection, name: "Astral Projection", artist: "Hallmore",

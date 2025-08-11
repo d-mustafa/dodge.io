@@ -1,4 +1,4 @@
-console.log("Working on Andromeda, aded moer new timestamps")// DODGE.IO - FUNCTIONS.JS
+console.log("back in the fucking game, baby")// DODGE.IO - FUNCTIONS.JS
 function loadingScreen(validInput) {
     if (validInput || endLoading) {
         if (now - loadingGame >= 1000 && gameState == "loading") {
@@ -166,7 +166,7 @@ function recordLeftClick() {
                         [time+0.931, "horizontal"], [time+1.148, "horizontal"], [time+1.406, "vertical"], [time+1.634, "vertical"],
                         ]
                     }
-                    function doubleTriple(time, cutOut=false) {
+                    function doubleTriple(time, cutOut8B=false) {
                         // DT to TD [0.475] // TD to DT [0.493] // DT to 8B [0.49] // 8B to DT [0.222]
                         
                         // double-triple - [0.48, 0.465, 0.189, 0.256]
@@ -184,10 +184,29 @@ function recordLeftClick() {
                                 // 8-beam
                         [time+5.619, "horizontal"], [time+5.844, "horizontal"], [time+6.084, "vertical"], [time+6.314, "vertical"],
                         ];
-                        if (!cutOut) DT = DT.concat([[time+6.550, "horizontal"], [time+6.767, "horizontal"], [time+7.025, "vertical"], [time+7.253, "vertical"],]);
+                        if (!cutOut8B) DT = DT.concat([[time+6.550, "horizontal"], [time+6.767, "horizontal"], [time+7.025, "vertical"], [time+7.253, "vertical"],]);
                         return DT
                     }
-                    
+                    function drumBuildUp(time) { // 31.925
+                        return [// 15-bomb (16th cuts out) // avg 0.470
+                        [time, "bomb"], [time+0.479, "bomb"], [time+0.912, "bomb"], [time+1.411, "bomb"], [time+1.885, "bomb"],
+                        [time+2.356, "bomb"], [time+2.819, "bomb"], [time+3.296, "bomb"], [time+3.761, "bomb"], [time+4.236, "bomb"],
+                        [time+4.695, "bomb"], [time+5.165, "bomb"], [time+5.638, "bomb"], [time+6.106, "bomb"], [time+6.575, "bomb"],
+
+                            // 16-bomb, drum tempo increased // avg 0.235
+                        [time+7.509, "bomb"], [time+7.744, "bomb"], [time+7.979, "bomb"], [time+8.214, "bomb"],
+                        [time+8.449, "bomb"], [time+8.684, "bomb"], [time+8.919, "bomb"], [time+9.153, "bomb"],
+                        [time+9.386, "bomb"], [time+9.619, "bomb"], [time+9.857, "bomb"], [time+10.088, "bomb"],
+                        [time+10.317, "bomb"], [time+10.556, "bomb"], [time+10.798, "bomb"], [time+11.019, "bomb"],
+                            
+                            // accelerando // 0.225, 0.24, 0.23, 0.236, 0.217, 0.258, 0.228
+                        [time+11.265, "bomb"], [time+11.500, "bomb"], [time+11.732, "bomb"], [time+11.952, "bomb"],
+                        [time+12.195, "bomb"], [time+12.425, "bomb"], [time+12.738, "bomb"], [time+12.671, "bomb"],
+
+                            // quintuple ring
+                        [time+13.140, "ring"], [time+13.610, "ring"], [time+14.077, "ring"], [time+14.547, "ring"], [time+14.780, "ring"],
+                        ]
+                    }
                     music = {var: astralProjection, name: "Astral Projection", artist: "Hallmore",
                              color: "rgb(220, 220, 220)", subColor: "rgb(240, 240, 240)", textColor: "rgb(0, 0, 0)",
                              timestamps: []
@@ -197,6 +216,7 @@ function recordLeftClick() {
                     music.timestamps = music.timestamps.concat(doubleTriple(music.timestamps[music.timestamps.length-1][0]+0.222));
                     music.timestamps = music.timestamps.concat(doubleTriple(music.timestamps[music.timestamps.length-1][0]+0.222));
                     music.timestamps = music.timestamps.concat(doubleTriple(music.timestamps[music.timestamps.length-1][0]+0.222), true);
+                    music.timestamps = music.timestamps.concat(drumBuildUp(31.925));
                     music.timestamps = music.timestamps.map(x => [x[0]-0.025, x[1]]);
                     /*
                     let secondsPerBeat = 60 / 128;

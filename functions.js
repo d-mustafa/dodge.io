@@ -1,4 +1,4 @@
-console.log("beams inbetween bombs")// DODGE.IO - FUNCTIONS.JS
+console.log("most of the song is now complete")// DODGE.IO - FUNCTIONS.JS
 function loadingScreen(validInput) {
     if (validInput || endLoading) {
         if (now - loadingGame >= 1000 && gameState == "loading") {
@@ -166,7 +166,7 @@ function recordLeftClick() {
                         [time+0.931, "horizontal"], [time+1.148, "horizontal"], [time+1.406, "vertical"], [time+1.634, "vertical"],
                         ]
                     }
-                    function doubleTriple(time, ending="8-beam") {
+                    function doubleTriple(time, ending="none", addon="none") {
                         // DT to TD [0.475] // TD to DT [0.493] // DT to 8B [0.49] // 8B to DT [0.222]
                         
                         // double-triple - [0.48, 0.465, 0.189, 0.256]
@@ -182,6 +182,7 @@ function recordLeftClick() {
                                 // silent double-triple
                         /*[time+3.739, "vertical"],*/ [time+4.219, "horizontal"], [time+4.684, "vertical"], [time+4.873, "horizontal"], [time+5.129, "vertical"],
                         ];
+                        if (addon === "bombs") DT = DT.concat([[time, "bomb"], [time+0.48, "bomb"], [time+4.219, "bomb"],])
                         // 8-beam
                         if (ending === "8-beam" || ending === "8-beam-cutout") DT = DT.concat([[time+5.619, "horizontal"], [time+5.844, "horizontal"], [time+6.084, "vertical"], [time+6.314, "vertical"],]);
                         if (ending === "8-beam") DT = DT.concat([[time+6.550, "horizontal"], [time+6.767, "horizontal"], [time+7.025, "vertical"], [time+7.253, "vertical"],]);
@@ -224,15 +225,26 @@ function recordLeftClick() {
                     // structure
                     music.timestamps = music.timestamps.concat(solo8Beam(0.075));
                     music.timestamps = music.timestamps.concat(doubleTriple(1.931, "8-beam"));
-                    music.timestamps = music.timestamps.concat(doubleTriple(music.timestamps[music.timestamps.length-1][0]+0.222, "8-beam"));
-                    music.timestamps = music.timestamps.concat(doubleTriple(music.timestamps[music.timestamps.length-1][0]+0.222, "8-beam"));
-                    music.timestamps = music.timestamps.concat(doubleTriple(music.timestamps[music.timestamps.length-1][0]+0.222, "8-beam-cutout"));
+                    music.timestamps = music.timestamps.concat(doubleTriple(9.433, "8-beam"));
+                    music.timestamps = music.timestamps.concat(doubleTriple(16.931, "8-beam"));
+                    music.timestamps = music.timestamps.concat(doubleTriple(24.435, "8-beam-cutout"));
                     music.timestamps = music.timestamps.concat(drumBuildUp(31.925));
-                    music.timestamps = music.timestamps.concat(doubleTriple(46.959, "8-beam"));
-                    music.timestamps = music.timestamps.concat(doubleTriple(54.459, "quintuple"));
-                    music.timestamps = music.timestamps.concat(doubleTriple(61.935, "8-beam"));
-                    music.timestamps = music.timestamps.concat(doubleTriple(69.393, "none"));
+                    music.timestamps = music.timestamps.concat(doubleTriple(46.959, "8-beam", "bombs"));
+                    music.timestamps = music.timestamps.concat(doubleTriple(54.459, "quintuple", "bombs"));
+                    music.timestamps = music.timestamps.concat(doubleTriple(61.935, "8-beam", "bombs"));
+                    music.timestamps = music.timestamps.concat(doubleTriple(69.393, "none", "bombs"));
                     music.timestamps = music.timestamps.concat([[76.461, "ring"]]);
+                    for (let i = 0; i < 8; i++) {
+                        music.timestamps = music.timestamps.concat(solo8Beam(84.430+(1.882*i)));
+                    }
+                    music.timestamps = music.timestamps.concat(doubleTriple(99.437, "8-beam"));
+                    music.timestamps = music.timestamps.concat(doubleTriple(106.925, "8-beam-cutout"));
+                    music.timestamps = music.timestamps.concat(drumBuildUp(114.417));
+                    music.timestamps = music.timestamps.concat(doubleTriple(129.431, "8-beam", "bombs"));
+                    music.timestamps = music.timestamps.concat(doubleTriple(136.390, "quintuple", "bombs"));
+                    music.timestamps = music.timestamps.concat(doubleTriple(144.438, "8-beam", "bombs"));
+                    music.timestamps = music.timestamps.concat(doubleTriple(151.909, "8-beam", "bombs"));
+                    
                     music.timestamps = music.timestamps.map(x => [x[0]-0.025, x[1]]);
                 }
                 if (mouseOver?.divine) {

@@ -1,4 +1,4 @@
-console.log("bug fix")// DODGE.IO - FUNCTIONS.JS
+console.log("infinite loop i think")// DODGE.IO - FUNCTIONS.JS
 function loadingScreen(validInput) {
     if (validInput || endLoading) {
         if (now - loadingGame >= 1000 && gameState == "loading") {
@@ -251,7 +251,7 @@ function recordLeftClick() {
                         [time+14.538, "ring"],
                         ]
                             // layers
-                        for (let i = 42; i < finale.length - 1; i++) { finale = finale.concat([ [finale[i][0], "vertical"], [finale[i][0], "horizontal"] ]); }
+                        for (let i = 42; i < 58; i++) { finale = finale.concat([ [finale[i][0], "vertical"], [finale[i][0], "horizontal"] ]); }
                         return finale;
                     }
                     music = {var: astralProjection, name: "Astral Projection", artist: "Hallmore",

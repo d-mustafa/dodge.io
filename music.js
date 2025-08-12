@@ -1,4 +1,4 @@
-console.log("compass spikes");// DODGE.IO - MUSIC.JS
+console.log("w: 2, h: 1.5");// DODGE.IO - MUSIC.JS
 function restartMusicMode() {
     allEnemies = [];
     player.lives = 3;
@@ -247,29 +247,31 @@ function spawnAndDrawDanger() {
         }
         else if (danger.type === "spike") {
             drawCircle(danger.x, danger.y, danger.r);
+            let w = 2;
+            let h = 1.5;
             // Top Spike
             ctx.beginPath();
-            ctx.moveTo(danger.x-danger.r/3, danger.y-danger.r/3);
-            ctx.lineTo(danger.x, danger.y - danger.r*2);
-            ctx.lineTo(danger.x+danger.r/3, danger.y-danger.r/3);
+            ctx.moveTo(danger.x-danger.r/w, danger.y-danger.r/w);
+            ctx.lineTo(danger.x, danger.y - danger.r*h);
+            ctx.lineTo(danger.x+danger.r/w, danger.y-danger.r/w);
             ctx.fill();
             // Bottom Spike
             ctx.beginPath();
-            ctx.moveTo(danger.x-danger.r/3, danger.y+danger.r/3);
-            ctx.lineTo(danger.x, danger.y + danger.r*2);
-            ctx.lineTo(danger.x+danger.r/3, danger.y+danger.r/3);
+            ctx.moveTo(danger.x-danger.r/w, danger.y+danger.r/w);
+            ctx.lineTo(danger.x, danger.y + danger.r*h);
+            ctx.lineTo(danger.x+danger.r/w, danger.y+danger.r/w);
             ctx.fill();
             // Left Spike
             ctx.beginPath();
-            ctx.moveTo(danger.x-danger.r/3, danger.y-danger.r/3);
-            ctx.lineTo(danger.x-danger.r*2, danger.y);
-            ctx.lineTo(danger.x-danger.r/3, danger.y+danger.r/3);
+            ctx.moveTo(danger.x-danger.r/w, danger.y-danger.r/w);
+            ctx.lineTo(danger.x-danger.r*h, danger.y);
+            ctx.lineTo(danger.x-danger.r/w, danger.y+danger.r/w);
             ctx.fill();
             // Right Spike
             ctx.beginPath();
-            ctx.moveTo(danger.x+danger.r/3, danger.y-danger.r/3);
-            ctx.lineTo(danger.x+danger.r*2, danger.y);
-            ctx.lineTo(danger.x+danger.r/3, danger.y+danger.r/3);
+            ctx.moveTo(danger.x+danger.r/w, danger.y-danger.r/w);
+            ctx.lineTo(danger.x+danger.r*h, danger.y);
+            ctx.lineTo(danger.x+danger.r/w, danger.y+danger.r/);
             ctx.fill()
             
             if (danger.colorValue >= 255 && !danger.launched) {

@@ -1,4 +1,4 @@
-console.log("fixed aiming");// DODGE.IO - MUSIC.JS
+console.log("spikes spikes");// DODGE.IO - MUSIC.JS
 function restartMusicMode() {
     allEnemies = [];
     player.lives = 3;
@@ -39,10 +39,10 @@ function drawEndLevel() {
     if (timeLeft <= 0 || innerGameState === "musicModeFail") {
         let exitX = 150;
         let exitY = (cnv.height/2 - 100);
-        let inExitRect = player.x + player.radius <= exitX + 200 && player.x - player.radius >= exitX && player.y + player.radius <= exitY + 200 && player.y - player.radius >= exitY;
+        let inExitRect = player.x + player.r <= exitX + 200 && player.x - player.r >= exitX && player.y + player.r <= exitY + 200 && player.y - player.r >= exitY;
         let redoX = 450;
         let redoY = (cnv.height/2 - 100);
-        let inRedoRect = player.x + player.radius <= redoX + 200 && player.x - player.radius >= redoX && player.y + player.radius <= redoY + 200 && player.y - player.radius >= redoY;
+        let inRedoRect = player.x + player.r <= redoX + 200 && player.x - player.r >= redoX && player.y + player.r <= redoY + 200 && player.y - player.r >= redoY;
         
         // Exit Rect
         if (timeLeft <= 0) ctx.fillStyle = "rgb(0, 235, 0)";
@@ -247,13 +247,21 @@ function spawnAndDrawDanger() {
         }
         else if (danger.type === "spike") {
             drawCircle(danger.x, danger.y, danger.r);
+            // Top Spike
+            ctx.beginPath();
+            ctx.moveTo(danger.x-danger.r/3, danger.y-danger.r/3);
+            ctx.lineTo(danger.x, danger.y - danger.r*2);
+            ctx.lineTo(danger.x+danger.r/3, danger.y-danger.r/3);
+            ctx.fill();
+
+            
             if (danger.colorValue >= 255 && !danger.launched) {
-                const dx = player.x - spike.x;
-                const dy = player.y - spike.y;
+                const dx = player.x - danger.x;
+                const dy = player.y - danger.y;
                 const dist = Math.hypot(dx, dy);
-                spike.movex = (dx/dist)*spike.speed;
-                spike.movey = (dy/dist)*spike.speed;
-                spike.facingAngle = Math.atan2(dx, dy);
+                danger.movex = (dx/dist)*danger.speed;
+                danger.movey = (dy/dist)*danger.speed;
+                danger.facingAngle = Math.atan2(dx, dy);
                 danger.launched = true;
             }
             
@@ -267,11 +275,12 @@ function spawnAndDrawDanger() {
 
 function musicCollisions() {
     allEnemies.forEach(danger => {
+        const distance = Math.hypot(player.x-danger.x, player.y-danger.y);
         if (timeLeft > 0 && innerGameState !== "musicModeFail" && danger.colorValue >= 250 &&
             now-player.hit >= 1500 && !dash.activated && now-dash.lastEnded >= 300) {
             if (danger.type === "beam") {
-                if ((danger.variant === "vertical" && player.x+player.radius >= danger.x && player.x-player.radius <= danger.x+danger.w) ||
-                   (danger.variant === "horizontal" && player.y+player.radius >= danger.y && player.y-player.radius <= danger.y+danger.h)) {
+                if ((danger.variant === "vertical" && player.x+player.r >= danger.x && player.x-player.r <= danger.x+danger.w) ||
+                   (danger.variant === "horizontal" && player.y+player.r >= danger.y && player.y-player.r <= danger.y+danger.h)) {
                     player.lives--;
                     player.hit = Date.now();
                     sharpPop.currentTime = 0;
@@ -279,10 +288,9 @@ function musicCollisions() {
                 }
             }
             if (danger.type === "circle") {
-                let distance = Math.hypot(player.x-danger.x, player.y-danger.y);
-                if ((danger.variant === "bomb" && distance <= danger.r+player.radius) ||
-                   (danger.variant === "ring" && distance <= danger.r+danger.lineWidth/2+player.radius &&
-                    distance >= danger.r-danger.lineWidth/2-player.radius)) {
+                if ((danger.variant === "bomb" && distance <= danger.r+player.r) ||
+                   (danger.variant === "ring" && distance <= danger.r+danger.lineWidth/2+player.r &&
+                    distance >= danger.r-danger.lineWidth/2-player.r)) {
                     player.lives--;
                     player.hit = Date.now();
                     sharpPop.currentTime = 0;
@@ -290,7 +298,6 @@ function musicCollisions() {
                 }
             }
             if (danger.type === "spike") {
-                let distance = Math.hypot(player.x-danger.x, player.y-danger.y);
                 if (distance <= danger.r+player.r) {
                     player.lives--;
                     player.hit = Date.now();

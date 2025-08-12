@@ -1,4 +1,4 @@
-console.log("2 enemies arrays")// DODGE.IO - SCRIPT.JS
+console.log("dangers arrays")// DODGE.IO - SCRIPT.JS
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 
@@ -335,6 +335,7 @@ function draw() {
     requestAnimationFrame(draw)
 }
 draw()
+
 
 
 

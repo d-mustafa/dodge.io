@@ -1,4 +1,4 @@
-console.log("player.r")// DODGE.IO - SCRIPT.JS
+console.log("r: 15,")// DODGE.IO - SCRIPT.JS
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 
@@ -332,4 +332,5 @@ function draw() {
     requestAnimationFrame(draw)
 }
 draw()
+
 

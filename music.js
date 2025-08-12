@@ -1,4 +1,4 @@
-console.log("spikes spikes");// DODGE.IO - MUSIC.JS
+console.log("compass spikes");// DODGE.IO - MUSIC.JS
 function restartMusicMode() {
     allEnemies = [];
     player.lives = 3;
@@ -253,7 +253,24 @@ function spawnAndDrawDanger() {
             ctx.lineTo(danger.x, danger.y - danger.r*2);
             ctx.lineTo(danger.x+danger.r/3, danger.y-danger.r/3);
             ctx.fill();
-
+            // Bottom Spike
+            ctx.beginPath();
+            ctx.moveTo(danger.x-danger.r/3, danger.y+danger.r/3);
+            ctx.lineTo(danger.x, danger.y + danger.r*2);
+            ctx.lineTo(danger.x+danger.r/3, danger.y+danger.r/3);
+            ctx.fill();
+            // Left Spike
+            ctx.beginPath();
+            ctx.moveTo(danger.x-danger.r/3, danger.y-danger.r/3);
+            ctx.lineTo(danger.x-danger.r*2, danger.y);
+            ctx.lineTo(danger.x-danger.r/3, danger.y+danger.r/3);
+            ctx.fill();
+            // Right Spike
+            ctx.beginPath();
+            ctx.moveTo(danger.x+danger.r/3, danger.y-danger.r/3);
+            ctx.lineTo(danger.x+danger.r*2, danger.y);
+            ctx.lineTo(danger.x+danger.r/3, danger.y+danger.r/3);
+            ctx.fill()
             
             if (danger.colorValue >= 255 && !danger.launched) {
                 const dx = player.x - danger.x;

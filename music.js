@@ -271,8 +271,8 @@ function spawnAndDrawDanger() {
             ctx.beginPath();
             ctx.moveTo(danger.x+danger.r/w, danger.y-danger.r/w);
             ctx.lineTo(danger.x+danger.r*h, danger.y);
-            ctx.lineTo(danger.x+danger.r/w, danger.y+danger.r/);
-            ctx.fill()
+            ctx.lineTo(danger.x+danger.r/w, danger.y+danger.r/w);
+            ctx.fill();
             
             if (danger.colorValue >= 255 && !danger.launched) {
                 const dx = player.x - danger.x;

@@ -1,4 +1,4 @@
-console.log("w: 2, h: 1.5");// DODGE.IO - MUSIC.JS
+console.log("despawning 'n stuf");// DODGE.IO - MUSIC.JS
 function restartMusicMode() {
     allEnemies = [];
     player.lives = 3;
@@ -114,6 +114,7 @@ function createBeam(variant="none") {
         get color() {
             return `rgb(${this.colorValue}, ${this.colorValue}, ${this.colorValue})`;
         },
+        despawn: false,
     }
     if (beam.variant > 0.5) beam.variant = "vertical";
     else beam.variant = "horizontal";
@@ -136,6 +137,7 @@ function createCircle(variant="none") {
         get lineWidth() {
             return this.r;
         },
+        despawn: false,
     }
     if (circle.variant > 0.5) circle.variant = "bomb";
     else circle.variant = "ring";
@@ -152,27 +154,27 @@ function createSpike(variant="none") {
         y: Math.random() * cnv.height,
         r: (Math.random() * 10) + 10,
         rotate: 0,
-        speed: 2,
-        launched: false,
         colorValue: 185,
         get color() {
             return `rgb(${this.colorValue}, ${this.colorValue}, ${this.colorValue})`;
         },
+        get speed() {
+            return 2 + 3 * (music.var.currentTime/music.var.duration);
+        },
+        launched: false,
         get reachedWall() {
-            if (this.colorValue >= 255) {
-                if (this.x - this.r - 2 < 0 || this.x + this.r + 2 > cnv.width ||
-                    this.y - this.r - 2 < 0 || this.y + this.r + 2 > cnv.height) {
-                    return true
-                }
+            if (this.x - this.r * 1.5 < 0 || this.x + this.r * 1.5 > cnv.width ||
+                this.y - this.r * 1.5 < 0 || this.y + this.r * 1.5 > cnv.height && this.launched) {
+                return true
             }
             else return false
         },
     }
     const rand = Math.random();
-    if (rand < 0.25) spike.x = spike.r + 2;
-    else if (rand < 0.5) spike.x = cnv.width - spike.r - 2;
-    else if (rand < 0.75) spike.y = spike.r + 2;
-    else if (rand < 1) spike.y = cnv.height - spike.r - 2;
+    if (rand < 0.25) spike.x = spike.r * 1.5;
+    else if (rand < 0.5) spike.x = cnv.width - spike.r * 1.5;
+    else if (rand < 0.75) spike.y = spike.r * 1.5;
+    else if (rand < 1) spike.y = cnv.height - spike.r * 1.5;
     
     if (variant !== "none") spike.variant = variant;
     allEnemies.unshift(spike);
@@ -208,7 +210,6 @@ function spawnAndDrawDanger() {
                     allEnemies[0].y = player.y;
                 } else if (dangerType === "spike") {
                     createSpike();
-
                     // spikes aim and shoot at the player
                 }
                 music.timestamps.splice(i, 1);
@@ -218,13 +219,13 @@ function spawnAndDrawDanger() {
 
     // Enemy Deleting
     function keepDanger(danger) {
-        if (danger.colorValue < 255) return true;
-        else if (danger.colorValue >= 255) {
-            if (danger.type !== "spike") return false
-            if (danger.type === "spike") {
-                if (danger.reachedWall) return false
-                else return true;
-            }
+        if (danger.type !== "spike") {
+            if (danger.despawn && danger.colorValue <= 185) return false
+            else return true;
+        }
+        else if (danger.type === "spike") {
+            if (danger.reachedWall && danger.colorValue <= 185) return false
+            else return true;
         }
     }
     allEnemies = allEnemies.filter(danger => keepDanger(danger));
@@ -233,7 +234,11 @@ function spawnAndDrawDanger() {
     allEnemies.forEach(danger => {
         ctx.fillStyle = danger.color;
         ctx.strokeStyle = danger.color;
-        if (danger.colorValue <= 255) danger.colorValue += 0.25;
+        if (danger.type !== "spike") {
+            if (danger.colorValue >= 255) danger.despawn = true;
+            if (danger.colorValue <= 255 && !danger.despawn) danger.colorValue += 0.25;
+            if (danger.colorValue >= 185 && danger.despawn) danger.colorValue -= 1;
+        }
         
         if (danger.type === "beam") {
             if (danger.variant === "vertical") ctx.fillRect(danger.x, 0, danger.w, cnv.height);
@@ -247,40 +252,58 @@ function spawnAndDrawDanger() {
             }
         }
         else if (danger.type === "spike") {
+            if (danger.colorValue <= 255 && !danger.reachedWall) danger.colorValue += 0.25;
+            else if (danger.colorValue >= 185 && danger.reachedWall) danger.colorValue -= 0.5;
+            
             drawCircle(danger.x, danger.y, danger.r);
             let w = 1.75;
             let h = 1.5;
-            
+            function draw4Spikes() {
+                // Top Spike
+                ctx.beginPath();
+                ctx.moveTo(-danger.r/w, -danger.r/w);
+                ctx.lineTo(0, -danger.r*h);
+                ctx.lineTo(danger.r/w, -danger.r/w);
+                ctx.fill();
+                // Bottom Spike
+                ctx.beginPath();
+                ctx.moveTo(-danger.r/w, danger.r/w);
+                ctx.lineTo(0, danger.r*h);
+                ctx.lineTo(danger.r/w, danger.r/w);
+                ctx.fill();
+                // Left Spike
+                ctx.beginPath();
+                ctx.moveTo(-danger.r/w, -danger.r/w);
+                ctx.lineTo(-danger.r*h, 0);
+                ctx.lineTo(-danger.r/w, danger.r/w);
+                ctx.fill();
+                // Right Spike
+                ctx.beginPath();
+                ctx.moveTo(danger.r/w, -danger.r/w);
+                ctx.lineTo(danger.r*h, 0);
+                ctx.lineTo(danger.r/w, danger.r/w);
+                ctx.fill();
+            }
+  
             ctx.save();
             ctx.translate(danger.x, danger.y);
             ctx.rotate(danger.rotate);
-            // Top Spike
-            ctx.beginPath();
-            ctx.moveTo(-danger.r/w, -danger.r/w);
-            ctx.lineTo(0, -danger.r*h);
-            ctx.lineTo(danger.r/w, -danger.r/w);
-            ctx.fill();
-            // Bottom Spike
-            ctx.beginPath();
-            ctx.moveTo(-danger.r/w, danger.r/w);
-            ctx.lineTo(0, danger.r*h);
-            ctx.lineTo(danger.r/w, danger.r/w);
-            ctx.fill();
-            // Left Spike
-            ctx.beginPath();
-            ctx.moveTo(-danger.r/w, -danger.r/w);
-            ctx.lineTo(-danger.r*h, 0);
-            ctx.lineTo(-danger.r/w, danger.r/w);
-            ctx.fill();
-            // Right Spike
-            ctx.beginPath();
-            ctx.moveTo(danger.r/w, -danger.r/w);
-            ctx.lineTo(danger.r*h, 0);
-            ctx.lineTo(danger.r/w, danger.r/w);
-            ctx.fill();
-            
+            draw4Spikes();
             ctx.restore();
-            danger.rotate += 0;
+            
+            ctx.save();
+            ctx.translate(danger.x, danger.y);
+            ctx.rotate((Math.PI/3)+danger.rotate);
+            draw4Spikes();
+            ctx.restore();
+
+            ctx.save();
+            ctx.translate(danger.x, danger.y);
+            ctx.rotate((Math.PI/6)+danger.rotate);
+            draw4Spikes();
+            ctx.restore();
+            
+            danger.rotate += Math.PI/100;
             
             if (danger.colorValue >= 255 && !danger.launched) {
                 const dx = player.x - danger.x;
@@ -303,7 +326,7 @@ function spawnAndDrawDanger() {
 function musicCollisions() {
     allEnemies.forEach(danger => {
         const distance = Math.hypot(player.x-danger.x, player.y-danger.y);
-        if (timeLeft > 0 && innerGameState !== "musicModeFail" && danger.colorValue >= 250 &&
+        if (timeLeft > 0 && innerGameState !== "musicModeFail" && danger.colorValue >= 255 &&
             now-player.hit >= 1500 && !dash.activated && now-dash.lastEnded >= 300) {
             if (danger.type === "beam") {
                 if ((danger.variant === "vertical" && player.x+player.r >= danger.x && player.x-player.r <= danger.x+danger.w) ||

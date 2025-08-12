@@ -1,4 +1,4 @@
-console.log("loopAudio()")// DODGE.IO - SCRIPT.JS
+console.log("player.r")// DODGE.IO - SCRIPT.JS
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 
@@ -66,7 +66,7 @@ window.addEventListener('mousemove', (event) => {
 let player = {
     x: cnv.width/2,
     y: cnv.height/2,
-    radius: 15,
+    r: 15,
     speed: 2.5,
     slowed: 1,
     dodger: "evader",
@@ -332,3 +332,4 @@ function draw() {
     requestAnimationFrame(draw)
 }
 draw()
+

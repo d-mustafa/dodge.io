@@ -183,13 +183,13 @@ function recordLeftClick() {
                         /*[time+3.739, "vertical"],*/ [time+4.219, "horizontal"], [time+4.684, "vertical"], [time+4.873, "horizontal"], [time+5.129, "vertical"],
                         ];
                         // 8-beam
-                        if (ending === "8-beam" || ending === "8-beam-cutout") DT = DT.concat([[time+5.619, "horizontal"], [time+5.844, "horizontal"], [time+6.084, "vertical"], [time+6.314, "vertical"],]);
-                        if (ending === "8-beam") DT = DT.concat([[time+6.550, "horizontal"], [time+6.767, "horizontal"], [time+7.025, "vertical"], [time+7.253, "vertical"],]);
+                        if (ending === "8-beam" || ending === "8-beam-cutout") DT.push([time+5.619, "horizontal"], [time+5.844, "horizontal"], [time+6.084, "vertical"], [time+6.314, "vertical"]);
+                        if (ending === "8-beam") DT.push([time+6.550, "horizontal"], [time+6.767, "horizontal"], [time+7.025, "vertical"], [time+7.253, "vertical"]);
                         // quintuple
-                        if (ending === "quintuple") DT = DT.concat([[time+5.608, "ring"], [time+6.078, "ring"], [time+6.545, "ring"], [time+7.015, "ring"], [time+7.248, "ring"],]);
+                        if (ending === "quintuple") DT.push([time+5.608, "ring"], [time+6.078, "ring"], [time+6.545, "ring"], [time+7.015, "ring"], [time+7.248, "ring"]);
                         // addon
-                        if (addon === "bombs") DT = DT.concat([[time, "bomb"], [time+0.945, "bomb"], [time+1.865, "bomb"], [time+2.818, "bomb"], [time+3.739, "bomb"], [time+4.684, "bomb"],]);
-                        if (addon === "bombs" && ending === "8-beam") DT = DT.concat([[time+5.619, "bomb"], [time+6.550, "bomb"],])
+                        if (addon === "bombs") DT.push([time, "bomb"], [time+0.945, "bomb"], [time+1.865, "bomb"], [time+2.818, "bomb"], [time+3.739, "bomb"], [time+4.684, "bomb"]);
+                        if (addon === "bombs" && ending === "8-beam") DT.push([time+5.619, "bomb"], [time+6.550, "bomb"])
                         return DT;
                     }
                     function drumBuildUp(time) {
@@ -213,8 +213,8 @@ function recordLeftClick() {
                         ];
                             // in-betweens
                         for (let i = 0; i < DBU.length; i++) {
-                            if (i < 15) DBU = DBU.concat([[DBU[i][0]+0.242, "horizontal"], [DBU[i][0]+0.356, "vertical"],]);
-                            else if (i < 39) DBU = DBU.concat([ [DBU[i][0], "horizontal"], [DBU[i][0], "vertical"],]);
+                            if (i < 15) DBU.push([DBU[i][0]+0.242, "horizontal"], [DBU[i][0]+0.356, "vertical"]);
+                            else if (i < 39) DBU.push([DBU[i][0], "horizontal"], [DBU[i][0], "vertical"]);
                         }
                         return DBU;
                     }
@@ -251,40 +251,37 @@ function recordLeftClick() {
                         [time+14.538, "ring"],
                         ]
                             // layers
-                        for (let i = 43; i < 58; i++) { finale = finale.concat([ [finale[i][0], "vertical"], [finale[i][0], "horizontal"] ]); }
+                        for (let i = 43; i < 58; i++) { finale.push([finale[i][0], "vertical"], [finale[i][0], "horizontal"]); }
                         return finale;
                     }
                     music = {var: astralProjection, name: "Astral Projection", artist: "Hallmore",
                              color: "rgb(220, 220, 220)", subColor: "rgb(240, 240, 240)", textColor: "rgb(0, 0, 0)",
-                             timestamps: []
+                             timestamps: [],
                             };
                     // structure
                     music.timestamps = music.timestamps.concat(solo8Beam(0.075));
-                    music.timestamps = music.timestamps.concat(doubleTriple(1.931, "8-beam"));
-                    music.timestamps = music.timestamps.concat(doubleTriple(9.433, "8-beam"));
-                    music.timestamps = music.timestamps.concat(doubleTriple(16.931, "8-beam"));
-                    music.timestamps = music.timestamps.concat(doubleTriple(24.435, "8-beam-cutout"));
+                    music.timestamps = music.timestamps.concat(doubleTriple(1.931, "8-beam"), doubleTriple(9.433, "8-beam"));
+                    music.timestamps = music.timestamps.concat(doubleTriple(16.931, "8-beam"), doubleTriple(24.435, "8-beam-cutout"));
                     music.timestamps = music.timestamps.concat(drumBuildUp(31.925));
-                    music.timestamps = music.timestamps.concat(doubleTriple(46.959, "8-beam", "bombs"));
-                    music.timestamps = music.timestamps.concat(doubleTriple(54.459, "quintuple", "bombs"));
-                    music.timestamps = music.timestamps.concat(doubleTriple(61.935, "8-beam", "bombs"));
-                    music.timestamps = music.timestamps.concat(doubleTriple(69.393, "none", "bombs"));
+                    music.timestamps = music.timestamps.concat(doubleTriple(46.959, "8-beam", "bombs"), doubleTriple(54.459, "quintuple", "bombs"));
+                    music.timestamps = music.timestamps.concat(doubleTriple(61.935, "8-beam", "bombs"), doubleTriple(69.393, "none", "bombs"));
                     music.timestamps = music.timestamps.concat([[76.461, "ring"]]);
+                    // 8 consecutive solo 8-beams
                     for (let i = 0; i < 8; i++) { music.timestamps = music.timestamps.concat(solo8Beam(84.430+(1.882*i))); }
-                    music.timestamps = music.timestamps.concat(doubleTriple(99.437, "8-beam"));
-                    music.timestamps = music.timestamps.concat(doubleTriple(106.925, "8-beam-cutout"));
+                    music.timestamps = music.timestamps.concat(doubleTriple(99.437, "8-beam"), doubleTriple(106.925, "8-beam-cutout"));
                     music.timestamps = music.timestamps.concat(drumBuildUp(114.417));
-                    music.timestamps = music.timestamps.concat(doubleTriple(129.431, "8-beam", "bombs"));
-                    music.timestamps = music.timestamps.concat(doubleTriple(136.390, "quintuple", "bombs"));
-                    music.timestamps = music.timestamps.concat(doubleTriple(144.438, "8-beam", "bombs"));
-                    music.timestamps = music.timestamps.concat(doubleTriple(151.909, "8-beam", "bombs"));
+                    music.timestamps = music.timestamps.concat(doubleTriple(129.431, "8-beam", "bombs"), doubleTriple(136.390, "quintuple", "bombs"));
+                    music.timestamps = music.timestamps.concat(doubleTriple(144.438, "8-beam", "bombs"), doubleTriple(151.909, "8-beam", "bombs"));
                     music.timestamps = music.timestamps.concat(ending(159.426));
                     music.timestamps = music.timestamps.map(x => [x[0]-0.025, x[1]]);
                 }
                 if (mouseOver?.divine) {
                     music = {var: divine, name: "Divine", artist: "SOTAREKO",
                              color: "rgb(223, 255, 156)", subColor: "rgb(224, 255, 232)", textColor: "rgb(255, 165, 252)",
-                             timestamps: [],};
+                             timestamps: [[16.730, "horizontal"], [17.268, "vertical"], [17.835, "horizontal"], [18.400, "vertical"]],};
+                    for (let i = 1; i < 16; i++) {
+                        music.timestamps.push([i, "ring"]);
+                    }
                 }
                 music.backUpTS = [...music.timestamps];
                 mouseMovementOn = previousMM;

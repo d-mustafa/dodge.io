@@ -1,4 +1,4 @@
-console.log("finnaly working on spikezzzzz");// DODGE.IO - MUSIC.JS
+console.log("fixed aiming");// DODGE.IO - MUSIC.JS
 function restartMusicMode() {
     allEnemies = [];
     player.lives = 3;
@@ -151,14 +151,16 @@ function createSpike(variant="none") {
         x: Math.random() * cnv.width,
         y: Math.random() * cnv.height,
         r: (Math.random() * 10) + 10,
+        speed: 2,
+        launched: false,
         colorValue: 185,
         get color() {
             return `rgb(${this.colorValue}, ${this.colorValue}, ${this.colorValue})`;
         },
         get reachedWall() {
             if (this.colorValue >= 255) {
-                if (this.x - this.r < 0 || this.x + this.r > cnv.width ||
-                    this.y - this.r < 0 || this.y + this.r > cnv.height) {
+                if (this.x - this.r - 2 < 0 || this.x + this.r + 2 > cnv.width ||
+                    this.y - this.r - 2 < 0 || this.y + this.r + 2 > cnv.height) {
                     return true
                 }
             }
@@ -166,18 +168,10 @@ function createSpike(variant="none") {
         },
     }
     const rand = Math.random();
-    if (rand < 0.25) spike.x = 0 + spike.r;
-    else if (rand < 0.5) spike.x = cnv.width - spike.r;
-    else if (rand < 0.75) spike.y = 0 + spike.r;
-    else if (rand < 1) spike.y = cnv.height - spike.r;
-
-    const dx = player.x - spike.x;
-    const dy = player.y - spike.y;
-    const dist = Math.hypot(dx, dy);
-    
-    spike.facingAngle = Math.atan2(dx, dy);
-    spike.movex = (dx/dist)*2;
-    spike.movey = (dx/dist)*2;
+    if (rand < 0.25) spike.x = spike.r + 2;
+    else if (rand < 0.5) spike.x = cnv.width - spike.r - 2;
+    else if (rand < 0.75) spike.y = spike.r + 2;
+    else if (rand < 1) spike.y = cnv.height - spike.r - 2;
     
     if (variant !== "none") spike.variant = variant;
     allEnemies.unshift(spike);
@@ -253,6 +247,16 @@ function spawnAndDrawDanger() {
         }
         else if (danger.type === "spike") {
             drawCircle(danger.x, danger.y, danger.r);
+            if (danger.colorValue >= 255 && !danger.launched) {
+                const dx = player.x - spike.x;
+                const dy = player.y - spike.y;
+                const dist = Math.hypot(dx, dy);
+                spike.movex = (dx/dist)*spike.speed;
+                spike.movey = (dy/dist)*spike.speed;
+                spike.facingAngle = Math.atan2(dx, dy);
+                danger.launched = true;
+            }
+            
             if (danger.colorValue >= 255 && !danger.reachedWall) {
                 danger.x += danger.movex;
                 danger.y += danger.movey;

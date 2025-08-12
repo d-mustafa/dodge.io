@@ -98,6 +98,7 @@ let settings = {
 };
 
 let allEnemies = [];
+let despawningEnemies = [];
 
 // Time, Highscore, and Difficulty
 let now = Date.now();
@@ -332,5 +333,6 @@ function draw() {
     requestAnimationFrame(draw)
 }
 draw()
+
 
 

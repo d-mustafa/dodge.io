@@ -1,4 +1,4 @@
-console.log("dangers arrays")// DODGE.IO - SCRIPT.JS
+console.log("danger array")// DODGE.IO - SCRIPT.JS
 const cnv = document.getElementById("canvas");
 const ctx = cnv.getContext('2d');
 
@@ -99,8 +99,6 @@ let settings = {
 
 let allEnemies = [];
 let allDangers = [];
-let spawningDangers = [];
-let despawningDangers = [];
 
 // Time, Highscore, and Difficulty
 let now = Date.now();
@@ -335,6 +333,7 @@ function draw() {
     requestAnimationFrame(draw)
 }
 draw()
+
 
 
 

@@ -1,4 +1,4 @@
-console.log("43")// DODGE.IO - FUNCTIONS.JS
+console.log("player.radius --> player.r")// DODGE.IO - FUNCTIONS.JS
 function loadingScreen(validInput) {
     if (validInput || endLoading) {
         if (now - loadingGame >= 1000 && gameState == "loading") {
@@ -740,7 +740,7 @@ function drawGameOver() {
 
 function drawPlayer() {
     ctx.fillStyle = player.color;
-    drawCircle(player.x, player.y, player.radius);
+    drawCircle(player.x, player.y, player.r);
 }
 
 function drawEnemies() {
@@ -962,8 +962,8 @@ function keyboardControls() {
         player.y += dyKB * player.speed;
 
         // Doesn't allow the player to leave the map (wall collisions)
-        if (player.x - player.radius  <= 0 || player.x + player.radius  >= cnv.width) player.x -= dxKB * player.speed;
-        if (player.y - player.radius  <= 0 || player.y + player.radius  >= cnv.height) player.y -= dyKB * player.speed;
+        if (player.x - player.r  <= 0 || player.x + player.r  >= cnv.width) player.x -= dxKB * player.speed;
+        if (player.y - player.r  <= 0 || player.y + player.r  >= cnv.height) player.y -= dyKB * player.speed;
     }
     
     // Determines the angle the player is facing
@@ -984,7 +984,7 @@ function mouseMovement() {
             player.speed = 2.5 * shiftPressed * player.slowed;
         }
 
-        const slowStart = player.radius + 40;
+        const slowStart = player.r + 40;
         let slowFactor;
         
         if (distance < slowStart) {
@@ -998,11 +998,11 @@ function mouseMovement() {
         }
 
         // Doesn't allow the player to leave the map (wall collisions)
-        if (player.x - player.radius  <= 0 || player.x + player.radius  >= cnv.width) {
+        if (player.x - player.r  <= 0 || player.x + player.r  >= cnv.width) {
             if (distance < slowStart) player.x -= (dxMouse / distance) * player.speed * slowFactor;
             else player.x -= (dxMouse / distance) * player.speed;
         }
-        if (player.y - player.radius  <= 0 || player.y + player.radius  >= cnv.height) {
+        if (player.y - player.r  <= 0 || player.y + player.r  >= cnv.height) {
             if (distance < slowStart) player.y -= (dyMouse / distance) * player.speed * slowFactor;
             else player.y -= (dyMouse / distance) * player.speed;
         }
@@ -1047,8 +1047,8 @@ function moveEnemies() { // Loops through the allEnemies array to move each enem
         if (player.dodger == "jötunn") {
             // Similar to mouse movement mechanics, but theres a limit to how slow the enemies move
             // Calculates the distance from the edge of the enemy to the edge of the player, so I subtract the radii
-            const slowStart = 175 - enemy.radius - player.radius;
-            const slowEnd = 75 - enemy.radius - player.radius;
+            const slowStart = 175 - enemy.radius - player.r;
+            const slowEnd = 75 - enemy.radius - player.r;
 
             if (enemyDist < slowStart) {
                 // Limit distance to avoid going below slowEnd
@@ -1130,7 +1130,7 @@ function collisions() { // Keeps track of when the player touches any enemy in t
         const distance = Math.hypot(dx, dy);
         // Gives the player some time to get out of an enemy they dashed onto (0.3s)
         if (!dash.activated && !(now - dash.lastEnded < 300)) {
-            if (distance < player.radius + enemy.radius) {
+            if (distance < player.r + enemy.radius) {
                 pauseAudio(music.promise, music.var);
                 highscoreColor = "rgb(87, 87, 87)";
                 difficulty.color = "rgb(87, 87, 87)";
@@ -1141,7 +1141,7 @@ function collisions() { // Keeps track of when the player touches any enemy in t
             }
         }
         if (gameState === "endlessOver") underAura = 0;
-        else if (enemy.ability === "decelerator" && distance < player.radius + enemy.auraRadius) underAura++;
+        else if (enemy.ability === "decelerator" && distance < player.r + enemy.auraRadius) underAura++;
     });
     
     player.slowed = 1 - (underAura/10)

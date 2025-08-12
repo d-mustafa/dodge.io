@@ -1,6 +1,8 @@
-console.log("despawning 'n stuf");// DODGE.IO - MUSIC.JS
+console.log("dangers arrays for despawning");// DODGE.IO - MUSIC.JS
 function restartMusicMode() {
-    allEnemies = [];
+    allDangers = [];
+    spawningDangers = [];
+    despawningDangers = [];
     player.lives = 3;
     player.hit = 0;
     volume = Math.floor((settings.volumeSliderX - 165) / 1.5);
@@ -119,7 +121,7 @@ function createBeam(variant="none") {
     if (beam.variant > 0.5) beam.variant = "vertical";
     else beam.variant = "horizontal";
     if (variant !== "none") beam.variant = variant;
-    allEnemies.unshift(beam);
+    allDangers.unshift(beam);
     return beam;
 }
 
@@ -142,7 +144,7 @@ function createCircle(variant="none") {
     if (circle.variant > 0.5) circle.variant = "bomb";
     else circle.variant = "ring";
     if (variant !== "none") circle.variant = variant;
-    allEnemies.unshift(circle);
+    allDangers.unshift(circle);
     return circle;
 }
 
@@ -177,11 +179,13 @@ function createSpike(variant="none") {
     else if (rand < 1) spike.y = cnv.height - spike.r * 1.5;
     
     if (variant !== "none") spike.variant = variant;
-    allEnemies.unshift(spike);
+    allDangers.unshift(spike);
     return spike;
 }
 
 function spawnAndDrawDanger() {
+    allDangers = [...despawningDangers, ...spawningDangers];
+    
     // Enemy Spawning
     if (music.timestamps.length > 0) {
         for (let i = music.timestamps.length-1; i >= 0; i--) {
@@ -190,24 +194,24 @@ function spawnAndDrawDanger() {
             if (music.var.currentTime >= timestamp) {
                 if (dangerType === "beam" || dangerType === "horizontal" || dangerType === "vertical") {
                     createBeam();
-                    if (dangerType === "vertical") allEnemies[0].variant = "vertical";
-                    else if (dangerType === "horizontal") allEnemies[0].variant = "horizontal";
+                    if (dangerType === "vertical") allDangers[0].variant = "vertical";
+                    else if (dangerType === "horizontal") allDangers[0].variant = "horizontal";
                     
                     // determines the beams x value based off the timestamp
                     let xMulti = Math.floor(timestamp*100/cnv.width);
-                    allEnemies[0].x = (timestamp*100)-(cnv.width*xMulti);
+                    allDangers[0].x = (timestamp*100)-(cnv.width*xMulti);
                     
                     // determines the beams y value based off the timestamp
                     let yMulti = Math.floor(timestamp*100/cnv.height);
-                    allEnemies[0].y = (timestamp*100)-(cnv.height*yMulti);
+                    allDangers[0].y = (timestamp*100)-(cnv.height*yMulti);
                 } else if (dangerType === "circle" || dangerType === "bomb" || dangerType === "ring") {
                     createCircle();
-                    if (dangerType === "bomb") allEnemies[0].variant = "bomb";
-                    else if (dangerType === "ring") allEnemies[0].variant = "ring";
+                    if (dangerType === "bomb") allDangers[0].variant = "bomb";
+                    else if (dangerType === "ring") allDangers[0].variant = "ring";
         
                     // the circle's x and y will mimic the players
-                    allEnemies[0].x = player.x;
-                    allEnemies[0].y = player.y;
+                    allDangers[0].x = player.x;
+                    allDangers[0].y = player.y;
                 } else if (dangerType === "spike") {
                     createSpike();
                     // spikes aim and shoot at the player
@@ -216,22 +220,8 @@ function spawnAndDrawDanger() {
             }
         }
     }
-
-    // Enemy Deleting
-    function keepDanger(danger) {
-        if (danger.type !== "spike") {
-            if (danger.despawn && danger.colorValue <= 185) return false
-            else return true;
-        }
-        else if (danger.type === "spike") {
-            if (danger.reachedWall && danger.colorValue <= 185) return false
-            else return true;
-        }
-    }
-    allEnemies = allEnemies.filter(danger => keepDanger(danger));
-
     // Enemy Drawing
-    allEnemies.forEach(danger => {
+    allDangers.forEach(danger => {
         ctx.fillStyle = danger.color;
         ctx.strokeStyle = danger.color;
         if (danger.type !== "spike") {
@@ -320,11 +310,31 @@ function spawnAndDrawDanger() {
                 danger.y += danger.movey;
             }
         }
-    })
+    }) 
+    // Enemy Transferring
+    for (let i = spawningDangers.length-1; i >= 0; i--) {
+        if (spawningDangers[i]?.despawn || spawningDangers[i]?.reachedWall) {
+            despawningDangers.push(spawningDangers[i]);
+            spawningDangers.splice(i, 1);
+        }
+    }
+    // Enemy Deleting
+    function keepDanger(danger) {
+        if (danger.type !== "spike") {
+            if (danger.despawn && danger.colorValue <= 185) return false
+            else return true;
+        }
+        else if (danger.type === "spike") {
+            if (danger.reachedWall && danger.colorValue <= 185) return false
+            else return true;
+        }
+    }
+    despawningDangers = despawningDangers.filter(danger => keepDanger(danger));
+
 }
 
 function musicCollisions() {
-    allEnemies.forEach(danger => {
+    allDangers.forEach(danger => {
         const distance = Math.hypot(player.x-danger.x, player.y-danger.y);
         if (timeLeft > 0 && innerGameState !== "musicModeFail" && danger.colorValue >= 255 &&
             now-player.hit >= 1500 && !dash.activated && now-dash.lastEnded >= 300) {

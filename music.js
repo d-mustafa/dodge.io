@@ -151,6 +151,7 @@ function createSpike(variant="none") {
         x: Math.random() * cnv.width,
         y: Math.random() * cnv.height,
         r: (Math.random() * 10) + 10,
+        rotate: 0,
         speed: 2,
         launched: false,
         colorValue: 185,
@@ -247,32 +248,39 @@ function spawnAndDrawDanger() {
         }
         else if (danger.type === "spike") {
             drawCircle(danger.x, danger.y, danger.r);
-            let w = 2;
+            let w = 1.75;
             let h = 1.5;
+            
+            ctx.save();
+            ctx.translate(danger.x, danger.y);
+            ctx.rotate(danger.rotate);
             // Top Spike
             ctx.beginPath();
-            ctx.moveTo(danger.x-danger.r/w, danger.y-danger.r/w);
-            ctx.lineTo(danger.x, danger.y - danger.r*h);
-            ctx.lineTo(danger.x+danger.r/w, danger.y-danger.r/w);
+            ctx.moveTo(-danger.r/w, -danger.r/w);
+            ctx.lineTo(0, -danger.r*h);
+            ctx.lineTo(danger.r/w, -danger.r/w);
             ctx.fill();
             // Bottom Spike
             ctx.beginPath();
-            ctx.moveTo(danger.x-danger.r/w, danger.y+danger.r/w);
-            ctx.lineTo(danger.x, danger.y + danger.r*h);
-            ctx.lineTo(danger.x+danger.r/w, danger.y+danger.r/w);
+            ctx.moveTo(-danger.r/w, danger.r/w);
+            ctx.lineTo(0, danger.r*h);
+            ctx.lineTo(danger.r/w, danger.r/w);
             ctx.fill();
             // Left Spike
             ctx.beginPath();
-            ctx.moveTo(danger.x-danger.r/w, danger.y-danger.r/w);
-            ctx.lineTo(danger.x-danger.r*h, danger.y);
-            ctx.lineTo(danger.x-danger.r/w, danger.y+danger.r/w);
+            ctx.moveTo(-danger.r/w, -danger.r/w);
+            ctx.lineTo(-danger.r*h, 0);
+            ctx.lineTo(-danger.r/w, danger.r/w);
             ctx.fill();
             // Right Spike
             ctx.beginPath();
-            ctx.moveTo(danger.x+danger.r/w, danger.y-danger.r/w);
-            ctx.lineTo(danger.x+danger.r*h, danger.y);
-            ctx.lineTo(danger.x+danger.r/w, danger.y+danger.r/w);
+            ctx.moveTo(danger.r/w, -danger.r/w);
+            ctx.lineTo(danger.r*h, 0);
+            ctx.lineTo(danger.r/w, danger.r/w);
             ctx.fill();
+            
+            ctx.restore();
+            danger.rotate += 0;
             
             if (danger.colorValue >= 255 && !danger.launched) {
                 const dx = player.x - danger.x;

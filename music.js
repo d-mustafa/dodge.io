@@ -1,4 +1,4 @@
-console.log("dangers arrays for despawning");// DODGE.IO - MUSIC.JS
+console.log("new despawn methods");// DODGE.IO - MUSIC.JS
 function restartMusicMode() {
     allDangers = [];
     player.lives = 3;
@@ -114,7 +114,6 @@ function createBeam(variant="none") {
         get color() {
             return `rgb(${this.colorValue}, ${this.colorValue}, ${this.colorValue})`;
         },
-        despawn: false,
     }
     if (beam.variant > 0.5) beam.variant = "vertical";
     else beam.variant = "horizontal";
@@ -134,11 +133,8 @@ function createCircle(variant="none") {
         get color() {
             return `rgb(${this.colorValue}, ${this.colorValue}, ${this.colorValue})`;
         },
-        get lineWidth() {
-            return this.r;
-        },
-        despawn: false,
     }
+    circle.lineWidth = circle.r
     if (circle.variant > 0.5) circle.variant = "bomb";
     else circle.variant = "ring";
     if (variant !== "none") circle.variant = variant;
@@ -177,7 +173,7 @@ function createSpike(variant="none") {
 }
 
 function spawnAndDrawDanger() {
-    // Enemy Spawning
+    // Danger Spawning
     if (music.timestamps.length > 0) {
         for (let i = music.timestamps.length-1; i >= 0; i--) {
             let timestamp = music.timestamps[i][0];
@@ -220,22 +216,28 @@ function spawnAndDrawDanger() {
             }
         }
     }
-    // Enemy Drawing
+    // Danger Drawing
     allDangers.forEach(danger => {
         ctx.fillStyle = danger.color;
         ctx.strokeStyle = danger.color;
         if (danger.type !== "spike") {
             if (danger.colorValue >= 255) danger.despawn = true;
             if (danger.colorValue < 255 && !danger.despawn) danger.colorValue += 0.25;
-            if (danger.colorValue > 185 && danger.despawn) danger.colorValue -= 1;
+            if (danger.despawn) danger.colorValue -= 2;
         }
         
         if (danger.type === "beam") {
-            if (danger.variant === "vertical") ctx.fillRect(danger.x, 0, danger.w, cnv.height);
-            else if (danger.variant === "horizontal") ctx.fillRect(0, danger.y, cnv.width, danger.h);
+            if (danger.variant === "vertical") {
+                ctx.fillRect(danger.x, 0, danger.w, cnv.height);
+            }
+            else if (danger.variant === "horizontal") {
+                ctx.fillRect(0, danger.y, cnv.width, danger.h);
+            }
         }
         else if (danger.type === "circle") {
-            if (danger.variant === "bomb") drawCircle(danger.x, danger.y, danger.r);
+            if (danger.variant === "bomb") {
+                drawCircle(danger.x, danger.y, danger.r);
+            }
             else if (danger.variant === "ring") {
                 ctx.lineWidth = danger.lineWidth;
                 drawCircle(danger.x, danger.y, danger.r, "stroke");
@@ -311,9 +313,11 @@ function spawnAndDrawDanger() {
             }
         }
     })
-    // Enemy Deleting
+    // Danger Rearranging
+    allDangers.sort((a, b) => a.colorValue - b.colorValue);
+    // Danger Deleting
     function keepDanger(danger) {
-        if (danger?.w === 0 || danger?.h === 0 || danger?.r === 0 || (danger.colorValue <= 185 && danger?.reachedWall)) return false
+        if (danger.colorValue <= 185 && (danger?.reachedWall || danger?.despawn)) return false;
         else return true;
     }
     allDangers = allDangers.filter(danger => keepDanger(danger));

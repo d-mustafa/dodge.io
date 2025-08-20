@@ -1,16 +1,6 @@
 // DODGE.IO - SCRIPT.JS
 const cnv = document.getElementById("game");
 const ctx = cnv.getContext('2d');
-const cursorCnv = document.getElementById("cursor");
-const cursorCtx = cursorCnv.getContext('2d');
-
-function resizeCursorCanvas() {
-  cursorCnv.width = window.innerWidth;
-  cursorCnv.height = window.innerHeight;
-}
-
-window.addEventListener("resize", resizeCursorCanvas);
-resizeCursorCanvas(); // call once at start
 
 let gameState = "loading";
 let innerGameState = "loading";
@@ -345,24 +335,5 @@ function draw() {
     }
     requestAnimationFrame(draw);
 }
-
-function drawCursor() {
-    function drawCursorCricle(x, y, r, type) {
-        cursorCtx.beginPath();
-        cursorCtx.arc(x, y, r, Math.PI * 2, 0);
-        if (type === "fill") cursorCtx.fill();
-        if (type === "stroke") cursorCtx.stroke();
-    }
-    cursorCtx.clearRect(0, 0, cursorCnv.width, cursorCnv.height);
-    
-    cursorCtx.fillStyle = player.color;
-    cursorCtx.strokeStyle = player.subColor;
-    drawCursorCricle(cursorX, cursorY, 7.5, "fill");
-    drawCursorCricle(cursorX, cursorY, 7.5, "stroke");
-    
-    requestAnimationFrame(drawCursor);
-}
-
-draw()
-drawCursor()
+draw();
 

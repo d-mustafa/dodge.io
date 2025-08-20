@@ -348,15 +348,15 @@ function draw() {
 
 function drawCursor() {
     function drawCursorCricle(x, y, r, type) {
-        ctxCursor.beginPath();
-        ctxCursor.arc(x, y, r, Math.PI * 2, 0);
-        if (type === "fill") ctxCursor.fill();
-        if (type === "stroke") ctxCursor.stroke();
+        cursorCtx.beginPath();
+        cursorCtx.arc(x, y, r, Math.PI * 2, 0);
+        if (type === "fill") cursorCtx.fill();
+        if (type === "stroke") cursorCtx.stroke();
     }
-    ctxCursor.clearRect(0, 0, cnvCursor.width, cnvCursor.height);
+    cursorCtx.clearRect(0, 0, cursorCnv.width, cursorCnv.height);
     
-    ctxCursor.fillStyle = player.color;
-    ctxCursor.strokeStyle = player.subColor;
+    cursorCtx.fillStyle = player.color;
+    cursorCtx.strokeStyle = player.subColor;
     drawCursorCricle(cursorX, cursorY, 7.5, "fill");
     drawCursorCricle(cursorX, cursorY, 7.5, "stroke");
     
@@ -365,3 +365,4 @@ function drawCursor() {
 
 draw()
 drawCursor()
+

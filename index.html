@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-cursor">
     <head>
         <title>Dodge.io</title>
         <link rel="icon" type="image/x-icon" href="DodgeImages/dodgeIcon.png" />
@@ -10,15 +10,37 @@
 
         <!-- CSS -->
         <style>
+            no-cursor html,
+            no-cursor body,
+            no-cursor * {
+                cursor: none !important;
+            }
+            html, body {
+                margin: 0;
+                padding: 0;
+                height: 100%;
+                overflow: hidden; /* blocks scrolling */
+            }
             body {
                 text-align: center;
                 font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-                margin: auto;
             }
             p {
                 display: inline;
                 margin-right: 50px;
                 font-weight: bold;
+            }
+            #game {
+                z-index: 1;
+            }
+            #cursor {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                z-index: 2; /* above game canvas */
+                pointer-events: none;
             }
             #evades {
                 color: #8ED5FF;
@@ -50,6 +72,8 @@
         <br>
 
         <!-- Canvas -->
-        <canvas id="canvas" width="800" height="650"></canvas>
+        <canvas id="game" width="800" height="650"></canvas>
+        <canvas id="cursor"></canvas>
     </body>
 </html>
+

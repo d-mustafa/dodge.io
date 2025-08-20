@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="no-cursor">
+<html lang="en">
     <head>
         <title>Dodge.io</title>
         <link rel="icon" type="image/x-icon" href="DodgeImages/dodgeIcon.png" />
@@ -33,15 +33,6 @@
             #game {
                 z-index: 1;
             }
-            #cursor {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100vw;
-                height: 100vh;
-                z-index: 2; /* above game canvas */
-                pointer-events: none;
-            }
             #evades {
                 color: #8ED5FF;
             }
@@ -73,7 +64,7 @@
 
         <!-- Canvas -->
         <canvas id="game" width="800" height="650"></canvas>
-        <canvas id="cursor"></canvas>
     </body>
 </html>
+
 

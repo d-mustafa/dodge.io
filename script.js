@@ -1,6 +1,16 @@
-console.log("danger array")// DODGE.IO - SCRIPT.JS
-const cnv = document.getElementById("canvas");
+// DODGE.IO - SCRIPT.JS
+const cnv = document.getElementById("game");
 const ctx = cnv.getContext('2d');
+const cursorCnv = document.getElementById("cursor");
+const cursorCtx = cursorCnv.getContext('2d');
+
+function resizeCursorCanvas() {
+  cursorCnv.width = window.innerWidth;
+  cursorCnv.height = window.innerHeight;
+}
+
+window.addEventListener("resize", resizeCursorCanvas);
+resizeCursorCanvas(); // call once at start
 
 let gameState = "loading";
 let innerGameState = "loading";
@@ -54,12 +64,16 @@ let mouseOver = {
 let mouseX;
 let mouseY;
 let track = false;
+let cursorX;
+let cursorY;
 window.addEventListener('mousemove', (event) => {
     const rect = cnv.getBoundingClientRect();
     mouseX = event.clientX - rect.left;
     mouseY = event.clientY - rect.top;
-
     if (track) console.log(`x: ${mouseX.toFixed()} || y: ${mouseY.toFixed()}`);
+    
+    cursorX = event.clientX;
+    cursorY = event.clientY;
 });
 
 // Player & Enemies
@@ -235,7 +249,6 @@ window.addEventListener('beforeunload', () => {
 
 
 // Drawing the game
-requestAnimationFrame(draw)
 function draw() {
     now = Date.now()
     ctx.fillStyle = "rgb(185, 185, 185)";
@@ -330,12 +343,25 @@ function draw() {
         abilities();
         musicCollisions();
     }
-    requestAnimationFrame(draw)
+    requestAnimationFrame(draw);
 }
+
+function drawCursor() {
+    function drawCursorCricle(x, y, r, type) {
+        ctxCursor.beginPath();
+        ctxCursor.arc(x, y, r, Math.PI * 2, 0);
+        if (type === "fill") ctxCursor.fill();
+        if (type === "stroke") ctxCursor.stroke();
+    }
+    ctxCursor.clearRect(0, 0, cnvCursor.width, cnvCursor.height);
+    
+    ctxCursor.fillStyle = player.color;
+    ctxCursor.strokeStyle = player.subColor;
+    drawCursorCricle(cursorX, cursorY, 7.5, "fill");
+    drawCursorCricle(cursorX, cursorY, 7.5, "stroke");
+    
+    requestAnimationFrame(drawCursor);
+}
+
 draw()
-
-
-
-
-
-
+drawCursor()
